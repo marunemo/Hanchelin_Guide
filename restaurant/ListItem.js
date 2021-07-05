@@ -1,43 +1,40 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
 import database from '@react-native-firebase/database';
 
-const itemActivity = () => {
-    const [name, setName] = useState("");
-    const [address, setAddress] = useState("");
-    const [phone, setPhone] = useState("");
-    const [distance, setDistance] = useState("");
-    const [menu, setMenu] = useState([]);
+const ItemActivity = () => {
+    const [restData, setData] = useState({});
 
-    database().ref("/식당/9월애").once("value").then(restData => {
-        data = restData.val();
-        setName(data["official_name"]);
-        setAddress(data["address"]);
-        setPhone(data["contact"]);
-        setDistance(data["distance"]);
-        setMenu(data["menu"]);
-    });
+    useEffect(() => {
+        database().ref("/식당/9월애").once("value").then(data => {
+            if(data) {
+                setData(data.val());
+            }
+        });
+        console.log(restData);
+    }, []);
+    console.log(restData);
 
     return(
         <SafeAreaView style = {style.containter}>
             <ScrollView>
                 <View style = {style.partition}>
-                    <Text>이름 : {name}</Text>
-                    <Text>주소 : {address}</Text>
-                    <Text>번호 : {phone}</Text>
+                    <Text>이름 : {restData["official_name"]}</Text>
+                    <Text>주소 : {restData["address"]}</Text>
+                    <Text>번호 : {restData["contact"]}</Text>
                 </View>
                 <View style = {style.partition}>
-                    <Text>거리 : {distance/1000}km</Text>
+                    <Text>거리 : {restData["distance"]/1000}km</Text>
                 </View>
                 <View style = {style.partition}>
-                    <Text>{menu}</Text>
+                    <Text>{restData["menu"]}</Text>
                 </View>
             </ScrollView>
         </SafeAreaView>
     )
 }
 
-export default itemActivity;
+export default ItemActivity;
 
 const style = StyleSheet.create({
     containter : {
