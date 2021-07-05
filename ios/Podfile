@@ -1,6 +1,9 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
+# add the Firebase pod for Google Analytics
+pod 'Firebase/Analytics'
+
 platform :ios, '10.0'
 
 target 'Hanchelin_Guide' do
