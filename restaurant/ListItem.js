@@ -2,8 +2,9 @@ import React, {useState, useEffect} from "react";
 import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
 import database from '@react-native-firebase/database';
 
-const ItemActivity = () => {
+const RestComponent = () => {
     const [restData, setData] = useState({});
+    var menu = "";
 
     useEffect(() => {
         database().ref("/식당/9월애").once("value").then(data => {
@@ -15,20 +16,32 @@ const ItemActivity = () => {
     }, []);
     console.log(restData);
 
+    for(menuList in restData["menu"])
+        menu += menuList + " : " + restData["menu"][menuList] + "\n";
+    menu = menu.substring(0, menu.length - 1)
+    
+    return (
+        <>
+            <View style = {style.partition}>
+                <Text>이름 : {restData["official_name"]}</Text>
+                <Text>주소 : {restData["address"]}</Text>
+                <Text>번호 : {restData["contact"]}</Text>
+            </View>
+            <View style = {style.partition}>
+                <Text>거리 : {restData["distance"]/1000}km</Text>
+            </View>
+            <View style = {style.partition}>
+                <Text>{menu}</Text>
+            </View>
+        </>
+    ); 
+}
+
+const ItemActivity = () => {
     return(
         <SafeAreaView style = {style.containter}>
             <ScrollView>
-                <View style = {style.partition}>
-                    <Text>이름 : {restData["official_name"]}</Text>
-                    <Text>주소 : {restData["address"]}</Text>
-                    <Text>번호 : {restData["contact"]}</Text>
-                </View>
-                <View style = {style.partition}>
-                    <Text>거리 : {restData["distance"]/1000}km</Text>
-                </View>
-                <View style = {style.partition}>
-                    <Text>{restData["menu"]}</Text>
-                </View>
+                <RestComponent></RestComponent>
             </ScrollView>
         </SafeAreaView>
     )
