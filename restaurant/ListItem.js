@@ -23,16 +23,16 @@ const RestComponent = () => {
     return (
         <>
             <View style = {style.partition}>
-                <Text>이름 : {restData["official_name"]}</Text>
-                <Text>주소 : {restData["address"]}</Text>
-                <Text>번호 : {restData["contact"]}</Text>
+                <Text><Text style={style.keyText}>이름 :</Text> {restData["official_name"]}</Text>
+                <Text><Text style={style.keyText}>주소 :</Text> {restData["address"]}</Text>
+                <Text><Text style={style.keyText}>번호 :</Text> {restData["contact"]}</Text>
             </View>
             <View style = {style.partition}>
-                <Text>거리 : {restData["distance"]/1000}km</Text>
+                <Text><Text style={style.keyText}>거리 :</Text> {restData["distance"]/1000}km</Text>
             </View>
             <View style = {style.partition}>
-                <Text>메뉴</Text>
-                <Text style={({alignItems : "center"})}>{menu}</Text>
+                <Text style={[style.keyText, {fontSize : 16}]}>ᐧ 메뉴</Text>
+                <Text style={({textAlign : "center"})}>{menu}</Text>
             </View>
         </>
     ); 
@@ -54,11 +54,14 @@ const style = StyleSheet.create({
     containter : {
         height : "100%"
     },
+    keyText : {
+        fontWeight : "bold",
+    },
     partition : {
         borderWidth : 2,
         borderRadius : 25,
         margin : 5,
-        padding : 10,
+        paddingVertical : 20,
         paddingHorizontal : 30
     }
 })
