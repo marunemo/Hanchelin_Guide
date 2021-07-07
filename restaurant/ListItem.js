@@ -31,7 +31,8 @@ const RestComponent = () => {
                 <Text>거리 : {restData["distance"]/1000}km</Text>
             </View>
             <View style = {style.partition}>
-                <Text>{menu}</Text>
+                <Text>메뉴</Text>
+                <Text style={({alignItems : "center"})}>{menu}</Text>
             </View>
         </>
     ); 
@@ -58,6 +59,6 @@ const style = StyleSheet.create({
         borderRadius : 25,
         margin : 5,
         padding : 10,
-        alignItems : "center"
+        paddingHorizontal : 30
     }
 })
