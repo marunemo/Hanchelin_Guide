@@ -14,25 +14,25 @@ const RestComponent = () => {
         });
         console.log(restData);
     }, []);
-    console.log(restData);
+    console.log(restData);   
 
-    for(menuList in restData["menu"])
-        menu += menuList + " : " + restData["menu"][menuList] + "\n";
+    for(var menuList of restData["menu"])
+        menu += menuList + "\n";
     menu = menu.substring(0, menu.length - 1)
     
     return (
         <>
             <View style = {style.partition}>
-                <Text><Text style={style.keyText}>이름 :</Text> {restData["official_name"]}</Text>
-                <Text><Text style={style.keyText}>주소 :</Text> {restData["address"]}</Text>
-                <Text><Text style={style.keyText}>번호 :</Text> {restData["contact"]}</Text>
+                <Text style={style.contexts}><Text style={style.keyText}>이름 :</Text> {restData["official_name"]}</Text>
+                <Text style={style.contexts}><Text style={style.keyText}>주소 :</Text> {restData["address"]}</Text>
+                <Text style={style.contexts}><Text style={style.keyText}>번호 :</Text> {restData["contact"]}</Text>
             </View>
             <View style = {style.partition}>
-                <Text><Text style={style.keyText}>거리 :</Text> {restData["distance"]/1000}km</Text>
+                <Text style={style.contexts}><Text style={style.keyText}>거리 :</Text> {restData["distance"]/1000}km</Text>
             </View>
             <View style = {style.partition}>
-                <Text style={[style.keyText, {fontSize : 16}]}>ᐧ 메뉴</Text>
-                <Text style={({textAlign : "center"})}>{menu}</Text>
+                <Text style={[style.keyText, {lineHeight : 40, fontSize : 16}]}>ᐧ 메뉴</Text>
+                <Text style={({paddingLeft : 20})}>{menu}</Text>
             </View>
         </>
     ); 
@@ -53,6 +53,9 @@ export default ItemActivity;
 const style = StyleSheet.create({
     containter : {
         height : "100%"
+    },
+    contexts : {
+        lineHeight : 20
     },
     keyText : {
         fontWeight : "bold",
