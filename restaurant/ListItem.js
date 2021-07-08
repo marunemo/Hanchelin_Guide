@@ -16,9 +16,11 @@ const RestComponent = () => {
     }, []);
     console.log(restData);   
 
-    for(var menuList of restData["menu"])
-        menu += menuList + "\n";
-    menu = menu.substring(0, menu.length - 1)
+    if(restData["menu"] != undefined) {
+        for(var menuList of restData["menu"])
+            menu += menuList + "\n";
+        menu = menu.substring(0, menu.length - 1)
+    }
     
     return (
         <>
@@ -28,7 +30,10 @@ const RestComponent = () => {
                 <Text style={style.contexts}><Text style={style.keyText}>번호 :</Text> {restData["contact"]}</Text>
             </View>
             <View style = {style.partition}>
-                <Text style={style.contexts}><Text style={style.keyText}>거리 :</Text> {restData["distance"]/1000}km</Text>
+                <Text style={style.contexts}>
+                    <Text style={style.keyText}>한동대까지의 거리 : </Text>
+                    {(restData["distance"]==undefined?"0":restData["distance"]/1000)}km
+                </Text>
             </View>
             <View style = {style.partition}>
                 <Text style={[style.keyText, {lineHeight : 40, fontSize : 16}]}>ᐧ 메뉴</Text>
