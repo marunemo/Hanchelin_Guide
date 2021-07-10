@@ -1,6 +1,13 @@
 import React, {useState, useEffect} from "react";
 import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
+import {WebView} from "react-native-webview"
 import database from '@react-native-firebase/database';
+
+const MapView = () => {
+    return(
+        <WebView style={style.mapView} source={{uri: "https://www.google.com" }} />
+    )
+}
 
 const RestComponent = () => {
     const [restData, setData] = useState({});
@@ -34,6 +41,7 @@ const RestComponent = () => {
                     <Text style={style.keyText}>한동대까지의 거리 : </Text>
                     {(restData["distance"]==undefined?"0":restData["distance"]/1000)}km
                 </Text>
+                <MapView></MapView>
             </View>
             <View style = {style.partition}>
                 <Text style={[style.keyText, {lineHeight : 40, fontSize : 16}]}>ᐧ 메뉴</Text>
@@ -71,5 +79,9 @@ const style = StyleSheet.create({
         margin : 5,
         paddingVertical : 20,
         paddingHorizontal : 30
+    },
+    mapView : {
+        height : "100%",
+        aspectRatio: 1
     }
 })
