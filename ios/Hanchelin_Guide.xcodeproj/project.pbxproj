@@ -11,6 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		23C5555F269C18F300935494 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23C5555E269C18F300935494 /* GoogleService-Info.plist */; };
 		2A050E088830A97948D4ABBE /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 804630251A2AB5259F8887C0 /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a */; };
 		3D1ADC953BB868FC99B33C78 /* libPods-Hanchelin_Guide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B32DD365C3680CC0E896679C /* libPods-Hanchelin_Guide.a */; };
 		5012F7E2269352A500720721 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5012F7E1269352A500720721 /* GoogleService-Info.plist */; };
@@ -37,6 +38,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Hanchelin_Guide/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Hanchelin_Guide/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Hanchelin_Guide/main.m; sourceTree = "<group>"; };
+		23C5555E269C18F300935494 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4933786ED3846D0E65FF1CD5 /* Pods-Hanchelin_Guide-Hanchelin_GuideTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hanchelin_Guide-Hanchelin_GuideTests.debug.xcconfig"; path = "Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5012F7E1269352A500720721 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		53D3C237EAD356C0470A41AF /* Pods-Hanchelin_Guide-Hanchelin_GuideTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hanchelin_Guide-Hanchelin_GuideTests.release.xcconfig"; path = "Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 		13B07FAE1A68108700A75B9A /* Hanchelin_Guide */ = {
 			isa = PBXGroup;
 			children = (
+				23C5555E269C18F300935494 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -248,6 +251,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				23C5555F269C18F300935494 /* GoogleService-Info.plist in Resources */,
 				5012F7E2269352A500720721 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
