@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {Text, View, ScrollView, SafeAreaView, StyleSheet, Button} from "react-native"
 import {WebView} from "react-native-webview"
+import Icon from 'react-native-vector-icons/FontAwesome';
 import database from '@react-native-firebase/database';
 
 const MapView = () => {
@@ -58,7 +59,11 @@ const ItemActivity = () => {
                 <RestComponent></RestComponent>
             </ScrollView>
             <View style = {style.commentView}>
-                <Button style = {style.commentButton} title = "Text" color = "red" onPress = {() => {}}/>
+            <Icon.Button name="facebook" backgroundColor="#3b5998">
+                <Text style={{ fontFamily: 'Arial', fontSize: 15 }}>
+                Login with Facebook
+                </Text>
+            </Icon.Button>
             </View>
         </SafeAreaView>
     )
