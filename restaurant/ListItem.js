@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {Text, View, ScrollView, SafeAreaView, StyleSheet, Button} from "react-native"
 import {WebView} from "react-native-webview"
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {IconButton} from "react-native-paper";
 import database from '@react-native-firebase/database';
 
 const MapView = () => {
@@ -59,11 +59,12 @@ const ItemActivity = () => {
                 <RestComponent></RestComponent>
             </ScrollView>
             <View style = {style.commentView}>
-            <Icon.Button name="facebook" backgroundColor="#3b5998">
-                <Text style={{ fontFamily: 'Arial', fontSize: 15 }}>
-                Login with Facebook
-                </Text>
-            </Icon.Button>
+            <IconButton
+                icon="camera"
+                color="#13ACBF"
+                size={35}
+                onPress={() => console.log('Pressed')}
+            />
             </View>
         </SafeAreaView>
     )
@@ -95,6 +96,7 @@ const style = StyleSheet.create({
     commentView : {
         position : "absolute",
         bottom : 60,
+        left : 100,
         width : "100%"
     },
     commentButton : {
