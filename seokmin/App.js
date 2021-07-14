@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import React, { Component } from 'react';
+import { NativeBaseProvider, Center, Box } from 'native-base';
 import firebase from '@react-native-firebase/database';
 
 export default class App extends Component {
@@ -13,7 +13,7 @@ export default class App extends Component {
         const ref = firebase().ref("/식당/호식이두마리치킨");
 
         ref.once("value").then(snapshot => {
-            if(snapshot)
+            if (snapshot)
                 this.setState({ data: snapshot.val() });
             console.log(this.state.data)
         })
@@ -21,25 +21,24 @@ export default class App extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text style={styles.text}>{this.state.data["official_name"]}</Text>
-                <Text style={styles.text}>{this.state.data["dong"]}</Text>
-                <Text style={styles.text}>{this.state.data["category"]}</Text>
-                <Text style={styles.text}>{this.state.data["address"]}</Text>
-            </View>
+            <NativeBaseProvider>
+                <Center flex={1}>
+                    <Box
+                        bg="primary.400"
+                        p={4}
+                        _text={{
+                            fontSize: "md",
+                            fontWeight: "bold",
+                            color: "white",
+                        }}
+                    >
+                        {this.state.data["official_name"]}
+                        {this.state.data["dong"]}
+                        {this.state.data["category"]}
+                        {this.state.data["address"]}
+                    </Box>
+                </Center>
+            </NativeBaseProvider>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-    text: {
-        fontSize: 20,
-        marginBottom: 20
-    }
-});
