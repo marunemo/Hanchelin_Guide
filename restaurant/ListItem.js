@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from "react";
-import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
+import {Text, View, ScrollView, SafeAreaView, StyleSheet, Button} from "react-native"
 import {WebView} from "react-native-webview"
+import Icon from 'react-native-vector-icons/FontAwesome';
 import database from '@react-native-firebase/database';
 
 const MapView = () => {
     return(
-        <WebView style={style.mapView} source={{uri: "https://www.google.com" }} />
+        <WebView style={style.mapView} source={{uri: "http://kko.to/LGrhG-H4M" }} originWhitelist={['*']} />
     )
 }
 
@@ -57,6 +58,13 @@ const ItemActivity = () => {
             <ScrollView>
                 <RestComponent></RestComponent>
             </ScrollView>
+            <View style = {style.commentView}>
+            <Icon.Button name="facebook" backgroundColor="#3b5998">
+                <Text style={{ fontFamily: 'Arial', fontSize: 15 }}>
+                Login with Facebook
+                </Text>
+            </Icon.Button>
+            </View>
         </SafeAreaView>
     )
 }
@@ -82,6 +90,14 @@ const style = StyleSheet.create({
     },
     mapView : {
         height : "100%",
-        aspectRatio: 1
+        aspectRatio : 1
+    },
+    commentView : {
+        position : "absolute",
+        bottom : 60,
+        width : "100%"
+    },
+    commentButton : {
+        
     }
 })
