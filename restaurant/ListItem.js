@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
-import {Text, View, ScrollView, SafeAreaView, StyleSheet, Button} from "react-native"
+import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
 import {WebView} from "react-native-webview"
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {IconButton, Icon, NativeBaseProvider} from "native-base";
+import Font from "react-native-vector-icons/FontAwesome5"
 import database from '@react-native-firebase/database';
 
 const MapView = () => {
@@ -22,7 +23,7 @@ const RestComponent = () => {
         });
         console.log(restData);
     }, []);
-    console.log(restData);   
+    console.log(restData);
 
     if(restData["menu"] != undefined) {
         for(var menuList of restData["menu"])
@@ -55,16 +56,19 @@ const RestComponent = () => {
 const ItemActivity = () => {
     return(
         <SafeAreaView style = {style.containter}>
+            <NativeBaseProvider>
             <ScrollView>
                 <RestComponent></RestComponent>
             </ScrollView>
-            <View style = {style.commentView}>
-            <Icon.Button name="facebook" backgroundColor="#3b5998">
-                <Text style={{ fontFamily: 'Arial', fontSize: 15 }}>
-                Login with Facebook
-                </Text>
-            </Icon.Button>
-            </View>
+                <IconButton
+                    style = {style.commentButton}
+                    borderRadius="full"
+                    colorScheme="cyan"
+                    variant="solid"
+                    size = "lg"
+                    icon = {<Icon name = "comment-alt" as = {Font} size="sm" />}
+                />
+            </NativeBaseProvider>
         </SafeAreaView>
     )
 }
@@ -92,12 +96,9 @@ const style = StyleSheet.create({
         height : "100%",
         aspectRatio : 1
     },
-    commentView : {
-        position : "absolute",
-        bottom : 60,
-        width : "100%"
-    },
     commentButton : {
-        
+        position : "absolute",
+        bottom : 30,
+        right : 30,
     }
 })
