@@ -11,6 +11,17 @@ const MapView = () => {
     )
 }
 
+const CommentButton = () => {
+    return <IconButton
+                style = {style.commentButton}
+                borderRadius="full"
+                colorScheme="cyan"
+                variant="solid"
+                size = "lg"
+                icon = {<Icon name = "comment-alt" as = {Font} size="sm" />}
+            />
+}
+
 const RestComponent = () => {
     const [restData, setData] = useState({});
     var menu = "";
@@ -57,17 +68,10 @@ const ItemActivity = () => {
     return(
         <SafeAreaView style = {style.containter}>
             <NativeBaseProvider>
-            <ScrollView>
-                <RestComponent></RestComponent>
-            </ScrollView>
-                <IconButton
-                    style = {style.commentButton}
-                    borderRadius="full"
-                    colorScheme="cyan"
-                    variant="solid"
-                    size = "lg"
-                    icon = {<Icon name = "comment-alt" as = {Font} size="sm" />}
-                />
+                <ScrollView>
+                    <RestComponent></RestComponent>
+                </ScrollView>
+                <CommentButton/>
             </NativeBaseProvider>
         </SafeAreaView>
     )
