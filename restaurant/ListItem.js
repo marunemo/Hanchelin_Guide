@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
 import {WebView} from "react-native-webview"
-import {IconButton, Icon, NativeBaseProvider} from "native-base";
+import {IconButton, Icon, NativeBaseProvider, Input} from "native-base";
 import Font from "react-native-vector-icons/FontAwesome5"
 import database from '@react-native-firebase/database';
 
@@ -12,16 +12,27 @@ const MapView = () => {
 }
 
 const CommentButton = () => {
-    return <IconButton
-                style = {style.commentButton}
-                borderRadius="full"
-                colorScheme="cyan"
-                variant="solid"
-                size = "lg"
-                icon = {<Icon name = "comment-alt" as = {Font} size="sm" />}
-            />
-}
+    onInput = false;
+    const showInput = () => {
+        onInput = !onInput;
+    }
 
+    return (<>
+                <Input
+                    w = "100%"
+                    placeholder="test"
+                />
+                <IconButton
+                    style = {style.commentButton}
+                    borderRadius="full"
+                    colorScheme="cyan"
+                    variant="solid"
+                    size = "lg"
+                    onPress={showInput}
+                    icon = {<Icon name = "comment-alt" as = {Font} size="sm" />}
+                />
+            </>)
+}
 const RestComponent = () => {
     const [restData, setData] = useState({});
     var menu = "";
