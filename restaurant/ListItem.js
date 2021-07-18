@@ -19,8 +19,8 @@ const CommentButton = () => {
 
     return (<>
                 <Input
-                    w = "100%"
-                    placeholder="test"
+                    style = {style.commentBox}
+                    placeholder = "test"
                 />
                 <IconButton
                     style = {style.commentButton}
@@ -115,5 +115,11 @@ const style = StyleSheet.create({
         position : "absolute",
         bottom : 30,
         right : 30,
+    },
+    commentBox : {
+        position : "absolute",
+        width : "100%",
+        height : "50%",
+        bottom : 0
     }
 })
