@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
+import {Text, View, ScrollView, SafeAreaView, StyleSheet, Modal} from "react-native"
 import {WebView} from "react-native-webview"
 import {IconButton, Icon, NativeBaseProvider, Input} from "native-base";
 import Font from "react-native-vector-icons/FontAwesome5"
@@ -12,25 +12,31 @@ const MapView = () => {
 }
 
 const CommentButton = () => {
-    onInput = false;
-    const showInput = () => {
-        onInput = !onInput;
-    }
+    const [onInput, showInput] = useState(false);
 
     return (<>
-                <Input
-                    style = {style.commentBox}
-                    placeholder = "test"
-                />
+                <Modal
+                    animationType = "slide"
+                    visible = {onInput}
+                    onRequestClose = {() => {
+                        showInput(false);
+                    }}>
+                    <SafeAreaView style = {style.commentView}>
+                        <Input
+                            placeholder = "Test" />
+                        <IconButton
+                            onPress={() => showInput(false)}
+                            icon = {<Icon name = "window-close" as = {Font} size="sm" />} />
+                    </SafeAreaView>
+                </Modal>
                 <IconButton
                     style = {style.commentButton}
                     borderRadius="full"
                     colorScheme="cyan"
                     variant="solid"
                     size = "lg"
-                    onPress={showInput}
-                    icon = {<Icon name = "comment-alt" as = {Font} size="sm" />}
-                />
+                    onPress={() => showInput(true)}
+                    icon = {<Icon name = "comment-alt" as = {Font} size="sm" />} />
             </>)
 }
 const RestComponent = () => {
@@ -111,15 +117,14 @@ const style = StyleSheet.create({
         height : "100%",
         aspectRatio : 1
     },
+    commentView : {
+        width : "100%",
+        height : "50%",
+        bottom : 0
+    },
     commentButton : {
         position : "absolute",
         bottom : 30,
         right : 30,
     },
-    commentBox : {
-        position : "absolute",
-        width : "100%",
-        height : "50%",
-        bottom : 0
-    }
 })
