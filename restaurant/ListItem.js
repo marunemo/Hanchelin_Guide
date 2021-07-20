@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
-import {Text, View, ScrollView, SafeAreaView, StyleSheet, Modal} from "react-native"
+import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
 import {WebView} from "react-native-webview"
+import Modal from "react-native-modal"
 import {IconButton, Icon, NativeBaseProvider, Input} from "native-base";
 import Font from "react-native-vector-icons/FontAwesome5"
 import database from '@react-native-firebase/database';
@@ -16,11 +17,9 @@ const CommentButton = () => {
 
     return (<>
                 <Modal
-                    animationType = "slide"
-                    visible = {onInput}
-                    onRequestClose = {() => {
-                        showInput(false);
-                    }}>
+                    isVisible = {onInput}
+                    onBackButtonPress = {() => showInput(false)}
+                    onBackdropPress = {() => showInput(false)} >
                     <SafeAreaView style = {style.commentView}>
                         <Text style = {style.commentHeader}>식당 리뷰</Text>
                         <Input
@@ -124,12 +123,13 @@ const style = StyleSheet.create({
         aspectRatio : 1
     },
     commentView : {
-        borderWidth : 2,
+        backgroundColor : "white",
         borderRadius : 25,
         width : "95%",
-        height : "50%",
+        height : "70%",
+        bottom : 0,
         alignItems : "center",
-        alignSelf : "center",
+        alignSelf : "center"
     },
     commentButton : {
         position : "absolute",
