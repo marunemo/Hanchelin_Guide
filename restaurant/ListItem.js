@@ -22,8 +22,14 @@ const CommentButton = () => {
                         showInput(false);
                     }}>
                     <SafeAreaView style = {style.commentView}>
+                        <Text style = {style.commentHeader}>식당 리뷰</Text>
                         <Input
-                            placeholder = "Test" />
+                            w = "80%"
+                            h = "50%"
+                            variant = "filled"
+                            textAlignVertical = "top"
+                            multiline = {true}
+                            placeholder = "해당 식장에 대한 리뷰를 적어주세요." />
                         <IconButton
                             onPress={() => showInput(false)}
                             icon = {<Icon name = "window-close" as = {Font} size="sm" />} />
@@ -118,13 +124,21 @@ const style = StyleSheet.create({
         aspectRatio : 1
     },
     commentView : {
-        width : "100%",
+        borderWidth : 2,
+        borderRadius : 25,
+        width : "95%",
         height : "50%",
-        bottom : 0
+        alignItems : "center",
+        alignSelf : "center",
     },
     commentButton : {
         position : "absolute",
         bottom : 30,
         right : 30,
     },
+    commentHeader : {
+        fontWeight : "bold",
+        marginVertical : 25,
+        fontSize : 20
+    }
 })
