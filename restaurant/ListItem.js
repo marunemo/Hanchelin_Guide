@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
 import {WebView} from "react-native-webview"
 import Modal from "react-native-modal"
-import {IconButton, Icon, NativeBaseProvider, Input} from "native-base";
+import {IconButton, Icon, NativeBaseProvider, Input, Button} from "native-base";
 import Font from "react-native-vector-icons/FontAwesome5"
 import database from '@react-native-firebase/database';
 
@@ -14,6 +14,19 @@ const MapView = () => {
 
 const CommentButton = () => {
     const [onInput, showInput] = useState(false);
+    const [isDeliver, setDeliver] = useState(false);
+
+    function DeliverOption(props) {
+        if(props.isDeliver) {
+            return (
+                <>
+                    <Text style = {style.commentText}>배달시간</Text>
+                    <Text style = {style.commentText}>배달비</Text>
+                </>
+            )
+        }
+        return (<></>)
+    }
 
     return (<>
                 <Modal
@@ -24,6 +37,20 @@ const CommentButton = () => {
                     <SafeAreaView style = {style.commentView}>
                         <Text style = {style.commentHeader}>식당 리뷰</Text>
                         <ScrollView style = {{margin : 0}}>
+                            <Text style = {style.commentText}>주문 방식</Text>
+                            <Button.Group alignSelf = "center">
+                                <Button
+                                    colorScheme = {isDeliver?"green":"teal"}
+                                    onPress = {() => setDeliver(true)}>
+                                    배달
+                                </Button>
+                                <Button
+                                    colorScheme = {isDeliver?"teal":"green"}
+                                    onPress = {() => setDeliver(false)}>
+                                    방문
+                                </Button>
+                            </Button.Group>
+                            <DeliverOption isDeliver = {isDeliver} />
                             <Text style = {style.commentText}>맛</Text>
                             <Text style = {style.commentText}>가성비</Text>
                             <Text style = {style.commentText}>서비스</Text>
