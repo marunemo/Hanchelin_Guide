@@ -36,7 +36,7 @@ const CommentButton = () => {
                     onBackdropPress = {() => showInput(false)} >
                     <SafeAreaView style = {style.commentView}>
                         <Text style = {style.commentHeader}>식당 리뷰</Text>
-                        <ScrollView style = {{margin : 0}}>
+                        <ScrollView>
                             <Text style = {style.commentText}>주문 방식</Text>
                             <Button.Group alignSelf = "center">
                                 <Button
@@ -45,7 +45,7 @@ const CommentButton = () => {
                                     배달
                                 </Button>
                                 <Button
-                                    colorScheme = {isDeliver?"teal":"green"}
+                                    colorScheme = {!isDeliver?"green":"teal"}
                                     onPress = {() => setDeliver(false)}>
                                     방문
                                 </Button>
@@ -56,7 +56,7 @@ const CommentButton = () => {
                             <Text style = {style.commentText}>서비스</Text>
                             <Text style = {style.commentText}>종합 평가</Text>
                             <Input
-                                w = "100%"
+                                w = {80}
                                 h = "100%"
                                 variant = "filled"
                                 textAlignVertical = "top"
