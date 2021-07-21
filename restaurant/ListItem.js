@@ -17,18 +17,25 @@ const CommentButton = () => {
 
     return (<>
                 <Modal
+                    style = {{justifyContent : "flex-end", alignItems : "center"}}
                     isVisible = {onInput}
                     onBackButtonPress = {() => showInput(false)}
                     onBackdropPress = {() => showInput(false)} >
                     <SafeAreaView style = {style.commentView}>
                         <Text style = {style.commentHeader}>식당 리뷰</Text>
-                        <Input
-                            w = "80%"
-                            h = "50%"
-                            variant = "filled"
-                            textAlignVertical = "top"
-                            multiline = {true}
-                            placeholder = "해당 식장에 대한 리뷰를 적어주세요." />
+                        <ScrollView style = {{margin : 0}}>
+                            <Text style = {style.commentText}>맛</Text>
+                            <Text style = {style.commentText}>가성비</Text>
+                            <Text style = {style.commentText}>서비스</Text>
+                            <Text style = {style.commentText}>종합 평가</Text>
+                            <Input
+                                w = "100%"
+                                h = "100%"
+                                variant = "filled"
+                                textAlignVertical = "top"
+                                multiline = {true}
+                                placeholder = "해당 식장에 대한 총평을 적어주세요." />
+                        </ScrollView>
                         <IconButton
                             onPress={() => showInput(false)}
                             icon = {<Icon name = "window-close" as = {Font} size="sm" />} />
@@ -126,10 +133,9 @@ const style = StyleSheet.create({
         backgroundColor : "white",
         borderRadius : 25,
         width : "95%",
-        height : "70%",
-        bottom : 0,
+        height : "80%",
         alignItems : "center",
-        alignSelf : "center"
+        alignSelf : "center",
     },
     commentButton : {
         position : "absolute",
@@ -139,6 +145,13 @@ const style = StyleSheet.create({
     commentHeader : {
         fontWeight : "bold",
         marginVertical : 25,
-        fontSize : 20
+        fontSize : 22
+    },
+    commentText : {
+        fontWeight : "bold",
+        alignSelf : "flex-start",
+        fontSize : 16,
+        paddingHorizontal : 16,
+        marginVertical : 5
     }
 })
