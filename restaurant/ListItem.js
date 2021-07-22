@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
 import {WebView} from "react-native-webview"
 import Modal from "react-native-modal"
+import {Rating, AirbnbRating} from "react-native-ratings";
 import {IconButton, Icon, NativeBaseProvider, Input, Button} from "native-base";
 import Font from "react-native-vector-icons/FontAwesome5"
 import database from '@react-native-firebase/database';
@@ -47,7 +48,7 @@ const CommentButton = () => {
                     onBackdropPress = {() => showInput(false)} >
                     <SafeAreaView style = {style.commentView}>
                         <Text style = {style.commentHeader}>식당 리뷰</Text>
-                        <ScrollView>
+                        <ScrollView showsVerticalScrollIndicator = {false}>
                             <Text style = {style.commentText}>주문 방식</Text>
                             <Button.Group alignSelf = "center">
                                 <Button
@@ -63,9 +64,30 @@ const CommentButton = () => {
                             </Button.Group>
                             <DeliverOption isDeliver = {isDeliver} />
                             <Text style = {style.commentText}>맛</Text>
+                            <Rating
+                                showRating = {true}
+                                imageSize = {20}
+                                fractions = {1}
+                                onFinishRating = {function(rating) {console.log("Taste is: " + rating)}} />
                             <Text style = {style.commentText}>가성비</Text>
+                            <Rating
+                                showRating = {true}
+                                imageSize = {20}
+                                fractions = {1}
+                                onFinishRating = {function(rating) {console.log("Pay is: " + rating)}} />
                             <Text style = {style.commentText}>서비스</Text>
+                            <Rating
+                                showRating = {true}
+                                imageSize = {20}
+                                fractions = {1}
+                                onFinishRating = {function(rating) {console.log("Service is: " + rating)}} />
                             <Text style = {style.commentText}>종합 평가</Text>
+                            <AirbnbRating
+                                type = "heart"
+                                count={5}
+                                reviews={["다시는 안 먹어요..", "가끔씩은 괜찮을 듯?", "무난해요.", "꽤 자주 갈꺼 같아요", "없던 병이 낫는 식당"]}
+                                defaultRating={2.5}
+                                size={30} />
                             <Input
                                 w = {270}
                                 minHeight = {150}
@@ -189,6 +211,7 @@ const style = StyleSheet.create({
         alignSelf : "flex-start",
         fontSize : 16,
         paddingHorizontal : 16,
-        marginVertical : 5
+        marginTop : 15,
+        marginBottom : 8
     }
 })
