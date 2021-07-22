@@ -21,7 +21,18 @@ const CommentButton = () => {
             return (
                 <>
                     <Text style = {style.commentText}>배달시간</Text>
+                    {/* slider or datetime picker */}
                     <Text style = {style.commentText}>배달비</Text>
+                    <Input
+                        size = "sm"
+                        w = {250}
+                        keyboardType="numeric"
+                        variant = "underlined"
+                        alignSelf = "flex-end"
+                        textAlign = "right"
+                        multiline = {false}
+                        InputRightElement = {<Text style = {{fontWeight : "bold"}}>원</Text>}
+                        placeholder = "들었던 배달 비용을 적어주세요." />
                 </>
             )
         }
@@ -40,12 +51,12 @@ const CommentButton = () => {
                             <Text style = {style.commentText}>주문 방식</Text>
                             <Button.Group alignSelf = "center">
                                 <Button
-                                    colorScheme = {isDeliver?"green":"teal"}
+                                    colorScheme = {isDeliver?"rgb(11, 153, 91)":"rgb(6, 209, 120)"}
                                     onPress = {() => setDeliver(true)}>
                                     배달
                                 </Button>
                                 <Button
-                                    colorScheme = {!isDeliver?"green":"teal"}
+                                    colorScheme = {!isDeliver?"rgb(11, 153, 91)":"rgb(6, 209, 120)"}
                                     onPress = {() => setDeliver(false)}>
                                     방문
                                 </Button>
@@ -56,10 +67,9 @@ const CommentButton = () => {
                             <Text style = {style.commentText}>서비스</Text>
                             <Text style = {style.commentText}>종합 평가</Text>
                             <Input
-                                w = {80}
-                                h = "100%"
+                                w = {270}
+                                minHeight = {150}
                                 variant = "filled"
-                                textAlignVertical = "top"
                                 multiline = {true}
                                 placeholder = "해당 식장에 대한 총평을 적어주세요." />
                         </ScrollView>
