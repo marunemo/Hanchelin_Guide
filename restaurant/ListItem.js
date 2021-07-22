@@ -83,12 +83,17 @@ const CommentButton = () => {
                                 onFinishRating = {function(rating) {console.log("Service is: " + rating)}} />
                             <Text style = {style.commentText}>종합 평가</Text>
                             <AirbnbRating
-                                type = "heart"
+                                starImage = {require("./rice-icon.jpeg")}
                                 count={5}
                                 reviews={["다시는 안 먹어요..", "가끔씩은 괜찮을 듯?", "무난해요.", "꽤 자주 갈꺼 같아요", "없던 병이 낫는 식당"]}
                                 defaultRating={2.5}
-                                size={30} />
+                                selectedColor = "#13ACBF"
+                                size={25}
+                                reviewColor = "#13ACBF"
+                                reviewSize = {18}
+                                onFinishRating = {function(rating) {console.log("Total is: " + rating)}} />
                             <Input
+                                style = {{marginVertical : 20}}
                                 w = {270}
                                 minHeight = {150}
                                 variant = "filled"
@@ -144,7 +149,7 @@ const RestComponent = () => {
                 </Text>
                 <MapView></MapView>
             </View>
-            <View style = {style.partition}>
+            <View style = {[style.partition, style.endMargin]}>
                 <Text style={[style.keyText, {lineHeight : 40, fontSize : 16}]}>ᐧ 메뉴</Text>
                 <Text style={({paddingLeft : 20})}>{menu}</Text>
             </View>
@@ -213,5 +218,8 @@ const style = StyleSheet.create({
         paddingHorizontal : 16,
         marginTop : 15,
         marginBottom : 8
+    },
+    endMargin : {
+        marginBottom : 100
     }
 })
