@@ -3,7 +3,7 @@ import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
 import {WebView} from "react-native-webview"
 import Modal from "react-native-modal"
 import {Rating, AirbnbRating} from "react-native-ratings";
-import {IconButton, Icon, NativeBaseProvider, Input, Button} from "native-base";
+import {IconButton, Icon, NativeBaseProvider, Input, Button, Slider} from "native-base";
 import Font from "react-native-vector-icons/FontAwesome5"
 import database from '@react-native-firebase/database';
 
@@ -18,11 +18,26 @@ const CommentButton = () => {
     const [isDeliver, setDeliver] = useState(false);
 
     function DeliverOption(props) {
+        const [delivTime, setDelivTime] = useState(30);
         if(props.isDeliver) {
             return (
                 <>
                     <Text style = {style.commentText}>배달시간</Text>
                     {/* slider or datetime picker */}
+                    <Slider
+                        w = "80%"
+                        alignSelf = "center"
+                        defaultValue = {30}
+                        maxValue = {60}
+                        step = {5}
+                        onChange = {time => {setDelivTime(time)}}
+                        onChangeEnd = {time => {console.log("Due time : " + time)}}>
+                        <Slider.Track>
+                            <Slider.FilledTrack/>
+                        </Slider.Track>
+                        <Slider.Thumb/>
+                    </Slider>
+                    <Text style = {{textAlign : "right"}}>{delivTime}분{(delivTime == 60)?" 이상":""}</Text>
                     <Text style = {style.commentText}>배달비</Text>
                     <Input
                         size = "sm"
@@ -97,6 +112,7 @@ const CommentButton = () => {
                                 w = {270}
                                 minHeight = {150}
                                 variant = "filled"
+                                textAlignVertical = "top"
                                 multiline = {true}
                                 placeholder = "해당 식장에 대한 총평을 적어주세요." />
                         </ScrollView>
