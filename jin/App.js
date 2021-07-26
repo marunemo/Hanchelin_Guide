@@ -5,7 +5,7 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import Authentication from './screens/Authentication';
-import Authenticated from './screens/Chat';
+import Chat from './screens/Chat';
 import Main from './screens/Main';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
