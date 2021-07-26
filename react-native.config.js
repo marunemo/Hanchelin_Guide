@@ -12,5 +12,11 @@ module.exports = {
           ios: null, // disable iOS platform, other platforms will still autolink
         },
       },
+      'react-native-safe-area-context': {
+        platforms: {
+          android: null, // disable Android platform, other platforms will still autolink
+          ios: null, // disable iOS platform, other platforms will still autolink
+        },
+      },
     },
   };

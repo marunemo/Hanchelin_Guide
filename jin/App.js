@@ -19,7 +19,7 @@ export default function App() {
     useEffect(() => {
       GoogleSignin.configure({
         webClientId:
-          'WEB_CLIENT_ID',
+          '503246918945-ujb7c7ig67mf102q3vi4o6qcf9e1d547.apps.googleusercontent.com',
       });
     }, []);
 
