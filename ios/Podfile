@@ -20,6 +20,8 @@ target 'Hanchelin_Guide' do
 
   pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
 
+  pod 'NMapsMap'
+
   target 'Hanchelin_GuideTests' do
     inherit! :complete
     # Pods for testing

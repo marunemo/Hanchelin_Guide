@@ -424,6 +424,7 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
+  - NMapsMap (3.13.0)
   - OpenSSL-Universal (1.1.180)
   - PromisesObjC (2.0.0)
   - RCT-Folly (2020.01.13.00):
@@ -619,6 +620,9 @@ PODS:
     - React-jsi (= 0.64.2)
     - React-perflogger (= 0.64.2)
   - React-jsinspector (0.64.2)
+  - react-native-nmap (0.0.66):
+    - NMapsMap
+    - React
   - react-native-safe-area-context (3.2.0):
     - React-Core
   - react-native-webview (11.6.5):
@@ -787,6 +791,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-nmap (from `../node_modules/react-native-nmap`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -847,6 +852,7 @@ SPEC REPOS:
     - leveldb-library
     - libevent
     - nanopb
+    - NMapsMap
     - OpenSSL-Universal
     - PromisesObjC
     - YogaKit
@@ -882,6 +888,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-nmap:
+    :path: "../node_modules/react-native-nmap"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-webview:
@@ -971,6 +979,7 @@ SPEC CHECKSUMS:
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  NMapsMap: 88b5bdac7087bfa99ab058ff5cdd95fb766e0e95
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
@@ -984,6 +993,7 @@ SPEC CHECKSUMS:
   React-jsi: 67747b9722f6dab2ffe15b011bcf6b3f2c3f1427
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
+  react-native-nmap: cfcc5402746040494c544ea90a6062f49505acdf
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   react-native-webview: 2e8fe70dc32b50d3231c23043f8e8b5a5525d346
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737

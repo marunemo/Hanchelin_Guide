@@ -70,5 +70,8 @@
 		<string>Zocial.ttf</string>
 		<string>Fontisto.ttf</string>
 	</array>
+	<key>NMFClientId</key>
+    <string>YOUR_CLIENT_ID_HERE</string>
+	<!-- DO NOT COMMIT WITH CLIENT ID!! -->
 </dict>
 </plist>
