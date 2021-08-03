@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
-import {WebView} from "react-native-webview"
+import NaverMapView from "react-native-nmap";
 import Modal from "react-native-modal"
 import {Rating, AirbnbRating} from "react-native-ratings";
 import {IconButton, Icon, NativeBaseProvider, Input, Button, Slider} from "native-base";
@@ -9,7 +9,7 @@ import database from '@react-native-firebase/database';
 
 const MapView = () => {
     return(
-        <WebView style={style.mapView} source={{uri: "http://kko.to/LGrhG-H4M" }} originWhitelist={['*']} />
+        <NaverMapView></NaverMapView>
     )
 }
 
