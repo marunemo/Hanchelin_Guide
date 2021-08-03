@@ -26,63 +26,50 @@ Object.keys(resData).forEach(key => arr.push({
 }))
 console.log(arr);
 
-class Home extends Component {
-    render() {
-        return (
-            <NativeBaseProvider>
-                <Center flex={1}>
-                    <ScrollView width="100%">
-                        <VStack my={0.5} space={0.5} alignItems="center">
-                            {arr.map((item) => (
-                                // <Button
-                                //     width="100%"
-                                //     height={100}
-                                //     onPress={() => this.props.navigation.navigate('식당 정보', { resName: val })}
-                                //     bgColor="white"
-                                //     _text={{
-                                //         fontSize: "md",
-                                //         color: "darkText",
-                                //     }}
-                                // >
-                                <TouchableOpacity
-                                    style={styles.itemContainer}
-                                    onPress={() => this.props.navigation.navigate('식당 정보', { resName: item.name })}>
-                                    <View style={styles.itemLogo}>
+function Home({ navigation: { navigate } }) {
+    return (
+        <NativeBaseProvider>
+            <Center flex={1}>
+                <ScrollView width="100%">
+                    <VStack my={0.5} space={0.5} alignItems="center">
+                        {arr.map((item) => (
+                            <TouchableOpacity
+                                style={styles.itemContainer}
+                                onPress={() => navigate('식당 정보', { resName: item.name })}>
+                                <View style={styles.itemLogo}>
+                                    <Image
+                                        style={styles.itemImage}
+                                        source={require('../images/none.jpeg')}
+                                    />
+                                </View>
+                                <View style={styles.itemBody}>
+                                    <Text style={styles.itemName}>{item.name}</Text>
+                                    <Text>{item.dong}</Text>
+                                </View>
+                                <View style={styles.itemIconBody}>
+                                    <Text style={styles.itemLike}>
                                         <Image
-                                            style={styles.itemImage}
-                                            source={require('../images/none.jpeg')}
-                                        />
-                                    </View>
-                                    <View style={styles.itemBody}>
-                                        <Text style={styles.itemName}>{item.name}</Text>
-                                        <Text>{item.dong}</Text>
-                                    </View>
-                                    <View style={styles.itemIconBody}>
-                                        <Text style={styles.itemLike}>
-                                            <Image
-                                                style={styles.itemIcon}
-                                                source={{ uri: 'https://i.pinimg.com/originals/39/44/6c/39446caa52f53369b92bc97253d2b2f1.png' }}
-                                            /> {item.likes} </Text>
-                                        <Text style={styles.itemLike}>
-                                            <Image
-                                                style={styles.itemIcon}
-                                                source={{ uri: 'https://cdn3.vectorstock.com/i/1000x1000/31/77/star-icon-isolated-on-background-modern-simple-sp-vector-21073177.jpg' }}
-                                            /> {item.bookmark_count} </Text>
-                                        <Text style={styles.itemLike}>
-                                            <Image
-                                                style={styles.itemIcon}
-                                                source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5osTFTdlco7oBcppJ5-StA8r9ZhY8rfug3Q&usqp=CAU' }}
-                                            /> {item.bookmark_count} </Text>
-                                    </View>
-                                </TouchableOpacity>
-                                // </Button>
-                            ))}
-                        </VStack>
-                    </ScrollView>
-                </Center>
-            </NativeBaseProvider>
-        )
-    }
+                                            style={styles.itemIcon}
+                                            source={{ uri: 'https://i.pinimg.com/originals/39/44/6c/39446caa52f53369b92bc97253d2b2f1.png' }}
+                                        /> {item.likes} </Text>
+                                    <Text style={styles.itemLike}>
+                                        <Image
+                                            style={styles.itemIcon}
+                                            source={{ uri: 'https://cdn3.vectorstock.com/i/1000x1000/31/77/star-icon-isolated-on-background-modern-simple-sp-vector-21073177.jpg' }}
+                                        /> {item.bookmark_count} </Text>
+                                    <Text style={styles.itemLike}>
+                                        <Image
+                                            style={styles.itemIcon}
+                                            source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5osTFTdlco7oBcppJ5-StA8r9ZhY8rfug3Q&usqp=CAU' }}
+                                        /> {item.bookmark_count} </Text>
+                                </View>
+                            </TouchableOpacity>
+                        ))}
+                    </VStack>
+                </ScrollView>
+            </Center>
+        </NativeBaseProvider>
+    )
 }
 
 const Stack = createStackNavigator();
