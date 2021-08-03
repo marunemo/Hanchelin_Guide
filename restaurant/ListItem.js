@@ -7,9 +7,12 @@ import {IconButton, Icon, NativeBaseProvider, Input, Button, Slider} from "nativ
 import Font from "react-native-vector-icons/FontAwesome5"
 import database from '@react-native-firebase/database';
 
-const MapView = () => {
+const MapView = (props) => {
     return(
-        <NaverMapView></NaverMapView>
+        <NaverMapView 
+            style = {style.mapView}
+            center={{...props.position, zoom : 18}} >
+        </NaverMapView>
     )
 }
 
@@ -163,7 +166,7 @@ const RestComponent = () => {
                     <Text style={style.keyText}>한동대까지의 거리 : </Text>
                     {(restData["distance"]==undefined?"0":restData["distance"]/1000)}km
                 </Text>
-                <MapView></MapView>
+                <MapView position={{latitude: 36.08050598988302, longitude: 129.39459663662552}}/>
             </View>
             <View style = {[style.partition, style.endMargin]}>
                 <Text style={[style.keyText, {lineHeight : 40, fontSize : 16}]}>ᐧ 메뉴</Text>
@@ -206,7 +209,7 @@ const style = StyleSheet.create({
         paddingHorizontal : 30
     },
     mapView : {
-        height : "100%",
+        width : "100%",
         aspectRatio : 1
     },
     commentView : {
