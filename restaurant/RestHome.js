@@ -3,81 +3,121 @@ import {
     Text,
     View,
     Image,
-    ScrollView,
     SafeAreaView,
     StyleSheet,
     TouchableOpacity,
     Dimensions
 } from "react-native"
-import { Center, VStack, NativeBaseProvider } from "native-base";
+import { Box, Center, VStack, HStack, IconButton, Icon, HamburgerIcon, ScrollView, NativeBaseProvider, Input, Button, Slider, Switch } from "native-base";
 import database from '@react-native-firebase/database';
 import RestInfo from './ListItem.js';
 import { createStackNavigator } from '@react-navigation/stack';
-import resJson from "./resData";
+import SearchInput, { createFilter } from 'react-native-search-filter';
+const KEYS_TO_FILTERS = ['name', 'dong', 'category'];
 
-resData = resJson["식당"];
-
-var arr = []
-Object.keys(resData).forEach(key => arr.push({
-    name: key,
-    dong: resData[key].dong,
-    likes: resData[key].likes,
-    bookmark_count: resData[key].bookmark_count
-}))
-console.log(arr);
-
-function Home({ navigation: { navigate } }) {
-    return (
-        <NativeBaseProvider>
-            <Center flex={1}>
-                <ScrollView width="100%">
-                    <VStack my={0.5} space={0.5} alignItems="center">
-                        {arr.map((item) => (
-                            <TouchableOpacity
-                                style={styles.itemContainer}
-                                onPress={() => navigate('식당 정보', { resName: item.name })}>
-                                <View style={styles.itemLogo}>
-                                    <Image
-                                        style={styles.itemImage}
-                                        source={require('../images/none.jpeg')}
-                                    />
-                                </View>
-                                <View style={styles.itemBody}>
-                                    <Text style={styles.itemName}>{item.name}</Text>
-                                    <Text>{item.dong}</Text>
-                                </View>
-                                <View style={styles.itemIconBody}>
-                                    <Text style={styles.itemLike}>
+class Home extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchTerm: '',
+            deilver_check: '0',
+            data: {}
+        }
+    }
+    componentDidMount() {
+        const ref = database().ref("/식당");
+        ref.once("value").then(snapshot => {
+            if (snapshot)
+                this.setState({ data: snapshot.val() });
+            // console.log(this.state.data)
+        })
+    }
+    searchUpdated(term) {
+        this.setState({ searchTerm: term })
+    }
+    render() {
+        var arr = []
+        Object.keys(this.state.data).forEach(key => arr.push({
+            name: key,
+            dong: this.state.data[key].dong,
+            likes: this.state.data[key].likes,
+            bookmark_count: this.state.data[key].bookmark_count,
+            comments_count: this.state.data[key].comments_count,
+            category: this.state.data[key].category,
+            delivery_availability: this.state.data[key].delivery_availability,
+        }))
+        var sortJsonArray = require('sort-json-array');
+        sortJsonArray(arr, 'name', 'asc');
+        const filteredArr = arr.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+        return (
+            <NativeBaseProvider>
+                <HStack alignItems="center" space={1} m={2}>
+                    <Text fontSize="md">배달가능만 보기</Text>
+                    <Switch />
+                </HStack>
+                <SearchInput
+                    onChangeText={(term) => { this.searchUpdated(term) }}
+                    style={styles.searchInput}
+                    placeholder="식당을 검색하세요."
+                />
+                <Center flex={1}>
+                    <ScrollView width="100%">
+                        <VStack my={0.5} space={0.5} alignItems="center">
+                            {filteredArr.map((item) => (
+                                <TouchableOpacity
+                                    style={styles.itemContainer}
+                                    onPress={() => this.props.navigation.navigate('식당 정보', { resName: item.name })}>
+                                    <View style={styles.itemLogo}>
                                         <Image
-                                            style={styles.itemIcon}
-                                            source={{ uri: 'https://i.pinimg.com/originals/39/44/6c/39446caa52f53369b92bc97253d2b2f1.png' }}
-                                        /> {item.likes} </Text>
-                                    <Text style={styles.itemLike}>
-                                        <Image
-                                            style={styles.itemIcon}
-                                            source={{ uri: 'https://cdn3.vectorstock.com/i/1000x1000/31/77/star-icon-isolated-on-background-modern-simple-sp-vector-21073177.jpg' }}
-                                        /> {item.bookmark_count} </Text>
-                                    <Text style={styles.itemLike}>
-                                        <Image
-                                            style={styles.itemIcon}
-                                            source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5osTFTdlco7oBcppJ5-StA8r9ZhY8rfug3Q&usqp=CAU' }}
-                                        /> {item.bookmark_count} </Text>
-                                </View>
-                            </TouchableOpacity>
-                        ))}
-                    </VStack>
-                </ScrollView>
-            </Center>
-        </NativeBaseProvider>
-    )
+                                            style={styles.itemImage}
+                                            source={require('../images/none.jpeg')}
+                                        />
+                                    </View>
+                                    <View style={styles.itemBody}>
+                                        <Text style={styles.itemName}>{item.name}</Text>
+                                        <Text>{item.category}</Text>
+                                        <Text>{item.dong}</Text>
+                                    </View>
+                                    <View style={styles.itemIconBody}>
+                                        <Text style={styles.itemLike}>
+                                            <Image
+                                                style={styles.itemIcon}
+                                                source={{ uri: 'https://i.pinimg.com/originals/39/44/6c/39446caa52f53369b92bc97253d2b2f1.png' }}
+                                            /> {item.likes} </Text>
+                                        <Text style={styles.itemLike}>
+                                            <Image
+                                                style={styles.itemIcon}
+                                                source={{ uri: 'https://cdn3.vectorstock.com/i/1000x1000/31/77/star-icon-isolated-on-background-modern-simple-sp-vector-21073177.jpg' }}
+                                            /> {item.bookmark_count} </Text>
+                                        <Text style={styles.itemLike}>
+                                            <Image
+                                                style={styles.itemIcon}
+                                                source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5osTFTdlco7oBcppJ5-StA8r9ZhY8rfug3Q&usqp=CAU' }}
+                                            /> {item.comments_count} </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            ))}
+                        </VStack>
+                    </ScrollView>
+                </Center>
+            </NativeBaseProvider>
+        )
+    }
 }
 
 const Stack = createStackNavigator();
 
-export default function RestStack() {
+export default function App() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="식당 리스트" component={Home} />
+            <Stack.Screen name="식당 리스트" component={Home}
+                options={{
+                    headerLeft: () => (
+                        <NativeBaseProvider>
+                            <HamburgerIcon ml={3} />
+                        </NativeBaseProvider>
+                    ),
+                }} />
             <Stack.Screen name="식당 정보" component={RestInfo} />
         </Stack.Navigator>
     );
@@ -174,5 +214,10 @@ const styles = StyleSheet.create({
     itemIcon: {
         width: 20,
         height: 20
+    },
+    searchInput: {
+        padding: 15,
+        borderColor: '#CCC',
+        borderWidth: 1
     }
 })
