@@ -7,6 +7,8 @@ import {IconButton, Icon, NativeBaseProvider, Input, Button, Slider} from "nativ
 import Font from "react-native-vector-icons/FontAwesome5"
 import database from '@react-native-firebase/database';
 
+resName = ""
+
 const MapView = () => {
     return(
         <WebView style={style.mapView} source={{uri: "http://kko.to/LGrhG-H4M" }} originWhitelist={['*']} />
@@ -136,7 +138,7 @@ const RestComponent = () => {
     var menu = "";
 
     useEffect(() => {
-        database().ref("/식당/9월애").once("value").then(data => {
+        database().ref("/식당/" + resName).once("value").then(data => {
             if(data) {
                 setData(data.val());
             }
@@ -173,7 +175,8 @@ const RestComponent = () => {
     ); 
 }
 
-const ItemActivity = () => {
+const ItemActivity = ({ route }) => {
+    resName = route.params.resName;
     return(
         <SafeAreaView style = {style.containter}>
             <NativeBaseProvider>
