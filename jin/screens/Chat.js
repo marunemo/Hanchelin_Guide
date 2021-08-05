@@ -6,7 +6,7 @@ import auth from '@react-native-firebase/auth';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import firestore from '@react-native-firebase/firestore';
 
-export default function Authenticated() {
+export default function Chat() {
   const user = auth().currentUser;
   const [messages, setMessages] = useState([]);
 
@@ -33,7 +33,6 @@ export default function Authenticated() {
 
   return (
     <View style={styles.chat}>
-      <Button title="Signout" onPress={() => auth().signOut()} />
       <GiftedChat messages={messages} onSend={(messages) => onSend(messages)} />
     </View>
   );
