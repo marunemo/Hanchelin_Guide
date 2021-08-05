@@ -14,11 +14,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 export default function App() {
     const [authenticated, setAuthenticated] = useState(false);
 
-    // google-services.json에서 webClientId를 가져올때 client-type이 3인 것의 id를 가져와야 한다
+    // google-services.json에서 webClientId를 가져올때 client-type이 3인 것의 id를 가져와야 한다...
+    // ID는 혹시 몰라서 빼놓고 보냅니다
+    // 아마 firebase에서 SHA-1 등록을 해야 작동할거임
     useEffect(() => {
       GoogleSignin.configure({
         webClientId:
-          '503246918945-graj2onlcd6t613vei4ti07s2s3g6u1p.apps.googleusercontent.com',
+          'WEB_CLIENT_ID',
       });
     }, []);
 
