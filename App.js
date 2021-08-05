@@ -5,7 +5,6 @@ import ListScreen from './restaurant/ListScreen.js';
 import RestHome from './restaurant/RestHome.js';
 import DiliverScreen from './restaurant/DiliverScreen.js';
 
-
 const BTab = createBottomTabNavigator();
 
 export default function App() {
@@ -22,7 +21,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-
-
-
