@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component } from "react";
 import {
     Text,
     View,
@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
     Dimensions
 } from "react-native"
-import { Box, Center, VStack, HStack, IconButton, Icon, HamburgerIcon, ScrollView, NativeBaseProvider, Input, Button, Slider } from "native-base";
+import { Box, Center, VStack, HStack, HamburgerIcon, ScrollView, NativeBaseProvider, Select, CheckIcon } from "native-base";
 import database from '@react-native-firebase/database';
 import RestInfo from './ListItem.js';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -22,6 +22,7 @@ class Home extends Component {
         this.state = {
             searchTerm: '',
             switchValue: false,
+            category: '',
             data: {}
         }
     }
@@ -36,6 +37,9 @@ class Home extends Component {
     searchUpdated(term) {
         this.setState({ searchTerm: term })
     }
+    setCategory(cate) {
+        cate == "전체" ? this.setState({ category: '' }) : this.setState({ category: cate })
+    }
     render() {
         var arr = []
         Object.keys(this.state.data).forEach(key => arr.push({
@@ -47,10 +51,10 @@ class Home extends Component {
             category: this.state.data[key].category,
             delivery_availability: this.state.data[key].delivery_availability,
         }))
+        var language = "";
         var sortJsonArray = require('sort-json-array');
         sortJsonArray(arr, 'name', 'asc');
-        filteredArr = arr.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
-        filteredArr = filteredArr.filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability'))
+        filteredArr = arr.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability')).filter(createFilter(this.state.category, 'category'))
         return (
             <NativeBaseProvider>
                 <HStack alignItems="center" space={1} m={2}>
@@ -59,6 +63,31 @@ class Home extends Component {
                         value={this.state.switchValue}
                         onValueChange={(switchValue) => this.setState({ switchValue })} />
                 </HStack>
+                <VStack alignItems="center" space={4}>
+                    <Select
+                        selectedValue={this.state.category}
+                        width="100%"
+                        placeholder="카테고리를 선택하세요"
+                        onValueChange={(itemValue) => this.setCategory(itemValue)}
+                        _selectedItem={{
+                            bg: "cyan.600",
+                            endIcon: <CheckIcon size={4} />,
+                        }}
+                    >
+                        <Select.Item label="전체" value="전체" />
+                        <Select.Item label="한식" value="한식" />
+                        <Select.Item label="양식" value="양식" />
+                        <Select.Item label="돈까스 / 회 / 일식" value="돈까스 / 회 / 일식" />
+                        <Select.Item label="중식" value="중식" />
+                        <Select.Item label="치킨" value="치킨" />
+                        <Select.Item label="육류 / 고기" value="육류 / 고기" />
+                        <Select.Item label="족발 / 보쌈" value="족발 / 보쌈" />
+                        <Select.Item label="분식" value="분식" />
+                        <Select.Item label="술집" value="술집" />
+                        <Select.Item label="아시안" value="아시안" />
+                        <Select.Item label="카페 / 디저트" value="카페 / 디저트" />
+                    </Select>
+                </VStack>
                 <SearchInput
                     onChangeText={(term) => { this.searchUpdated(term) }}
                     style={styles.searchInput}
