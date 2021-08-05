@@ -9,7 +9,7 @@ import database from '@react-native-firebase/database';
 
 const MapView = (props) => {
     return(
-        <NaverMapView 
+        <NaverMapView
             style = {style.mapView}
             center={{...props.position, zoom : 18}} >
                 <Marker coordinate={props.position} />
@@ -178,12 +178,12 @@ const RestComponent = (props) => {
     ); 
 }
 
-const ItemActivity = () => {
+const ItemActivity = (props) => {
     return(
         <SafeAreaView style = {style.containter}>
             <NativeBaseProvider>
                 <ScrollView>
-                    <RestComponent restId = "댓끼리짬뽕"></RestComponent>
+                    <RestComponent restId = {props.resName}></RestComponent>
                 </ScrollView>
                 <CommentButton/>
             </NativeBaseProvider>
