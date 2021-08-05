@@ -5,10 +5,11 @@ import {
     Image,
     SafeAreaView,
     StyleSheet,
+    Switch,
     TouchableOpacity,
     Dimensions
 } from "react-native"
-import { Box, Center, VStack, HStack, IconButton, Icon, HamburgerIcon, ScrollView, NativeBaseProvider, Input, Button, Slider, Switch } from "native-base";
+import { Box, Center, VStack, HStack, IconButton, Icon, HamburgerIcon, ScrollView, NativeBaseProvider, Input, Button, Slider } from "native-base";
 import database from '@react-native-firebase/database';
 import RestInfo from './ListItem.js';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -20,7 +21,7 @@ class Home extends Component {
         super(props);
         this.state = {
             searchTerm: '',
-            deilver_check: '0',
+            switchValue: false,
             data: {}
         }
     }
@@ -48,12 +49,15 @@ class Home extends Component {
         }))
         var sortJsonArray = require('sort-json-array');
         sortJsonArray(arr, 'name', 'asc');
-        const filteredArr = arr.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+        filteredArr = arr.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+        filteredArr = filteredArr.filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability'))
         return (
             <NativeBaseProvider>
                 <HStack alignItems="center" space={1} m={2}>
-                    <Text fontSize="md">배달가능만 보기</Text>
-                    <Switch />
+                    <Text>{this.state.switchValue ? '배달만 보기 ON' : '배달만 보기 OFF'}</Text>
+                    <Switch
+                        value={this.state.switchValue}
+                        onValueChange={(switchValue) => this.setState({ switchValue })} />
                 </HStack>
                 <SearchInput
                     onChangeText={(term) => { this.searchUpdated(term) }}
