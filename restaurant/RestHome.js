@@ -51,7 +51,6 @@ class Home extends Component {
             category: this.state.data[key].category,
             delivery_availability: this.state.data[key].delivery_availability,
         }))
-        var language = "";
         var sortJsonArray = require('sort-json-array');
         sortJsonArray(arr, 'name', 'asc');
         filteredArr = arr.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability')).filter(createFilter(this.state.category, 'category'))
