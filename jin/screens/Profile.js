@@ -16,7 +16,7 @@ export default function Profile (props) {
       /* 리뷰 데이터를 스토어에 업로드 할때 유저의 고유 아이디인 uid를 같이 업로드하여
       .where()로 필터링하여 유저 개인 페이지에 표시한다*/
       const reviewSub = firestore()
-        .collection('review')
+        .collection('가게').doc('9월애').collection('리뷰')
 
         /* 
         시간대별 정렬이랑 uid 필터가 따로하면 잘되는데 같이 하면 에러 뜸. SOF에서는 무슨 에러 핸들링 어쩌고 하는데

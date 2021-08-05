@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Authentication from './Authentication';
 import Chat from './Chat';
 import Profile from './Profile';
+import Chatroom from './Chatroom';
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
@@ -14,15 +15,15 @@ function HomeScreen({ navigation }) {
     const user = auth().currentUser;
     const [reviews, setReviews] = useState('');
     const [rate, setRate] = useState(null);
-    const ref = firestore().collection('review');
+    const ref = firestore().collection('가게').doc('9월애').collection('리뷰');
 
     async function addReview() {
         await ref.add({
             message: reviews,
             rating: rate,
             uid: user?.uid,
-            // have to change timestamp to local for chat
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            // 시간은 local이지만 표기만 UTC로 되는것 같다
+            createdAt: new Date(),
         });
         setReviews('');
         setRate(null);
@@ -43,15 +44,6 @@ function HomeScreen({ navigation }) {
     );
 }
 
-function ChatSelect({ navigation }) {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ fontSize: 24 }}>This is a Chatroom. Select your chat</Text>
-            <Button title="Select Chat" onPress={() => navigation.navigate('Chat')} />
-        </View>
-    );
-}
-
 const Stack = createStackNavigator();
 
 export default function Home() {
@@ -59,7 +51,7 @@ export default function Home() {
         <Stack.Navigator initialRouteName="HomeScreen">
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="Chatroom" component={ChatSelect} />
+          <Stack.Screen name="Chatroom" component={Chatroom} />
           <Stack.Screen name="Chat" component={Chat} />
         </Stack.Navigator>
     );
