@@ -1,17 +1,19 @@
 import React, {useState, useEffect} from "react";
 import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
-import {WebView} from "react-native-webview"
+import NaverMapView, {Marker} from "react-native-nmap";
 import Modal from "react-native-modal"
 import {Rating, AirbnbRating} from "react-native-ratings";
 import {IconButton, Icon, NativeBaseProvider, Input, Button, Slider} from "native-base";
 import Font from "react-native-vector-icons/FontAwesome5"
 import database from '@react-native-firebase/database';
 
-resName = ""
-
-const MapView = () => {
+const MapView = (props) => {
     return(
-        <WebView style={style.mapView} source={{uri: "http://kko.to/LGrhG-H4M" }} originWhitelist={['*']} />
+        <NaverMapView
+            style = {style.mapView}
+            center={{...props.position, zoom : 18}} >
+                <Marker coordinate={props.position} />
+        </NaverMapView>
     )
 }
 
@@ -133,12 +135,13 @@ const CommentButton = () => {
                     icon = {<Icon name = "comment-alt" as = {Font} size="sm" />} />
             </>)
 }
-const RestComponent = () => {
+const RestComponent = (props) => {
     const [restData, setData] = useState({});
     var menu = "";
+    let restDir = "/식당/" + props.restId;
 
     useEffect(() => {
-        database().ref("/식당/" + resName).once("value").then(data => {
+        database().ref(restDir).once("value").then(data => {
             if(data) {
                 setData(data.val());
             }
@@ -165,7 +168,7 @@ const RestComponent = () => {
                     <Text style={style.keyText}>한동대까지의 거리 : </Text>
                     {(restData["distance"]==undefined?"0":restData["distance"]/1000)}km
                 </Text>
-                <MapView></MapView>
+                <MapView position={{latitude: restData["y"], longitude: restData["x"]}}/>
             </View>
             <View style = {[style.partition, style.endMargin]}>
                 <Text style={[style.keyText, {lineHeight : 40, fontSize : 16}]}>ᐧ 메뉴</Text>
@@ -175,13 +178,12 @@ const RestComponent = () => {
     ); 
 }
 
-const ItemActivity = ({ route }) => {
-    resName = route.params.resName;
+const ItemActivity = (props) => {
     return(
         <SafeAreaView style = {style.containter}>
             <NativeBaseProvider>
                 <ScrollView>
-                    <RestComponent></RestComponent>
+                    <RestComponent restId = {props.restId}/>
                 </ScrollView>
                 <CommentButton/>
             </NativeBaseProvider>
@@ -209,7 +211,7 @@ const style = StyleSheet.create({
         paddingHorizontal : 30
     },
     mapView : {
-        height : "100%",
+        width : "100%",
         aspectRatio : 1
     },
     commentView : {

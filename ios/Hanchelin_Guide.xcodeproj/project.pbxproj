@@ -11,10 +11,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2395E09626BCBCF000CE4F7D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2395E09526BCBCF000CE4F7D /* GoogleService-Info.plist */; };
 		2395E09726BCBCF000CE4F7D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2395E09526BCBCF000CE4F7D /* GoogleService-Info.plist */; };
 		2A050E088830A97948D4ABBE /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 804630251A2AB5259F8887C0 /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a */; };
 		3D1ADC953BB868FC99B33C78 /* libPods-Hanchelin_Guide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B32DD365C3680CC0E896679C /* libPods-Hanchelin_Guide.a */; };
+		508897FB26BD4C7E0085785C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 508897FA26BD4C7E0085785C /* GoogleService-Info.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +44,7 @@
 		2B15CAC5759C48E7811CA1D4 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		4933786ED3846D0E65FF1CD5 /* Pods-Hanchelin_Guide-Hanchelin_GuideTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hanchelin_Guide-Hanchelin_GuideTests.debug.xcconfig"; path = "Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4D8583F1E529461DAD23E993 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		508897FA26BD4C7E0085785C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		53D3C237EAD356C0470A41AF /* Pods-Hanchelin_Guide-Hanchelin_GuideTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hanchelin_Guide-Hanchelin_GuideTests.release.xcconfig"; path = "Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests.release.xcconfig"; sourceTree = "<group>"; };
 		6C5BFD49D57D438B9FD955F7 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		70BF5D21F8A24154B8541526 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
@@ -170,6 +171,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				508897FA26BD4C7E0085785C /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* Hanchelin_Guide */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* Hanchelin_GuideTests */,
@@ -203,8 +205,8 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				0F7F8F73EFEA683CEF7CF2D2 /* [CP] Embed Pods Frameworks */,
 				9C75AE2BC5C73AC4C9828B1C /* [CP] Copy Pods Resources */,
+				9666941AE78219B80129A5E9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -226,9 +228,9 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				EBEC5AA9FD9D189885851D2E /* [CP] Embed Pods Frameworks */,
 				8852230848CD3801C8983F35 /* [CP] Copy Pods Resources */,
 				3CF1E9D2A8D91371356E143E /* [CP-User] [RNFB] Core Configuration */,
+				D4B2D1D08B5A54E669BC9AD3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -290,7 +292,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				2395E09626BCBCF000CE4F7D /* GoogleService-Info.plist in Resources */,
+				508897FB26BD4C7E0085785C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,23 +312,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
-		};
-		0F7F8F73EFEA683CEF7CF2D2 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		1DC1C498D273F1C4B4D4C1EA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -380,6 +365,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide/Pods-Hanchelin_Guide-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		9666941AE78219B80129A5E9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9C75AE2BC5C73AC4C9828B1C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -397,7 +399,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EBEC5AA9FD9D189885851D2E /* [CP] Embed Pods Frameworks */ = {
+		D4B2D1D08B5A54E669BC9AD3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -546,6 +548,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Hanchelin_Guide/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -571,6 +574,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = Hanchelin_Guide/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

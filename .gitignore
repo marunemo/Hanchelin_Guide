@@ -1,5 +1,7 @@
 ### for Security ###
 
+android/app/src/main/AndroidManifest.xml
+ios/Hanchelin_Guide/Info.plist
 google-services.json
 GoogleService-Info.plist
 
