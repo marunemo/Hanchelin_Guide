@@ -277,7 +277,7 @@ PODS:
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
-  - FirebaseCoreDiagnostics (8.4.0):
+  - FirebaseCoreDiagnostics (8.5.0):
     - GoogleDataTransport (~> 9.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
@@ -297,7 +297,7 @@ PODS:
     - "gRPC-C++ (~> 1.28.0)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 2.30908.0)
-  - FirebaseInstallations (8.4.0):
+  - FirebaseInstallations (8.5.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/UserDefaults (~> 7.4)
@@ -621,7 +621,7 @@ PODS:
   - React-jsinspector (0.64.2)
   - react-native-safe-area-context (3.2.0):
     - React-Core
-  - react-native-webview (11.6.5):
+  - react-native-webview (11.6.6):
     - React-Core
   - React-perflogger (0.64.2)
   - React-RCTActionSheet (0.64.2):
@@ -689,18 +689,18 @@ PODS:
     - React-perflogger (= 0.64.2)
   - RNCMaskedView (0.1.11):
     - React
-  - RNFBApp (12.3.0):
+  - RNFBApp (12.4.0):
     - Firebase/CoreOnly (= 8.4.0)
     - React-Core
-  - RNFBAuth (12.3.0):
+  - RNFBAuth (12.4.0):
     - Firebase/Auth (= 8.4.0)
     - React-Core
     - RNFBApp
-  - RNFBDatabase (12.3.0):
+  - RNFBDatabase (12.4.0):
     - Firebase/Database (= 8.4.0)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (12.3.0):
+  - RNFBFirestore (12.4.0):
     - Firebase/Firestore (= 8.4.0)
     - React-Core
     - RNFBApp
@@ -738,7 +738,7 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.4.0):
+  - RNScreens (3.5.0):
     - React-Core
     - React-RCTImage
   - RNSVG (12.1.1):
@@ -943,15 +943,15 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
-  FBReactNativeSpec: 3d5c145ce063a09b0cf91fbf69d27f7e052db852
+  FBReactNativeSpec: 57280c9d63109495908f7d42d8dc0a445cfbea3b
   Firebase: 54cdc8bc9c9b3de54f43dab86e62f5a76b47034f
   FirebaseAnalytics: 4751d6a49598a2b58da678cc07df696bcd809ab9
   FirebaseAuth: 8ef169751d795f20921d425f7b0131cc1c70935c
   FirebaseCore: 31f389c37ac1ea52454a53d3081f2d7019485a4a
-  FirebaseCoreDiagnostics: cad03be1904b975f845e632f2720c3337da27faf
+  FirebaseCoreDiagnostics: 7bf55d386f9fc690d971b70a582142321a390eb8
   FirebaseDatabase: 38f21731dea277e454060d0d39c1bf2aaa12bbb9
   FirebaseFirestore: 99613cefa9102c08da94f584faa5adfaf21f31da
-  FirebaseInstallations: 1585729afc787877763208c2088ed84221161f77
+  FirebaseInstallations: f2bc590b291d25fb40a9a05b8281c02a881b5117
   Flipper: d3da1aa199aad94455ae725e9f3aa43f3ec17021
   Flipper-DoubleConversion: 38631e41ef4f9b12861c67d17cb5518d06badc41
   Flipper-Folly: 755929a4f851b2fb2c347d533a23f191b008554c
@@ -985,7 +985,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
-  react-native-webview: 2e8fe70dc32b50d3231c23043f8e8b5a5525d346
+  react-native-webview: e6eddf2722f5e7220eae7229b516efabb1ed0acd
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
   React-RCTAnimation: 6a2e76ab50c6f25b428d81b76a5a45351c4d77aa
@@ -999,14 +999,14 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: a9904c6d0218fb9f8b19d6dd88607225927668f9
   ReactCommon: 149906e01aa51142707a10665185db879898e966
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
-  RNFBApp: 64c90ab78b6010ed5c3ade026dfe5ff6442c21fd
-  RNFBAuth: 59fe503707ab7bd2c2790ac5b7a11d4e14b44452
-  RNFBDatabase: 06fa955d2435cb012babbf847ca821a287ffd8ae
-  RNFBFirestore: 52169edf8775af42dd8c84f14a6ca963316b30d7
+  RNFBApp: 97b2da195d4606716b284a7c8a988dd8ed5cec41
+  RNFBAuth: 63a3ca8a290937f73fa90d3bf37766458ce03e17
+  RNFBDatabase: 40bd9b428a20796b05f310d607e5cadf75110703
+  RNFBFirestore: 9ff0a5bac2c5acddb8de7a64d4d8eb38c49604bf
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNGoogleSignin: e64616a4080cf7d83f4b292fad82d174587444e2
   RNReanimated: 9c13c86454bfd54dab7505c1a054470bfecd2563
-  RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
+  RNScreens: 01ab149b5dd5c27f5ff26741b1d2bdf2cee1af35
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac

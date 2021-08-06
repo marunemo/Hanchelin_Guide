@@ -51,42 +51,38 @@ class Home extends Component {
             category: this.state.data[key].category,
             delivery_availability: this.state.data[key].delivery_availability,
         }))
-        var sortJsonArray = require('sort-json-array');
-        sortJsonArray(arr, 'name', 'asc');
-        filteredArr = arr.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability')).filter(createFilter(this.state.category, 'category'))
+        const filteredArr = arr.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability')).filter(createFilter(this.state.category, 'category'))
         return (
             <NativeBaseProvider>
                 <HStack alignItems="center" space={1} m={2}>
-                    <Text>{this.state.switchValue ? '배달만 보기 ON' : '배달만 보기 OFF'}</Text>
+                    <Text>{this.state.switchValue ? '배달만 보기 켜짐' : '배달만 보기 꺼짐'}</Text>
                     <Switch
                         value={this.state.switchValue}
                         onValueChange={(switchValue) => this.setState({ switchValue })} />
                 </HStack>
-                <VStack alignItems="center" space={4}>
-                    <Select
-                        selectedValue={this.state.category}
-                        width="100%"
-                        placeholder="카테고리를 선택하세요"
-                        onValueChange={(itemValue) => this.setCategory(itemValue)}
-                        _selectedItem={{
-                            bg: "cyan.600",
-                            endIcon: <CheckIcon size={4} />,
-                        }}
-                    >
-                        <Select.Item label="전체" value="전체" />
-                        <Select.Item label="한식" value="한식" />
-                        <Select.Item label="양식" value="양식" />
-                        <Select.Item label="돈까스 / 회 / 일식" value="돈까스 / 회 / 일식" />
-                        <Select.Item label="중식" value="중식" />
-                        <Select.Item label="치킨" value="치킨" />
-                        <Select.Item label="육류 / 고기" value="육류 / 고기" />
-                        <Select.Item label="족발 / 보쌈" value="족발 / 보쌈" />
-                        <Select.Item label="분식" value="분식" />
-                        <Select.Item label="술집" value="술집" />
-                        <Select.Item label="아시안" value="아시안" />
-                        <Select.Item label="카페 / 디저트" value="카페 / 디저트" />
-                    </Select>
-                </VStack>
+                <Select
+                    selectedValue={this.state.category}
+                    width="100%"
+                    placeholder="카테고리를 선택하세요"
+                    onValueChange={(itemValue) => this.setCategory(itemValue)}
+                    _selectedItem={{
+                        bg: "cyan.600",
+                        endIcon: <CheckIcon size={4} />,
+                    }}
+                >
+                    <Select.Item label="전체" value="전체" />
+                    <Select.Item label="한식" value="한식" />
+                    <Select.Item label="양식" value="양식" />
+                    <Select.Item label="돈까스 / 회 / 일식" value="돈까스 / 회 / 일식" />
+                    <Select.Item label="중식" value="중식" />
+                    <Select.Item label="치킨" value="치킨" />
+                    <Select.Item label="육류 / 고기" value="육류 / 고기" />
+                    <Select.Item label="족발 / 보쌈" value="족발 / 보쌈" />
+                    <Select.Item label="분식" value="분식" />
+                    <Select.Item label="술집" value="술집" />
+                    <Select.Item label="아시안" value="아시안" />
+                    <Select.Item label="카페 / 디저트" value="카페 / 디저트" />
+                </Select>
                 <SearchInput
                     onChangeText={(term) => { this.searchUpdated(term) }}
                     style={styles.searchInput}
@@ -249,7 +245,7 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         padding: 15,
-        borderColor: '#CCC',
+        borderColor: '#DDD',
         borderWidth: 1
     }
 })
