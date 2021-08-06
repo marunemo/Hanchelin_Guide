@@ -54,7 +54,7 @@ class Home extends Component {
         const filteredArr = arr.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability')).filter(createFilter(this.state.category, 'category'))
         return (
             <NativeBaseProvider>
-                <HStack alignItems="center" space={2} m={1}>
+                <HStack alignItems="center" space={1} m={1}>
                     <Select
                         selectedValue={this.state.category}
                         width="60%"
@@ -64,6 +64,7 @@ class Home extends Component {
                             bg: "cyan.600",
                             endIcon: <CheckIcon size={4} />,
                         }}
+                        mr={1}
                     >
                         <Select.Item label="전체" value="전체" />
                         <Select.Item label="한식" value="한식" />
