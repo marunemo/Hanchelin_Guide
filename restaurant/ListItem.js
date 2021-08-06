@@ -183,7 +183,7 @@ const ItemActivity = (props) => {
         <SafeAreaView style = {style.containter}>
             <NativeBaseProvider>
                 <ScrollView>
-                    <RestComponent restId = {props.resName}></RestComponent>
+                    <RestComponent restId = {props.restId}/>
                 </ScrollView>
                 <CommentButton/>
             </NativeBaseProvider>

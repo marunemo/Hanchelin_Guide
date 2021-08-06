@@ -27,7 +27,7 @@ class Home extends Component {
         }
     }
     componentDidMount() {
-        const ref = database().ref();
+        const ref = database().ref("/식당");
         ref.once("value").then(snapshot => {
             if (snapshot)
                 this.setState({ data: snapshot.val() });
@@ -85,7 +85,7 @@ class Home extends Component {
                             {filteredArr.map((item) => (
                                 <TouchableOpacity
                                     style={styles.itemContainer}
-                                    onPress={() => this.props.navigation.navigate('식당 정보', { resName: item.name })}>
+                                    onPress={() => this.props.navigation.navigate('식당 정보', { restId: item.id })}>
                                     <View style={styles.itemLogo}>
                                         <Image
                                             style={styles.itemImage}
