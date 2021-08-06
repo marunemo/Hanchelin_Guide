@@ -23,11 +23,11 @@ class Home extends Component {
             searchTerm: '',
             switchValue: false,
             category: '',
-            data: {}
+            data: []
         }
     }
     componentDidMount() {
-        const ref = database().ref("/식당");
+        const ref = database().ref();
         ref.once("value").then(snapshot => {
             if (snapshot)
                 this.setState({ data: snapshot.val() });
@@ -41,17 +41,7 @@ class Home extends Component {
         cate == "전체" ? this.setState({ category: '' }) : this.setState({ category: cate })
     }
     render() {
-        var arr = []
-        Object.keys(this.state.data).forEach(key => arr.push({
-            name: key,
-            dong: this.state.data[key].dong,
-            likes: this.state.data[key].likes,
-            bookmark_count: this.state.data[key].bookmark_count,
-            comments_count: this.state.data[key].comments_count,
-            category: this.state.data[key].category,
-            delivery_availability: this.state.data[key].delivery_availability,
-        }))
-        const filteredArr = arr.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability')).filter(createFilter(this.state.category, 'category'))
+        const filteredArr = this.state.data.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability')).filter(createFilter(this.state.category, 'category'))
         return (
             <NativeBaseProvider>
                 <HStack alignItems="center" space={1} m={1}>
