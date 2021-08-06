@@ -178,12 +178,12 @@ const RestComponent = (props) => {
     ); 
 }
 
-const ItemActivity = (props) => {
+const ItemActivity = ({route}) => {
     return(
         <SafeAreaView style = {style.containter}>
             <NativeBaseProvider>
                 <ScrollView>
-                    <RestComponent restId = {props.restId}/>
+                    <RestComponent restId = {route.params.restId}/>
                 </ScrollView>
                 <CommentButton/>
             </NativeBaseProvider>
