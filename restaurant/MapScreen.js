@@ -7,6 +7,7 @@ import {useNavigation} from "@react-navigation/native";
 const MapScreen = ({route}) => {
     const navigation = useNavigation();
     const [currentPosition, setPosition] = useState({latitude : 36.103116, longitude : 129.388368});
+    const [centerPosition, setCenter] = useState(route.params.coordinate)
 
     useEffect(() => {
         if(Platform.OS === "ios")
@@ -16,6 +17,10 @@ const MapScreen = ({route}) => {
             coordinate => {
                 const {latitude, longitude} = coordinate.coords;
                 setPosition({latitude, longitude})
+                setCenter(
+                    {latitude : (currentPosition.latitude + route.params.coordinate.latitude) / 2,
+                     longitude : (currentPosition.longitude + route.params.coordinate.longitude) / 2}
+                )
             },
             error => {
                 console.log(error.code, error.message);
@@ -27,7 +32,7 @@ const MapScreen = ({route}) => {
     return(
         <NaverMapView
             style = {styles.mapScreen}
-            center={{...route.params.coordinate, zoom : 15}}
+            center={{...centerPosition, zoom : 13}}
             onMapClick = {() => navigation.goBack()} >
                 <Marker
                     coordinate = {currentPosition}
