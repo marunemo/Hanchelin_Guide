@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {StyleSheet, Platform} from "react-native"
-import NaverMapView, {Marker} from "react-native-nmap";
+import NaverMapView, {Marker, Path} from "react-native-nmap";
 import Geolocation from 'react-native-geolocation-service';
 import {useNavigation} from "@react-navigation/native";
 
@@ -40,7 +40,8 @@ const MapScreen = ({route}) => {
                     caption = {{text : "현위치"}} />
                 <Marker
                     coordinate = {route.params.coordinate}
-                    caption = {{text : "목적지"}} />
+                    caption = {{text : route.params.name}} />
+                <Path coordinates = {[currentPosition, route.params.coordinate]} />
         </NaverMapView>
     )
 }
