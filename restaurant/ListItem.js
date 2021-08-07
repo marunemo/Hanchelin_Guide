@@ -3,17 +3,25 @@ import {Text, View, ScrollView, SafeAreaView, StyleSheet} from "react-native"
 import NaverMapView, {Marker} from "react-native-nmap";
 import {NativeBaseProvider} from "native-base";
 import database from '@react-native-firebase/database';
+import {useNavigation} from "@react-navigation/native";
+import {createStackNavigator} from "@react-navigation/stack";
 
 import CommentButton from "./CommentModal";
+import MapScreen from "./MapScreen";
+
+const Stack = createStackNavigator();
 
 const MapView = (props) => {
+    const navigation = useNavigation();
+
     if(props.position["latitude"] == undefined)
         return <View style = {style.mapView} />
     
     return(
         <NaverMapView
             style = {style.mapView}
-            center={{...props.position, zoom : 18}} >
+            center={{...props.position, zoom : 18}} 
+            onMapClick = {() => {navigation.navigate("식당 위치", {coordinate : props.position})}}>
                 <Marker coordinate={props.position} />
         </NaverMapView>
     )
@@ -62,16 +70,29 @@ const RestComponent = (props) => {
     ); 
 }
 
-const ItemActivity = ({route}) => {
+const RestaurantInfo = (props) => {
     return(
         <SafeAreaView style = {style.containter}>
             <NativeBaseProvider>
                 <ScrollView>
-                    <RestComponent restId = {route.params.restId}/>
+                    <RestComponent restId = {props.restId}/>
                 </ScrollView>
                 <CommentButton/>
             </NativeBaseProvider>
         </SafeAreaView>
+    )
+}
+
+const ItemActivity = ({route}) => {
+    const RestInfo = () => {
+        return <RestaurantInfo restId = {route.params.restId} />
+    }
+
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="식당 정보" component = {RestInfo}/>
+            <Stack.Screen name="식당 위치" component = {MapScreen}/>
+        </Stack.Navigator>
     )
 }
 
