@@ -8,6 +8,9 @@ import Font from "react-native-vector-icons/FontAwesome5"
 import database from '@react-native-firebase/database';
 
 const MapView = (props) => {
+    if(props.position["latitude"] == undefined)
+        return <View style = {style.mapView} />
+    
     return(
         <NaverMapView
             style = {style.mapView}
