@@ -90,8 +90,14 @@ const ItemActivity = ({route}) => {
 
     return (
         <Stack.Navigator>
-            <Stack.Screen name="식당 정보" component = {RestInfo}/>
-            <Stack.Screen name="식당 위치" component = {MapScreen}/>
+            <Stack.Screen
+                name = "식당 정보"
+                component = {RestInfo}
+                options = {{headerShown : false}} />
+            <Stack.Screen
+                name = "식당 위치"
+                component = {MapScreen}
+                options = {{headerShown : false}} />
         </Stack.Navigator>
     )
 }
