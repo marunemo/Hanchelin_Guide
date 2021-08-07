@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {StyleSheet, Platform} from "react-native"
+import {StyleSheet, Platform, Dimensions} from "react-native"
 import NaverMapView, {Marker, Path} from "react-native-nmap";
 import Geolocation from 'react-native-geolocation-service';
 import {useNavigation} from "@react-navigation/native";
@@ -8,6 +8,10 @@ const MapScreen = ({route}) => {
     const navigation = useNavigation();
     const [currentPosition, setPosition] = useState({latitude : 36.103116, longitude : 129.388368}); // Handong University
     const [centerPosition, setCenter] = useState(route.params.coordinate)
+    const [zoomLevel, setZoom] = useState(16)
+    // default zoom level of naver map is 16, and ratio is 1px : 1m when zoom level is 16.
+    // ref : https://d2.naver.com/helloworld/1174
+    // ref : https://www.ncloud.com/support/notice/all/738
 
     useEffect(() => {
         if(Platform.OS === "ios")
@@ -21,27 +25,37 @@ const MapScreen = ({route}) => {
                     {latitude : (currentPosition.latitude + route.params.coordinate.latitude) / 2,
                      longitude : (currentPosition.longitude + route.params.coordinate.longitude) / 2}
                 )
+                
+                var maxAngle = Math.max(
+                    Math.abs(currentPosition.latitude - route.params.coordinate.latitude) / (Dimensions.get("screen").height),
+                    Math.abs(currentPosition.longitude - route.params.coordinate.longitude)  / (Dimensions.get("screen").width)
+                ) // max scale of angle per pixel
+                var diffMeter = maxAngle / 360 * 2 * Math.PI * 6371000 // 2 * pi * earth radius(m) * (angle) / 360
+                setZoom(16 - Math.log2(diffMeter) - 1) // reduce 1 level for padding
             },
             error => {
                 console.log(error.code, error.message);
             },
             {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000}
         )
-    }, []);
+    }, [zoomLevel]);
 
     return(
         <NaverMapView
             style = {styles.mapScreen}
-            center={{...centerPosition, zoom : 13}}
+            center={{...centerPosition, zoom : zoomLevel}}
+            showsMyLocationButton = {true}
+            scaleBar = {true}
+            minZoomLevel = {6}
+            maxZoomLevel = {19}
             onMapClick = {() => navigation.goBack()} >
                 <Marker
                     coordinate = {currentPosition}
-                    pinColor = "blue" 
+                    pinColor = "blue"
                     caption = {{text : "현위치"}} />
                 <Marker
                     coordinate = {route.params.coordinate}
                     caption = {{text : route.params.name}} />
-                <Path coordinates = {[currentPosition, route.params.coordinate]} />
         </NaverMapView>
     )
 }
