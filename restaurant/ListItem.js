@@ -7,6 +7,9 @@ import database from '@react-native-firebase/database';
 import CommentButton from "./CommentModal";
 
 const MapView = (props) => {
+    if(props.position["latitude"] == undefined)
+        return <View style = {style.mapView} />
+    
     return(
         <NaverMapView
             style = {style.mapView}
@@ -59,12 +62,12 @@ const RestComponent = (props) => {
     ); 
 }
 
-const ItemActivity = (props) => {
+const ItemActivity = ({route}) => {
     return(
         <SafeAreaView style = {style.containter}>
             <NativeBaseProvider>
                 <ScrollView>
-                    <RestComponent restId = {props.restId}/>
+                    <RestComponent restId = {route.params.restId}/>
                 </ScrollView>
                 <CommentButton/>
             </NativeBaseProvider>
