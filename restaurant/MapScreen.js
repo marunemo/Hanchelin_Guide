@@ -6,12 +6,12 @@ import {useNavigation} from "@react-navigation/native";
 
 const MapScreen = ({route}) => {
     const navigation = useNavigation();
-    const [currentPosition, setPosition] = useState({latitude : 36.103116, longitude : 129.388368});
+    const [currentPosition, setPosition] = useState({latitude : 36.103116, longitude : 129.388368}); // Handong University
     const [centerPosition, setCenter] = useState(route.params.coordinate)
 
     useEffect(() => {
         if(Platform.OS === "ios")
-            Geolocation.requestAuthorization("always");
+            Geolocation.requestAuthorization("whenInUse");
 
         Geolocation.getCurrentPosition(
             coordinate => {
@@ -25,7 +25,7 @@ const MapScreen = ({route}) => {
             error => {
                 console.log(error.code, error.message);
             },
-            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+            {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000}
         )
     }, []);
 
