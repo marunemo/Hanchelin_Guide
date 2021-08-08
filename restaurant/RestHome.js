@@ -11,7 +11,7 @@ import {
 } from "react-native"
 import { Box, Center, VStack, HStack, HamburgerIcon, ScrollView, NativeBaseProvider, Select, CheckIcon } from "native-base";
 import database from '@react-native-firebase/database';
-import RestInfo from './ListItem.js';
+import RestInfo from './info/ListItem';
 import { createStackNavigator } from '@react-navigation/stack';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 const KEYS_TO_FILTERS = ['name', 'dong', 'category'];
