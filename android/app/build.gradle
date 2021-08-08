@@ -204,6 +204,9 @@ dependencies {
     // Import safe-area
     implementation project(':react-native-safe-area-context')
 
+    // Import Naver Map SDK
+    implementation 'com.naver.maps:map-sdk:3.12.0'
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }

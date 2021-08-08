@@ -1,14 +1,15 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component } from "react";
 import {
     Text,
     View,
     Image,
     SafeAreaView,
     StyleSheet,
+    Switch,
     TouchableOpacity,
     Dimensions
 } from "react-native"
-import { Box, Center, VStack, HStack, IconButton, Icon, HamburgerIcon, ScrollView, NativeBaseProvider, Input, Button, Slider, Switch } from "native-base";
+import { Box, Center, VStack, HStack, HamburgerIcon, ScrollView, NativeBaseProvider, Select, CheckIcon } from "native-base";
 import database from '@react-native-firebase/database';
 import RestInfo from './ListItem.js';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -20,8 +21,9 @@ class Home extends Component {
         super(props);
         this.state = {
             searchTerm: '',
-            deilver_check: '0',
-            data: {}
+            switchValue: false,
+            category: '',
+            data: []
         }
     }
     componentDidMount() {
@@ -35,25 +37,42 @@ class Home extends Component {
     searchUpdated(term) {
         this.setState({ searchTerm: term })
     }
+    setCategory(cate) {
+        cate == "전체" ? this.setState({ category: '' }) : this.setState({ category: cate })
+    }
     render() {
-        var arr = []
-        Object.keys(this.state.data).forEach(key => arr.push({
-            name: key,
-            dong: this.state.data[key].dong,
-            likes: this.state.data[key].likes,
-            bookmark_count: this.state.data[key].bookmark_count,
-            comments_count: this.state.data[key].comments_count,
-            category: this.state.data[key].category,
-            delivery_availability: this.state.data[key].delivery_availability,
-        }))
-        var sortJsonArray = require('sort-json-array');
-        sortJsonArray(arr, 'name', 'asc');
-        const filteredArr = arr.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+        const filteredArr = this.state.data.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability')).filter(createFilter(this.state.category, 'category'))
         return (
             <NativeBaseProvider>
-                <HStack alignItems="center" space={1} m={2}>
-                    <Text fontSize="md">배달가능만 보기</Text>
-                    <Switch />
+                <HStack alignItems="center" space={1} m={1}>
+                    <Select
+                        selectedValue={this.state.category}
+                        width="60%"
+                        placeholder="카테고리를 선택하세요"
+                        onValueChange={(itemValue) => this.setCategory(itemValue)}
+                        _selectedItem={{
+                            bg: "cyan.600",
+                            endIcon: <CheckIcon size={4} />,
+                        }}
+                        mr={1}
+                    >
+                        <Select.Item label="전체" value="전체" />
+                        <Select.Item label="한식" value="한식" />
+                        <Select.Item label="양식" value="양식" />
+                        <Select.Item label="돈까스 / 회 / 일식" value="돈까스 / 회 / 일식" />
+                        <Select.Item label="중식" value="중식" />
+                        <Select.Item label="치킨" value="치킨" />
+                        <Select.Item label="육류 / 고기" value="육류 / 고기" />
+                        <Select.Item label="족발 / 보쌈" value="족발 / 보쌈" />
+                        <Select.Item label="분식" value="분식" />
+                        <Select.Item label="술집" value="술집" />
+                        <Select.Item label="아시안" value="아시안" />
+                        <Select.Item label="카페 / 디저트" value="카페 / 디저트" />
+                    </Select>
+                    <Text>배달가능만 보기</Text>
+                    <Switch
+                        value={this.state.switchValue}
+                        onValueChange={(switchValue) => this.setState({ switchValue })} />
                 </HStack>
                 <SearchInput
                     onChangeText={(term) => { this.searchUpdated(term) }}
@@ -62,11 +81,11 @@ class Home extends Component {
                 />
                 <Center flex={1}>
                     <ScrollView width="100%">
-                        <VStack my={0.5} space={0.5} alignItems="center">
+                        <VStack mb={0.5} space={0.5} alignItems="center">
                             {filteredArr.map((item) => (
                                 <TouchableOpacity
                                     style={styles.itemContainer}
-                                    onPress={() => this.props.navigation.navigate('식당 정보', { resName: item.name })}>
+                                    onPress={() => this.props.navigation.navigate('식당 정보', { restId: item.id })}>
                                     <View style={styles.itemLogo}>
                                         <Image
                                             style={styles.itemImage}
@@ -217,7 +236,7 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         padding: 15,
-        borderColor: '#CCC',
+        borderColor: '#DDD',
         borderWidth: 1
     }
 })

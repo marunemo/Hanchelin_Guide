@@ -7,7 +7,7 @@ import {
     Text,Modal,
     TouchableOpacity,
   } from 'react-native';
-import {ModalPicker} from './Modalpicker'
+import {ModalPicker} from './ModalPicker'
 
 const SettingsStack = createStackNavigator();
 
