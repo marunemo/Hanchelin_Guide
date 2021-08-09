@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
+import { NativeBaseProvider, Popover } from 'native-base';
 
 export default function Chat({ route }) {
   const { thread } = route.params;
@@ -76,8 +77,12 @@ export default function Chat({ route }) {
       messages={messages}
       onSend={handleSend}
       user={{
-        _id: user?.uid
+        _id: user?.uid,
+        name: user?.displayName,
+        avatar: user?.photoURL,
       }}
+      renderUsernameOnMessage
+      placeholder={'메시지를 입력하세요...'}
     />
   );
 }
