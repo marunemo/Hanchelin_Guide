@@ -34,7 +34,7 @@ class Home extends Component {
             searchTerm: '',
             switchValue: false,
             category: '',
-            sortTerm: 'name',
+            sortTerm: '가나다순',
             data: []
         }
     }
@@ -54,8 +54,8 @@ class Home extends Component {
     }
     setSortTerm(term) {
         this.setState({ sortTerm: term })
-        term == "가나다순" && this.setState({ data: this.state.data.sort((a, b) => a.name > b.name ? 1 : -1) })
-        term == "추천순" && this.setState({ data: this.state.data.sort((a, b) => a.likes < b.likes ? 1 : -1) })
+        term == "가나다순" && this.setState({ data: this.state.data.sort((a, b) => a.name > b.name) })
+        term == "추천순" && this.setState({ data: this.state.data.sort((a, b) => a.likes < b.likes) })
     }
     render() {
         const filteredArr = this.state.data.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability')).filter(createFilter(this.state.category, 'category'))
