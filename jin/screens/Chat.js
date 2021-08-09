@@ -1,65 +1,88 @@
-// 채팅 화면 - 아직 오류들이 있고, 카톡처럼 1:1 채팅 기능을 만드려면 좀 갈아엎어야 할 듯??
+import React, { useState, useEffect } from 'react'
+import { GiftedChat } from 'react-native-gifted-chat'
+import firestore from '@react-native-firebase/firestore'
+import auth from '@react-native-firebase/auth'
+import { NativeBaseProvider, Popover } from 'native-base';
 
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Button, ScrollView } from 'react-native';
-import auth from '@react-native-firebase/auth';
-import { GiftedChat, IMessage } from 'react-native-gifted-chat';
-import firestore from '@react-native-firebase/firestore';
-
-export default function Authenticated() {
+export default function Chat({ route }) {
+  const { thread } = route.params;
   const user = auth().currentUser;
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    const subscribe = firestore()
-      .collection('chatId')
-      .onSnapshot((querySnapshot) => {
-        querySnapshot.docChanges().forEach((change) => {
-          if (change.type === 'added') {
-            let data: any = change.doc.data();
-            data.createdAt = data.createdAt.toDate();
-            setMessages((prevMessage) => GiftedChat.append(prevMessage, data));
-          }
-        })
-      })
-  }, []);
+    const unsubscribeListener = firestore()
+      .collection('Chat')
+      .doc(thread._id)
+      .collection('Messages')
+      .orderBy('createdAt', 'desc')
+      .onSnapshot(querySnapshot => {
+        const messages = querySnapshot.docs.map(doc => {
+          const firebaseData = doc.data();
 
-  function onSend(messages: IMessage[]) {
+          const data = {
+            _id: doc.id,
+            text: '',
+            createdAt: new Date().getTime(),
+            ...firebaseData
+          }
+
+          if (!firebaseData.system) {
+            data.user = {
+              ...firebaseData.user,
+              name: firebaseData.user.displayName,
+            }
+          }
+
+          return data;
+        })
+
+        setMessages(messages);
+      })
+
+      return () => unsubscribeListener();
+  }, [])
+
+  async function handleSend(messages) {
+    const text = messages[0].text;
+
     firestore()
-      .collection('chatId')
-      .doc(Date.now().toString())
-      .set(messages[0]);
+      .collection('Chat')
+      .doc(thread._id)
+      .collection('Messages')
+      .add({
+        text,
+        createdAt: new Date().getTime(),
+        user: {
+          _id: user?.uid,
+          displayName: user?.displayName,
+        }
+      })
+
+    await firestore()
+      .collection('Chat')
+      .doc(thread._id)
+      .set(
+        {
+          latestMessage: {
+            text, 
+            createdAt: new Date().getTime(),
+          }
+        },
+        { merge: true }
+      )
   }
 
   return (
-    <View style={styles.chat}>
-      <Button title="Signout" onPress={() => auth().signOut()} />
-      <GiftedChat messages={messages} onSend={(messages) => onSend(messages)} />
-    </View>
+    <GiftedChat
+      messages={messages}
+      onSend={handleSend}
+      user={{
+        _id: user?.uid,
+        name: user?.displayName,
+        avatar: user?.photoURL,
+      }}
+      renderUsernameOnMessage
+      placeholder={'메시지를 입력하세요...'}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 25,
-    marginBottom: 30,
-  },
-  image: {
-    height: 150,
-    width: 150,
-    borderRadius: 150,
-    marginBottom: 20,
-  },
-  text: {
-    fontSize: 20,
-  },
-  chat: {
-    flex: 1,
-    backgroundColor: '#fff'
-  },
-});

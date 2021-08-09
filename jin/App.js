@@ -1,25 +1,26 @@
-// 제 컴퓨터에서 안 돌아가서 일단 코드만 올려놓습니다.
-// google signin에 대한 코드가 있다. 그냥 이메일 로그인도 넣을까 생각중
-// build.gradle 등에 더 넣어야 할 코드들은 추가 예정
+// 구글 로그인과 네비게이션 기능들이 모여있음
 
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import Authentication from './screens/Authentication';
 import Chat from './screens/Chat';
-import Main from './screens/Main';
+import Profile from './screens/Profile';
+import Home from './screens/Home';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 export default function App() {
     const [authenticated, setAuthenticated] = useState(false);
 
-    // webClientId는 firebase에서 다운받은 google.services.json에서 가져오면 된다
-    // client -> oauth_client -> client_id에 있는 걸 복붙
+    // google-services.json에서 webClientId를 가져올때 client-type이 3인 것의 id를 가져와야 한다...
+    // ID는 혹시 몰라서 빼놓고 보냅니다
+    // 아마 firebase에서 SHA-1 등록을 해야 작동할거임
     useEffect(() => {
       GoogleSignin.configure({
         webClientId:
-          '503246918945-ujb7c7ig67mf102q3vi4o6qcf9e1d547.apps.googleusercontent.com',
+          'WEB_CLIENT_ID',
       });
     }, []);
 
@@ -29,7 +30,6 @@ export default function App() {
       return auth().signInWithCredential(googleCredential);
     }
 
-    // 유저 로그인 상태 체크
     auth().onAuthStateChanged((user) => {
       if(user) {
         setAuthenticated(true);
@@ -38,12 +38,11 @@ export default function App() {
       }
     });
 
-    // 유저가 로그인 상태면 Main으로, 아니면 로그인 페이지를 보여준다.
     if (authenticated) {
       return (
         <NavigationContainer>
           {
-            <Main />
+            <Home />
           }
         </NavigationContainer>
       )

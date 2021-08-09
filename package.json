@@ -31,7 +31,7 @@
     "react-native-nmap": "^0.0.66",
     "react-native-ratings": "^8.1.0",
     "react-native-reanimated": "^2.2.0",
-    "react-native-safe-area-context": "^3.2.0",
+    "react-native-safe-area-context": "^3.3.0",
     "react-native-screens": "^3.5.0",
     "react-native-search-filter": "^0.1.5",
     "react-native-svg": "^12.1.1",

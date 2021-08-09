@@ -4,13 +4,47 @@ import {IconButton, Icon, Input, Button, Slider} from "native-base";
 import Modal from "react-native-modal"
 import {Rating, AirbnbRating} from "react-native-ratings";
 import Font from "react-native-vector-icons/FontAwesome5"
+import auth, { firebase } from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const CommentButton = () => {
+    const user = auth().currentUser; //현재 유저 정보 불러오기
     const [onInput, showInput] = useState(false);
     const [isDeliver, setDeliver] = useState(false);
 
+    // 여기서 가게 이름 (doc)을 현재 들어간 가게에 따라서 가져와야 한다
+    let ref = firestore().collection('가게').doc('9월애').collection('리뷰');
+    const [taste, setTaste] = useState(0); //맛
+    const [costPerf, setCostPerf] = useState(0); //가성비
+    const [service, setService] = useState(0); //서비스
+    const [overall, setOverall] = useState(0); //종합
+    const [total, setTotal] = useState(''); //총평
+    const [delivTime, setDelivTime] = useState(30); //배달시간
+    const [delivFee, setDelivFee] = useState(''); //배달비
+
+    async function addReview() {
+        await ref.add({
+            맛: taste,
+            가성비: costPerf,
+            서비스: service,
+            종합: overall,
+            총평: total,
+            배달시간: delivTime,
+            배달비: delivFee, // 배달비는 Input이라서 string으로만 받아지는 것 같음
+            작성시간: new Date(),
+            uid: user?.uid,
+        });
+
+        setTaste(0);
+        setCostPerf(0);
+        setService(0);
+        setOverall(0);
+        setTotal('');
+        setDelivTime(0);
+        setDelivFee('');
+    }
+
     function DeliverOption(props) {
-        const [delivTime, setDelivTime] = useState(30);
         if(props.isDeliver) {
             return (
                 <>
@@ -22,7 +56,7 @@ const CommentButton = () => {
                         maxValue = {60}
                         step = {5}
                         onChange = {time => {setDelivTime(time)}}
-                        onChangeEnd = {time => {console.log("Due time : " + time)}}>
+                        onChangeEnd = {setDelivTime}>
                         <Slider.Track>
                             <Slider.FilledTrack/>
                         </Slider.Track>
@@ -39,7 +73,9 @@ const CommentButton = () => {
                         textAlign = "right"
                         multiline = {false}
                         InputRightElement = {<Text style = {{fontWeight : "bold"}}>원</Text>}
-                        placeholder = "들었던 배달 비용을 적어주세요." />
+                        placeholder = "들었던 배달 비용을 적어주세요."
+                        value = {delivFee}
+                        onChangeText = {setDelivFee} />
                 </>
             )
         }
@@ -74,19 +110,22 @@ const CommentButton = () => {
                                 showRating = {true}
                                 imageSize = {20}
                                 fractions = {1}
-                                onFinishRating = {function(rating) {console.log("Taste is: " + rating)}} />
+                                onChange = {rating => {setTaste(rating)}}
+                                onFinishRating = {setTaste} />
                             <Text style = {style.commentText}>가성비</Text>
                             <Rating
                                 showRating = {true}
                                 imageSize = {20}
                                 fractions = {1}
-                                onFinishRating = {function(rating) {console.log("Pay is: " + rating)}} />
+                                onChange = {rating => {setCostPerf(rating)}}
+                                onFinishRating = {setCostPerf} />
                             <Text style = {style.commentText}>서비스</Text>
                             <Rating
                                 showRating = {true}
                                 imageSize = {20}
                                 fractions = {1}
-                                onFinishRating = {function(rating) {console.log("Service is: " + rating)}} />
+                                onChange = {rating => {setService(rating)}}
+                                onFinishRating = {setService} />
                             <Text style = {style.commentText}>종합 평가</Text>
                             <AirbnbRating
                                 starImage = {require("./rice-icon.jpeg")}
@@ -97,7 +136,8 @@ const CommentButton = () => {
                                 size={25}
                                 reviewColor = "#13ACBF"
                                 reviewSize = {18}
-                                onFinishRating = {function(rating) {console.log("Total is: " + rating)}} />
+                                onChange = {rating => {setOverall(rating)}}
+                                onFinishRating = {setOverall} />
                             <Input
                                 style = {{marginVertical : 20}}
                                 w = {270}
@@ -105,7 +145,10 @@ const CommentButton = () => {
                                 variant = "filled"
                                 textAlignVertical = "top"
                                 multiline = {true}
-                                placeholder = "해당 식장에 대한 총평을 적어주세요." />
+                                placeholder = "해당 식장에 대한 총평을 적어주세요."
+                                value = {total}
+                                onChangeText={setTotal} />
+                            <Button alignSelf='center' onPress={() => addReview()}>완료</Button>
                         </ScrollView>
                         <IconButton
                             onPress={() => showInput(false)}

@@ -1,13 +1,14 @@
-// 앱에 들어가면 가장 먼저 나오는 로그인 화면이다.
+// 로그인 페이지
 
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 
 export default function Authentication(props) {
   return (
     <View style={styles.screen}>
-      <Text style={styles.title}>Google Authentication</Text>
+      <Text style={styles.title}>Hanchelin Guide</Text>
+      <Image style={styles.img} source={require('../../images/logo.png')} />
       <GoogleSigninButton onPress={props.onGoogleButtonPress} />
     </View>
   );
@@ -20,7 +21,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 25,
+    fontSize: 35,
     marginBottom: 30,
   },
+  img: {
+    marginTop: 20,
+    marginBottom: 30,
+    width: 200,
+    height: 200,
+  }
 });
