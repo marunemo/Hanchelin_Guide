@@ -23,7 +23,7 @@ import {
 } from "native-base";
 import database from '@react-native-firebase/database';
 import RestInfo from './info/ListItem';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SearchInput, { createFilter } from 'react-native-search-filter';
 import Profile from "../jin/screens/Profile.js";
 import Chatroom from "../jin/screens/Chatroom.js";
@@ -166,7 +166,7 @@ class Home extends Component {
     }
 }
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App({ navigation }) {
     return (
