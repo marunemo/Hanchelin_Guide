@@ -6,7 +6,7 @@ import auth from '@react-native-firebase/auth';
 import Authentication from './jin/screens/Authentication'
 import ListScreen from './restaurant/ListScreen.js';
 import RestHome from './restaurant/RestHome.js';
-import DiliverScreen from './restaurant/DiliverScreen.js';
+import DeliverScreen from './restaurant/DeliverScreen.js';
 
 const BTab = createBottomTabNavigator();
 
@@ -49,4 +49,6 @@ export default function App() {
   }
   
   return <Authentication onGoogleButtonPress={onGoogleButtonPress} />
+  
+  
 }

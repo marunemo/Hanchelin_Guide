@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
 
 
 
-export default function DiliverScreen() {
+export default function DeliverScreen() {
     return (
         <SettingsStack.Navigator>
         <SettingsStack.Screen
