@@ -9,7 +9,18 @@ import {
     TouchableOpacity,
     Dimensions
 } from "react-native"
-import { Box, Center, VStack, HStack, HamburgerIcon, ScrollView, NativeBaseProvider, Select, CheckIcon } from "native-base";
+import {
+    Box,
+    Button,
+    Center,
+    VStack,
+    HStack,
+    HamburgerIcon,
+    ScrollView,
+    NativeBaseProvider,
+    Select,
+    CheckIcon
+} from "native-base";
 import database from '@react-native-firebase/database';
 import RestInfo from './info/ListItem';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -23,6 +34,7 @@ class Home extends Component {
             searchTerm: '',
             switchValue: false,
             category: '',
+            sortTerm: '가나다순',
             data: []
         }
     }
@@ -40,10 +52,30 @@ class Home extends Component {
     setCategory(cate) {
         cate == "전체" ? this.setState({ category: '' }) : this.setState({ category: cate })
     }
+    setSortTerm(term) {
+        this.setState({ sortTerm: term })
+        term == "가나다순" && this.setState({ data: this.state.data.sort((a, b) => a.name > b.name) })
+        term == "추천순" && this.setState({ data: this.state.data.sort((a, b) => a.likes < b.likes) })
+    }
     render() {
         const filteredArr = this.state.data.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability')).filter(createFilter(this.state.category, 'category'))
         return (
             <NativeBaseProvider>
+                <Select
+                    selectedValue={this.state.sortTerm}
+                    width="100%"
+                    placeholder="정렬"
+                    onValueChange={(itemValue) => this.setSortTerm(itemValue)}
+                    _selectedItem={{
+                        bg: "cyan.600",
+                        endIcon: <CheckIcon size={4} />,
+                    }}
+                    mr={1}
+                >
+                    <Select.Item label="가나다순" value="가나다순" />
+                    <Select.Item label="추천순" value="추천순" />
+                    <Select.Item label="별점순" value="별점순" />
+                </Select>
                 <HStack alignItems="center" space={1} m={1}>
                     <Select
                         selectedValue={this.state.category}
