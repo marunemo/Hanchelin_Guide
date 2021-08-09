@@ -59,10 +59,10 @@ class Home extends Component {
         term == "리뷰개수순" && this.setState({ data: this.state.data.sort((a, b) => a.comments_count < b.comments_count) })
     }
     render() {
-        const filteredArr = this.state.data
-        .filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
-        .filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability'))
-        .filter(createFilter(this.state.category, 'category'))
+        const filteredArr = (this.state.data)
+            .filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+            .filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability'))
+            .filter(createFilter(this.state.category, 'category'))
         return (
             <NativeBaseProvider>
                 <Select
