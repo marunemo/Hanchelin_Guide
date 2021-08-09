@@ -9,11 +9,16 @@ import {
     TouchableOpacity,
     Dimensions
 } from "react-native"
-import { Box, Center, VStack, HStack, HamburgerIcon, ScrollView, NativeBaseProvider, Select, CheckIcon } from "native-base";
+import { Box, Center, VStack, HStack, HamburgerIcon, ScrollView, NativeBaseProvider, Select, CheckIcon, Button, AddIcon, CircleIcon } from "native-base";
 import database from '@react-native-firebase/database';
 import RestInfo from './ListItem.js';
 import { createStackNavigator } from '@react-navigation/stack';
 import SearchInput, { createFilter } from 'react-native-search-filter';
+import Profile from "../jin/screens/Profile.js";
+import Chatroom from "../jin/screens/Chatroom.js";
+import CreateChat from "../jin/screens/CreateChat.js";
+import Chat from "../jin/screens/Chat.js";
+
 const KEYS_TO_FILTERS = ['name', 'dong', 'category'];
 
 class Home extends Component {
@@ -126,18 +131,53 @@ class Home extends Component {
 
 const Stack = createStackNavigator();
 
-export default function App() {
+export default function App({ navigation }) {
     return (
         <Stack.Navigator>
             <Stack.Screen name="식당 리스트" component={Home}
                 options={{
                     headerLeft: () => (
                         <NativeBaseProvider>
-                            <HamburgerIcon ml={3} />
+                            <TouchableOpacity style={{ marginLeft: 10, marginTop: 10, size: 10 }}
+                                onPress={() => navigation.navigate('프로필')}>
+                                    <HamburgerIcon />
+                            </TouchableOpacity>
                         </NativeBaseProvider>
                     ),
+                    headerRight: () => (
+                        <NativeBaseProvider>
+                            <TouchableOpacity style={{ marginRight: 10, marginTop: 10, size: 10 }}
+                                onPress={() => navigation.navigate('채팅')}>
+                                    <CircleIcon />
+                            </TouchableOpacity>
+                        </NativeBaseProvider>
+                    )
                 }} />
             <Stack.Screen name="식당 정보" component={RestInfo} />
+            <Stack.Screen name="프로필" component={Profile} />
+            <Stack.Screen 
+                name="채팅" 
+                component={Chatroom}
+                options={({ navigation }) => ({
+                    headerRight: () => (
+                        <NativeBaseProvider>
+                            <TouchableOpacity 
+                                style={{ marginRight: 10, marginTop: 10, size: 10 }}
+                                onPress={() => navigation.navigate('새로운 채팅방 만들기')}
+                            >
+                                <AddIcon />
+                            </TouchableOpacity>
+                        </NativeBaseProvider>
+                    )
+                })} />
+            <Stack.Screen name="새로운 채팅방 만들기" component={CreateChat} />
+            <Stack.Screen 
+                name="메시지" 
+                component={Chat}
+                options={({ route }) => ({
+                  title: route.params.thread.name  
+                })} 
+            />
         </Stack.Navigator>
     );
 }

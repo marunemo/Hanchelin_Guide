@@ -77,7 +77,7 @@ export default function Profile (props) {
             <Text style={styles.text}>{user?.email}</Text>
             <Text>{user?.uid}</Text>
             <View style={{ marginTop: 30 }}>
-              <Button title="Signout" onPress={() => auth().signOut()} />
+              <Button title="로그아웃" onPress={() => auth().signOut()} />
             </View>
           </View>
           <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 쓴 리뷰</Text>
