@@ -10,7 +10,17 @@ export default function App() {
   
   return (
     <NavigationContainer>
-      <BTab.Navigator tabBarOptions={{activeTintColor: "black" , inactiveTintColor: 'gray'}}>
+      <BTab.Navigator 
+        tabBarOptions={{
+          activeTintColor: '#fff',
+          inactiveTintColor: 'lightgray',
+          activeBackgroundColor: '#A57873',
+          inactiveBackgroundColor: '#5B5853',
+          style: {
+              backgroundColor: '#CE4418',
+              paddingBottom: 3
+          }
+        }}>
         <BTab.Screen
           name="식당리스트"
           component={RestHome}
