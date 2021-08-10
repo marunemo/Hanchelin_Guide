@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button, ScrollView, TextInput, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Icon, Divider, NativeBaseProvider } from 'native-base';
-import Authentication from './Authentication';
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-export default function Chatroom({ navigation }) {
+import Authentication from './Authentication';
+import CreateChat from "./CreateChat";
+import Chat from "./Chat";
+
+const Stack = createNativeStackNavigator();
+
+function Chatroom({ navigation }) {
     const [threads, setThreads] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -63,6 +68,29 @@ export default function Chatroom({ navigation }) {
         </View>
         </NativeBaseProvider>
       );
+}
+
+export default function() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="같이 배달 리스트"
+        component={Chatroom}
+        options={{headerShown: false}} />
+      <Stack.Screen
+        name="새로운 채팅방 만들기"
+        component={CreateChat}
+        options={{headerShown: false}} />
+      <Stack.Screen 
+        name="메시지" 
+        component={Chat}
+        options={({ route }) => ({
+          headerShown: false,
+          title: route.params.thread.name  
+        })} 
+        />
+    </Stack.Navigator>
+  )
 }
 
 const styles = StyleSheet.create({

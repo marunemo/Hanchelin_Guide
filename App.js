@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NativeBaseProvider, AddIcon, IconButton } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -6,7 +7,7 @@ import auth from '@react-native-firebase/auth';
 
 import Authentication from './jin/screens/Authentication'
 import RestHome from './restaurant/RestHome.js';
-import DeliverScreen from './restaurant/DeliverScreen.js';
+import Chatroom from "./jin/screens/Chatroom.js";
 import ClientId from "./android/app/google-services.json"
 
 const BTab = createBottomTabNavigator();
@@ -51,11 +52,20 @@ export default function App() {
           <BTab.Screen
             name="식당리스트"
             component={RestHome}
-            options={{headerShown : false}} />
-          <BTab.Screen
-            name="같이배달"
-            component={DeliverScreen}
-            options={{headerShown : false}} />
+            options={{headerShown: false}} />
+          <BTab.Screen 
+                name="같이배달" 
+                component={Chatroom}
+                options={({ navigation }) => ({
+                    headerRight: () => (
+                        <NativeBaseProvider>
+                            <IconButton
+                                onPress={() => navigation.navigate('새로운 채팅방 만들기')}
+                                icon = {<AddIcon />} />
+                        </NativeBaseProvider>
+                    )
+                })
+               } />
         </BTab.Navigator>
       </NavigationContainer>
     );

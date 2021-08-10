@@ -28,9 +28,6 @@ import RestInfo from './info/ListItem';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SearchInput, { createFilter } from 'react-native-search-filter';
 import Profile from "../jin/screens/Profile.js";
-import Chatroom from "../jin/screens/Chatroom.js";
-import CreateChat from "../jin/screens/CreateChat.js";
-import Chat from "../jin/screens/Chat.js";
 
 const KEYS_TO_FILTERS = ['name', 'dong', 'category'];
 
@@ -177,46 +174,15 @@ export default function App({ navigation }) {
                 options={{
                     headerLeft: () => (
                         <NativeBaseProvider>
-                            <TouchableOpacity style={{ marginLeft: 10, marginTop: 10, size: 10 }}
+                            <TouchableOpacity
                                 onPress={() => navigation.navigate('프로필')}>
                                     <HamburgerIcon />
-                            </TouchableOpacity>
-                        </NativeBaseProvider>
-                    ),
-                    headerRight: () => (
-                        <NativeBaseProvider>
-                            <TouchableOpacity style={{ marginRight: 10, marginTop: 10, size: 10 }}
-                                onPress={() => navigation.navigate('채팅')}>
-                                    <CircleIcon />
                             </TouchableOpacity>
                         </NativeBaseProvider>
                     )
                 }} />
             <Stack.Screen name="식당 정보" component={RestInfo} />
             <Stack.Screen name="프로필" component={Profile} />
-            <Stack.Screen 
-                name="채팅" 
-                component={Chatroom}
-                options={({ navigation }) => ({
-                    headerRight: () => (
-                        <NativeBaseProvider>
-                            <TouchableOpacity 
-                                style={{ marginRight: 10, marginTop: 10, size: 10 }}
-                                onPress={() => navigation.navigate('새로운 채팅방 만들기')}
-                            >
-                                <AddIcon />
-                            </TouchableOpacity>
-                        </NativeBaseProvider>
-                    )
-                })} />
-            <Stack.Screen name="새로운 채팅방 만들기" component={CreateChat} />
-            <Stack.Screen 
-                name="메시지" 
-                component={Chat}
-                options={({ route }) => ({
-                  title: route.params.thread.name  
-                })} 
-            />
         </Stack.Navigator>
     );
 }
