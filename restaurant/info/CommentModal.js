@@ -14,13 +14,13 @@ const CommentButton = (props) => {
 
     // 여기서 가게 이름 (doc)을 현재 들어간 가게에 따라서 가져와야 한다
     let ref = firestore().collection('가게').doc(props.restName).collection('리뷰');
-    const [taste, setTaste] = useState(0); //맛
-    const [costPerf, setCostPerf] = useState(0); //가성비
-    const [service, setService] = useState(0); //서비스
-    const [overall, setOverall] = useState(0); //종합
+    const [taste, setTaste] = useState(2.5); //맛
+    const [costPerf, setCostPerf] = useState(2.5); //가성비
+    const [service, setService] = useState(2.5); //서비스
+    const [overall, setOverall] = useState(3); //종합
     const [total, setTotal] = useState(''); //총평
     const [delivTime, setDelivTime] = useState(30); //배달시간
-    const [delivFee, setDelivFee] = useState(''); //배달비
+    const [delivFee, setDelivFee] = useState(0); //배달비
 
     async function addReview() {
         await ref.add({
@@ -35,13 +35,13 @@ const CommentButton = (props) => {
             uid: user?.uid,
         });
 
-        setTaste(0);
-        setCostPerf(0);
-        setService(0);
-        setOverall(0);
+        setTaste(2.5);
+        setCostPerf(2.5);
+        setService(2.5);
+        setOverall(3);
         setTotal('');
-        setDelivTime(0);
-        setDelivFee('');
+        setDelivTime(30);
+        setDelivFee(0);
     }
 
     function DeliverOption(props) {
@@ -74,8 +74,7 @@ const CommentButton = (props) => {
                         multiline = {false}
                         InputRightElement = {<Text style = {{fontWeight : "bold"}}>원</Text>}
                         placeholder = "들었던 배달 비용을 적어주세요."
-                        value = {delivFee}
-                        onChangeText = {setDelivFee} />
+                        onChangeText = {(fee) => setDelivFee(parseInt(fee))} />
                 </>
             )
         }
@@ -106,26 +105,26 @@ const CommentButton = (props) => {
                             </Button.Group>
                             <DeliverOption isDeliver = {isDeliver} />
                             <Text style = {style.commentText}>맛</Text>
+                            <Text style = {style.ratingText}>{taste} / 5</Text>    
                             <Rating
-                                showRating = {true}
+                                startingValue = {taste}
                                 imageSize = {20}
                                 fractions = {1}
-                                onChange = {rating => {setTaste(rating)}}
-                                onFinishRating = {setTaste} />
+                                onSwipeRating = {(rating) => {setTaste(rating)}} />
                             <Text style = {style.commentText}>가성비</Text>
+                            <Text style = {style.ratingText}>{costPerf} / 5</Text>
                             <Rating
-                                showRating = {true}
+                                startingValue = {costPerf}
                                 imageSize = {20}
                                 fractions = {1}
-                                onChange = {rating => {setCostPerf(rating)}}
-                                onFinishRating = {setCostPerf} />
+                                onSwipeRating = {(rating) => {setCostPerf(rating)}} />
                             <Text style = {style.commentText}>서비스</Text>
+                            <Text style = {style.ratingText}>{service} / 5</Text>
                             <Rating
-                                showRating = {true}
+                                startingValue = {service}
                                 imageSize = {20}
                                 fractions = {1}
-                                onChange = {rating => {setService(rating)}}
-                                onFinishRating = {setService} />
+                                onSwipeRating = {(rating) => {setService(rating)}} />
                             <Text style = {style.commentText}>종합 평가</Text>
                             <AirbnbRating
                                 starImage = {require("./rice-icon.jpeg")}
@@ -136,8 +135,7 @@ const CommentButton = (props) => {
                                 size={25}
                                 reviewColor = "#13ACBF"
                                 reviewSize = {18}
-                                onChange = {rating => {setOverall(rating)}}
-                                onFinishRating = {setOverall} />
+                                onFinishRating = {(rating) => {setOverall(rating)}} />
                             <Input
                                 style = {{marginVertical : 20}}
                                 w = {270}
@@ -148,11 +146,11 @@ const CommentButton = (props) => {
                                 placeholder = "해당 식장에 대한 총평을 적어주세요."
                                 value = {total}
                                 onChangeText={setTotal} />
-                            <Button alignSelf='center' onPress={() => addReview()}>완료</Button>
                         </ScrollView>
-                        <IconButton
-                            onPress={() => showInput(false)}
-                            icon = {<Icon name = "window-close" as = {Font} size="sm" />} />
+                        <Button.Group>
+                            <Button onPress={() => addReview()}>완료</Button>
+                            <Button onPress={() => showInput(false)}>취소</Button>
+                        </Button.Group>
                     </SafeAreaView>
                 </Modal>
                 <IconButton
@@ -194,5 +192,12 @@ const style = StyleSheet.create({
         paddingHorizontal : 16,
         marginTop : 15,
         marginBottom : 8
+    },
+    ratingText : {
+        fontWeight : "bold",
+        fontSize : 20,
+        textAlign : "center",
+        color : "#f1c40f",
+        marginVertical : 10
     }
 })
