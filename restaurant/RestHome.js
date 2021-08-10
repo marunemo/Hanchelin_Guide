@@ -19,7 +19,9 @@ import {
     ScrollView,
     NativeBaseProvider,
     Select,
-    CheckIcon
+    CheckIcon,
+    CircleIcon,
+    AddIcon
 } from "native-base";
 import database from '@react-native-firebase/database';
 import RestInfo from './info/ListItem';
