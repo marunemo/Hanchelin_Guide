@@ -33,20 +33,9 @@ const MapView = (props) => {
 }
 
 const RestComponent = (props) => {
-    const [restData, setData] = useState({});
-    var menu = "";
-    let restDir = "/식당/" + props.restId;
-
-    useEffect(() => {
-        database().ref(restDir).once("value").then(data => {
-            if(data) {
-                setData(data.val());
-            }
-        });
-        console.log(restData);
-    }, []);
-    console.log(restData);
-
+    const restData = props.restData;
+    
+    let menu = "";
     if(restData["menu"] != undefined) {
         for(var menuList of restData["menu"])
             menu += menuList + "\n";
@@ -77,13 +66,26 @@ const RestComponent = (props) => {
 }
 
 const RestaurantInfo = (props) => {
+    const [restData, setData] = useState({});
+    let restDir = "/식당/" + props.restId;
+
+    useEffect(() => {
+        database().ref(restDir).once("value").then(data => {
+            if(data) {
+                setData(data.val());
+            }
+        });
+        console.log(restData);
+    }, []);
+    console.log(restData);
+
     return(
         <SafeAreaView style = {style.containter}>
             <NativeBaseProvider>
                 <ScrollView>
-                    <RestComponent restId = {props.restId}/>
+                    <RestComponent restData = {restData}/>
                 </ScrollView>
-                <CommentButton/>
+                <CommentButton restName = {restData["official_name"]}/>
             </NativeBaseProvider>
         </SafeAreaView>
     )
