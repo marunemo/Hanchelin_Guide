@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NativeBaseProvider, Center, Box } from 'native-base';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
     SafeAreaView,
     StyleSheet,
@@ -9,7 +9,7 @@ import {
   } from 'react-native';
 import {ModalPicker} from './ModalPicker'
 
-const SettingsStack = createStackNavigator();
+const SettingsStack = createNativeStackNavigator();
 
 
 

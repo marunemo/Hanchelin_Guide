@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState} from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import {
   SafeAreaView,
@@ -9,7 +9,7 @@ import {
   View, Image, TouchableOpacity, FlatList, Dimensions,Button,TouchableHighlight
 } from 'react-native';
 
-const HomeStack = createStackNavigator();
+const HomeStack = createNativeStackNavigator();
 
 const listTab = [
     {

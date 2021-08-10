@@ -2,6 +2,8 @@ package com.hanchelin_guide;
 
 import com.facebook.react.ReactActivity;
 
+import android.os.Bundle; // react-navigation
+
 public class MainActivity extends ReactActivity {
 
   /**
@@ -11,5 +13,13 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "Hanchelin_Guide";
+  }
+
+  /**
+   * In react-navigation, react-native-screens package requires this life cycle method.
+   */
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null);
   }
 }
