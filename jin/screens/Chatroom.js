@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button, ScrollView, TextInput, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Icon, Divider, NativeBaseProvider } from 'native-base';
-import Authentication from './Authentication';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { AddIcon, IconButton, Divider, NativeBaseProvider } from 'native-base';
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-export default function Chatroom({ navigation }) {
+import Authentication from './Authentication';
+import CreateChat from "./CreateChat";
+import Chat from "./Chat";
+
+const Stack = createNativeStackNavigator();
+
+function Chatroom({ navigation }) {
     const [threads, setThreads] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -52,7 +57,7 @@ export default function Chatroom({ navigation }) {
                       <Text style={styles.nameText}>{item.name}</Text>
                     </View>
                     <Text style={styles.contentText}>
-                      {item.latestMessage.text.slice(0, 90)}
+                      {item.latestMessage.text != undefined && item.latestMessage.text.slice(0, 90)}
                     </Text>
                   </View>
                 </View>
@@ -63,6 +68,38 @@ export default function Chatroom({ navigation }) {
         </View>
         </NativeBaseProvider>
       );
+}
+
+export default function({ navigation }) {
+  return (
+    <NativeBaseProvider>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="같이 배달 리스트"
+          component={Chatroom}
+          options={() => ({
+            title: "같이 배달",
+            headerRight: () => (
+              <IconButton
+                  onPress={() => navigation.navigate('새로운 채팅방 만들기')}
+                  icon = {<AddIcon />} />
+              )
+          })} />
+        <Stack.Screen
+          name="새로운 채팅방 만들기"
+          component={CreateChat}
+          options={{headerBackTitleVisible: false}} />
+        <Stack.Screen 
+          name="메시지" 
+          component={Chat}
+          options={({ route }) => ({
+            headerBackTitleVisible: false,
+            title: route.params.thread.name  
+          })} 
+          />
+      </Stack.Navigator>
+    </NativeBaseProvider>
+  )
 }
 
 const styles = StyleSheet.create({

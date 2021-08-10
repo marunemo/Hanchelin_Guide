@@ -6,7 +6,7 @@ import auth from '@react-native-firebase/auth';
 
 import Authentication from './jin/screens/Authentication'
 import RestHome from './restaurant/RestHome.js';
-import DeliverScreen from './restaurant/DeliverScreen.js';
+import Chatroom from "./jin/screens/Chatroom.js";
 import ClientId from "./android/app/google-services.json"
 
 const BTab = createBottomTabNavigator();
@@ -51,11 +51,11 @@ export default function App() {
           <BTab.Screen
             name="식당리스트"
             component={RestHome}
-            options={{headerShown : false}} />
-          <BTab.Screen
-            name="같이배달"
-            component={DeliverScreen}
-            options={{headerShown : false}} />
+            options={{headerShown: false}} />
+          <BTab.Screen 
+              name="같이배달" 
+              component={Chatroom}
+              options={{headerShown: false}} />
         </BTab.Navigator>
       </NavigationContainer>
     );
