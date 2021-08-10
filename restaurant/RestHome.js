@@ -20,8 +20,7 @@ import {
     NativeBaseProvider,
     Select,
     CheckIcon,
-    CircleIcon,
-    AddIcon
+    IconButton
 } from "native-base";
 import database from '@react-native-firebase/database';
 import RestInfo from './info/ListItem';
@@ -169,21 +168,20 @@ const Stack = createNativeStackNavigator();
 
 export default function App({ navigation }) {
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="식당 리스트" component={Home}
-                options={{
-                    headerLeft: () => (
-                        <NativeBaseProvider>
-                            <TouchableOpacity
-                                onPress={() => navigation.navigate('프로필')}>
-                                    <HamburgerIcon />
-                            </TouchableOpacity>
-                        </NativeBaseProvider>
-                    )
-                }} />
-            <Stack.Screen name="식당 정보" component={RestInfo} />
-            <Stack.Screen name="프로필" component={Profile} />
-        </Stack.Navigator>
+        <NativeBaseProvider>
+            <Stack.Navigator>
+                <Stack.Screen name="식당 리스트" component={Home}
+                    options={{
+                        headerLeft: () => (
+                            <IconButton
+                                onPress={() => navigation.navigate('프로필')}
+                                icon = {<HamburgerIcon />} />
+                        )
+                    }} />
+                <Stack.Screen name="식당 정보" component={RestInfo} />
+                <Stack.Screen name="프로필" component={Profile} />
+            </Stack.Navigator>
+        </NativeBaseProvider>
     );
 }
 
