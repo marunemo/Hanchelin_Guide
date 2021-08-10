@@ -21,6 +21,11 @@ const MapView = (props) => {
         <NaverMapView
             style = {style.mapView}
             center={{...props.position, zoom : 18}} 
+            compass = {false}
+            scaleBar = {true}
+            zoomControl = {true}
+            minZoomLevel = {6}
+            maxZoomLevel = {19}
             onMapClick = {() => {navigation.navigate("식당 위치", {name : props.restName, coordinate : props.position})}}>
                 <Marker coordinate={props.position} />
         </NaverMapView>
