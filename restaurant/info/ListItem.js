@@ -21,6 +21,11 @@ const MapView = (props) => {
         <NaverMapView
             style = {style.mapView}
             center={{...props.position, zoom : 18}} 
+            compass = {false}
+            scaleBar = {true}
+            zoomControl = {true}
+            minZoomLevel = {6}
+            maxZoomLevel = {19}
             onMapClick = {() => {navigation.navigate("식당 위치", {name : props.restName, coordinate : props.position})}}>
                 <Marker coordinate={props.position} />
         </NaverMapView>
@@ -57,8 +62,7 @@ const RestComponent = (props) => {
             </View>
             <View style = {style.partition}>
                 <Text style={style.contexts}>
-                    <Text style={style.keyText}>한동대까지의 거리 : </Text>
-                    {(restData["distance"]==undefined?"0":restData["distance"]/1000)}km
+                    <Text style={style.keyText}>위치 정보</Text>
                 </Text>
                 <MapView
                     restName = {restData["official_name"]}

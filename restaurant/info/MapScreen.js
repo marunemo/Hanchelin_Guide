@@ -45,7 +45,9 @@ const MapScreen = ({route}) => {
             style = {styles.mapScreen}
             center={{...centerPosition, zoom : zoomLevel}}
             showsMyLocationButton = {true}
+            compass = {false}
             scaleBar = {true}
+            zoomControl = {false}
             minZoomLevel = {6}
             maxZoomLevel = {19}
             onMapClick = {() => navigation.goBack()} >
