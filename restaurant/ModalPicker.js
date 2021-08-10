@@ -1,11 +1,11 @@
 import React from 'react';
 import {
     StyleSheet,
-    Text,Modal,
-    View, TouchableOpacity, Dimensions,ScrollView
-  } from 'react-native';
+    Text, Modal,
+    View, TouchableOpacity, Dimensions, ScrollView
+} from 'react-native';
 
-const OPTIONS =['모두', '한식','중식','일식','양식','디저트','기타' ]
+const OPTIONS = ['모두', '한식', '중식', '일식', '양식', '디저트', '기타']
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
@@ -15,7 +15,7 @@ const ModalPicker = (props) => {
         props.changeModalVisibility(false);
         props.setData(option);
     }
-    const option = OPTIONS.map((item,index) => {
+    const option = OPTIONS.map((item, index) => {
         return (
             <TouchableOpacity
                 style={styles.option}
@@ -31,17 +31,17 @@ const ModalPicker = (props) => {
     })
 
     return (
-    <TouchableOpacity
-        onPress={() => props.changeModalVisibility(false)}
-        style={styles.container}
-    >
-        <View style={[styles.modal, {width: WIDTH/2, height:HEIGHT/3}]}>
-            <ScrollView>
-                {option}
-            </ScrollView>
-        </View>
-        
-    </TouchableOpacity>
+        <TouchableOpacity
+            onPress={() => props.changeModalVisibility(false)}
+            style={styles.container}
+        >
+            <View style={[styles.modal, { width: WIDTH / 2, height: HEIGHT / 3 }]}>
+                <ScrollView>
+                    {option}
+                </ScrollView>
+            </View>
+
+        </TouchableOpacity>
 
     )
 
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         margin: 10,
         fontSize: 10,
         fontWeight: 'bold'
-     }
+    }
 
 });
-  export {ModalPicker}
+export { ModalPicker }

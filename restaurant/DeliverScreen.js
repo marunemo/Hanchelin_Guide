@@ -4,18 +4,16 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
     SafeAreaView,
     StyleSheet,
-    Text,Modal,
+    Text, Modal,
     TouchableOpacity,
-  } from 'react-native';
-import {ModalPicker} from './ModalPicker'
+} from 'react-native';
+import { ModalPicker } from './ModalPicker'
 
 const SettingsStack = createNativeStackNavigator();
 
-
-
-function B (){
+function B() {
     const [chooseData, setchooseData] = useState('Select Item...');
-    const[isModalVisible, setisModalVisible] = useState(false)
+    const [isModalVisible, setisModalVisible] = useState(false)
 
     const changeModalVisibility = (bool) => {
         setisModalVisible(bool)
@@ -23,7 +21,7 @@ function B (){
     const setData = (option) => {
         setchooseData(option)
     }
-    return(
+    return (
         <SafeAreaView style={styles.selectBox}>
             <TouchableOpacity
                 onPress={() => changeModalVisibility(true)}
@@ -38,14 +36,13 @@ function B (){
                 nRequestClose={() => changeModalVisibility(false)}
             >
                 <ModalPicker
-                    changeModalVisibility= {changeModalVisibility}
-                    setData= {setData}
+                    changeModalVisibility={changeModalVisibility}
+                    setData={setData}
                 />
             </Modal>
         </SafeAreaView>
     )
 }
-        
 
 const styles = StyleSheet.create({
     selectBox: {
@@ -67,16 +64,4 @@ const styles = StyleSheet.create({
     }
 });
 
-
-
-export default function DeliverScreen() {
-    return (
-        <SettingsStack.Navigator>
-        <SettingsStack.Screen
-            name="같이배달"
-            component={B}
-            options={{ tabBarLabel: 'Settings!' }}
-        />
-        </SettingsStack.Navigator>
-    );
-} 
+export default B;
