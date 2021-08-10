@@ -7,13 +7,13 @@ import Font from "react-native-vector-icons/FontAwesome5"
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-const CommentButton = () => {
+const CommentButton = (props) => {
     const user = auth().currentUser; //현재 유저 정보 불러오기
     const [onInput, showInput] = useState(false);
     const [isDeliver, setDeliver] = useState(false);
 
     // 여기서 가게 이름 (doc)을 현재 들어간 가게에 따라서 가져와야 한다
-    let ref = firestore().collection('가게').doc('9월애').collection('리뷰');
+    let ref = firestore().collection('가게').doc(props.restName).collection('리뷰');
     const [taste, setTaste] = useState(0); //맛
     const [costPerf, setCostPerf] = useState(0); //가성비
     const [service, setService] = useState(0); //서비스
