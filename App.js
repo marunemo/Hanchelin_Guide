@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { NativeBaseProvider, AddIcon, IconButton } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -54,18 +53,9 @@ export default function App() {
             component={RestHome}
             options={{headerShown: false}} />
           <BTab.Screen 
-                name="같이배달" 
-                component={Chatroom}
-                options={({ navigation }) => ({
-                    headerRight: () => (
-                        <NativeBaseProvider>
-                            <IconButton
-                                onPress={() => navigation.navigate('새로운 채팅방 만들기')}
-                                icon = {<AddIcon />} />
-                        </NativeBaseProvider>
-                    )
-                })
-               } />
+              name="같이배달" 
+              component={Chatroom}
+              options={{headerShown: false}} />
         </BTab.Navigator>
       </NavigationContainer>
     );
