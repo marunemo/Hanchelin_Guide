@@ -3,11 +3,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Authentication from './jin/screens/Authentication'
 import RestHome from './restaurant/RestHome.js';
 import Chatroom from "./jin/screens/Chatroom.js";
-import ClientId from "./android/app/google-services.json"
+import ClientId from "./android/app/google-services.json";
 
 const BTab = createBottomTabNavigator();
 
@@ -16,7 +17,7 @@ export default function App() {
 
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId : ClientId["client"][0]["oauth_client"][2]["client_id"]
+      webClientId: ClientId["client"][0]["oauth_client"][2]["client_id"]
     });
   }, []);
 
@@ -27,41 +28,46 @@ export default function App() {
   }
 
   auth().onAuthStateChanged((user) => {
-    if(user) {
+    if (user) {
       setAuthenticated(true);
     } else {
       setAuthenticated(false);
     }
   });
-  
+
   if (authenticated) {
     return (
       <NavigationContainer>
-        <BTab.Navigator 
-          tabBarOptions={{
-            activeTintColor: '#fff',
-            inactiveTintColor: 'lightgray',
-            activeBackgroundColor: '#A57873',
-            inactiveBackgroundColor: '#5B5853',
-            style: {
-                backgroundColor: '#CE4418',
-                paddingBottom: 3
-            }
-          }}>
+        <BTab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: () => {
+              let iconName;
+              if (route.name == '식당') {
+                iconName = 'cutlery';
+              } else if (route.name == '같이 배달') {
+                iconName = 'automobile';
+              }
+              return <Icon name={iconName} size={20} color='#ffffff' />;
+            },
+            tabBarActiveTintColor: '#ffffff',
+            tabBarInactiveTintColor: '#ffffff',
+            tabBarActiveBackgroundColor: '#468966',
+            tabBarInactiveBackgroundColor: '#FFF0A5',
+          })}>
           <BTab.Screen
-            name="식당리스트"
+            name='식당'
             component={RestHome}
-            options={{headerShown: false}} />
-          <BTab.Screen 
-              name="같이배달" 
-              component={Chatroom}
-              options={{headerShown: false}} />
+            options={{ headerShown: false }} />
+          <BTab.Screen
+            name='같이 배달'
+            component={Chatroom}
+            options={{ headerShown: false }} />
         </BTab.Navigator>
       </NavigationContainer>
     );
   }
-  
+
   return <Authentication onGoogleButtonPress={onGoogleButtonPress} />
-  
-  
+
+
 }
