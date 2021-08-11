@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Text, ScrollView, SafeAreaView, StyleSheet } from 'react-native'
+import { Text, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import { IconButton, Icon, Input, Button, Slider } from 'native-base';
-import Modal from 'react-native-modal'
+import Modal from 'react-native-modal';
 import { Rating, AirbnbRating } from 'react-native-ratings';
-import Font from 'react-native-vector-icons/FontAwesome5'
+import Font from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 

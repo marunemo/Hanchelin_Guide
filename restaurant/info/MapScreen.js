@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Platform, Dimensions } from 'react-native'
+import { StyleSheet, Platform, Dimensions } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import Geolocation from 'react-native-geolocation-service';
 import { useNavigation } from '@react-navigation/native';
@@ -60,7 +60,7 @@ const MapScreen = ({ route }) => {
 				caption={{ text: route.params.name }}
 			/>
     </NaverMapView>
-  )
+  );
 }
 
 export default MapScreen;

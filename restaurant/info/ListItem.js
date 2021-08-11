@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, SafeAreaView, StyleSheet } from 'react-native'
+import { Text, View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import { NativeBaseProvider } from 'native-base';
 import database from '@react-native-firebase/database';
 import { useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
@@ -14,8 +14,9 @@ const Stack = createNativeStackNavigator();
 const MapView = (props) => {
   const navigation = useNavigation();
 
-  if (props.position['latitude'] == undefined)
-    return <View style={style.mapView} />
+  if (props.position['latitude'] == undefined) {
+    return <View style={style.mapView} />;
+	}
 
   return (
     <NaverMapView
@@ -40,7 +41,7 @@ const RestComponent = (props) => {
   if (restData['menu'] != undefined) {
     for (var menuList of restData['menu'])
       menu += menuList + '\n';
-    menu = menu.substring(0, menu.length - 1)
+    menu = menu.substring(0, menu.length - 1);
   }
 
   return (
@@ -104,7 +105,7 @@ const RestaurantInfo = (props) => {
 
 const ItemActivity = ({ route }) => {
   const RestInfo = () => {
-    return <RestaurantInfo restId={route.params.restId} />
+    return <RestaurantInfo restId={route.params.restId} />;
   }
 
   return (
@@ -120,7 +121,7 @@ const ItemActivity = ({ route }) => {
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
-  )
+  );
 }
 
 export default ItemActivity;
