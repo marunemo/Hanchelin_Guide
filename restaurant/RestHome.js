@@ -117,6 +117,7 @@ class Home extends Component {
             <VStack mb={0.5} space={0.5} alignItems="center">
               {filteredArr.map((item) => (
                 <TouchableOpacity
+                  key={item.id}
                   style={styles.itemContainer}
                   onPress={() => this.props.navigation.navigate('식당 정보', { restId: item.id })}>
                   <HStack>
