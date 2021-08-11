@@ -156,7 +156,9 @@ export default function App({ navigation }) {
   return (
     <NativeBaseProvider>
       <Stack.Navigator>
-        <Stack.Screen name="식당 리스트" component={Home}
+        <Stack.Screen
+          name="식당 리스트"
+          component={Home}
           options={{
             headerStyle: {
               backgroundColor: '#468966',
@@ -167,11 +169,25 @@ export default function App({ navigation }) {
               fontSize: 20,
             },
             headerLeft: () => (
-              <Icon name="bars" size={24} color="#ffffff"
-                onPress={() => navigation.navigate('프로필')} />
+              <Icon
+                name="bars"
+                size={24}
+                color="#adff2f"
+              />
+            ),
+            headerRight: () => (
+              <Icon
+                name="user"
+                size={24}
+                color="#7fffd4"
+                onPress={() => navigation.navigate("프로필")}
+              />
             )
-          }} />
-        <Stack.Screen name="식당 정보" component={RestInfo}
+          }}
+        />
+        <Stack.Screen
+          name="식당 정보"
+          component={RestInfo}
           options={{
             headerStyle: {
               backgroundColor: '#468966',
@@ -181,7 +197,8 @@ export default function App({ navigation }) {
               fontWeight: 'bold',
               fontSize: 20,
             }
-          }} />
+          }}
+        />
         <Stack.Screen name="프로필" component={Profile} />
       </Stack.Navigator>
     </NativeBaseProvider>
