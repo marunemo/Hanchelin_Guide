@@ -16,7 +16,7 @@ export default function App() {
 
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId : ClientId["client"][0]["oauth_client"][2]["client_id"]
+      webClientId: ClientId["client"][0]["oauth_client"][2]["client_id"]
     });
   }, []);
 
@@ -27,41 +27,41 @@ export default function App() {
   }
 
   auth().onAuthStateChanged((user) => {
-    if(user) {
+    if (user) {
       setAuthenticated(true);
     } else {
       setAuthenticated(false);
     }
   });
-  
+
   if (authenticated) {
     return (
       <NavigationContainer>
-        <BTab.Navigator 
+        <BTab.Navigator
           tabBarOptions={{
             activeTintColor: '#fff',
             inactiveTintColor: 'lightgray',
             activeBackgroundColor: '#468966',
             inactiveBackgroundColor: '#FFF0A5',
             style: {
-                backgroundColor: '#CE4418',
-                paddingBottom: 3
+              backgroundColor: '#CE4418',
+              paddingBottom: 3
             }
           }}>
           <BTab.Screen
-            name="식당리스트"
+            name="식당"
             component={RestHome}
-            options={{headerShown: false}} />
-          <BTab.Screen 
-              name="같이배달" 
-              component={Chatroom}
-              options={{headerShown: false}} />
+            options={{ headerShown: false }} />
+          <BTab.Screen
+            name="같이배달"
+            component={Chatroom}
+            options={{ headerShown: false }} />
         </BTab.Navigator>
       </NavigationContainer>
     );
   }
-  
+
   return <Authentication onGoogleButtonPress={onGoogleButtonPress} />
-  
-  
+
+
 }
