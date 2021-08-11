@@ -13,67 +13,67 @@ import ClientId from "./android/app/google-services.json"
 const BTab = createBottomTabNavigator();
 
 export default function App() {
-  const [authenticated, setAuthenticated] = useState(false);
+    const [authenticated, setAuthenticated] = useState(false);
 
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId: ClientId["client"][0]["oauth_client"][2]["client_id"]
-    });
-  }, []);
+    useEffect(() => {
+        GoogleSignin.configure({
+            webClientId: ClientId["client"][0]["oauth_client"][2]["client_id"]
+        });
+    }, []);
 
-  async function onGoogleButtonPress() {
-    const { idToken } = await GoogleSignin.signIn();
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    return auth().signInWithCredential(googleCredential);
-  }
-
-  auth().onAuthStateChanged((user) => {
-    if (user) {
-      setAuthenticated(true);
-    } else {
-      setAuthenticated(false);
+    async function onGoogleButtonPress() {
+        const { idToken } = await GoogleSignin.signIn();
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+        return auth().signInWithCredential(googleCredential);
     }
-  });
 
-  if (authenticated) {
-    return (
-      <NavigationContainer>
-        <BTab.Navigator
-          tabBarOptions={{
-            activeTintColor: '#ffffff',
-            inactiveTintColor: '#ffffff',
-            activeBackgroundColor: '#468966',
-            inactiveBackgroundColor: '#FFF0A5',
-            style: {
-              backgroundColor: '#CE4418',
-              paddingBottom: 3
-            }
-          }}
-          screenOptions={({ route }) => ({
-            tabBarIcon: () => {
-              let iconName;
-              if (route.name == '식당') {
-                iconName = 'cutlery';
-              } else if (route.name == '같이 배달') {
-                iconName = 'automobile';
-              }
-              return <Icon name={iconName} size={20} color='#ffffff' />;
-            },
-          })}>
-          <BTab.Screen
-            name='식당'
-            component={RestHome}
-            options={{ headerShown: false }} />
-          <BTab.Screen
-            name='같이 배달'
-            component={Chatroom}
-            options={{ headerShown: false }} />
-        </BTab.Navigator>
-      </NavigationContainer>
-    );
-  }
+    auth().onAuthStateChanged((user) => {
+        if (user) {
+            setAuthenticated(true);
+        } else {
+            setAuthenticated(false);
+        }
+    });
 
-  return <Authentication onGoogleButtonPress={onGoogleButtonPress} />
+    if (authenticated) {
+        return (
+            <NavigationContainer>
+                <BTab.Navigator
+                    tabBarOptions={{
+                        activeTintColor: '#ffffff',
+                        inactiveTintColor: '#ffffff',
+                        activeBackgroundColor: '#468966',
+                        inactiveBackgroundColor: '#FFF0A5',
+                        style: {
+                            backgroundColor: '#CE4418',
+                            paddingBottom: 3
+                        }
+                    }}
+                    screenOptions={({ route }) => ({
+                        tabBarIcon: () => {
+                            let iconName;
+                            if (route.name == '식당') {
+                                iconName = 'cutlery';
+                            } else if (route.name == '같이 배달') {
+                                iconName = 'automobile';
+                            }
+                            return <Icon name={iconName} size={20} color='#ffffff' />;
+                        },
+                    })}>
+                    <BTab.Screen
+                        name='식당'
+                        component={RestHome}
+                        options={{ headerShown: false }} />
+                    <BTab.Screen
+                        name='같이 배달'
+                        component={Chatroom}
+                        options={{ headerShown: false }} />
+                </BTab.Navigator>
+            </NavigationContainer>
+        );
+    }
+
+    return <Authentication onGoogleButtonPress={onGoogleButtonPress} />
 
 
 }
