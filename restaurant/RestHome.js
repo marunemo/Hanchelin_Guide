@@ -65,24 +65,23 @@ class Home extends Component {
       <NativeBaseProvider>
         <Select
           selectedValue={this.state.sortTerm}
-          width="100%"
           placeholder="정렬"
           onValueChange={(itemValue) => this.setSortTerm(itemValue)}
           _selectedItem={{
             bg: "#468966",
             endIcon: <CheckIcon size={4} />,
           }}
-          mr={1}
+          m={2}
         >
           <Select.Item label="가나다순" value="가나다순" />
           <Select.Item label="추천순" value="추천순" />
           <Select.Item label="리뷰개수순" value="리뷰개수순" />
           <Select.Item label="별점순" value="별점순" />
         </Select>
-        <HStack alignItems="center" space={1} m={1}>
+        <HStack alignItems="center" space={1} mx={2} mb={2}>
           <Select
             selectedValue={this.state.category}
-            width="60%"
+            width="55%"
             placeholder="카테고리를 선택하세요"
             onValueChange={(itemValue) => this.setCategory(itemValue)}
             _selectedItem={{
@@ -175,7 +174,6 @@ export default function App({ navigation }) {
       <Stack.Navigator>
         <Stack.Screen name="식당 리스트" component={Home}
           options={{
-            title: '식당 리스트',
             headerStyle: {
               backgroundColor: '#468966',
             },
@@ -190,7 +188,17 @@ export default function App({ navigation }) {
                 icon={<HamburgerIcon color="white" />} />
             )
           }} />
-        <Stack.Screen name="식당 정보" component={RestInfo} />
+        <Stack.Screen name="식당 정보" component={RestInfo}
+          options={{
+            headerStyle: {
+              backgroundColor: '#468966',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 20,
+            }
+          }} />
         <Stack.Screen name="프로필" component={Profile} />
       </Stack.Navigator>
     </NativeBaseProvider>
