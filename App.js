@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Authentication from './jin/screens/Authentication'
 import RestHome from './restaurant/RestHome.js';
@@ -39,21 +40,32 @@ export default function App() {
       <NavigationContainer>
         <BTab.Navigator
           tabBarOptions={{
-            activeTintColor: '#fff',
-            inactiveTintColor: 'lightgray',
+            activeTintColor: '#ffffff',
+            inactiveTintColor: '#ffffff',
             activeBackgroundColor: '#468966',
             inactiveBackgroundColor: '#FFF0A5',
             style: {
               backgroundColor: '#CE4418',
               paddingBottom: 3
             }
-          }}>
+          }}
+          screenOptions={({ route }) => ({
+            tabBarIcon: () => {
+              let iconName;
+              if (route.name == '식당') {
+                iconName = 'cutlery';
+              } else if (route.name == '같이 배달') {
+                iconName = 'automobile';
+              }
+              return <Icon name={iconName} size={20} color='#ffffff' />;
+            },
+          })}>
           <BTab.Screen
-            name="식당"
+            name='식당'
             component={RestHome}
             options={{ headerShown: false }} />
           <BTab.Screen
-            name="같이배달"
+            name='같이 배달'
             component={Chatroom}
             options={{ headerShown: false }} />
         </BTab.Navigator>
