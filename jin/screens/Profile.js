@@ -35,9 +35,9 @@ export default function Profile (props) {
             const item = documentSnapshot.data();
             review.push(
               <View style={styles.content}>
-                <Text>내용 : {item.message}</Text>
-                <Text>별점 : {item.rating}</Text>
-                <Text>UID : {item.uid}</Text>
+                <Text>내용 : {item['총평']}</Text>
+                <Text>별점 : {'★'.repeat(item['종합'])}</Text>
+                <Text>UID : {item['uid']}</Text>
               </View>
             );
           });
@@ -62,10 +62,9 @@ export default function Profile (props) {
             </View>
           );
         });
-        
+
         setStore(store)
       });
-    console.log(review, store)
     }, []);
 
 
