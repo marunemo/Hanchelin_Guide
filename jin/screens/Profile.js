@@ -34,7 +34,7 @@ export default function Profile (props) {
           querySnapshot.forEach(documentSnapshot => {
             const item = documentSnapshot.data();
             review.push(
-              <View style={styles.content}>
+              <View style={styles.content} key={documentSnapshot.id}>
                 <Text>내용 : {item['총평']}</Text>
                 <Text>별점 : {'★'.repeat(item['종합'])}</Text>
                 <Text>UID : {item['uid']}</Text>
@@ -57,7 +57,7 @@ export default function Profile (props) {
         querySnapshot.forEach(documentSnapshot => {
           const item = documentSnapshot.data();
           store.push(
-            <View style={styles.content}>
+            <View style={styles.content} key={documentSnapshot.id}>
               <Text>가게 이름 : {item.name}</Text>
             </View>
           );
