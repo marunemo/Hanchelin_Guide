@@ -175,6 +175,15 @@ export default function App({ navigation }) {
             <Stack.Navigator>
                 <Stack.Screen name="식당 리스트" component={Home}
                     options={{
+                        title: '식당 리스트',
+                        headerStyle: {
+                            backgroundColor: '#468966',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                            fontSize: 20,
+                        },
                         headerLeft: () => (
                             <IconButton
                                 onPress={() => navigation.navigate('프로필')}
