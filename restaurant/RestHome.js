@@ -24,6 +24,47 @@ import Profile from "../jin/screens/Profile.js";
 
 const KEYS_TO_FILTERS = ['name', 'dong', 'category'];
 
+class RestaurantItem extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const item = this.props.restItem;
+
+    return(
+      <TouchableOpacity
+        key={item.id.toString()}
+        style={styles.itemContainer}
+        onPress={() => this.props.navigation.navigate('식당 정보', { restId: item.id })}
+      >
+        <HStack>
+          <Image
+            style={{ flex: 3 }}
+            resizeMode="contain"
+            source={require('../images/none.jpeg')}
+            alt="Alternate Text"
+            size="md"
+          />
+          <VStack space={1} style={{ flex: 5 }}>
+            <Text bold>{item.name}</Text>
+            <Text>{item.category}</Text>
+            <Text>{item.dong}</Text>
+          </VStack>
+          <HStack style={{ flex: 4 }} space={1}>
+            <Icon name="thumbs-up" size={24} color="#30A9DE" />
+            <Text>{item.likes}</Text>
+            <Icon name="heart" size={24} color="#f15c5c" />
+            <Text>{item.bookmark_count}</Text>
+            <Icon name="comments" size={24} color="#8b8687" />
+            <Text>{item.comments_count}</Text>
+          </HStack>
+        </HStack>
+      </TouchableOpacity>
+    )
+  }
+}
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -115,34 +156,7 @@ class Home extends Component {
         <Center flex={1}>
           <ScrollView width="100%">
             <VStack mb={0.5} space={0.5} alignItems="center">
-              {filteredArr.map((item) => (
-                <TouchableOpacity
-                  key={item.id}
-                  style={styles.itemContainer}
-                  onPress={() => this.props.navigation.navigate('식당 정보', { restId: item.id })}>
-                  <HStack>
-                    <Image style={{ flex: 3 }}
-                      resizeMode={"contain"}
-                      source={require('../images/none.jpeg')}
-                      alt="Alternate Text"
-                      size={"md"}
-                    />
-                    <VStack space={1} style={{ flex: 5 }}>
-                      <Text bold>{item.name}</Text>
-                      <Text>{item.category}</Text>
-                      <Text>{item.dong}</Text>
-                    </VStack>
-                    <HStack style={{ flex: 4 }} space={1}>
-                      <Icon name="thumbs-up" size={24} color="#30A9DE" />
-                      <Text>{item.likes}</Text>
-                      <Icon name="heart" size={24} color="#f15c5c" />
-                      <Text>{item.bookmark_count}</Text>
-                      <Icon name="comments" size={24} color="#8b8687" />
-                      <Text>{item.comments_count}</Text>
-                    </HStack>
-                  </HStack>
-                </TouchableOpacity>
-              ))}
+              {filteredArr.map(item => <RestaurantItem restItem={item} navigation={this.props.navigation} />)}
             </VStack>
           </ScrollView>
         </Center>
