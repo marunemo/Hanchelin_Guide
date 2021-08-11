@@ -10,13 +10,12 @@ import {
   Center,
   VStack,
   HStack,
-  HamburgerIcon,
   ScrollView,
   NativeBaseProvider,
   Select,
   CheckIcon,
-  IconButton
 } from "native-base";
+import Icon from 'react-native-vector-icons/FontAwesome';
 import database from '@react-native-firebase/database';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SearchInput, { createFilter } from 'react-native-search-filter';
@@ -133,26 +132,11 @@ class Home extends Component {
                       <Text>{item.dong}</Text>
                     </VStack>
                     <HStack style={{ flex: 4 }} space={1}>
-                      {/* <Icon
-                                                size={20}
-                                                name='thumbs-up'
-                                                type='font-awesome'
-                                                color='#30A9DE'
-                                            /> */}
+                      <Icon name="thumbs-up" size={24} color="#30A9DE" />
                       <Text>{item.likes}</Text>
-                      {/* <Icon
-                                                size={18}
-                                                name='heart'
-                                                type='font-awesome'
-                                                color='#f15c5c'
-                                            /> */}
+                      <Icon name="heart" size={24} color="#f15c5c" />
                       <Text>{item.bookmark_count}</Text>
-                      {/* <Icon
-                                                size={20}
-                                                name='comments'
-                                                type='font-awesome'
-                                                color='#8b8687'
-                                            /> */}
+                      <Icon name="comments" size={24} color="#8b8687" />
                       <Text>{item.comments_count}</Text>
                     </HStack>
                   </HStack>
@@ -177,15 +161,14 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#468966',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#ffffff',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
             },
             headerLeft: () => (
-              <IconButton
-                onPress={() => navigation.navigate('프로필')}
-                icon={<HamburgerIcon color="white" />} />
+              <Icon name="bars" size={24} color="#ffffff"
+                onPress={() => navigation.navigate('프로필')} />
             )
           }} />
         <Stack.Screen name="식당 정보" component={RestInfo}

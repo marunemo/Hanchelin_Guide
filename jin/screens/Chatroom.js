@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button, ScrollView, TextInput, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AddIcon, IconButton, Divider, NativeBaseProvider } from 'native-base';
+import { Divider, NativeBaseProvider } from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
@@ -88,9 +89,8 @@ export default function ({ navigation }) {
               fontSize: 20,
             },
             headerRight: () => (
-              <IconButton
-                onPress={() => navigation.navigate('새로운 채팅방 만들기')}
-                icon={<AddIcon color="white" />} />
+              <Icon name="plus" size={24} color="#ffffff"
+                onPress={() => navigation.navigate('새로운 채팅방 만들기')} />
             )
           }} />
         <Stack.Screen
