@@ -39,16 +39,6 @@ export default function App() {
         return (
             <NavigationContainer>
                 <BTab.Navigator
-                    tabBarOptions={{
-                        activeTintColor: '#ffffff',
-                        inactiveTintColor: '#ffffff',
-                        activeBackgroundColor: '#468966',
-                        inactiveBackgroundColor: '#FFF0A5',
-                        style: {
-                            backgroundColor: '#CE4418',
-                            paddingBottom: 3
-                        }
-                    }}
                     screenOptions={({ route }) => ({
                         tabBarIcon: () => {
                             let iconName;
@@ -59,6 +49,10 @@ export default function App() {
                             }
                             return <Icon name={iconName} size={20} color='#ffffff' />;
                         },
+                        tabBarActiveTintColor: '#ffffff',
+                        tabBarInactiveTintColor: '#ffffff',
+                        tabBarActiveBackgroundColor: '#468966',
+                        tabBarInactiveBackgroundColor: '#FFF0A5',
                     })}>
                     <BTab.Screen
                         name='식당'
