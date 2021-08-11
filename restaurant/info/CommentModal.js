@@ -62,7 +62,9 @@ const CommentButton = (props) => {
               </Slider.Track>
               <Slider.Thumb />
           </Slider>
-          <Text style={{textAlign: 'right'}}>{delivTime}분{(delivTime == 60)?' 이상':''}</Text>
+          <Text style={{ textAlign: 'right' }}>
+            {delivTime}분{(delivTime == 60)?' 이상':''}
+          </Text>
           <Text style={style.commentText}>배달비</Text>
           <Input
             size="sm"
@@ -72,7 +74,7 @@ const CommentButton = (props) => {
             alignSelf="flex-end"
             textAlign="right"
             multiline={false}
-            InputRightElement={<Text style={{fontWeight: 'bold'}}>원</Text>}
+            InputRightElement={<Text style={{ fontWeight: 'bold' }}>원</Text>}
             placeholder="들었던 배달 비용을 적어주세요."
             onChangeText={(fee) => setDelivFee(parseInt(fee))}
           />
@@ -85,80 +87,86 @@ const CommentButton = (props) => {
   return (
     <>
       <Modal
-        style={{justifyContent: 'flex-end', alignItems: 'center'}}
+        style={{ justifyContent: 'flex-end', alignItems: 'center' }}
         isVisible={onInput}
         onBackButtonPress={() => showInput(false)}
-        onBackdropPress={() => showInput(false)}>
-          <SafeAreaView style={style.commentView}>
-          <Text style={style.commentHeader}>식당 리뷰</Text>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <Text style={style.commentText}>주문 방식</Text>
-            <Button.Group alignSelf="center">
-            <Button
-                colorScheme={isDeliver?"rgb(11, 153, 91)":"rgb(6, 209, 120)"}
-                onPress={() => setDeliver(true)}>
-                  배달
-            </Button>
-            <Button
-                colorScheme={!isDeliver?"rgb(11, 153, 91)":"rgb(6, 209, 120)"}
-                onPress={() => setDeliver(false)}>
-                  방문
-            </Button>
-            </Button.Group>
-            <DeliverOption isDeliver={isDeliver} />
-            <Text style={style.commentText}>맛</Text>
-            <Text style={style.ratingText}>{taste} / 5</Text>  
-            <Rating
-              startingValue={taste}
-              imageSize={20}
-              fractions={1}
-              onSwipeRating={(rating) => {setTaste(rating)}}
-            />
-            <Text style={style.commentText}>가성비</Text>
-            <Text style={style.ratingText}>{costPerf} / 5</Text>
-            <Rating
-              startingValue={costPerf}
-              imageSize={20}
-              fractions={1}
-              onSwipeRating={(rating) => {setCostPerf(rating)}}
-            />
-            <Text style={style.commentText}>서비스</Text>
-            <Text style={style.ratingText}>{service} / 5</Text>
-            <Rating
-              startingValue={service}
-              imageSize={20}
-              fractions={1}
-              onSwipeRating={(rating) => {setService(rating)}}
-            />
-            <Text style={style.commentText}>종합 평가</Text>
-            <AirbnbRating
-              starImage={require('./rice-icon.jpeg')}
-              count={5}
-              reviews={['다시는 안 먹어요..', '가끔씩은 괜찮을 듯?', '무난해요.', '꽤 자주 갈꺼 같아요', '없던 병이 낫는 식당']}
-              defaultRating={2.5}
-              selectedColor="#13ACBF"
-              size={25}
-              reviewColor="#13ACBF"
-              reviewSize={18}
-              onFinishRating={(rating) => {setOverall(rating)}}
-            />
-            <Input
-              style={{marginVertical: 20}}
-              w={270}
-              minHeight={150}
-              variant="filled"
-              textAlignVertical="top"
-              multiline={true}
-              placeholder="해당 식장에 대한 총평을 적어주세요."
-              value={total}
-              onChangeText={setTotal}
-            />
-          </ScrollView>
-          <Button.Group>
-            <Button onPress={() => addReview()}>완료</Button>
-            <Button onPress={() => showInput(false)}>취소</Button>
+        onBackdropPress={() => showInput(false)}
+      >
+        <SafeAreaView style={style.commentView}>
+        <Text style={style.commentHeader}>식당 리뷰</Text>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Text style={style.commentText}>주문 방식</Text>
+          <Button.Group alignSelf="center">
+          <Button
+              colorScheme={isDeliver?"rgb(11, 153, 91)":"rgb(6, 209, 120)"}
+              onPress={() => setDeliver(true)}>
+                배달
+          </Button>
+          <Button
+              colorScheme={!isDeliver?"rgb(11, 153, 91)":"rgb(6, 209, 120)"}
+              onPress={() => setDeliver(false)}>
+                방문
+          </Button>
           </Button.Group>
-          </SafeAreaView>
+          <DeliverOption isDeliver={isDeliver} />
+          <Text style={style.commentText}>맛</Text>
+          <Text style={style.ratingText}>{taste} / 5</Text>  
+          <Rating
+            startingValue={taste}
+            imageSize={20}
+            fractions={1}
+            onSwipeRating={(rating) => {setTaste(rating)}}
+          />
+          <Text style={style.commentText}>가성비</Text>
+          <Text style={style.ratingText}>{costPerf} / 5</Text>
+          <Rating
+            startingValue={costPerf}
+            imageSize={20}
+            fractions={1}
+            onSwipeRating={(rating) => {setCostPerf(rating)}}
+          />
+          <Text style={style.commentText}>서비스</Text>
+          <Text style={style.ratingText}>{service} / 5</Text>
+          <Rating
+            startingValue={service}
+            imageSize={20}
+            fractions={1}
+            onSwipeRating={(rating) => {setService(rating)}}
+          />
+          <Text style={style.commentText}>종합 평가</Text>
+          <AirbnbRating
+            starImage={require('./rice-icon.jpeg')}
+            count={5}
+            reviews={['다시는 안 먹어요..', '가끔씩은 괜찮을 듯?', '무난해요.', '꽤 자주 갈꺼 같아요', '없던 병이 낫는 식당']}
+            defaultRating={3}
+            selectedColor="#13ACBF"
+            size={25}
+            reviewColor="#13ACBF"
+            reviewSize={18}
+            onFinishRating={(rating) => {setOverall(rating)}}
+          />
+          <Input
+            style={{ marginVertical: 20 }}
+            w={270}
+            minHeight={150}
+            variant="filled"
+            textAlignVertical="top"
+            multiline={true}
+            placeholder="해당 식장에 대한 총평을 적어주세요."
+            value={total}
+            onChangeText={setTotal}
+          />
+        </ScrollView>
+        <Button.Group>
+          <Button onPress={() => {
+            addReview();
+            showInput(false);
+          }}>
+            완료
+          </Button>
+          <Button onPress={() => showInput(false)}>취소</Button>
+        </Button.Group>
+        </SafeAreaView>
       </Modal>
       <IconButton
         style={style.commentButton}
