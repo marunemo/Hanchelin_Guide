@@ -5,6 +5,7 @@ import Modal from 'react-native-modal';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import Font from 'react-native-vector-icons/FontAwesome5';
 import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
 
 const CommentButton = (props) => {
@@ -13,7 +14,10 @@ const CommentButton = (props) => {
   const [isDeliver, setDeliver] = useState(false);
 
   // 여기서 가게 이름 (doc)을 현재 들어간 가게에 따라서 가져와야 한다
-  let ref = firestore().collection('가게').doc(props.restName).collection('리뷰');
+  let commentRef = database().ref(props.commentsDir);
+  let reviewRef = firestore().collection('가게').doc(props.restName).collection('리뷰');
+  let commentList = props.comments?props.comments:[];
+
   const [taste, setTaste] = useState(2.5); //맛
   const [costPerf, setCostPerf] = useState(2.5); //가성비
   const [service, setService] = useState(2.5); //서비스
@@ -23,14 +27,30 @@ const CommentButton = (props) => {
   const [delivFee, setDelivFee] = useState(0); //배달비
 
   async function addReview() {
-    await ref.add({
+    commentList.push({
       맛: taste,
       가성비: costPerf,
       서비스: service,
       종합: overall,
       총평: total,
       배달시간: delivTime,
-      배달비: delivFee, // 배달비는 Input이라서 string으로만 받아지는 것 같음
+      배달비: delivFee,
+      작성시간: new Date(),
+      uid: user?.uid,
+    });
+
+    await commentRef.update({
+      comments: commentList
+    });
+
+    await reviewRef.add({
+      맛: taste,
+      가성비: costPerf,
+      서비스: service,
+      종합: overall,
+      총평: total,
+      배달시간: delivTime,
+      배달비: delivFee,
       작성시간: new Date(),
       uid: user?.uid,
     });

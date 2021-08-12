@@ -97,7 +97,11 @@ const RestaurantInfo = (props) => {
         <ScrollView>
           <RestComponent restData={restData} />
         </ScrollView>
-        <CommentButton restName={restData['official_name']} />
+        <CommentButton
+          restName={restData['official_name']} 
+          comments={restData['comments']}
+          commentsDir={restDir}
+        />
       </NativeBaseProvider>
     </SafeAreaView>
   )
