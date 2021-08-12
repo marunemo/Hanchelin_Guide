@@ -33,9 +33,10 @@ const CommentButton = (props) => {
       서비스: service,
       종합: overall,
       총평: total,
+      배달여부: isDeliver,
       배달시간: delivTime,
       배달비: delivFee,
-      작성시간: new Date(),
+      작성시간: new Date().toLocaleString(),
       uid: user?.uid,
     });
 

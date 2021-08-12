@@ -44,6 +44,25 @@ const RestComponent = (props) => {
     menu = menu.substring(0, menu.length - 1);
   }
 
+  let comments = [];
+  const commentsList = restData['comments']
+  if (commentsList !== undefined) {
+    for (var id in commentsList) {
+      const comment = commentsList[id];
+      comments.push(
+        <View style={style.commentsView} key={id}>
+          <Text>맛 : {'★'.repeat(comment["맛"])}</Text>
+          <Text>가성비 : {'★'.repeat(comment["가성비"])}</Text>
+          <Text>서비스 : {'★'.repeat(comment["서비스"])}</Text>
+          <Text>종합 : {'★'.repeat(comment["종합"])}</Text>
+          <Text>총평 : {comment["총평"]}</Text>
+          {comment["배달여부"] && <Text>배달 시간 : {comment["배달시간"]}분    배달비 : {comment["배달비"]}원</Text>}
+          <Text style={{ textAlign: "right" }}>{comment["작성시간"]}</Text>
+        </View>
+      )
+    }
+  }
+
   return (
     <>
       <View style={style.partition}>
@@ -69,9 +88,13 @@ const RestComponent = (props) => {
           position={{ latitude: restData['y'], longitude: restData['x'] }}
         />
       </View>
-      <View style={[style.partition, style.endMargin]}>
+      <View style={style.partition}>
         <Text style={[style.keyText, {lineHeight: 40, fontSize: 16}]}>ᐧ 메뉴</Text>
         <Text style={{ paddingLeft: 20 }}>{menu}</Text>
+      </View>
+      <View style={[style.partition, style.endMargin]}>
+        <Text style={[style.keyText, {lineHeight: 40, fontSize: 16}]}>댓글</Text>
+          {comments}
       </View>
     </>
   );
@@ -89,9 +112,10 @@ const RestaurantInfo = (props) => {
       }
     });
     setReload(false);
-    console.log(restData);
+    console.log(reload);
+    // console.log(restData);
   }, [reload]);
-  console.log(restData);
+  // console.log(restData);
 
   return (
     <SafeAreaView style={style.containter}>
@@ -156,5 +180,13 @@ const style = StyleSheet.create({
   },
   endMargin: {
     marginBottom: 100
+  },
+  commentsView: {
+    borderWidth: 1,
+    borderColor: "#75a64a",
+    width: "100%",
+    marginVertical: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 20
   }
 })
