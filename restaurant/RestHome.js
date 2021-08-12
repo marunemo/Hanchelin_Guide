@@ -32,9 +32,8 @@ class RestaurantItem extends Component {
   render() {
     const item = this.props.restItem;
 
-    return(
+    return (
       <TouchableOpacity
-        key={item.id.toString()}
         style={styles.itemContainer}
         onPress={() => this.props.navigation.navigate('식당 정보', { restId: item.id })}
       >
@@ -156,7 +155,7 @@ class Home extends Component {
         <Center flex={1}>
           <ScrollView width="100%">
             <VStack mb={0.5} space={0.5} alignItems="center">
-              {filteredArr.map(item => <RestaurantItem restItem={item} navigation={this.props.navigation} />)}
+              {filteredArr.map(item => <RestaurantItem restItem={item} key={item.id.toString()} navigation={this.props.navigation} />)}
             </VStack>
           </ScrollView>
         </Center>
@@ -178,7 +177,7 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#468966',
             },
-            headerTintColor: '#ffffff',
+            headerTintColor: '#f2f2f2',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
@@ -187,14 +186,14 @@ export default function App({ navigation }) {
               <Icon
                 name="bars"
                 size={24}
-                color="#adff2f"
+                color="#f2f2f2"
               />
             ),
             headerRight: () => (
               <Icon
                 name="user"
                 size={24}
-                color="#7fffd4"
+                color="#f2f2f2"
                 onPress={() => navigation.navigate("프로필")}
               />
             )
@@ -207,7 +206,7 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#468966',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#f2f2f2',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
