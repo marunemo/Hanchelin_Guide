@@ -15,8 +15,7 @@ export default function Profile (props) {
     useEffect(() => {
       /* 리뷰 데이터를 스토어에 업로드 할때 유저의 고유 아이디인 uid를 같이 업로드하여
       .where()로 필터링하여 유저 개인 페이지에 표시한다*/
-      const reviewSub = firestore()
-        .collection('가게').doc('9월애').collection('리뷰')
+      firestore().collection('가게').doc('9월애').collection('리뷰')
 
         /* 
         시간대별 정렬이랑 uid 필터가 따로하면 잘되는데 같이 하면 에러 뜸. SOF에서는 무슨 에러 핸들링 어쩌고 하는데
@@ -30,39 +29,42 @@ export default function Profile (props) {
         //.orderBy('createdAt', 'desc')
         .where('uid', '==', user?.uid)
         .onSnapshot(querySnapshot => {
-          const review = [];
+          let review = []
 
           querySnapshot.forEach(documentSnapshot => {
-            review.push({
-              ...documentSnapshot.data(),
-              key: documentSnapshot.id,
-            });
+            const item = documentSnapshot.data();
+            review.push(
+              <View style={styles.content} key={documentSnapshot.id}>
+                <Text>내용 : {item['총평']}</Text>
+                <Text>별점 : {'★'.repeat(item['종합'])}</Text>
+                <Text>UID : {item['uid']}</Text>
+              </View>
+            );
           });
 
-          setReview(review);
+          setReview(review)
         });
       
       /* 리뷰와 비슷하긴 하지만 각 음식점 콜렉션에 찜을 했는지의 여부 체크를 찜 버튼을 누르면 uid를 array로
       업로드한 다음 array에 현재 유저의 uid가 있으면 표시한다.
       찜 버튼을 눌렀을 때 collection 안에 있는 array에 data 추가/삭제 방법 알아보기 */
-      const storeSub = firestore()
+      firestore()
       .collection('store')
       .where('heart', 'array-contains', user?.uid)
       .onSnapshot(querySnapshot => {
-        const store = [];
+        let store = []
 
         querySnapshot.forEach(documentSnapshot => {
-          store.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
+          const item = documentSnapshot.data();
+          store.push(
+            <View style={styles.content} key={documentSnapshot.id}>
+              <Text>가게 이름 : {item.name}</Text>
+            </View>
+          );
         });
 
-        setStore(store);
+        setStore(store)
       });
-      
-      return () => reviewSub();
-      return () => storeSub();
     }, []);
 
 
@@ -81,27 +83,9 @@ export default function Profile (props) {
             </View>
           </View>
           <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 쓴 리뷰</Text>
-          <FlatList 
-            data={review}
-            renderItem={({ item }) => (
-              // 가게 리뷰 칸으로의 링크 추가??? 실제 리뷰에서 수정/삭제 기능
-              <View style={styles.content}>
-                <Text>내용 : {item.message}</Text>
-                <Text>별점 : {item.rating}</Text>
-                <Text>UID : {item.uid}</Text>
-              </View>
-            )}
-          />
+            {review}
           <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 찜한 가게</Text>
-          <FlatList 
-            data={store}
-            renderItem={({ item }) => (
-              // 가게로의 링크 추가?? 찜 버튼 추가
-              <View style={styles.content}>
-                <Text>가게 이름 : {item.name}</Text>
-              </View>
-            )}
-          />
+            {store}
         </ScrollView>  
       </SafeAreaView>
     );
