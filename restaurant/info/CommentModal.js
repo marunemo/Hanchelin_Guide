@@ -179,6 +179,7 @@ const CommentButton = (props) => {
         </ScrollView>
         <Button.Group>
           <Button onPress={() => {
+            props.onFinish(true);
             addReview();
             showInput(false);
           }}>

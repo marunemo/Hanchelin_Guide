@@ -78,6 +78,7 @@ const RestComponent = (props) => {
 }
 
 const RestaurantInfo = (props) => {
+  const [reload, setReload] = useState(false);
   const [restData, setData] = useState({});
   let restDir = '/식당/' + props.restId;
 
@@ -87,8 +88,9 @@ const RestaurantInfo = (props) => {
         setData(data.val());
       }
     });
+    setReload(false);
     console.log(restData);
-  }, []);
+  }, [reload]);
   console.log(restData);
 
   return (
@@ -101,6 +103,7 @@ const RestaurantInfo = (props) => {
           restName={restData['official_name']} 
           comments={restData['comments']}
           commentsDir={restDir}
+          onFinish={update => setReload(update)}
         />
       </NativeBaseProvider>
     </SafeAreaView>
