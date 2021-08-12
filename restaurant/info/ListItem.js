@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
-import { NativeBaseProvider } from 'native-base';
+import { NativeBaseProvider, IconButton, Icon } from 'native-base';
+import Font from 'react-native-vector-icons/FontAwesome';
 import database from '@react-native-firebase/database';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -47,19 +48,25 @@ const RestComponent = (props) => {
   let comments = [];
   const commentsList = restData['comments']
   if (commentsList !== undefined) {
-    for (var id in commentsList) {
-      const comment = commentsList[id];
-      comments.push(
-        <View style={style.commentsView} key={id}>
-          <Text>맛 : {'★'.repeat(comment["맛"])}</Text>
-          <Text>가성비 : {'★'.repeat(comment["가성비"])}</Text>
-          <Text>서비스 : {'★'.repeat(comment["서비스"])}</Text>
-          <Text>종합 : {'★'.repeat(comment["종합"])}</Text>
-          <Text>총평 : {comment["총평"]}</Text>
-          {comment["배달여부"] && <Text>배달 시간 : {comment["배달시간"]}분    배달비 : {comment["배달비"]}원</Text>}
-          <Text style={{ textAlign: "right" }}>{comment["작성시간"]}</Text>
-        </View>
-      )
+    for (const [id, comment] of Object.entries(commentsList)) {
+      if (comment != null) {
+        comments.push(
+          <View style={style.commentsView} key={id}>
+            <IconButton
+              style={{ alignSelf: "flex-end" }}
+              onPress={() => props.onPop(id)}
+              icon={<Icon name="trash-o" as={Font} size="xs" />}
+            />
+            <Text>맛 : {'★'.repeat(comment["맛"])}</Text>
+            <Text>가성비 : {'★'.repeat(comment["가성비"])}</Text>
+            <Text>서비스 : {'★'.repeat(comment["서비스"])}</Text>
+            <Text>종합 : {'★'.repeat(comment["종합"])}</Text>
+            <Text>총평 : {comment["총평"]}</Text>
+            {comment["배달여부"] && <Text>배달 시간 : {comment["배달시간"]}분    배달비 : {comment["배달비"]}원</Text>}
+            <Text style={{ textAlign: "right" }}>{comment["작성시간"]}</Text>
+          </View>
+        )
+      }
     }
   }
 
@@ -104,24 +111,30 @@ const RestaurantInfo = (props) => {
   const [reload, setReload] = useState(false);
   const [restData, setData] = useState({});
   let restDir = '/식당/' + props.restId;
+  const restRef = database().ref(restDir);
 
   useEffect(() => {
-    database().ref(restDir).once('value').then(data => {
+    restRef.once('value').then(data => {
       if (data) {
         setData(data.val());
       }
     });
     setReload(false);
-    console.log(reload);
-    // console.log(restData);
   }, [reload]);
-  // console.log(restData);
+
+  async function removeComment(commentId) {
+    await restRef.child("comments/" + commentId.toString()).remove();
+    setReload(true);
+  }
 
   return (
     <SafeAreaView style={style.containter}>
       <NativeBaseProvider>
         <ScrollView>
-          <RestComponent restData={restData} />
+          <RestComponent
+            restData={restData}
+            onPop={id => removeComment(id)}
+          />
         </ScrollView>
         <CommentButton
           restName={restData['official_name']} 

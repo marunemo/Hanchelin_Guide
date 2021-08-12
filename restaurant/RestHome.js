@@ -155,7 +155,13 @@ class Home extends Component {
         <Center flex={1}>
           <ScrollView width="100%">
             <VStack mb={0.5} space={0.5} alignItems="center">
-              {filteredArr.map(item => <RestaurantItem restItem={item} key={item.id.toString()} navigation={this.props.navigation} />)}
+              {filteredArr.map(item => 
+                <RestaurantItem
+                  key={item.id.toString()}
+                  restItem={item}
+                  navigation={this.props.navigation}
+                />
+              )}
             </VStack>
           </ScrollView>
         </Center>
