@@ -83,13 +83,13 @@ export default function ({ navigation }) {
             headerStyle: {
               backgroundColor: '#468966',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#f2f2f2',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
             },
             headerRight: () => (
-              <Icon name="plus" size={24} color="#ffffff"
+              <Icon name="plus" size={24} color="#f2f2f2"
                 onPress={() => navigation.navigate('새로운 채팅방 만들기')} />
             )
           }} />
