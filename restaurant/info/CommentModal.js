@@ -73,11 +73,11 @@ const CommentButton = (props) => {
           <Slider
             w="80%"
             alignSelf="center"
-            defaultValue={30}
+            defaultValue={delivTime}
             maxValue={60}
             step={5}
             onChange={time => {setDelivTime(time)}}
-            onChangeEnd={setDelivTime}>
+          >
               <Slider.Track>
                 <Slider.FilledTrack />
               </Slider.Track>
@@ -90,6 +90,7 @@ const CommentButton = (props) => {
           <Input
             size="sm"
             w={250}
+            isRequired={true}
             keyboardType="numeric"
             variant="underlined"
             alignSelf="flex-end"
@@ -97,7 +98,7 @@ const CommentButton = (props) => {
             multiline={false}
             InputRightElement={<Text style={{ fontWeight: 'bold' }}>원</Text>}
             placeholder="들었던 배달 비용을 적어주세요."
-            onChangeText={(fee) => setDelivFee(parseInt(fee))}
+            onChange={(fee) => setDelivFee(parseInt(fee))}
           />
         </>
       );
