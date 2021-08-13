@@ -68,17 +68,23 @@ const RestComponent = (props) => {
         comments.push(
           <View style={style.commentsView} key={id}>
             <IconButton
-              style={{ alignSelf: "flex-end" }}
+              alignSelf="flex-end"
+              size="sm"
+              borderRadius="full"
               onPress={() => props.onPop(id)}
-              icon={<Icon name="trash-o" as={Font} size="xs" />}
+              icon={<Icon name="trash-o" as={Font} size="sm" color="#0a4a33" />}
             />
-            <Text>맛 : {'★'.repeat(comment["맛"])}</Text>
-            <Text>가성비 : {'★'.repeat(comment["가성비"])}</Text>
-            <Text>서비스 : {'★'.repeat(comment["서비스"])}</Text>
-            <Text>종합 : {'★'.repeat(comment["종합"])}</Text>
-            <Text>총평 : {comment["총평"]}</Text>
-            {comment["배달여부"] && <Text>배달 시간 : {comment["배달시간"]}분    배달비 : {comment["배달비"]}원</Text>}
-            <Text style={{ textAlign: "right" }}>{comment["작성시간"]}</Text>
+            <Text style={style.commentsText}>맛 : {'★'.repeat(comment["맛"])}</Text>
+            <Text style={style.commentsText}>가성비 : {'★'.repeat(comment["가성비"])}</Text>
+            <Text style={style.commentsText}>서비스 : {'★'.repeat(comment["서비스"])}</Text>
+            <Text style={style.commentsText}>종합 : {'★'.repeat(comment["종합"])}</Text>
+            <Text style={style.commentsText}>총평 : {comment["총평"]}</Text>
+            {comment["배달여부"] &&
+              <Text style={style.commentsText}>
+                배달 시간 : {comment["배달시간"]}분    배달비 : {comment["배달비"]}원
+              </Text>
+            }
+            <Text style={{ textAlign: "right", color: "#4b4b4b" }}>{comment["작성시간"]}</Text>
           </View>
         )
       }
@@ -93,25 +99,12 @@ const RestComponent = (props) => {
         <View style={style.horizontalLayout}>
           <IconButton
             onPress={() => setTog1(!tog1)}
-            icon={
-              <Icon
-                name={tog1?"thumbs-up":"thumbs-o-up"}
-                as={Font}
-                size="sm"
-                color="#30A9DE"
-              />
-            }
+            icon={<Icon name={tog1?"thumbs-up":"thumbs-o-up"} as={Font} size="sm" color="#30A9DE" />}
           />
-           <IconButton
-            onPress={() => setTog2(!tog2)}
-            icon={
-              <Icon
-                name={tog2?"heart":"heart-o"}
-                as={Font}
-                size="sm"
-                color="#f15c5c"
-              />
-            }
+          <IconButton
+          onPress={() => setTog2(!tog2)}
+          icon={
+            <Icon name={tog2?"heart":"heart-o"} as={Font} size="sm" color="#f15c5c" />}
           />
         </View>
         <View>
@@ -268,10 +261,16 @@ const style = StyleSheet.create({
   },
   commentsView: {
     borderWidth: 1,
+    borderRadius: 20,
     borderColor: "#75a64a",
+    backgroundColor: "#d7ffb5",
     width: "100%",
     marginVertical: 5,
     paddingVertical: 5,
     paddingHorizontal: 20
+  },
+  commentsText: {
+    fontSize: 14,
+    marginVertical: 3
   }
 })
