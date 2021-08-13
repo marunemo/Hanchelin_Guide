@@ -53,15 +53,22 @@ const InfoComponent = (props) => {
 const RestComponent = (props) => {
   const restData = props.restData;
 
-  let menu = '';
-  if (restData['menu'] != undefined) {
-    for (var menuList of restData['menu'])
-      menu += menuList + '\n';
-    menu = menu.substring(0, menu.length - 1);
+  let menu = [];
+  const menuList = restData['menu'];
+  if (menuList != undefined) {
+    for (const [id, order] of Object.entries(menuList)) {
+      const [food, price] = order.split(" : ")
+      menu.push(
+        <View style={style.menuView} key={id}>
+          <Text style={{ fontWeight: "bold" }}>{food}</Text>
+          <Text>{price}원</Text>
+        </View>
+      )
+    }
   }
 
   let comments = [];
-  const commentsList = restData['comments']
+  const commentsList = restData['comments'];
   if (commentsList !== undefined) {
     for (const [id, comment] of Object.entries(commentsList)) {
       if (comment != null) {
@@ -139,7 +146,7 @@ const RestComponent = (props) => {
             <Text style={style.keyText}>메뉴</Text>
           </View>
         </View>
-        <Text style={{ paddingLeft: 15 }}>{menu}</Text>
+          {menu}
       </View>
       <View style={[style.partition, style.endMargin]}>
         <View style={[style.contexts, {marginBottom: 15}]}>
@@ -147,7 +154,7 @@ const RestComponent = (props) => {
             <Text style={style.keyText}>댓글</Text>
           </View>
         </View>
-        {comments}
+          {comments}
       </View>
     </> 
   );
@@ -258,6 +265,15 @@ const style = StyleSheet.create({
   },
   endMargin: {
     marginBottom: 100
+  },
+  menuView: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#d1d1d1",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginBottom: 5,
+    marginHorizontal: 10
   },
   commentsView: {
     borderWidth: 1,
