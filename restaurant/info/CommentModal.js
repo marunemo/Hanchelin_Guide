@@ -27,23 +27,6 @@ const CommentButton = (props) => {
   const [delivFee, setDelivFee] = useState(0); //배달비
 
   async function addReview() {
-    commentList.push({
-      맛: taste,
-      가성비: costPerf,
-      서비스: service,
-      종합: overall,
-      총평: total,
-      배달여부: isDeliver,
-      배달시간: delivTime,
-      배달비: delivFee,
-      작성시간: new Date().toLocaleString(),
-      uid: user?.uid,
-    });
-
-    await commentRef.update({
-      comments: commentList
-    });
-
     await reviewRef.add({
       맛: taste,
       가성비: costPerf,
@@ -54,7 +37,26 @@ const CommentButton = (props) => {
       배달비: delivFee,
       작성시간: new Date(),
       uid: user?.uid,
-    });
+    })
+    .then(querySnapshot => {
+      commentList.push({
+        맛: taste,
+        가성비: costPerf,
+        서비스: service,
+        종합: overall,
+        총평: total,
+        배달여부: isDeliver,
+        배달시간: delivTime,
+        배달비: delivFee,
+        작성시간: new Date().toLocaleString(),
+        uid: user?.uid,
+        query: querySnapshot.id
+      });
+  
+      commentRef.update({
+        comments: commentList
+      });
+    })
 
     setTaste(2.5);
     setCostPerf(2.5);
