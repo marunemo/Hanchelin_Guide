@@ -54,7 +54,8 @@ const CommentButton = (props) => {
       });
   
       commentRef.update({
-        comments: commentList
+        comments: commentList,
+        comments_count: props.commentsCount + 1
       });
     })
 

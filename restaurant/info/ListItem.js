@@ -188,6 +188,9 @@ const RestaurantInfo = (props) => {
           .doc(queryId)
           .delete();
       });
+    await restRef.update({
+      comments_count: restData['comments_count'] - 1
+    });
     setReload(true);
   }
 
@@ -203,6 +206,7 @@ const RestaurantInfo = (props) => {
         <CommentButton
           restName={restData['official_name']} 
           comments={restData['comments']}
+          commentsCount={restData['comments_count']}
           commentsDir={restDir}
           onFinish={update => setReload(update)}
         />
