@@ -79,7 +79,7 @@ const RestComponent = (props) => {
               size="sm"
               borderRadius="full"
               onPress={() => props.onPop(id)}
-              icon={<Icon name="trash-o" as={Font} size="sm" color="#0a4a33" />}
+              icon={<Icon name="trash-o" as={Font} size="sm" color="#713f12" />}
             />
             <Text style={style.commentsText}>맛 : {'★'.repeat(comment["맛"])}</Text>
             <Text style={style.commentsText}>가성비 : {'★'.repeat(comment["가성비"])}</Text>
@@ -226,20 +226,21 @@ export default ItemActivity;
 const style = StyleSheet.create({
   containter: {
     height: '100%',
-    backgroundColor: "#d1ffe9"
+    backgroundColor: "#d1fae5"
   },
   contexts: {
     flexDirection: "row",
     marginVertical: 3,
   },
   keyText: {
+    color: "#033326",
     fontSize: 16,
     fontWeight: "bold",
     marginVertical: 3,
     marginHorizontal: 10
   },
   titleView: {
-    backgroundColor: "#7eed9a",
+    backgroundColor: "#86efac",
     borderRadius: 50,
     marginHorizontal: 5
   },
@@ -278,14 +279,15 @@ const style = StyleSheet.create({
   commentsView: {
     borderWidth: 1,
     borderRadius: 20,
-    borderColor: "#75a64a",
-    backgroundColor: "#d7ffb5",
+    borderColor: "#65a30d",
+    backgroundColor: "#d9f99d",
     width: "100%",
     marginVertical: 5,
     paddingVertical: 5,
     paddingHorizontal: 20
   },
   commentsText: {
+    color: "#1c1917",
     fontSize: 14,
     marginVertical: 3
   }
