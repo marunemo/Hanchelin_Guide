@@ -230,6 +230,7 @@ const style = StyleSheet.create({
     shadowColor: '#333333',
     shadowRadius: 2,
     shadowOpacity: 0.7,
+    elevation: 15
   },
   commentHeader: {
     fontWeight: 'bold',

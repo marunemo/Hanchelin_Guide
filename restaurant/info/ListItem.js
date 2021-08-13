@@ -254,6 +254,7 @@ const style = StyleSheet.create({
     shadowColor: '#666666',
     shadowRadius: 1,
     shadowOpacity: 0.3,
+    elevation: 8
   },
   horizontalLayout: {
     flexDirection: "row-reverse"
