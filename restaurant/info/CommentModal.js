@@ -218,6 +218,9 @@ const style = StyleSheet.create({
     position: 'absolute',
     bottom: 30,
     right: 30,
+    shadowColor: '#333333',
+    shadowRadius: 2,
+    shadowOpacity: 0.7,
   },
   commentHeader: {
     fontWeight: 'bold',
