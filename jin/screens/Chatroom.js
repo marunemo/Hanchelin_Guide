@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Button, ScrollView, TextInput, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  Image, 
+  Button, 
+  ScrollView, 
+  TextInput, 
+  TouchableOpacity, 
+  FlatList, 
+  ActivityIndicator,
+} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Divider, NativeBaseProvider } from 'native-base';
+import { Divider, NativeBaseProvider, Stack, HStack } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -10,7 +21,7 @@ import Authentication from './Authentication';
 import CreateChat from "./CreateChat";
 import Chat from "./Chat";
 
-const Stack = createNativeStackNavigator();
+const StackNav = createNativeStackNavigator();
 
 function Chatroom({ navigation }) {
   const [threads, setThreads] = useState([]);
@@ -25,6 +36,9 @@ function Chatroom({ navigation }) {
           return {
             _id: documentSnapshot.id,
             name: '',
+            location: '',
+            store: '',
+            endTime: 0,
             latestMessage: { text: '' },
             ...documentSnapshot.data()
           }
@@ -60,6 +74,13 @@ function Chatroom({ navigation }) {
                   <Text style={styles.contentText}>
                     {item.latestMessage.text != undefined && item.latestMessage.text.slice(0, 90)}
                   </Text>
+                  <Stack>
+                    <HStack space={3}>
+                      <Text>가게: {item.store}</Text>
+                      <Text>위치: {item.location}</Text>
+                      <Text>모집마감: {item.endTime}</Text> 
+                    </HStack>
+                  </Stack>
                 </View>
               </View>
             </TouchableOpacity>
@@ -74,8 +95,8 @@ function Chatroom({ navigation }) {
 export default function ({ navigation }) {
   return (
     <NativeBaseProvider>
-      <Stack.Navigator>
-        <Stack.Screen
+      <StackNav.Navigator>
+        <StackNav.Screen
           name="같이 배달 리스트"
           component={Chatroom}
           options={{
@@ -93,19 +114,37 @@ export default function ({ navigation }) {
                 onPress={() => navigation.navigate('새로운 채팅방 만들기')} />
             )
           }} />
-        <Stack.Screen
+        <StackNav.Screen
           name="새로운 채팅방 만들기"
           component={CreateChat}
-          options={{ headerBackTitleVisible: false }} />
-        <Stack.Screen
+          options={{ 
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#468966',
+            },
+            headerTintColor: '#f2f2f2',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 20,
+            },
+          }} />
+        <StackNav.Screen
           name="메시지"
           component={Chat}
           options={({ route }) => ({
             headerBackTitleVisible: false,
-            title: route.params.thread.name
+            title: route.params.thread.name,
+            headerStyle: {
+              backgroundColor: '#468966',
+            },
+            headerTintColor: '#f2f2f2',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 20,
+            },
           })}
         />
-      </Stack.Navigator>
+      </StackNav.Navigator>
     </NativeBaseProvider>
   )
 }
