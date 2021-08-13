@@ -70,9 +70,35 @@ const RestComponent = (props) => {
     }
   }
 
+  const [tog1, setTog1] = useState(false);
+  const [tog2, setTog2] = useState(false);
   return (
     <>
       <View style={style.partition}>
+        <View style={style.horizontalLayout}>
+          <IconButton
+            onPress={() => setTog1(!tog1)}
+            icon={
+              <Icon
+                name={tog1?"thumbs-up":"thumbs-o-up"}
+                as={Font}
+                size="sm"
+                color="#30A9DE"
+              />
+            }
+          />
+           <IconButton
+            onPress={() => setTog2(!tog2)}
+            icon={
+              <Icon
+                name={tog2?"heart":"heart-o"}
+                as={Font}
+                size="sm"
+                color="#f15c5c"
+              />
+            }
+          />
+        </View>
         <Text style={style.contexts}>
           <Text style={style.keyText}>이름 : </Text>
           {restData['official_name']}
@@ -186,6 +212,9 @@ const style = StyleSheet.create({
     margin: 5,
     paddingVertical: 20,
     paddingHorizontal: 30
+  },
+  horizontalLayout: {
+    flexDirection: "row-reverse"
   },
   mapView: {
     width: '100%',
