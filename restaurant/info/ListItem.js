@@ -35,6 +35,21 @@ const MapView = (props) => {
   )
 }
 
+const InfoComponent = (props) => {
+  return (
+    <View style={style.contexts}>
+      <View style={style.titleView}>
+        <Text style={style.keyText}>
+          {props.keyText}
+        </Text>
+      </View>
+      <Text style={{ fontSize: 16, marginVertical: 3 }}>
+        {props.value}
+      </Text>
+    </View>
+  )
+}
+
 const RestComponent = (props) => {
   const restData = props.restData;
 
@@ -99,35 +114,47 @@ const RestComponent = (props) => {
             }
           />
         </View>
-        <Text style={style.contexts}>
-          <Text style={style.keyText}>이름 : </Text>
-          {restData['official_name']}
-        </Text>
-        <Text style={style.contexts}>
-					<Text style={style.keyText}>주소 : </Text>
-					{restData['address']}
-				</Text>
-        <Text style={style.contexts}>
-					<Text style={style.keyText}>번호 : </Text>
-					{restData['contact']}
-				</Text>
+        <View>
+          <InfoComponent
+            keyText="이름"
+            value={restData['official_name']}
+          />
+          <InfoComponent
+            keyText="주소"
+            value={restData['address']}
+          />
+          <InfoComponent
+            keyText="번호"
+            value={restData['contact']}
+          />
+				</View>
       </View>
       <View style={style.partition}>
-        <Text style={style.contexts}>
-          <Text style={style.keyText}>위치 정보</Text>
-        </Text>
+        <View style={style.contexts}>
+          <View style={style.titleView}>
+            <Text style={style.keyText}>위치 정보</Text>
+          </View>
+        </View>
         <MapView
           restName={restData['official_name']}
           position={{ latitude: restData['y'], longitude: restData['x'] }}
         />
       </View>
       <View style={style.partition}>
-        <Text style={[style.keyText, {lineHeight: 40, fontSize: 16}]}>ᐧ 메뉴</Text>
+        <View style={style.contexts}>
+          <View style={style.titleView}>
+            <Text style={style.keyText}>메뉴</Text>
+          </View>
+        </View>
         <Text style={{ paddingLeft: 20 }}>{menu}</Text>
       </View>
       <View style={[style.partition, style.endMargin]}>
-        <Text style={[style.keyText, {lineHeight: 40, fontSize: 16}]}>댓글</Text>
-          {comments}
+        <View style={style.contexts}>
+          <View style={style.titleView}>
+            <Text style={style.keyText}>댓글</Text>
+          </View>
+        </View>
+        {comments}
       </View>
     </>
   );
@@ -202,10 +229,19 @@ const style = StyleSheet.create({
     backgroundColor: "#d1ffe9"
   },
   contexts: {
-    lineHeight: 20
+    flexDirection: "row",
+    marginVertical: 3,
   },
   keyText: {
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontWeight: "bold",
+    marginVertical: 3,
+    marginHorizontal: 10
+  },
+  titleView: {
+    backgroundColor: "#7eed9a",
+    borderRadius: 50,
+    marginHorizontal: 5
   },
   partition: {
     borderRadius: 25,
