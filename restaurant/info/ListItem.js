@@ -198,7 +198,8 @@ export default ItemActivity;
 
 const style = StyleSheet.create({
   containter: {
-    height: '100%'
+    height: '100%',
+    backgroundColor: "#d1ffe9"
   },
   contexts: {
     lineHeight: 20
@@ -207,11 +208,15 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
   },
   partition: {
-    borderWidth: 2,
     borderRadius: 25,
-    margin: 5,
+    backgroundColor: "#ffffff",
+    marginVertical: 5,
+    marginHorizontal: 15,
     paddingVertical: 20,
-    paddingHorizontal: 30
+    paddingHorizontal: 30,
+    shadowColor: '#666666',
+    shadowRadius: 1,
+    shadowOpacity: 0.3,
   },
   horizontalLayout: {
     flexDirection: "row-reverse"
