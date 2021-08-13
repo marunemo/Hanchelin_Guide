@@ -47,10 +47,10 @@ export default function App() {
               } else if (route.name == '같이 배달') {
                 iconName = 'automobile';
               }
-              return <Icon name={iconName} size={20} color='#ffffff' />;
+              return <Icon name={iconName} size={20} color='#f2f2f2' />;
             },
-            tabBarActiveTintColor: '#ffffff',
-            tabBarInactiveTintColor: '#ffffff',
+            tabBarActiveTintColor: '#f2f2f2',
+            tabBarInactiveTintColor: '#f2f2f2',
             tabBarActiveBackgroundColor: '#468966',
             tabBarInactiveBackgroundColor: '#FFF0A5',
           })}>
