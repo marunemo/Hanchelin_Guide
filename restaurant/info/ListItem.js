@@ -130,7 +130,7 @@ const RestComponent = (props) => {
 				</View>
       </View>
       <View style={style.partition}>
-        <View style={style.contexts}>
+        <View style={[style.contexts, {marginBottom: 15}]}>
           <View style={style.titleView}>
             <Text style={style.keyText}>위치 정보</Text>
           </View>
@@ -141,22 +141,22 @@ const RestComponent = (props) => {
         />
       </View>
       <View style={style.partition}>
-        <View style={style.contexts}>
+        <View style={[style.contexts, {marginBottom: 20}]}>
           <View style={style.titleView}>
             <Text style={style.keyText}>메뉴</Text>
           </View>
         </View>
-        <Text style={{ paddingLeft: 20 }}>{menu}</Text>
+        <Text style={{ paddingLeft: 15 }}>{menu}</Text>
       </View>
       <View style={[style.partition, style.endMargin]}>
-        <View style={style.contexts}>
+        <View style={[style.contexts, {marginBottom: 15}]}>
           <View style={style.titleView}>
             <Text style={style.keyText}>댓글</Text>
           </View>
         </View>
         {comments}
       </View>
-    </>
+    </> 
   );
 }
 
@@ -259,7 +259,9 @@ const style = StyleSheet.create({
   },
   mapView: {
     width: '100%',
-    aspectRatio: 1
+    aspectRatio: 1,
+    borderColor: "#aaaaaa",
+    borderWidth: 1
   },
   endMargin: {
     marginBottom: 100
