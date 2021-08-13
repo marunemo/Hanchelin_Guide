@@ -35,75 +35,128 @@ const MapView = (props) => {
   )
 }
 
+const InfoComponent = (props) => {
+  return (
+    <View style={style.contexts}>
+      <View style={style.titleView}>
+        <Text style={style.keyText}>
+          {props.keyText}
+        </Text>
+      </View>
+      <Text style={{ fontSize: 16, marginVertical: 3 }}>
+        {props.value}
+      </Text>
+    </View>
+  )
+}
+
 const RestComponent = (props) => {
   const restData = props.restData;
 
-  let menu = '';
-  if (restData['menu'] != undefined) {
-    for (var menuList of restData['menu'])
-      menu += menuList + '\n';
-    menu = menu.substring(0, menu.length - 1);
+  let menu = [];
+  const menuList = restData['menu'];
+  if (menuList != undefined) {
+    for (const [id, order] of Object.entries(menuList)) {
+      const [food, price] = order.split(" : ")
+      menu.push(
+        <View style={style.menuView} key={id}>
+          <Text style={{ fontWeight: "bold" }}>{food}</Text>
+          <Text>{price}원</Text>
+        </View>
+      )
+    }
   }
 
   let comments = [];
-  const commentsList = restData['comments']
+  const commentsList = restData['comments'];
   if (commentsList !== undefined) {
     for (const [id, comment] of Object.entries(commentsList)) {
       if (comment != null) {
         comments.push(
           <View style={style.commentsView} key={id}>
             <IconButton
-              style={{ alignSelf: "flex-end" }}
+              alignSelf="flex-end"
+              size="sm"
+              borderRadius="full"
               onPress={() => props.onPop(id)}
-              icon={<Icon name="trash-o" as={Font} size="xs" />}
+              icon={<Icon name="trash-o" as={Font} size="sm" color="#713f12" />}
             />
-            <Text>맛 : {'★'.repeat(comment["맛"])}</Text>
-            <Text>가성비 : {'★'.repeat(comment["가성비"])}</Text>
-            <Text>서비스 : {'★'.repeat(comment["서비스"])}</Text>
-            <Text>종합 : {'★'.repeat(comment["종합"])}</Text>
-            <Text>총평 : {comment["총평"]}</Text>
-            {comment["배달여부"] && <Text>배달 시간 : {comment["배달시간"]}분    배달비 : {comment["배달비"]}원</Text>}
-            <Text style={{ textAlign: "right" }}>{comment["작성시간"]}</Text>
+            <Text style={style.commentsText}>맛 : {'★'.repeat(comment["맛"])}</Text>
+            <Text style={style.commentsText}>가성비 : {'★'.repeat(comment["가성비"])}</Text>
+            <Text style={style.commentsText}>서비스 : {'★'.repeat(comment["서비스"])}</Text>
+            <Text style={style.commentsText}>종합 : {'★'.repeat(comment["종합"])}</Text>
+            <Text style={style.commentsText}>총평 : {comment["총평"]}</Text>
+            {comment["배달여부"] &&
+              <Text style={style.commentsText}>
+                배달 시간 : {comment["배달시간"]}분    배달비 : {comment["배달비"]}원
+              </Text>
+            }
+            <Text style={{ textAlign: "right", color: "#4b4b4b" }}>{comment["작성시간"]}</Text>
           </View>
         )
       }
     }
   }
 
+  const [tog1, setTog1] = useState(false);
+  const [tog2, setTog2] = useState(false);
   return (
     <>
       <View style={style.partition}>
-        <Text style={style.contexts}>
-          <Text style={style.keyText}>이름 : </Text>
-          {restData['official_name']}
-        </Text>
-        <Text style={style.contexts}>
-					<Text style={style.keyText}>주소 : </Text>
-					{restData['address']}
-				</Text>
-        <Text style={style.contexts}>
-					<Text style={style.keyText}>번호 : </Text>
-					{restData['contact']}
-				</Text>
+        <View style={style.horizontalLayout}>
+          <IconButton
+            onPress={() => setTog1(!tog1)}
+            icon={<Icon name={tog1?"thumbs-up":"thumbs-o-up"} as={Font} size="sm" color="#30A9DE" />}
+          />
+          <IconButton
+          onPress={() => setTog2(!tog2)}
+          icon={
+            <Icon name={tog2?"heart":"heart-o"} as={Font} size="sm" color="#f15c5c" />}
+          />
+        </View>
+        <View>
+          <InfoComponent
+            keyText="이름"
+            value={restData['official_name']}
+          />
+          <InfoComponent
+            keyText="주소"
+            value={restData['address']}
+          />
+          <InfoComponent
+            keyText="번호"
+            value={restData['contact']}
+          />
+				</View>
       </View>
       <View style={style.partition}>
-        <Text style={style.contexts}>
-          <Text style={style.keyText}>위치 정보</Text>
-        </Text>
+        <View style={[style.contexts, {marginBottom: 15}]}>
+          <View style={style.titleView}>
+            <Text style={style.keyText}>위치 정보</Text>
+          </View>
+        </View>
         <MapView
           restName={restData['official_name']}
           position={{ latitude: restData['y'], longitude: restData['x'] }}
         />
       </View>
       <View style={style.partition}>
-        <Text style={[style.keyText, {lineHeight: 40, fontSize: 16}]}>ᐧ 메뉴</Text>
-        <Text style={{ paddingLeft: 20 }}>{menu}</Text>
+        <View style={[style.contexts, {marginBottom: 20}]}>
+          <View style={style.titleView}>
+            <Text style={style.keyText}>메뉴</Text>
+          </View>
+        </View>
+          {menu}
       </View>
       <View style={[style.partition, style.endMargin]}>
-        <Text style={[style.keyText, {lineHeight: 40, fontSize: 16}]}>댓글</Text>
+        <View style={[style.contexts, {marginBottom: 15}]}>
+          <View style={style.titleView}>
+            <Text style={style.keyText}>댓글</Text>
+          </View>
+        </View>
           {comments}
       </View>
-    </>
+    </> 
   );
 }
 
@@ -172,34 +225,71 @@ export default ItemActivity;
 
 const style = StyleSheet.create({
   containter: {
-    height: '100%'
+    height: '100%',
+    backgroundColor: "#d1fae5"
   },
   contexts: {
-    lineHeight: 20
+    flexDirection: "row",
+    marginVertical: 3,
   },
   keyText: {
-    fontWeight: 'bold',
+    color: "#033326",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginVertical: 3,
+    marginHorizontal: 10
+  },
+  titleView: {
+    backgroundColor: "#86efac",
+    borderRadius: 50,
+    marginHorizontal: 5
   },
   partition: {
-    borderWidth: 2,
     borderRadius: 25,
-    margin: 5,
+    backgroundColor: "#ffffff",
+    marginVertical: 5,
+    marginHorizontal: 15,
     paddingVertical: 20,
-    paddingHorizontal: 30
+    paddingHorizontal: 30,
+    shadowColor: '#666666',
+    shadowRadius: 1,
+    shadowOpacity: 0.3,
+    elevation: 8
+  },
+  horizontalLayout: {
+    flexDirection: "row-reverse"
   },
   mapView: {
     width: '100%',
-    aspectRatio: 1
+    aspectRatio: 1,
+    borderColor: "#aaaaaa",
+    borderWidth: 1
   },
   endMargin: {
     marginBottom: 100
   },
+  menuView: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#d1d1d1",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginBottom: 5,
+    marginHorizontal: 10
+  },
   commentsView: {
     borderWidth: 1,
-    borderColor: "#75a64a",
+    borderRadius: 20,
+    borderColor: "#65a30d",
+    backgroundColor: "#d9f99d",
     width: "100%",
     marginVertical: 5,
     paddingVertical: 5,
     paddingHorizontal: 20
+  },
+  commentsText: {
+    color: "#1c1917",
+    fontSize: 14,
+    marginVertical: 3
   }
 })
