@@ -140,7 +140,7 @@ const RestComponent = (props) => {
             </View>
             <Progress
               rounded="0"
-              width={50}
+              width={75}
               height={14}
               max={5}
               value={restData['flavor']}
@@ -153,12 +153,12 @@ const RestComponent = (props) => {
             </View>
             <Progress
               rounded="0"
-              width={50}
+              width={75}
               height={14}
               max={5}
-              value={restData['cost_performance'] * 20}
+              value={restData['cost_performance']}
             />
-            <Text>{restData['flavor']}</Text>
+            <Text>{restData['cost_performance']}</Text>
           </View>
           <View style={style.ratingView}>
             <View style={style.ratingTextView}>
@@ -166,12 +166,12 @@ const RestComponent = (props) => {
             </View>
             <Progress
               rounded="0"
-              width={50}
+              width={75}
               height={14}
               max={5}
-              value={restData['service'] * 20}
+              value={restData['service']}
             />
-            <Text>{restData['flavor']}</Text>
+            <Text>{restData['service']}</Text>
           </View>
           <View style={style.horizontalLayout}>
             <Text>총 {restData['comments_count']}명이 참여해주셨습니다.</Text>
