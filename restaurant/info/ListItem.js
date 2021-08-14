@@ -173,8 +173,24 @@ const RestComponent = (props) => {
             />
             <Text>{restData['service']}</Text>
           </View>
+          <View style={style.ratingView}>
+            <View style={[style.ratingTextView, {backgroundColor: '#fbbf24'}]}>
+              <Text style={style.ratingText}>종합</Text>
+            </View>
+            <Progress
+              rounded="0"
+              colorScheme="amber"
+              width={75}
+              height={14}
+              max={5}
+              value={restData['overall']}
+            />
+            <Text>{restData['overall']}</Text>
+          </View>
           <View style={style.horizontalLayout}>
-            <Text>총 {restData['comments_count']}명이 참여해주셨습니다.</Text>
+            <Text style={{ color: '#57534e', fontWeight: 'bold' }}>
+              총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.
+            </Text>
           </View>
         </View>
       </View>
