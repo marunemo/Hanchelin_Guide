@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
-import { NativeBaseProvider, IconButton, Icon } from 'native-base';
+import { NativeBaseProvider, IconButton, Icon, Progress } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
@@ -82,10 +82,10 @@ const RestComponent = (props) => {
               onPress={() => props.onPop(id, comment.query)}
               icon={<Icon name="trash-o" as={Font} size="sm" color="#713f12" />}
             />
-            <Text style={style.commentsText}>맛 : {'★'.repeat(comment["맛"])}</Text>
-            <Text style={style.commentsText}>가성비 : {'★'.repeat(comment["가성비"])}</Text>
-            <Text style={style.commentsText}>서비스 : {'★'.repeat(comment["서비스"])}</Text>
-            <Text style={style.commentsText}>종합 : {'★'.repeat(comment["종합"])}</Text>
+            <Text style={style.commentsText}>맛 : {comment["맛"]}</Text>
+            <Text style={style.commentsText}>가성비 : {comment["가성비"]}</Text>
+            <Text style={style.commentsText}>서비스 : {comment["서비스"]}</Text>
+            <Text style={style.commentsText}>종합 : {comment["종합"]}</Text>
             <Text style={style.commentsText}>총평 : {comment["총평"]}</Text>
             {comment["배달여부"] &&
               <Text style={style.commentsText}>
@@ -129,6 +129,43 @@ const RestComponent = (props) => {
             value={restData['contact']}
           />
 				</View>
+        <View>
+          <View style={style.ratingView}>
+            <View style={style.ratingTextView}>
+              <Text style={style.ratingText}>맛</Text>
+            </View>
+            <Progress
+              rounded="0"
+              width={50}
+              height={14}
+              max={5}
+              value={restData['flavor']}
+            />
+            <Text>{restData['flavor']}</Text>
+          </View>
+          <View style={style.ratingView}>
+            <View style={style.ratingTextView}>
+              <Text style={style.ratingText}>가성비</Text>
+            </View>
+            <Progress
+              rounded="0"
+              size="lg"
+              max={5}
+              value={restData['cost_performance'] * 20}
+            />
+          </View>
+          <View style={style.ratingView}>
+            <View style={style.ratingTextView}>
+              <Text style={style.ratingText}>서비스</Text>
+            </View>
+            <Progress
+              rounded="0"
+              size="lg"
+              max={5}
+              value={restData['service'] * 20}
+            />
+          </View>
+        </View>
       </View>
       <View style={style.partition}>
         <View style={[style.contexts, {marginBottom: 15}]}>
@@ -273,6 +310,24 @@ const style = StyleSheet.create({
   },
   horizontalLayout: {
     flexDirection: "row-reverse"
+  },
+  ratingView: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 3
+  },
+  ratingTextView: {
+    width: 52,
+    height: 22,
+    backgroundColor: "#67e8f9",
+    justifyContent: "center",
+    borderRadius: 50,
+    marginHorizontal: 5
+  },
+  ratingText: {
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "bold"
   },
   mapView: {
     width: '100%',
