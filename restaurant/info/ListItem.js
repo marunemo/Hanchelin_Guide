@@ -58,10 +58,10 @@ const RestComponent = (props) => {
   const menuList = restData['menu'];
   if (menuList != undefined) {
     for (const [id, order] of Object.entries(menuList)) {
-      const [food, price] = order.split(" : ")
+      const [food, price] = order.split(' : ')
       menu.push(
         <View style={style.menuView} key={id}>
-          <Text style={{ fontWeight: "bold" }}>{food}</Text>
+          <Text style={{ fontWeight: 'bold' }}>{food}</Text>
           <Text>{price}원</Text>
         </View>
       )
@@ -82,17 +82,17 @@ const RestComponent = (props) => {
               onPress={() => props.onPop(id, comment.query)}
               icon={<Icon name="trash-o" as={Font} size="sm" color="#713f12" />}
             />
-            <Text style={style.commentsText}>맛 : {comment["맛"]}</Text>
-            <Text style={style.commentsText}>가성비 : {comment["가성비"]}</Text>
-            <Text style={style.commentsText}>서비스 : {comment["서비스"]}</Text>
-            <Text style={style.commentsText}>종합 : {comment["종합"]}</Text>
-            <Text style={style.commentsText}>총평 : {comment["총평"]}</Text>
-            {comment["배달여부"] &&
+            <Text style={style.commentsText}>맛 : {comment['맛']}</Text>
+            <Text style={style.commentsText}>가성비 : {comment['가성비']}</Text>
+            <Text style={style.commentsText}>서비스 : {comment['서비스']}</Text>
+            <Text style={style.commentsText}>종합 : {comment['종합']}</Text>
+            <Text style={style.commentsText}>총평 : {comment['총평']}</Text>
+            {comment['배달여부'] &&
               <Text style={style.commentsText}>
-                배달 시간 : {comment["배달시간"]}분    배달비 : {comment["배달비"]}원
+                배달 시간 : {comment['배달시간']}분    배달비 : {comment['배달비']}원
               </Text>
             }
-            <Text style={{ textAlign: "right", color: "#4b4b4b" }}>{comment["작성시간"]}</Text>
+            <Text style={{ textAlign: 'right', color: '#4b4b4b' }}>{comment['작성시간']}</Text>
           </View>
         )
       }
@@ -149,7 +149,8 @@ const RestComponent = (props) => {
             </View>
             <Progress
               rounded="0"
-              size="lg"
+              width={50}
+              height={14}
               max={5}
               value={restData['cost_performance'] * 20}
             />
@@ -160,10 +161,14 @@ const RestComponent = (props) => {
             </View>
             <Progress
               rounded="0"
-              size="lg"
+              width={50}
+              height={14}
               max={5}
               value={restData['service'] * 20}
             />
+          </View>
+          <View>
+            <Text>총 {restData['comments_count']}명이 참여해주셨습니다.</Text>
           </View>
         </View>
       </View>
@@ -215,7 +220,7 @@ const RestaurantInfo = (props) => {
 
   async function removeComment(commentId, queryId) {
     await restRef
-      .child("comments/" + commentId.toString())
+      .child('comments/' + commentId.toString())
       .remove()
       .then(() => {
         firestore()
@@ -278,27 +283,27 @@ export default ItemActivity;
 const style = StyleSheet.create({
   containter: {
     height: '100%',
-    backgroundColor: "#d1fae5"
+    backgroundColor: '#d1fae5'
   },
   contexts: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginVertical: 3,
   },
   keyText: {
-    color: "#033326",
+    color: '#033326',
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginVertical: 3,
     marginHorizontal: 10
   },
   titleView: {
-    backgroundColor: "#86efac",
+    backgroundColor: '#86efac',
     borderRadius: 50,
     marginHorizontal: 5
   },
   partition: {
     borderRadius: 25,
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     marginVertical: 5,
     marginHorizontal: 15,
     paddingVertical: 20,
@@ -309,39 +314,39 @@ const style = StyleSheet.create({
     elevation: 8
   },
   horizontalLayout: {
-    flexDirection: "row-reverse"
+    flexDirection: 'row-reverse'
   },
   ratingView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginVertical: 3
   },
   ratingTextView: {
     width: 52,
     height: 22,
-    backgroundColor: "#67e8f9",
-    justifyContent: "center",
+    backgroundColor: '#67e8f9',
+    justifyContent: 'center',
     borderRadius: 50,
     marginHorizontal: 5
   },
   ratingText: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 14,
-    fontWeight: "bold"
+    fontWeight: 'bold'
   },
   mapView: {
     width: '100%',
     aspectRatio: 1,
-    borderColor: "#aaaaaa",
+    borderColor: '#aaaaaa',
     borderWidth: 1
   },
   endMargin: {
     marginBottom: 100
   },
   menuView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "#d1d1d1",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#d1d1d1',
     paddingVertical: 5,
     paddingHorizontal: 10,
     marginBottom: 5,
@@ -350,15 +355,15 @@ const style = StyleSheet.create({
   commentsView: {
     borderWidth: 1,
     borderRadius: 20,
-    borderColor: "#65a30d",
-    backgroundColor: "#d9f99d",
-    width: "100%",
+    borderColor: '#65a30d',
+    backgroundColor: '#d9f99d',
+    width: '100%',
     marginVertical: 5,
     paddingVertical: 5,
     paddingHorizontal: 20
   },
   commentsText: {
-    color: "#1c1917",
+    color: '#1c1917',
     fontSize: 14,
     marginVertical: 3
   }
