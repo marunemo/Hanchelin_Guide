@@ -27,23 +27,6 @@ const CommentButton = (props) => {
   const [delivFee, setDelivFee] = useState(0); //배달비
 
   async function addReview() {
-    commentList.push({
-      맛: taste,
-      가성비: costPerf,
-      서비스: service,
-      종합: overall,
-      총평: total,
-      배달여부: isDeliver,
-      배달시간: delivTime,
-      배달비: delivFee,
-      작성시간: new Date().toLocaleString(),
-      uid: user?.uid,
-    });
-
-    await commentRef.update({
-      comments: commentList
-    });
-
     await reviewRef.add({
       맛: taste,
       가성비: costPerf,
@@ -54,7 +37,27 @@ const CommentButton = (props) => {
       배달비: delivFee,
       작성시간: new Date(),
       uid: user?.uid,
-    });
+    })
+    .then(querySnapshot => {
+      commentList.push({
+        맛: taste,
+        가성비: costPerf,
+        서비스: service,
+        종합: overall,
+        총평: total,
+        배달여부: isDeliver,
+        배달시간: delivTime,
+        배달비: delivFee,
+        작성시간: new Date().toLocaleString(),
+        uid: user?.uid,
+        query: querySnapshot.id
+      });
+  
+      commentRef.update({
+        comments: commentList,
+        comments_count: props.commentsCount + 1
+      });
+    })
 
     setTaste(2.5);
     setCostPerf(2.5);
@@ -73,11 +76,11 @@ const CommentButton = (props) => {
           <Slider
             w="80%"
             alignSelf="center"
-            defaultValue={30}
+            defaultValue={delivTime}
             maxValue={60}
             step={5}
             onChange={time => {setDelivTime(time)}}
-            onChangeEnd={setDelivTime}>
+          >
               <Slider.Track>
                 <Slider.FilledTrack />
               </Slider.Track>
@@ -90,6 +93,7 @@ const CommentButton = (props) => {
           <Input
             size="sm"
             w={250}
+            isRequired={true}
             keyboardType="numeric"
             variant="underlined"
             alignSelf="flex-end"
@@ -97,7 +101,7 @@ const CommentButton = (props) => {
             multiline={false}
             InputRightElement={<Text style={{ fontWeight: 'bold' }}>원</Text>}
             placeholder="들었던 배달 비용을 적어주세요."
-            onChangeText={(fee) => setDelivFee(parseInt(fee))}
+            onChange={(fee) => setDelivFee(parseInt(fee))}
           />
         </>
       );

@@ -4,6 +4,7 @@ import NaverMapView, { Marker } from 'react-native-nmap';
 import { NativeBaseProvider, IconButton, Icon } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
 import database from '@react-native-firebase/database';
+import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -78,7 +79,7 @@ const RestComponent = (props) => {
               alignSelf="flex-end"
               size="sm"
               borderRadius="full"
-              onPress={() => props.onPop(id)}
+              onPress={() => props.onPop(id, comment.query)}
               icon={<Icon name="trash-o" as={Font} size="sm" color="#713f12" />}
             />
             <Text style={style.commentsText}>맛 : {'★'.repeat(comment["맛"])}</Text>
@@ -175,8 +176,21 @@ const RestaurantInfo = (props) => {
     setReload(false);
   }, [reload]);
 
-  async function removeComment(commentId) {
-    await restRef.child("comments/" + commentId.toString()).remove();
+  async function removeComment(commentId, queryId) {
+    await restRef
+      .child("comments/" + commentId.toString())
+      .remove()
+      .then(() => {
+        firestore()
+          .collection('가게')
+          .doc(restData['official_name'])
+          .collection('리뷰')
+          .doc(queryId)
+          .delete();
+      });
+    await restRef.update({
+      comments_count: restData['comments_count'] - 1
+    });
     setReload(true);
   }
 
@@ -186,12 +200,13 @@ const RestaurantInfo = (props) => {
         <ScrollView>
           <RestComponent
             restData={restData}
-            onPop={id => removeComment(id)}
+            onPop={(id, query) => removeComment(id, query)}
           />
         </ScrollView>
         <CommentButton
           restName={restData['official_name']} 
           comments={restData['comments']}
+          commentsCount={restData['comments_count']}
           commentsDir={restDir}
           onFinish={update => setReload(update)}
         />
