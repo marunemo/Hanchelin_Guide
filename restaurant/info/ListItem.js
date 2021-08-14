@@ -86,7 +86,11 @@ const RestComponent = (props) => {
             <Text style={style.commentsText}>가성비 : {comment['가성비']}</Text>
             <Text style={style.commentsText}>서비스 : {comment['서비스']}</Text>
             <Text style={style.commentsText}>종합 : {comment['종합']}</Text>
-            <Text style={style.commentsText}>총평 : {comment['총평']}</Text>
+            {comment['총평'] !== '' &&
+              <Text style={style.commentsText}>
+                총평 : {comment['총평']}
+              </Text>
+            }
             {comment['배달여부'] &&
               <Text style={style.commentsText}>
                 배달 시간 : {comment['배달시간']}분    배달비 : {comment['배달비']}원
@@ -154,6 +158,7 @@ const RestComponent = (props) => {
               max={5}
               value={restData['cost_performance'] * 20}
             />
+            <Text>{restData['flavor']}</Text>
           </View>
           <View style={style.ratingView}>
             <View style={style.ratingTextView}>
@@ -166,8 +171,9 @@ const RestComponent = (props) => {
               max={5}
               value={restData['service'] * 20}
             />
+            <Text>{restData['flavor']}</Text>
           </View>
-          <View>
+          <View style={style.horizontalLayout}>
             <Text>총 {restData['comments_count']}명이 참여해주셨습니다.</Text>
           </View>
         </View>
@@ -215,6 +221,7 @@ const RestaurantInfo = (props) => {
         setData(data.val());
       }
     });
+    console.log(reload);
     setReload(false);
   }, [reload]);
 
