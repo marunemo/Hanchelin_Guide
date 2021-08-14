@@ -114,6 +114,7 @@ const CommentButton = (props) => {
       <Modal
         style={{ justifyContent: 'flex-end', alignItems: 'center' }}
         isVisible={onInput}
+        onModalWillHide={() => props.onFinish(true)}
         onBackButtonPress={() => showInput(false)}
         onBackdropPress={() => showInput(false)}
       >
@@ -189,15 +190,16 @@ const CommentButton = (props) => {
             <Button
               colorScheme="rgb(14, 165, 233)"
               onPress={() => {
-              props.onFinish(true);
-              addReview();
-              showInput(false);
-            }}>
+                addReview();
+                showInput(false);
+              }}
+            >
               완료
             </Button>
             <Button
               colorScheme="rgb(251, 113, 133)"
-              onPress={() => showInput(false)}>
+              onPress={() => showInput(false)}
+            >
                 취소
             </Button>
           </Button.Group>
