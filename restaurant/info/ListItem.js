@@ -236,11 +236,28 @@ const RestaurantInfo = (props) => {
           .collection('리뷰')
           .doc(queryId)
           .delete();
-      });
-    await restRef.update({
-      comments_count: restData['comments_count'] - 1
-    });
-    setReload(true);
+          
+          const commentsCount = restData['comments_count'];
+          if (commentsCount == 1) {
+            restRef.update({
+              comments_count: 0,
+              flavor: 0,
+              cost_performance: 0,
+              service: 0,
+              overall: 0,
+            }).then(() => setReload(true));
+          } else {
+            const comment = restData['comments'][commentId];
+
+            restRef.update({
+              comments_count: commentsCount - 1,
+              flavor: (restData['flavor'] * commentsCount - comment['맛']) / (commentsCount - 1),
+              cost_performance: (restData['cost_performance'] * commentsCount - comment['가성비']) / (commentsCount - 1),
+              service: (restData['service'] * commentsCount - comment['서비스']) / (commentsCount - 1),
+              overall: (restData['overall'] * commentsCount - comment['종합']) / (commentsCount - 1)
+            }).then(() => setReload(true));
+          }
+        });
   }
 
   return (
@@ -253,9 +270,7 @@ const RestaurantInfo = (props) => {
           />
         </ScrollView>
         <CommentButton
-          restName={restData['official_name']} 
-          comments={restData['comments']}
-          commentsCount={restData['comments_count']}
+          restaurantData={restData}
           commentsDir={restDir}
           onFinish={update => setReload(update)}
         />

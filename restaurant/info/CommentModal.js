@@ -15,8 +15,9 @@ const CommentButton = (props) => {
 
   // 여기서 가게 이름 (doc)을 현재 들어간 가게에 따라서 가져와야 한다
   let commentRef = database().ref(props.commentsDir);
-  let reviewRef = firestore().collection('가게').doc(props.restName).collection('리뷰');
-  let commentList = props.comments?props.comments:[];
+  let reviewRef = firestore().collection('가게').doc(props.restaurantData['official_name']).collection('리뷰');
+  let commentList = props.restaurantData['comments']?props.restaurantData['comments']:[];
+  const commentsCount = props.restaurantData['comments_count'];
 
   const [taste, setTaste] = useState(2.5); //맛
   const [costPerf, setCostPerf] = useState(2.5); //가성비
@@ -55,7 +56,11 @@ const CommentButton = (props) => {
   
       commentRef.update({
         comments: commentList,
-        comments_count: props.commentsCount + 1
+        comments_count: commentsCount + 1,
+        flavor: (props.restaurantData['flavor'] * commentsCount + taste) / (commentsCount + 1),
+        cost_performance: (props.restaurantData['cost_performance'] * commentsCount + costPerf) / (commentsCount + 1),
+        service: (props.restaurantData['service'] * commentsCount + service) / (commentsCount + 1),
+        overall: (props.restaurantData['overall'] * commentsCount + overall) / (commentsCount + 1)
       });
     })
 
