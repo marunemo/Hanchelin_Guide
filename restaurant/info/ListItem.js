@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator();
 
 const MapView = (props) => {
   const navigation = useNavigation();
-
+  
   if (props.position['latitude'] == undefined) {
     return <View style={style.mapView} />;
   }
@@ -64,6 +64,7 @@ const RestComponent = (props) => {
 
   const [tog1, setTog1] = useState(false);
   const [tog2, setTog2] = useState(false);
+  const navigation = useNavigation();
   return (
     <>
       <View style={style.partition}>
@@ -76,6 +77,11 @@ const RestComponent = (props) => {
             onPress={() => setTog2(!tog2)}
             icon={
               <Icon name={tog2 ? "heart" : "heart-o"} as={Font} size="sm" color="#f15c5c" />}
+          />
+          <IconButton
+            onPress={() => navigation.navigate("같이 배달", {screen: "새로운 채팅방 만들기"})}
+            icon={
+              <Icon name="wechat" as={Font} size="sm" color="#4c1d95" />}
           />
         </View>
         <View>
