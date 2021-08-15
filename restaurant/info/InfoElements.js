@@ -4,18 +4,18 @@ import { IconButton, Icon, Progress } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
 
 const InfoView = (props) => {
-  return (
-    <View style={style.contexts}>
-      <View style={style.titleView}>
-        <Text style={style.keyText}>
-          {props.keyText}
-        </Text>
-      </View>
-      <Text style={{ fontSize: 16, marginVertical: 3 }}>
-        {props.value}
-      </Text>
-    </View>
-  )
+	return (
+		<View style={style.contexts}>
+			<View style={style.titleView}>
+				<Text style={style.keyText}>
+					{props.keyText}
+				</Text>
+			</View>
+			<Text style={{ fontSize: 16, marginVertical: 3 }}>
+				{props.value}
+			</Text>
+		</View>
+	)
 }
 
 const MenuListView = (props) => {
@@ -63,14 +63,14 @@ const CommentListView = (props) => {
 }
 
 const RatingBar = (props) => {
-  const backgroundText = props.bgText
+	const backgroundText = props.bgText
 	const ratingName = props.ratingName;
 	const ratingData = props.ratingData;
 	const theme = props.theme;
 
 	return (
 		<View style={style.ratingView}>
-			<View style={[style.ratingTextView, {backgroundColor: backgroundText}]}>
+			<View style={[style.ratingTextView, { backgroundColor: backgroundText }]}>
 				<Text style={style.ratingText}>{ratingName}</Text>
 			</View>
 			<Progress
@@ -89,61 +89,61 @@ const RatingBar = (props) => {
 export { InfoView, MenuListView, CommentListView, RatingBar };
 
 const style = StyleSheet.create({
-  contexts: {
-    flexDirection: 'row',
-    marginVertical: 3,
-  },
-  keyText: {
-    color: '#033326',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginVertical: 3,
-    marginHorizontal: 10
-  },
-  titleView: {
-    backgroundColor: '#86efac',
-    borderRadius: 50,
-    marginHorizontal: 5
-  },
-  ratingView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 3
-  },
-  ratingTextView: {
-    width: 52,
-    height: 22,
-    justifyContent: 'center',
-    borderRadius: 50,
-    marginHorizontal: 5
-  },
-  ratingText: {
-    textAlign: 'center',
-    fontSize: 14,
-    fontWeight: 'bold'
-  },
-  menuView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#d1d1d1',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    marginBottom: 5,
-    marginHorizontal: 10
-  },
-  commentsView: {
-    borderWidth: 1,
-    borderRadius: 20,
-    borderColor: '#65a30d',
-    backgroundColor: '#d9f99d',
-    width: '100%',
-    marginVertical: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 20
-  },
-  commentsText: {
-    color: '#1c1917',
-    fontSize: 14,
-    marginVertical: 3
-  }
+	contexts: {
+		flexDirection: 'row',
+		marginVertical: 3,
+	},
+	keyText: {
+		color: '#033326',
+		fontSize: 16,
+		fontWeight: 'bold',
+		marginVertical: 3,
+		marginHorizontal: 10
+	},
+	titleView: {
+		backgroundColor: '#86efac',
+		borderRadius: 50,
+		marginHorizontal: 5
+	},
+	ratingView: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		marginVertical: 3
+	},
+	ratingTextView: {
+		width: 52,
+		height: 22,
+		justifyContent: 'center',
+		borderRadius: 50,
+		marginHorizontal: 5
+	},
+	ratingText: {
+		textAlign: 'center',
+		fontSize: 14,
+		fontWeight: 'bold'
+	},
+	menuView: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		backgroundColor: '#d1d1d1',
+		paddingVertical: 5,
+		paddingHorizontal: 10,
+		marginBottom: 5,
+		marginHorizontal: 10
+	},
+	commentsView: {
+		borderWidth: 1,
+		borderRadius: 20,
+		borderColor: '#65a30d',
+		backgroundColor: '#d9f99d',
+		width: '100%',
+		marginVertical: 5,
+		paddingVertical: 5,
+		paddingHorizontal: 20
+	},
+	commentsText: {
+		color: '#1c1917',
+		fontSize: 14,
+		marginVertical: 3
+	}
 })

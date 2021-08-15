@@ -19,7 +19,7 @@ const MapView = (props) => {
 
   if (props.position['latitude'] == undefined) {
     return <View style={style.mapView} />;
-	}
+  }
 
   return (
     <NaverMapView
@@ -30,7 +30,7 @@ const MapView = (props) => {
       zoomControl={true}
       minZoomLevel={6}
       maxZoomLevel={19}
-      onMapClick={() => {navigation.navigate("식당 위치", {name: props.restName, coordinate: props.position})}}
+      onMapClick={() => navigation.navigate("식당 위치", { name: props.restName, coordinate: props.position })}
     >
       <Marker coordinate={props.position} />
     </NaverMapView>
@@ -41,7 +41,7 @@ const RestComponent = (props) => {
   const restData = props.restData;
   let menu = [];
   let comments = [];
-  
+
   const menuList = restData['menu'];
   const commentsList = restData['comments'];
 
@@ -70,12 +70,12 @@ const RestComponent = (props) => {
         <View style={style.horizontalLayout}>
           <IconButton
             onPress={() => setTog1(!tog1)}
-            icon={<Icon name={tog1?"thumbs-up":"thumbs-o-up"} as={Font} size="sm" color="#30A9DE" />}
+            icon={<Icon name={tog1 ? "thumbs-up" : "thumbs-o-up"} as={Font} size="sm" color="#30A9DE" />}
           />
           <IconButton
-          onPress={() => setTog2(!tog2)}
-          icon={
-            <Icon name={tog2?"heart":"heart-o"} as={Font} size="sm" color="#f15c5c" />}
+            onPress={() => setTog2(!tog2)}
+            icon={
+              <Icon name={tog2 ? "heart" : "heart-o"} as={Font} size="sm" color="#f15c5c" />}
           />
         </View>
         <View>
@@ -91,7 +91,7 @@ const RestComponent = (props) => {
             keyText="번호"
             value={restData['contact']}
           />
-				</View>
+        </View>
         <View>
           <RatingBar
             bgText="#67e8f9"
@@ -100,7 +100,7 @@ const RestComponent = (props) => {
             theme="cyan"
           />
           <RatingBar
-            bgText="#67e8f9"  
+            bgText="#67e8f9"
             ratingName="가성비"
             ratingData={restData['cost_performance']}
             theme="cyan"
@@ -125,7 +125,7 @@ const RestComponent = (props) => {
         </View>
       </View>
       <View style={style.partition}>
-        <View style={[style.contexts, {marginBottom: 15}]}>
+        <View style={[style.contexts, { marginBottom: 15 }]}>
           <View style={style.titleView}>
             <Text style={style.keyText}>위치 정보</Text>
           </View>
@@ -136,22 +136,22 @@ const RestComponent = (props) => {
         />
       </View>
       <View style={style.partition}>
-        <View style={[style.contexts, {marginBottom: 20}]}>
+        <View style={[style.contexts, { marginBottom: 20 }]}>
           <View style={style.titleView}>
             <Text style={style.keyText}>메뉴</Text>
           </View>
         </View>
-          {menu}
+        {menu}
       </View>
       <View style={[style.partition, style.endMargin]}>
-        <View style={[style.contexts, {marginBottom: 15}]}>
+        <View style={[style.contexts, { marginBottom: 15 }]}>
           <View style={style.titleView}>
             <Text style={style.keyText}>댓글</Text>
           </View>
         </View>
-          {comments}
+        {comments}
       </View>
-    </> 
+    </>
   );
 }
 
@@ -174,7 +174,7 @@ const RestaurantInfo = (props) => {
   async function removeComment(commentId, queryId) {
     await restRef.child('comments/' + commentId.toString()).remove().then(() => {
       const commentsCount = restData['comments_count'];
-      
+
       firestore().collection('가게').doc(restData['official_name']).collection('리뷰').doc(queryId).delete();
       if (commentsCount == 1) {
         restRef.update({

@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const MapScreen = ({ route }) => {
   const navigation = useNavigation();
-  const [currentPosition, setPosition] = useState({latitude: 36.103116, longitude: 129.388368}); // Handong University
+  const [currentPosition, setPosition] = useState({ latitude: 36.103116, longitude: 129.388368 }); // Handong University
   const [centerPosition, setCenter] = useState(route.params.coordinate)
   const [zoomLevel, setZoom] = useState(16)
   // default zoom level of naver map is 16, and ratio is 1px : 1m when zoom level is 16.
@@ -14,31 +14,31 @@ const MapScreen = ({ route }) => {
   // ref : https://www.ncloud.com/support/notice/all/738
 
   useEffect(() => {
-    if(Platform.OS === 'ios') {
+    if (Platform.OS === 'ios') {
       Geolocation.requestAuthorization('whenInUse');
-		}
+    }
 
     Geolocation.getCurrentPosition(coordinate => {
-        const {latitude, longitude} = coordinate.coords;
-        setPosition({latitude, longitude})
-        setCenter(
-          {latitude: (currentPosition.latitude + route.params.coordinate.latitude) / 2,
-           longitude: (currentPosition.longitude + route.params.coordinate.longitude) / 2}
-        )
-        
-        const maxAngle = Math.max(
-          Math.abs(currentPosition.latitude - route.params.coordinate.latitude) / (Dimensions.get('screen').height),
-          Math.abs(currentPosition.longitude - route.params.coordinate.longitude)  / (Dimensions.get('screen').width)
-        ) // max scale of angle per pixel
-        const diffMeter = maxAngle / 360 * 2 * Math.PI * 6371000 // 2 * pi * earth radius(m) * (angle) / 360
-        setZoom(16 - Math.log2(diffMeter) - 1) // reduce 1 level for padding
-      }, error => {
-        console.log(error.code, error.message);
-      }, {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000}
-	)
-}, [zoomLevel]);
+      const { latitude, longitude } = coordinate.coords;
+      setPosition({ latitude, longitude })
+      setCenter({
+        latitude: (currentPosition.latitude + route.params.coordinate.latitude) / 2,
+        longitude: (currentPosition.longitude + route.params.coordinate.longitude) / 2
+      })
 
-  return(
+      const maxAngle = Math.max(
+        Math.abs(currentPosition.latitude - route.params.coordinate.latitude) / (Dimensions.get('screen').height),
+        Math.abs(currentPosition.longitude - route.params.coordinate.longitude) / (Dimensions.get('screen').width)
+      ) // max scale of angle per pixel
+      const diffMeter = maxAngle / 360 * 2 * Math.PI * 6371000 // 2 * pi * earth radius(m) * (angle) / 360
+      setZoom(16 - Math.log2(diffMeter) - 1) // reduce 1 level for padding
+    }, error => {
+      console.log(error.code, error.message);
+    }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+    )
+  }, [zoomLevel]);
+
+  return (
     <NaverMapView
       style={styles.mapScreen}
       center={{ ...centerPosition, zoom: zoomLevel }}
@@ -49,16 +49,16 @@ const MapScreen = ({ route }) => {
       minZoomLevel={6}
       maxZoomLevel={19}
       onMapClick={() => navigation.goBack()}
-		>
-			<Marker
-				coordinate={currentPosition}
-				pinColor="blue"
-				caption={{ text: '현위치' }}
-			/>
-			<Marker
-				coordinate={route.params.coordinate}
-				caption={{ text: route.params.name }}
-			/>
+    >
+      <Marker
+        coordinate={currentPosition}
+        pinColor="blue"
+        caption={{ text: '현위치' }}
+      />
+      <Marker
+        coordinate={route.params.coordinate}
+        caption={{ text: route.params.name }}
+      />
     </NaverMapView>
   );
 }

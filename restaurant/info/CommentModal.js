@@ -16,7 +16,7 @@ const CommentButton = (props) => {
   // 여기서 가게 이름 (doc)을 현재 들어간 가게에 따라서 가져와야 한다
   let commentRef = database().ref(props.commentsDir);
   let reviewRef = firestore().collection('가게').doc(props.restaurantData['official_name']).collection('리뷰');
-  let commentList = props.restaurantData['comments']?props.restaurantData['comments']:[];
+  let commentList = props.restaurantData['comments'] ? props.restaurantData['comments'] : [];
   const commentsCount = props.restaurantData['comments_count'];
 
   const [taste, setTaste] = useState(2.5); //맛
@@ -39,30 +39,30 @@ const CommentButton = (props) => {
       작성시간: new Date(),
       uid: user?.uid,
     })
-    .then(querySnapshot => {
-      commentList.push({
-        맛: taste,
-        가성비: costPerf,
-        서비스: service,
-        종합: overall,
-        총평: total,
-        배달여부: isDeliver,
-        배달시간: delivTime,
-        배달비: delivFee,
-        작성시간: new Date().toLocaleString(),
-        uid: user?.uid,
-        query: querySnapshot.id
-      });
-  
-      commentRef.update({
-        comments: commentList,
-        comments_count: commentsCount + 1,
-        flavor: (props.restaurantData['flavor'] * commentsCount + taste) / (commentsCount + 1),
-        cost_performance: (props.restaurantData['cost_performance'] * commentsCount + costPerf) / (commentsCount + 1),
-        service: (props.restaurantData['service'] * commentsCount + service) / (commentsCount + 1),
-        overall: (props.restaurantData['overall'] * commentsCount + overall) / (commentsCount + 1)
-      });
-    })
+      .then(querySnapshot => {
+        commentList.push({
+          맛: taste,
+          가성비: costPerf,
+          서비스: service,
+          종합: overall,
+          총평: total,
+          배달여부: isDeliver,
+          배달시간: delivTime,
+          배달비: delivFee,
+          작성시간: new Date().toLocaleString(),
+          uid: user?.uid,
+          query: querySnapshot.id
+        });
+
+        commentRef.update({
+          comments: commentList,
+          comments_count: commentsCount + 1,
+          flavor: (props.restaurantData['flavor'] * commentsCount + taste) / (commentsCount + 1),
+          cost_performance: (props.restaurantData['cost_performance'] * commentsCount + costPerf) / (commentsCount + 1),
+          service: (props.restaurantData['service'] * commentsCount + service) / (commentsCount + 1),
+          overall: (props.restaurantData['overall'] * commentsCount + overall) / (commentsCount + 1)
+        });
+      })
 
     setTaste(2.5);
     setCostPerf(2.5);
@@ -74,7 +74,7 @@ const CommentButton = (props) => {
   }
 
   function DeliverOption(props) {
-    if(props.isDeliver) {
+    if (props.isDeliver) {
       return (
         <>
           <Text style={style.commentText}>배달시간</Text>
@@ -84,15 +84,15 @@ const CommentButton = (props) => {
             defaultValue={delivTime}
             maxValue={60}
             step={5}
-            onChange={time => {setDelivTime(time)}}
+            onChange={time => setDelivTime(time)}
           >
-              <Slider.Track>
-                <Slider.FilledTrack />
-              </Slider.Track>
-              <Slider.Thumb />
+            <Slider.Track>
+              <Slider.FilledTrack />
+            </Slider.Track>
+            <Slider.Thumb />
           </Slider>
           <Text style={{ textAlign: 'right' }}>
-            {delivTime}분{(delivTime == 60)?' 이상':''}
+            {delivTime}분{(delivTime == 60) ? ' 이상' : ''}
           </Text>
           <Text style={style.commentText}>배달비</Text>
           <Input
@@ -106,7 +106,7 @@ const CommentButton = (props) => {
             multiline={false}
             InputRightElement={<Text style={{ fontWeight: 'bold' }}>원</Text>}
             placeholder="들었던 배달 비용을 적어주세요."
-            onChange={(fee) => setDelivFee(parseInt(fee))}
+            onChange={fee => setDelivFee(parseInt(fee))}
           />
         </>
       );
@@ -131,25 +131,25 @@ const CommentButton = (props) => {
           >
             <Text style={style.commentText}>주문 방식</Text>
             <Button.Group alignSelf="center">
-            <Button
-                colorScheme={isDeliver?"rgb(4, 120, 87)":"rgb(52, 211, 153)"}
+              <Button
+                colorScheme={isDeliver ? "rgb(4, 120, 87)" : "rgb(52, 211, 153)"}
                 onPress={() => setDeliver(true)}>
-                  배달
-            </Button>
-            <Button
-                colorScheme={!isDeliver?"rgb(4, 120, 87)":"rgb(52, 211, 153)"}
+                배달
+              </Button>
+              <Button
+                colorScheme={!isDeliver ? "rgb(4, 120, 87)" : "rgb(52, 211, 153)"}
                 onPress={() => setDeliver(false)}>
-                  방문
-            </Button>
+                방문
+              </Button>
             </Button.Group>
             <DeliverOption isDeliver={isDeliver} />
             <Text style={style.commentText}>맛</Text>
-            <Text style={style.ratingText}>{taste} / 5</Text>  
+            <Text style={style.ratingText}>{taste} / 5</Text>
             <Rating
               startingValue={taste}
               imageSize={20}
               fractions={1}
-              onSwipeRating={(rating) => {setTaste(rating)}}
+              onSwipeRating={rating => setTaste(rating)}
             />
             <Text style={style.commentText}>가성비</Text>
             <Text style={style.ratingText}>{costPerf} / 5</Text>
@@ -157,7 +157,7 @@ const CommentButton = (props) => {
               startingValue={costPerf}
               imageSize={20}
               fractions={1}
-              onSwipeRating={(rating) => {setCostPerf(rating)}}
+              onSwipeRating={rating => setCostPerf(rating)}
             />
             <Text style={style.commentText}>서비스</Text>
             <Text style={style.ratingText}>{service} / 5</Text>
@@ -165,7 +165,7 @@ const CommentButton = (props) => {
               startingValue={service}
               imageSize={20}
               fractions={1}
-              onSwipeRating={(rating) => {setService(rating)}}
+              onSwipeRating={rating => setService(rating)}
             />
             <Text style={style.commentText}>종합 평가</Text>
             <AirbnbRating
@@ -177,7 +177,7 @@ const CommentButton = (props) => {
               size={25}
               reviewColor="#13ACBF"
               reviewSize={18}
-              onFinishRating={(rating) => {setOverall(rating)}}
+              onFinishRating={rating => setOverall(rating)}
             />
             <Input
               style={{ marginVertical: 20 }}
@@ -205,7 +205,7 @@ const CommentButton = (props) => {
               colorScheme="rgb(251, 113, 133)"
               onPress={() => showInput(false)}
             >
-                취소
+              취소
             </Button>
           </Button.Group>
         </SafeAreaView>
