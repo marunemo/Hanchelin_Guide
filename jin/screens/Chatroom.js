@@ -45,7 +45,7 @@ function Chatroom({ navigation }) {
         })
 
         setThreads(threads);
-        console.log(threads);
+        //console.log(threads);
         if (loading) {
           setLoading(false);
         }
@@ -142,6 +142,10 @@ export default function ({ navigation }) {
               fontWeight: 'bold',
               fontSize: 20,
             },
+            headerRight: () => (
+              <Icon name="times" size={24} color="#f2f2f2"
+                 />
+            )
           })}
         />
       </StackNav.Navigator>
