@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
+import { InfoView, MenuListView, CommentListView, RatingBar } from './InfoElements';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,68 +37,26 @@ const MapView = (props) => {
   )
 }
 
-const InfoComponent = (props) => {
-  return (
-    <View style={style.contexts}>
-      <View style={style.titleView}>
-        <Text style={style.keyText}>
-          {props.keyText}
-        </Text>
-      </View>
-      <Text style={{ fontSize: 16, marginVertical: 3 }}>
-        {props.value}
-      </Text>
-    </View>
-  )
-}
-
 const RestComponent = (props) => {
   const restData = props.restData;
-
   let menu = [];
+  let comments = [];
+  
   const menuList = restData['menu'];
+  const commentsList = restData['comments'];
+
   if (menuList != undefined) {
     for (const [id, order] of Object.entries(menuList)) {
-      const [food, price] = order.split(' : ')
       menu.push(
-        <View style={style.menuView} key={id}>
-          <Text style={{ fontWeight: 'bold' }}>{food}</Text>
-          <Text>{price}원</Text>
-        </View>
+        <MenuListView key={id} id={id} order={order} />
       )
     }
   }
-
-  let comments = [];
-  const commentsList = restData['comments'];
   if (commentsList !== undefined) {
     for (const [id, comment] of Object.entries(commentsList)) {
       if (comment != null) {
         comments.push(
-          <View style={style.commentsView} key={id}>
-            <IconButton
-              alignSelf="flex-end"
-              size="sm"
-              borderRadius="full"
-              onPress={() => props.onPop(id, comment.query)}
-              icon={<Icon name="trash-o" as={Font} size="sm" color="#713f12" />}
-            />
-            <Text style={style.commentsText}>맛 : {comment['맛']}</Text>
-            <Text style={style.commentsText}>가성비 : {comment['가성비']}</Text>
-            <Text style={style.commentsText}>서비스 : {comment['서비스']}</Text>
-            <Text style={style.commentsText}>종합 : {comment['종합']}</Text>
-            {comment['총평'] !== '' &&
-              <Text style={style.commentsText}>
-                총평 : {comment['총평']}
-              </Text>
-            }
-            {comment['배달여부'] &&
-              <Text style={style.commentsText}>
-                배달 시간 : {comment['배달시간']}분    배달비 : {comment['배달비']}원
-              </Text>
-            }
-            <Text style={{ textAlign: 'right', color: '#4b4b4b' }}>{comment['작성시간']}</Text>
-          </View>
+          <CommentListView key={id} id={id} comment={comment} onPop={props.onPop} />
         )
       }
     }
@@ -120,73 +79,44 @@ const RestComponent = (props) => {
           />
         </View>
         <View>
-          <InfoComponent
+          <InfoView
             keyText="이름"
             value={restData['official_name']}
           />
-          <InfoComponent
+          <InfoView
             keyText="주소"
             value={restData['address']}
           />
-          <InfoComponent
+          <InfoView
             keyText="번호"
             value={restData['contact']}
           />
 				</View>
         <View>
-          <View style={style.ratingView}>
-            <View style={style.ratingTextView}>
-              <Text style={style.ratingText}>맛</Text>
-            </View>
-            <Progress
-              rounded="0"
-              width={75}
-              height={14}
-              max={5}
-              value={restData['flavor']}
-            />
-            <Text>{restData['flavor']}</Text>
-          </View>
-          <View style={style.ratingView}>
-            <View style={style.ratingTextView}>
-              <Text style={style.ratingText}>가성비</Text>
-            </View>
-            <Progress
-              rounded="0"
-              width={75}
-              height={14}
-              max={5}
-              value={restData['cost_performance']}
-            />
-            <Text>{restData['cost_performance']}</Text>
-          </View>
-          <View style={style.ratingView}>
-            <View style={style.ratingTextView}>
-              <Text style={style.ratingText}>서비스</Text>
-            </View>
-            <Progress
-              rounded="0"
-              width={75}
-              height={14}
-              max={5}
-              value={restData['service']}
-            />
-            <Text>{restData['service']}</Text>
-          </View>
-          <View style={style.ratingView}>
-            <View style={[style.ratingTextView, {backgroundColor: '#fbbf24'}]}>
-              <Text style={style.ratingText}>종합</Text>
-            </View>
-            <Progress
-              rounded="0"
-              colorScheme="amber"
-              width={75}
-              height={14}
-              max={5}
-              value={restData['overall']}
-            />
-            <Text>{restData['overall']}</Text>
-          </View>
+          <RatingBar
+            bgText="#67e8f9"
+            ratingName="맛"
+            ratingData={restData['flavor']}
+            theme="cyan"
+          />
+          <RatingBar
+            bgText="#67e8f9"  
+            ratingName="가성비"
+            ratingData={restData['cost_performance']}
+            theme="cyan"
+          />
+          <RatingBar
+            bgText="#67e8f9"
+            ratingName="서비스"
+            ratingData={restData['service']}
+            theme="cyan"
+          />
+          <RatingBar
+            bgText="#fbbf24"
+            ratingName="종합"
+            ratingData={restData['overall']}
+            theme="amber"
+          />
           <View style={style.horizontalLayout}>
             <Text style={{ color: '#57534e', fontWeight: 'bold' }}>
               총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.
@@ -354,24 +284,6 @@ const style = StyleSheet.create({
   horizontalLayout: {
     flexDirection: 'row-reverse'
   },
-  ratingView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 3
-  },
-  ratingTextView: {
-    width: 52,
-    height: 22,
-    backgroundColor: '#67e8f9',
-    justifyContent: 'center',
-    borderRadius: 50,
-    marginHorizontal: 5
-  },
-  ratingText: {
-    textAlign: 'center',
-    fontSize: 14,
-    fontWeight: 'bold'
-  },
   mapView: {
     width: '100%',
     aspectRatio: 1,
@@ -380,29 +292,5 @@ const style = StyleSheet.create({
   },
   endMargin: {
     marginBottom: 100
-  },
-  menuView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#d1d1d1',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    marginBottom: 5,
-    marginHorizontal: 10
-  },
-  commentsView: {
-    borderWidth: 1,
-    borderRadius: 20,
-    borderColor: '#65a30d',
-    backgroundColor: '#d9f99d',
-    width: '100%',
-    marginVertical: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 20
-  },
-  commentsText: {
-    color: '#1c1917',
-    fontSize: 14,
-    marginVertical: 3
   }
 })
