@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Text, View, ScrollView, SafeAreaView, RefreshControl, StyleSheet } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import { NativeBaseProvider, IconButton, Icon, Progress } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
@@ -162,10 +162,16 @@ const RestComponent = (props) => {
 }
 
 const RestaurantInfo = (props) => {
-  const [reload, setReload] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [restData, setData] = useState({});
   let restDir = '/식당/' + props.restId;
   const restRef = database().ref(restDir);
+
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => setRefreshing(false), 2000);
+  }, []);
 
   useEffect(() => {
     restRef.once('value').then(data => {
@@ -173,9 +179,8 @@ const RestaurantInfo = (props) => {
         setData(data.val());
       }
     });
-    console.log(reload);
-    setReload(false);
-  }, [reload]);
+    console.log(refreshing)
+  }, [refreshing]);
 
   async function removeComment(commentId, queryId) {
     await restRef.child('comments/' + commentId.toString()).remove().then(() => {
@@ -189,7 +194,7 @@ const RestaurantInfo = (props) => {
           cost_performance: 0,
           service: 0,
           overall: 0
-        }).then(() => setReload(true));
+        }).then(onRefresh);
       } else {
         const comment = restData['comments'][commentId];
         restRef.update({
@@ -198,7 +203,7 @@ const RestaurantInfo = (props) => {
           cost_performance: (restData['cost_performance'] * commentsCount - comment['가성비']) / (commentsCount - 1),
           service: (restData['service'] * commentsCount - comment['서비스']) / (commentsCount - 1),
           overall: (restData['overall'] * commentsCount - comment['종합']) / (commentsCount - 1)
-        }).then(() => setReload(true));
+        }).then(onRefresh);
       }
     });
   }
@@ -206,7 +211,14 @@ const RestaurantInfo = (props) => {
   return (
     <SafeAreaView style={style.containter}>
       <NativeBaseProvider>
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        >
           <RestComponent
             restData={restData}
             onPop={(id, query) => removeComment(id, query)}
@@ -215,7 +227,7 @@ const RestaurantInfo = (props) => {
         <CommentButton
           restaurantData={restData}
           commentsDir={restDir}
-          onFinish={update => setReload(update)}
+          onFinish={onRefresh}
         />
       </NativeBaseProvider>
     </SafeAreaView>

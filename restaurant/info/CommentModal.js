@@ -119,7 +119,7 @@ const CommentButton = (props) => {
       <Modal
         style={{ justifyContent: 'flex-end', alignItems: 'center' }}
         isVisible={onInput}
-        onModalWillHide={() => props.onFinish(true)}
+        onModalWillHide={props.onFinish}
         onBackButtonPress={() => showInput(false)}
         onBackdropPress={() => showInput(false)}
       >
