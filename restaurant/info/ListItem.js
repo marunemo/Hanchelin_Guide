@@ -172,38 +172,29 @@ const RestaurantInfo = (props) => {
   }, [reload]);
 
   async function removeComment(commentId, queryId) {
-    await restRef
-      .child('comments/' + commentId.toString())
-      .remove()
-      .then(() => {
-        firestore()
-          .collection('가게')
-          .doc(restData['official_name'])
-          .collection('리뷰')
-          .doc(queryId)
-          .delete();
-          
-          const commentsCount = restData['comments_count'];
-          if (commentsCount == 1) {
-            restRef.update({
-              comments_count: 0,
-              flavor: 0,
-              cost_performance: 0,
-              service: 0,
-              overall: 0,
-            }).then(() => setReload(true));
-          } else {
-            const comment = restData['comments'][commentId];
-
-            restRef.update({
-              comments_count: commentsCount - 1,
-              flavor: (restData['flavor'] * commentsCount - comment['맛']) / (commentsCount - 1),
-              cost_performance: (restData['cost_performance'] * commentsCount - comment['가성비']) / (commentsCount - 1),
-              service: (restData['service'] * commentsCount - comment['서비스']) / (commentsCount - 1),
-              overall: (restData['overall'] * commentsCount - comment['종합']) / (commentsCount - 1)
-            }).then(() => setReload(true));
-          }
-        });
+    await restRef.child('comments/' + commentId.toString()).remove().then(() => {
+      const commentsCount = restData['comments_count'];
+      
+      firestore().collection('가게').doc(restData['official_name']).collection('리뷰').doc(queryId).delete();
+      if (commentsCount == 1) {
+        restRef.update({
+          comments_count: 0,
+          flavor: 0,
+          cost_performance: 0,
+          service: 0,
+          overall: 0
+        }).then(() => setReload(true));
+      } else {
+        const comment = restData['comments'][commentId];
+        restRef.update({
+          comments_count: commentsCount - 1,
+          flavor: (restData['flavor'] * commentsCount - comment['맛']) / (commentsCount - 1),
+          cost_performance: (restData['cost_performance'] * commentsCount - comment['가성비']) / (commentsCount - 1),
+          service: (restData['service'] * commentsCount - comment['서비스']) / (commentsCount - 1),
+          overall: (restData['overall'] * commentsCount - comment['종합']) / (commentsCount - 1)
+        }).then(() => setReload(true));
+      }
+    });
   }
 
   return (
