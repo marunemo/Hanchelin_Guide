@@ -50,7 +50,7 @@ class RestaurantItem extends Component {
             <Text>{item.category}</Text>
             <Text>{item.dong}</Text>
           </VStack>
-          <HStack style={{ flex: 4 }} space={1}>
+          <HStack style={{ flex: 4, alignItems: 'flex-end' }} space={1}>
             <Icon name="thumbs-up" size={24} color="#30A9DE" />
             <Text>{item.likes}</Text>
             <Icon name="heart" size={24} color="#f15c5c" />
