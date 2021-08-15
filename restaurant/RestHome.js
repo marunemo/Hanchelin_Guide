@@ -155,7 +155,7 @@ class Home extends Component {
         <Center flex={1}>
           <ScrollView width="100%">
             <VStack mb={0.5} space={0.5} alignItems="center">
-              {filteredArr.map(item => 
+              {filteredArr.map(item =>
                 <RestaurantItem
                   key={item.id.toString()}
                   restItem={item}
@@ -209,6 +209,7 @@ export default function App({ navigation }) {
           name="식당 정보"
           component={RestInfo}
           options={{
+            headerBackTitleVisible: false,
             headerStyle: {
               backgroundColor: '#468966',
             },
@@ -219,7 +220,21 @@ export default function App({ navigation }) {
             }
           }}
         />
-        <Stack.Screen name="프로필" component={Profile} />
+        <Stack.Screen
+          name="프로필"
+          component={Profile}
+          options={{
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#468966',
+            },
+            headerTintColor: '#f2f2f2',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 20,
+            }
+          }}
+        />
       </Stack.Navigator>
     </NativeBaseProvider>
   );
