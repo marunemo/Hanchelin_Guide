@@ -59,9 +59,9 @@ const CommentListView = (props) => {
 			<Text style={style.commentsText}>가성비 : {comment['가성비']}</Text>
 			<Text style={style.commentsText}>서비스 : {comment['서비스']}</Text>
 			<Text style={style.commentsText}>종합 : {comment['종합']}</Text>
-			{comment['총평'] !== '' &&
+			{comment['리뷰'] !== '' &&
 				<Text style={style.commentsText}>
-					총평 : {comment['총평']}
+					리뷰 : {comment['리뷰']}
 				</Text>
 			}
 			{comment['배달여부'] &&

@@ -28,8 +28,6 @@ const MapView = (props) => {
       compass={false}
       scaleBar={true}
       zoomControl={true}
-      scrollGesturesEnabled={false}
-      zoomGesturesEnabled={false}
       minZoomLevel={6}
       maxZoomLevel={19}
       onMapClick={() => navigation.navigate("식당 위치", { name: props.restName, coordinate: props.position })}
@@ -103,8 +101,8 @@ const RestComponent = (props) => {
           <RatingBar
             bgText="#fbbf24"
             textColor="#4a1f07"
-            ratingName="종합"
-            ratingData={restData['overall']}
+            ratingName="평점"
+            ratingData={restData['total']}
             theme="amber"
           />
           <View style={style.horizontalLayout}>
@@ -183,7 +181,7 @@ const RestaurantInfo = (props) => {
           flavor: 0,
           cost_performance: 0,
           service: 0,
-          overall: 0
+          total: 0
         }).then(onRefresh);
       } else {
         const comment = restData['comments'][commentId];
@@ -192,7 +190,7 @@ const RestaurantInfo = (props) => {
           flavor: (restData['flavor'] * commentsCount - comment['맛']) / (commentsCount - 1),
           cost_performance: (restData['cost_performance'] * commentsCount - comment['가성비']) / (commentsCount - 1),
           service: (restData['service'] * commentsCount - comment['서비스']) / (commentsCount - 1),
-          overall: (restData['overall'] * commentsCount - comment['종합']) / (commentsCount - 1)
+          total: (restData['total'] * commentsCount - comment['종합']) / (commentsCount - 1)
         }).then(onRefresh);
       }
     });

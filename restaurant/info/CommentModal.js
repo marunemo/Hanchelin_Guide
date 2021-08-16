@@ -22,8 +22,8 @@ const CommentButton = (props) => {
   const [flavor, setFlavor] = useState(2.5); //맛
   const [costPerf, setCostPerf] = useState(2.5); //가성비
   const [service, setService] = useState(2.5); //서비스
-  const [overall, setOverall] = useState(3); //종합
-  const [total, setTotal] = useState(''); //총평
+  const [total, setTotal] = useState(3); //종합
+  const [review, setReview] = useState(''); //총평
   const [delivTime, setDelivTime] = useState(30); //배달시간
   const [delivFee, setDelivFee] = useState(0); //배달비
 
@@ -32,8 +32,8 @@ const CommentButton = (props) => {
       맛: flavor,
       가성비: costPerf,
       서비스: service,
-      종합: overall,
-      총평: total,
+      종합: total,
+      리뷰: review,
       배달시간: delivTime,
       배달비: delivFee,
       작성시간: new Date(),
@@ -44,8 +44,8 @@ const CommentButton = (props) => {
           맛: flavor,
           가성비: costPerf,
           서비스: service,
-          종합: overall,
-          총평: total,
+          종합: total,
+          리뷰: review,
           배달여부: isDeliver,
           배달시간: delivTime,
           배달비: delivFee,
@@ -60,15 +60,15 @@ const CommentButton = (props) => {
           flavor: (props.restaurantData['flavor'] * commentsCount + flavor) / (commentsCount + 1),
           cost_performance: (props.restaurantData['cost_performance'] * commentsCount + costPerf) / (commentsCount + 1),
           service: (props.restaurantData['service'] * commentsCount + service) / (commentsCount + 1),
-          overall: (props.restaurantData['overall'] * commentsCount + overall) / (commentsCount + 1)
+          total: (props.restaurantData['total'] * commentsCount + total) / (commentsCount + 1)
         });
       })
 
     setFlavor(2.5);
     setCostPerf(2.5);
     setService(2.5);
-    setOverall(3);
-    setTotal('');
+    setTotal(3);
+    setReview('');
     setDelivTime(30);
     setDelivFee(0);
   }
@@ -146,8 +146,8 @@ const CommentButton = (props) => {
               startingValue={flavor}
               imageSize={20}
               fractions={1}
-              onSwipeRating={rating => setFlavor(rating)}
-              onFinishRating={rating => setFlavor(rating)}
+              onSwipeRating={setFlavor}
+              onFinishRating={setFlavor}
             />
             <Text style={style.commentText}>가성비</Text>
             <Text style={style.ratingText}>{costPerf} / 5</Text>
@@ -155,8 +155,8 @@ const CommentButton = (props) => {
               startingValue={costPerf}
               imageSize={20}
               fractions={1}
-              onSwipeRating={rating => setCostPerf(rating)}
-              onFinishRating={rating => setCostPerf(rating)}
+              onSwipeRating={setCostPerf}
+              onFinishRating={setCostPerf}
             />
             <Text style={style.commentText}>서비스</Text>
             <Text style={style.ratingText}>{service} / 5</Text>
@@ -164,8 +164,8 @@ const CommentButton = (props) => {
               startingValue={service}
               imageSize={20}
               fractions={1}
-              onSwipeRating={rating => setService(rating)}
-              onFinishRating={rating => setService(rating)}
+              onSwipeRating={setService}
+              onFinishRating={setService}
             />
             <Text style={style.commentText}>종합 평가</Text>
             <AirbnbRating
@@ -177,7 +177,7 @@ const CommentButton = (props) => {
               size={25}
               reviewColor="#13ACBF"
               reviewSize={18}
-              onFinishRating={rating => setOverall(rating)}
+              onFinishRating={setTotal}
             />
             <Input
               style={{ marginVertical: 20 }}
@@ -186,9 +186,9 @@ const CommentButton = (props) => {
               variant="filled"
               textAlignVertical="top"
               multiline={true}
-              placeholder="해당 식장에 대한 총평을 적어주세요."
-              value={total}
-              onChangeText={setTotal}
+              placeholder="해당 식장에 대한 리뷰를 적어주세요."
+              value={review}
+              onChangeText={setReview}
             />
           </ScrollView>
           <Button.Group style={{ marginVertical: 10 }}>
