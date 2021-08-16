@@ -92,17 +92,37 @@ export default function ({ navigation }) {
               <Icon name="plus" size={24} color="#f2f2f2"
                 onPress={() => navigation.navigate('새로운 채팅방 만들기')} />
             )
-          }} />
+          }}
+        />
         <Stack.Screen
           name="새로운 채팅방 만들기"
           component={CreateChat}
-          options={{ headerBackTitleVisible: false }} />
+          options={{
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#468966',
+            },
+            headerTintColor: '#f2f2f2',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 20,
+            }
+          }}
+        />
         <Stack.Screen
           name="메시지"
           component={Chat}
           options={({ route }) => ({
+            title: route.params.thread.name,
             headerBackTitleVisible: false,
-            title: route.params.thread.name
+            headerStyle: {
+              backgroundColor: '#468966',
+            },
+            headerTintColor: '#f2f2f2',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 20,
+            }
           })}
         />
       </Stack.Navigator>
