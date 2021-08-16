@@ -92,24 +92,6 @@ const RestComponent = (props) => {
         </View>
         <View>
           <RatingBar
-            bgText="#67e8f9"
-            ratingName="맛"
-            ratingData={restData['flavor']}
-            theme="cyan"
-          />
-          <RatingBar
-            bgText="#67e8f9"
-            ratingName="가성비"
-            ratingData={restData['cost_performance']}
-            theme="cyan"
-          />
-          <RatingBar
-            bgText="#67e8f9"
-            ratingName="서비스"
-            ratingData={restData['service']}
-            theme="cyan"
-          />
-          <RatingBar
             bgText="#fbbf24"
             ratingName="종합"
             ratingData={restData['overall']}
@@ -138,6 +120,27 @@ const RestComponent = (props) => {
         {menu}
       </View>
       <View style={[style.partition, style.endMargin]}>
+        <View style={style.contexts}>
+          <KeyTextView keyText="평가" />
+        </View>
+        <RatingBar
+          bgText="#67e8f9"
+          ratingName="맛"
+          ratingData={restData['flavor']}
+          theme="cyan"
+        />
+        <RatingBar
+          bgText="#67e8f9"
+          ratingName="가성비"
+          ratingData={restData['cost_performance']}
+          theme="cyan"
+        />
+        <RatingBar
+          bgText="#67e8f9"
+          ratingName="서비스"
+          ratingData={restData['service']}
+          theme="cyan"
+        />
         <View style={style.contexts}>
           <KeyTextView keyText="댓글" />
         </View>
