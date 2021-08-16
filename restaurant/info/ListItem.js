@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Text, View, ScrollView, SafeAreaView, RefreshControl, StyleSheet } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
-import { NativeBaseProvider, IconButton, Icon } from 'native-base';
+import { NativeBaseProvider, IconButton, Icon, Progress } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
@@ -10,15 +10,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
+import { InfoView, MenuListView, CommentListView, RatingBar } from './InfoElements';
 
 const Stack = createNativeStackNavigator();
 
 const MapView = (props) => {
   const navigation = useNavigation();
-
+  
   if (props.position['latitude'] == undefined) {
     return <View style={style.mapView} />;
-	}
+  }
 
   return (
     <NaverMapView
@@ -29,71 +30,33 @@ const MapView = (props) => {
       zoomControl={true}
       minZoomLevel={6}
       maxZoomLevel={19}
-      onMapClick={() => {navigation.navigate("식당 위치", {name: props.restName, coordinate: props.position})}}
+      onMapClick={() => navigation.navigate("식당 위치", { name: props.restName, coordinate: props.position })}
     >
       <Marker coordinate={props.position} />
     </NaverMapView>
   )
 }
 
-const InfoComponent = (props) => {
-  return (
-    <View style={style.contexts}>
-      <View style={style.titleView}>
-        <Text style={style.keyText}>
-          {props.keyText}
-        </Text>
-      </View>
-      <Text style={{ fontSize: 16, marginVertical: 3 }}>
-        {props.value}
-      </Text>
-    </View>
-  )
-}
-
 const RestComponent = (props) => {
   const restData = props.restData;
-
   let menu = [];
+  let comments = [];
+
   const menuList = restData['menu'];
+  const commentsList = restData['comments'];
+
   if (menuList != undefined) {
     for (const [id, order] of Object.entries(menuList)) {
-      const [food, price] = order.split(" : ")
       menu.push(
-        <View style={style.menuView} key={id}>
-          <Text style={{ fontWeight: "bold" }}>{food}</Text>
-          <Text>{price}원</Text>
-        </View>
+        <MenuListView key={id} id={id} order={order} />
       )
     }
   }
-
-  let comments = [];
-  const commentsList = restData['comments'];
   if (commentsList !== undefined) {
     for (const [id, comment] of Object.entries(commentsList)) {
       if (comment != null) {
         comments.push(
-          <View style={style.commentsView} key={id}>
-            <IconButton
-              alignSelf="flex-end"
-              size="sm"
-              borderRadius="full"
-              onPress={() => props.onPop(id, comment.query)}
-              icon={<Icon name="trash-o" as={Font} size="sm" color="#713f12" />}
-            />
-            <Text style={style.commentsText}>맛 : {'★'.repeat(comment["맛"])}</Text>
-            <Text style={style.commentsText}>가성비 : {'★'.repeat(comment["가성비"])}</Text>
-            <Text style={style.commentsText}>서비스 : {'★'.repeat(comment["서비스"])}</Text>
-            <Text style={style.commentsText}>종합 : {'★'.repeat(comment["종합"])}</Text>
-            <Text style={style.commentsText}>총평 : {comment["총평"]}</Text>
-            {comment["배달여부"] &&
-              <Text style={style.commentsText}>
-                배달 시간 : {comment["배달시간"]}분    배달비 : {comment["배달비"]}원
-              </Text>
-            }
-            <Text style={{ textAlign: "right", color: "#4b4b4b" }}>{comment["작성시간"]}</Text>
-          </View>
+          <CommentListView key={id} id={id} comment={comment} onPop={props.onPop} />
         )
       }
     }
@@ -101,37 +64,74 @@ const RestComponent = (props) => {
 
   const [tog1, setTog1] = useState(false);
   const [tog2, setTog2] = useState(false);
+  const navigation = useNavigation();
   return (
     <>
       <View style={style.partition}>
         <View style={style.horizontalLayout}>
           <IconButton
             onPress={() => setTog1(!tog1)}
-            icon={<Icon name={tog1?"thumbs-up":"thumbs-o-up"} as={Font} size="sm" color="#30A9DE" />}
+            icon={<Icon name={tog1 ? "thumbs-up" : "thumbs-o-up"} as={Font} size="sm" color="#30A9DE" />}
           />
           <IconButton
-          onPress={() => setTog2(!tog2)}
-          icon={
-            <Icon name={tog2?"heart":"heart-o"} as={Font} size="sm" color="#f15c5c" />}
+            onPress={() => setTog2(!tog2)}
+            icon={
+              <Icon name={tog2 ? "heart" : "heart-o"} as={Font} size="sm" color="#f15c5c" />}
+          />
+          <IconButton
+            onPress={() => navigation.navigate("같이 배달", {screen: "새로운 채팅방 만들기"})}
+            icon={
+              <Icon name="wechat" as={Font} size="sm" color="#4c1d95" />}
           />
         </View>
         <View>
-          <InfoComponent
+          <InfoView
             keyText="이름"
             value={restData['official_name']}
           />
-          <InfoComponent
+          <InfoView
             keyText="주소"
             value={restData['address']}
           />
-          <InfoComponent
+          <InfoView
             keyText="번호"
             value={restData['contact']}
           />
-				</View>
+        </View>
+        <View>
+          <RatingBar
+            bgText="#67e8f9"
+            ratingName="맛"
+            ratingData={restData['flavor']}
+            theme="cyan"
+          />
+          <RatingBar
+            bgText="#67e8f9"
+            ratingName="가성비"
+            ratingData={restData['cost_performance']}
+            theme="cyan"
+          />
+          <RatingBar
+            bgText="#67e8f9"
+            ratingName="서비스"
+            ratingData={restData['service']}
+            theme="cyan"
+          />
+          <RatingBar
+            bgText="#fbbf24"
+            ratingName="종합"
+            ratingData={restData['overall']}
+            theme="amber"
+          />
+          <View style={style.horizontalLayout}>
+            <Text style={{ color: '#57534e', fontWeight: 'bold' }}>
+              총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.
+            </Text>
+          </View>
+        </View>
       </View>
       <View style={style.partition}>
-        <View style={[style.contexts, {marginBottom: 15}]}>
+        <View style={[style.contexts, { marginBottom: 15 }]}>
           <View style={style.titleView}>
             <Text style={style.keyText}>위치 정보</Text>
           </View>
@@ -142,30 +142,36 @@ const RestComponent = (props) => {
         />
       </View>
       <View style={style.partition}>
-        <View style={[style.contexts, {marginBottom: 20}]}>
+        <View style={[style.contexts, { marginBottom: 20 }]}>
           <View style={style.titleView}>
             <Text style={style.keyText}>메뉴</Text>
           </View>
         </View>
-          {menu}
+        {menu}
       </View>
       <View style={[style.partition, style.endMargin]}>
-        <View style={[style.contexts, {marginBottom: 15}]}>
+        <View style={[style.contexts, { marginBottom: 15 }]}>
           <View style={style.titleView}>
             <Text style={style.keyText}>댓글</Text>
           </View>
         </View>
-          {comments}
+        {comments}
       </View>
-    </> 
+    </>
   );
 }
 
 const RestaurantInfo = (props) => {
-  const [reload, setReload] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [restData, setData] = useState({});
   let restDir = '/식당/' + props.restId;
   const restRef = database().ref(restDir);
+
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => setRefreshing(false), 2000);
+  }, []);
 
   useEffect(() => {
     restRef.once('value').then(data => {
@@ -173,42 +179,55 @@ const RestaurantInfo = (props) => {
         setData(data.val());
       }
     });
-    setReload(false);
-  }, [reload]);
+    console.log(refreshing)
+  }, [refreshing]);
 
   async function removeComment(commentId, queryId) {
-    await restRef
-      .child("comments/" + commentId.toString())
-      .remove()
-      .then(() => {
-        firestore()
-          .collection('가게')
-          .doc(restData['official_name'])
-          .collection('리뷰')
-          .doc(queryId)
-          .delete();
-      });
-    await restRef.update({
-      comments_count: restData['comments_count'] - 1
+    await restRef.child('comments/' + commentId.toString()).remove().then(() => {
+      const commentsCount = restData['comments_count'];
+
+      firestore().collection('가게').doc(restData['official_name']).collection('리뷰').doc(queryId).delete();
+      if (commentsCount == 1) {
+        restRef.update({
+          comments_count: 0,
+          flavor: 0,
+          cost_performance: 0,
+          service: 0,
+          overall: 0
+        }).then(onRefresh);
+      } else {
+        const comment = restData['comments'][commentId];
+        restRef.update({
+          comments_count: commentsCount - 1,
+          flavor: (restData['flavor'] * commentsCount - comment['맛']) / (commentsCount - 1),
+          cost_performance: (restData['cost_performance'] * commentsCount - comment['가성비']) / (commentsCount - 1),
+          service: (restData['service'] * commentsCount - comment['서비스']) / (commentsCount - 1),
+          overall: (restData['overall'] * commentsCount - comment['종합']) / (commentsCount - 1)
+        }).then(onRefresh);
+      }
     });
-    setReload(true);
   }
 
   return (
     <SafeAreaView style={style.containter}>
       <NativeBaseProvider>
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        >
           <RestComponent
             restData={restData}
             onPop={(id, query) => removeComment(id, query)}
           />
         </ScrollView>
         <CommentButton
-          restName={restData['official_name']} 
-          comments={restData['comments']}
-          commentsCount={restData['comments_count']}
+          restaurantData={restData}
           commentsDir={restDir}
-          onFinish={update => setReload(update)}
+          onFinish={onRefresh}
         />
       </NativeBaseProvider>
     </SafeAreaView>
@@ -241,27 +260,27 @@ export default ItemActivity;
 const style = StyleSheet.create({
   containter: {
     height: '100%',
-    backgroundColor: "#d1fae5"
+    backgroundColor: '#d1fae5'
   },
   contexts: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginVertical: 3,
   },
   keyText: {
-    color: "#033326",
+    color: '#033326',
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginVertical: 3,
     marginHorizontal: 10
   },
   titleView: {
-    backgroundColor: "#86efac",
+    backgroundColor: '#86efac',
     borderRadius: 50,
     marginHorizontal: 5
   },
   partition: {
     borderRadius: 25,
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     marginVertical: 5,
     marginHorizontal: 15,
     paddingVertical: 20,
@@ -272,39 +291,15 @@ const style = StyleSheet.create({
     elevation: 8
   },
   horizontalLayout: {
-    flexDirection: "row-reverse"
+    flexDirection: 'row-reverse'
   },
   mapView: {
     width: '100%',
     aspectRatio: 1,
-    borderColor: "#aaaaaa",
+    borderColor: '#aaaaaa',
     borderWidth: 1
   },
   endMargin: {
     marginBottom: 100
-  },
-  menuView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "#d1d1d1",
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    marginBottom: 5,
-    marginHorizontal: 10
-  },
-  commentsView: {
-    borderWidth: 1,
-    borderRadius: 20,
-    borderColor: "#65a30d",
-    backgroundColor: "#d9f99d",
-    width: "100%",
-    marginVertical: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 20
-  },
-  commentsText: {
-    color: "#1c1917",
-    fontSize: 14,
-    marginVertical: 3
   }
 })
