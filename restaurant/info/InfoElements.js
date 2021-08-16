@@ -3,14 +3,20 @@ import { Text, View, StyleSheet } from 'react-native';
 import { IconButton, Icon, Progress } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
 
+const KeyTextView = (props) => {
+	return (
+		<View style={style.titleView}>
+			<Text style={style.keyText}>
+				{props.keyText}
+			</Text>
+		</View>
+	)
+}
+
 const InfoView = (props) => {
 	return (
 		<View style={style.contexts}>
-			<View style={style.titleView}>
-				<Text style={style.keyText}>
-					{props.keyText}
-				</Text>
-			</View>
+			<KeyTextView keyText={props.keyText} />
 			<Text style={{ fontSize: 16, marginVertical: 3 }}>
 				{props.value}
 			</Text>
@@ -86,7 +92,7 @@ const RatingBar = (props) => {
 	)
 }
 
-export { InfoView, MenuListView, CommentListView, RatingBar };
+export { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar };
 
 const style = StyleSheet.create({
 	contexts: {

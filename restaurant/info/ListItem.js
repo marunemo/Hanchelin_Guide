@@ -10,7 +10,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
-import { InfoView, MenuListView, CommentListView, RatingBar } from './InfoElements';
+import { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar } from './InfoElements';
 
 const Stack = createNativeStackNavigator();
 
@@ -85,22 +85,10 @@ const RestComponent = (props) => {
           />
         </View>
         <View>
-          <InfoView
-            keyText="이름"
-            value={restData['official_name']}
-          />
-          <InfoView
-            keyText="주소"
-            value={restData['address']}
-          />
-          <InfoView
-            keyText="번호"
-            value={restData['contact']}
-          />
-          <InfoView
-            keyText="영업 시간"
-            value={restData['opening_hours']}
-          />
+          <InfoView keyText="이름" value={restData['official_name']} />
+          <InfoView keyText="주소" value={restData['address']} />
+          <InfoView keyText="번호" value={restData['contact']} />
+          <InfoView keyText="영업 시간" value={restData['opening_hours']} />
         </View>
         <View>
           <RatingBar
@@ -135,10 +123,8 @@ const RestComponent = (props) => {
         </View>
       </View>
       <View style={style.partition}>
-        <View style={[style.contexts, { marginBottom: 15 }]}>
-          <View style={style.titleView}>
-            <Text style={style.keyText}>위치 정보</Text>
-          </View>
+        <View style={style.contexts}>
+          <KeyTextView keyText="위치 정보" />
         </View>
         <MapView
           restName={restData['official_name']}
@@ -146,18 +132,14 @@ const RestComponent = (props) => {
         />
       </View>
       <View style={style.partition}>
-        <View style={[style.contexts, { marginBottom: 20 }]}>
-          <View style={style.titleView}>
-            <Text style={style.keyText}>메뉴</Text>
-          </View>
+        <View style={style.contexts}>
+          <KeyTextView keyText="메뉴" />
         </View>
         {menu}
       </View>
       <View style={[style.partition, style.endMargin]}>
-        <View style={[style.contexts, { marginBottom: 15 }]}>
-          <View style={style.titleView}>
-            <Text style={style.keyText}>댓글</Text>
-          </View>
+        <View style={style.contexts}>
+          <KeyTextView keyText="댓글" />
         </View>
         {comments}
       </View>
@@ -268,19 +250,7 @@ const style = StyleSheet.create({
   },
   contexts: {
     flexDirection: 'row',
-    marginVertical: 3,
-  },
-  keyText: {
-    color: '#033326',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginVertical: 3,
-    marginHorizontal: 10
-  },
-  titleView: {
-    backgroundColor: '#86efac',
-    borderRadius: 50,
-    marginHorizontal: 5
+    marginVertical: 18,
   },
   partition: {
     borderRadius: 25,
