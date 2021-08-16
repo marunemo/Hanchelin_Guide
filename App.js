@@ -20,7 +20,7 @@ export default function App() {
       webClientId: ClientId["client"][0]["oauth_client"][2]["client_id"]
     });
   }, []);
-
+  
   async function onGoogleButtonPress() {
     const { idToken } = await GoogleSignin.signIn();
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
