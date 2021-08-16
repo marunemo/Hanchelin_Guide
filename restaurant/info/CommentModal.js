@@ -147,6 +147,7 @@ const CommentButton = (props) => {
               imageSize={20}
               fractions={1}
               onSwipeRating={rating => setTaste(rating)}
+              onFinishRating={rating => setTaste(rating)}
             />
             <Text style={style.commentText}>가성비</Text>
             <Text style={style.ratingText}>{costPerf} / 5</Text>
@@ -155,6 +156,7 @@ const CommentButton = (props) => {
               imageSize={20}
               fractions={1}
               onSwipeRating={rating => setCostPerf(rating)}
+              onFinishRating={rating => setCostPerf(rating)}
             />
             <Text style={style.commentText}>서비스</Text>
             <Text style={style.ratingText}>{service} / 5</Text>
@@ -163,6 +165,7 @@ const CommentButton = (props) => {
               imageSize={20}
               fractions={1}
               onSwipeRating={rating => setService(rating)}
+              onFinishRating={rating => setService(rating)}
             />
             <Text style={style.commentText}>종합 평가</Text>
             <AirbnbRating
