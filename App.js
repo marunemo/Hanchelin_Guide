@@ -17,7 +17,7 @@ export default function App() {
 
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId: ClientId["client"][0]["oauth_client"][2]["client_id"]
+      webClientId: ClientId["client"][0]["oauth_client"][1]["client_id"]
     });
   }, []);
 

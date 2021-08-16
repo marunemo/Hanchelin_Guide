@@ -22,6 +22,8 @@ target 'Hanchelin_Guide' do
 
   pod 'NMapsMap'
 
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
+
   target 'Hanchelin_GuideTests' do
     inherit! :complete
     # Pods for testing
