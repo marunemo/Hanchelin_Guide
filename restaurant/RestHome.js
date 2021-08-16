@@ -93,12 +93,12 @@ class Home extends Component {
     this.setState({ sortTerm: term })
     term == "가나다순" && this.setState({ data: this.state.data.sort((a, b) => a.name > b.name) })
     term == "추천순" && this.setState({ data: this.state.data.sort((a, b) => a.likes < b.likes) })
-    term == "리뷰개수순" && this.setState({ data: this.state.data.sort((a, b) => a.comments_count < b.comments_count) })
+    term == "리뷰많은순" && this.setState({ data: this.state.data.sort((a, b) => a.comments_count < b.comments_count) })
   }
   render() {
     const filteredArr = (this.state.data)
       .filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
-      .filter(createFilter(this.state.switchValue ? '1' : '', 'delivery_availability'))
+      .filter(createFilter(this.state.switchValue ? 'true' : '', 'delivery_availability'))
       .filter(createFilter(this.state.category, 'category'))
     return (
       <NativeBaseProvider>
@@ -107,14 +107,14 @@ class Home extends Component {
           placeholder="정렬"
           onValueChange={(itemValue) => this.setSortTerm(itemValue)}
           _selectedItem={{
-            bg: "#468966",
+            bg: "#BF2A52",
             endIcon: <CheckIcon size={4} />,
           }}
           m={2}
         >
           <Select.Item label="가나다순" value="가나다순" />
           <Select.Item label="추천순" value="추천순" />
-          <Select.Item label="리뷰개수순" value="리뷰개수순" />
+          <Select.Item label="리뷰많은순" value="리뷰많은순" />
           <Select.Item label="별점순" value="별점순" />
         </Select>
         <HStack alignItems="center" space={1} mx={2} mb={2}>
@@ -124,7 +124,7 @@ class Home extends Component {
             placeholder="카테고리를 선택하세요"
             onValueChange={(itemValue) => this.setCategory(itemValue)}
             _selectedItem={{
-              bg: "#468966",
+              bg: "#BF2A52",
               endIcon: <CheckIcon size={4} />,
             }}
             mr={1}
@@ -181,7 +181,7 @@ export default function App({ navigation }) {
           component={Home}
           options={{
             headerStyle: {
-              backgroundColor: '#468966',
+              backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
             headerTitleStyle: {
@@ -211,7 +211,7 @@ export default function App({ navigation }) {
           options={{
             headerBackTitleVisible: false,
             headerStyle: {
-              backgroundColor: '#468966',
+              backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
             headerTitleStyle: {
@@ -226,7 +226,7 @@ export default function App({ navigation }) {
           options={{
             headerBackTitleVisible: false,
             headerStyle: {
-              backgroundColor: '#468966',
+              backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
             headerTitleStyle: {

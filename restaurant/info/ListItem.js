@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Text, View, ScrollView, SafeAreaView, RefreshControl, StyleSheet,Dimensions } from 'react-native';
+import { Text, View, ScrollView, SafeAreaView, RefreshControl, StyleSheet, Dimensions } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import { NativeBaseProvider, IconButton, Icon, Progress } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
@@ -17,7 +17,7 @@ const Stack = createNativeStackNavigator();
 
 const MapView = (props) => {
   const navigation = useNavigation();
-  
+
   if (props.position['latitude'] == undefined) {
     return <View style={style.mapView} />;
   }
@@ -69,9 +69,9 @@ const RestComponent = (props) => {
   return (
     <>
       <MapView
-          restName={restData['official_name']}
-          position={{ latitude: restData['y'], longitude: restData['x'] }}
-        />
+        restName={restData['official_name']}
+        position={{ latitude: restData['y'], longitude: restData['x'] }}
+      />
       <View style={style.partition}>
         <View style={style.horizontalLayout}>
           <IconButton
@@ -84,12 +84,12 @@ const RestComponent = (props) => {
               <Icon name={tog2 ? "heart" : "heart-o"} as={Font} size="sm" color="#f15c5c" />}
           />
           <IconButton
-            onPress={() => navigation.navigate("같이 배달", {screen: "새로운 채팅방 만들기"})}
+            onPress={() => navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기" })}
             icon={
               <Icon name="wechat" as={Font} size="sm" color="#4c1d95" />}
           />
         </View>
-        
+
         <View>
           <InfoView keyText="이름" value={restData['official_name']} />
           <InfoView keyText="주소" value={restData['address']} />
@@ -102,22 +102,21 @@ const RestComponent = (props) => {
             theme="amber"
           />
         </View>
-      {/* </View> */}
-          
-          {/* <View style={style.horizontalLayout}> */}
-            <Text style={{ color: '#57534e', fontWeight: 'bold' }}>
-              총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.     
-            </Text>
-          </View>
-      
-      
+        {/* </View> */}
+
+        {/* <View style={style.horizontalLayout}> */}
+        <Text style={{ color: '#57534e', fontWeight: 'bold' }}>
+          총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.
+        </Text>
+      </View>
+
       <View style={style.partition}>
         <View style={style.contexts}>
           <KeyTextView keyText="메뉴" />
         </View>
         {menu}
       </View>
-      
+
       <View style={[style.partition, style.endMargin]}>
         <View style={style.contexts}>
           <KeyTextView keyText="댓글" />
@@ -134,7 +133,7 @@ const RestComponent = (props) => {
             ratingName="가성비"
             ratingData={restData['cost_performance']}
             theme="cyan"
-          /> 
+          />
           <RatingBar
             bgText="#67e8f9"
             ratingName="서비스"
