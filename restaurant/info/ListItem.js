@@ -67,6 +67,10 @@ const RestComponent = (props) => {
   const navigation = useNavigation();
   return (
     <>
+      <MapView
+        restName={restData['official_name']}
+        position={{ latitude: restData['y'], longitude: restData['x'] }}
+      />
       <View style={style.partition}>
         <View style={style.horizontalLayout}>
           <IconButton
@@ -103,15 +107,6 @@ const RestComponent = (props) => {
             </Text>
           </View>
         </View>
-      </View>
-      <View style={style.partition}>
-        <View style={style.contexts}>
-          <KeyTextView keyText="위치 정보" />
-        </View>
-        <MapView
-          restName={restData['official_name']}
-          position={{ latitude: restData['y'], longitude: restData['x'] }}
-        />
       </View>
       <View style={style.partition}>
         <View style={style.contexts}>
@@ -273,8 +268,6 @@ const style = StyleSheet.create({
   mapView: {
     width: '100%',
     aspectRatio: 1,
-    borderColor: '#aaaaaa',
-    borderWidth: 1
   },
   endMargin: {
     marginBottom: 100
