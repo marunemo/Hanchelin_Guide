@@ -20,7 +20,7 @@ const InfoView = (props) => {
 
 const MenuListView = (props) => {
 	const id = props.id;
-	const [food, price] = props.order.split(' : ');
+	const [food, price] = props.order.split(': ');
 
 	return (
 		<View style={style.menuView}>

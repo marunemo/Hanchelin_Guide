@@ -97,6 +97,10 @@ const RestComponent = (props) => {
             keyText="번호"
             value={restData['contact']}
           />
+          <InfoView
+            keyText="영업 시간"
+            value={restData['opening_hours']}
+          />
         </View>
         <View>
           <RatingBar
