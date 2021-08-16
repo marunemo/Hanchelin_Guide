@@ -18,5 +18,11 @@ module.exports = {
           ios: null, // disable iOS platform, other platforms will still autolink
         },
       },
+      '@react-native-community/datetimepicker': {
+        platforms: {
+          android: null, // disable Android platform, other platforms will still autolink
+          ios: null, // disable iOS platform, other platforms will still autolink
+        },
+      },
     },
   };
