@@ -28,11 +28,16 @@ const MapView = (props) => {
       compass={false}
       scaleBar={true}
       zoomControl={true}
+      scrollGesturesEnabled={false}
+      zoomGesturesEnabled={false}
       minZoomLevel={6}
       maxZoomLevel={19}
       onMapClick={() => navigation.navigate("식당 위치", { name: props.restName, coordinate: props.position })}
     >
-      <Marker coordinate={props.position} />
+      <Marker
+        coordinate={props.position}
+        caption={{ text: props.restName }}
+      />
     </NaverMapView>
   )
 }
@@ -117,7 +122,7 @@ const RestComponent = (props) => {
       </View>
       <View style={[style.partition, style.endMargin]}>
         <View style={style.contexts}>
-          <KeyTextView keyText="평가" />
+          <KeyTextView keyText="평점" />
         </View>
         <RatingBar
           bgText="#fda4af"
@@ -140,9 +145,6 @@ const RestComponent = (props) => {
           ratingData={restData['service']}
           theme="emerald"
         />
-        <View style={style.contexts}>
-          <KeyTextView keyText="댓글" />
-        </View>
         {comments}
       </View>
     </>
@@ -248,7 +250,7 @@ export default ItemActivity;
 const style = StyleSheet.create({
   containter: {
     height: '100%',
-    backgroundColor: '#d1fae5'
+    backgroundColor: '#f7f7f7'
   },
   contexts: {
     flexDirection: 'row',
