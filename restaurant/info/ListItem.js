@@ -97,6 +97,7 @@ const RestComponent = (props) => {
         <View>
           <RatingBar
             bgText="#fbbf24"
+            textColor="#4a1f07"
             ratingName="종합"
             ratingData={restData['overall']}
             theme="amber"
@@ -119,22 +120,25 @@ const RestComponent = (props) => {
           <KeyTextView keyText="평가" />
         </View>
         <RatingBar
-          bgText="#67e8f9"
+          bgText="#fda4af"
+          textColor="#540820"
           ratingName="맛"
           ratingData={restData['flavor']}
-          theme="cyan"
+          theme="rose"
         />
         <RatingBar
           bgText="#67e8f9"
+          textColor="#053f4d"
           ratingName="가성비"
           ratingData={restData['cost_performance']}
           theme="cyan"
         />
         <RatingBar
-          bgText="#67e8f9"
+          bgText="#6ee7b7"
+          textColor="#022e22"
           ratingName="서비스"
           ratingData={restData['service']}
-          theme="cyan"
+          theme="emerald"
         />
         <View style={style.contexts}>
           <KeyTextView keyText="댓글" />
