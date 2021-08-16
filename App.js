@@ -51,8 +51,8 @@ export default function App() {
             },
             tabBarActiveTintColor: '#f2f2f2',
             tabBarInactiveTintColor: '#f2f2f2',
-            tabBarActiveBackgroundColor: '#468966',
-            tabBarInactiveBackgroundColor: '#FFF0A5',
+            tabBarActiveBackgroundColor: '#BF2A52',
+            tabBarInactiveBackgroundColor: '#555',
           })}>
           <BTab.Screen
             name='식당'

@@ -81,7 +81,7 @@ export default function ({ navigation }) {
           options={{
             title: '같이 배달',
             headerStyle: {
-              backgroundColor: '#468966',
+              backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
             headerTitleStyle: {
@@ -100,7 +100,7 @@ export default function ({ navigation }) {
           options={{
             headerBackTitleVisible: false,
             headerStyle: {
-              backgroundColor: '#468966',
+              backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
             headerTitleStyle: {
@@ -116,7 +116,7 @@ export default function ({ navigation }) {
             title: route.params.thread.name,
             headerBackTitleVisible: false,
             headerStyle: {
-              backgroundColor: '#468966',
+              backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
             headerTitleStyle: {

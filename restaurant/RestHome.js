@@ -107,7 +107,7 @@ class Home extends Component {
           placeholder="정렬"
           onValueChange={(itemValue) => this.setSortTerm(itemValue)}
           _selectedItem={{
-            bg: "#468966",
+            bg: "#BF2A52",
             endIcon: <CheckIcon size={4} />,
           }}
           m={2}
@@ -124,7 +124,7 @@ class Home extends Component {
             placeholder="카테고리를 선택하세요"
             onValueChange={(itemValue) => this.setCategory(itemValue)}
             _selectedItem={{
-              bg: "#468966",
+              bg: "#BF2A52",
               endIcon: <CheckIcon size={4} />,
             }}
             mr={1}
@@ -181,7 +181,7 @@ export default function App({ navigation }) {
           component={Home}
           options={{
             headerStyle: {
-              backgroundColor: '#468966',
+              backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
             headerTitleStyle: {
@@ -211,7 +211,7 @@ export default function App({ navigation }) {
           options={{
             headerBackTitleVisible: false,
             headerStyle: {
-              backgroundColor: '#468966',
+              backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
             headerTitleStyle: {
@@ -226,7 +226,7 @@ export default function App({ navigation }) {
           options={{
             headerBackTitleVisible: false,
             headerStyle: {
-              backgroundColor: '#468966',
+              backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
             headerTitleStyle: {
