@@ -132,8 +132,8 @@ export default function ({ navigation }) {
           name="메시지"
           component={Chat}
           options={({ route }) => ({
-            headerBackTitleVisible: false,
             title: route.params.thread.name,
+            headerBackTitleVisible: false,
             headerStyle: {
               backgroundColor: '#468966',
             },

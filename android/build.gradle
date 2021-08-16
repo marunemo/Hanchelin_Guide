@@ -11,6 +11,10 @@ buildscript {
     repositories {
         google()
         jcenter()
+        // The RepositoryHandler.jcenter() method has been deprecated. 
+        maven {
+            url 'https://naver.jfrog.io/artifactory/maven/'
+        }
     }
     dependencies {
         classpath("com.android.tools.build:gradle:4.1.0")
