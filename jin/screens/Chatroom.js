@@ -3,8 +3,7 @@ import {
   StyleSheet, 
   Text, 
   View, 
-  Image, 
-  Button, 
+  Image,  
   ScrollView, 
   TextInput, 
   TouchableOpacity, 
@@ -12,7 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Divider, NativeBaseProvider, Stack, HStack } from 'native-base';
+import { Divider, NativeBaseProvider, Stack, HStack, Modal, Button, } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -93,6 +92,26 @@ function Chatroom({ navigation }) {
 }
 
 export default function ({ navigation }) {
+  const user = auth().currentUser;
+  const [showModal, setShowModal] = useState(false); // 권한이 없을때의 modal 보여주기
+  const [showAuthModal, setShowAuthModal] = useState(false); // 권한이 있을때의 modal 보여주기
+  const [isFinal, setIsFinal] = useState(false); // 채팅방 삭제 최종 확인
+
+  async function deleteChat (props) {
+    if (user?.uid === props.initialUser) {
+      setShowAuthModal(true)
+
+      firestore()
+      .collection('Chat')
+      .doc(props._id)
+      .delete()
+      
+      navigation.navigate('같이 배달 리스트')
+    } else {
+      setShowModal(true)
+    }
+  }
+
   return (
     <NativeBaseProvider>
       <StackNav.Navigator>
@@ -144,11 +163,26 @@ export default function ({ navigation }) {
             },
             headerRight: () => (
               <Icon name="times" size={24} color="#f2f2f2"
-                 />
+                onPress={() => deleteChat(route.params.thread)}
+              />
             )
           })}
         />
       </StackNav.Navigator>
+      
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <Modal.Content minWidth='200' minHeight='200'>
+          <Modal.CloseButton />
+          <Modal.Header alignItems='center'>삭제 권한이 없습니다.</Modal.Header>
+        </Modal.Content>
+      </Modal>
+
+      <Modal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)}>
+        <Modal.Content minWidth='200' minHeight='200' alignItems='center'>
+          <Modal.CloseButton />
+          <Modal.Header>채팅이 삭제되었습니다.</Modal.Header>
+        </Modal.Content>
+      </Modal>
     </NativeBaseProvider>
   )
 }

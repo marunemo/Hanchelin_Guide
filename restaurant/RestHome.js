@@ -235,19 +235,6 @@ export default function App({ navigation }) {
             }
           }}
         />
-        <Stack.Screen 
-          name="프로필" 
-          component={Profile}
-          options={{
-            headerStyle: {
-              backgroundColor: '#468966',
-            },
-            headerTintColor: '#f2f2f2',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: 20,
-            }
-          }} />
       </Stack.Navigator>
     </NativeBaseProvider>
   );

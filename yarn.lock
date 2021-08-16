@@ -1884,6 +1884,13 @@
     "sudo-prompt" "^9.0.0"
     "wcwidth" "^1.0.1"
 
+"@react-native-community/datetimepicker@^3.5.2", "@react-native-community/datetimepicker@>=3.0.0":
+  "integrity" "sha512-TWRuAtr/DnrEcRewqvXMLea2oB+YF+SbtuYLHguALLxNJQLl/RFB7aTNZeF+OoH75zKFqtXECXV1/uxQUpA+sg=="
+  "resolved" "https://registry.npmjs.org/@react-native-community/datetimepicker/-/datetimepicker-3.5.2.tgz"
+  "version" "3.5.2"
+  dependencies:
+    "invariant" "^2.2.4"
+
 "@react-native-community/eslint-config@2.0.0":
   "integrity" "sha512-vHaMMfvMp9BWCQQ0lNIXibOJTcXIbYUQ8dSUsMOsrXgVkeVQJj88OwrKS00rQyqwMaC4/a6HuDiFzYUkGKOpVg=="
   "resolved" "https://registry.npmjs.org/@react-native-community/eslint-config/-/eslint-config-2.0.0.tgz"
@@ -4538,11 +4545,6 @@
   "integrity" "sha1-FQStJSMVjKpA20onh8sBQRmU6k8="
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
-
-"fsevents@^2.1.2":
-  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
-  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
-  "version" "2.3.2"
 
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
@@ -7235,6 +7237,13 @@
   "integrity" "sha512-TFZA6iKEEHpAUIXjMTRb6vx0/9rHgEKy3ZBiRAy295PwldYg5c8opwnbyURLIl522ykeqhVx9uGdXjSMIowLvA=="
   "resolved" "https://registry.npmjs.org/react-native-lightbox/-/react-native-lightbox-0.8.1.tgz"
   "version" "0.8.1"
+  dependencies:
+    "prop-types" "^15.7.2"
+
+"react-native-modal-datetime-picker@^10.2.0":
+  "integrity" "sha512-eMQb3EPqHx47WrlLPTrXvmLZDwGwGH//WTWiQBUvJ+6ehDeuTjIn8/v/ANv8wxCCrt4NeHem8FQY3Z5fa4fRgQ=="
+  "resolved" "https://registry.npmjs.org/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-10.2.0.tgz"
+  "version" "10.2.0"
   dependencies:
     "prop-types" "^15.7.2"
 

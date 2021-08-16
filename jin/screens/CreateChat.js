@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
-import firestore from '@react-native-firebase/firestore'
+import { View, StyleSheet, TextInput, TouchableOpacity, Platform } from 'react-native'
 import { NativeBaseProvider, Text, Input, Button, Select } from 'native-base'
 import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
 
 export default function CreateChat({ navigation }) {
   const user = auth().currentUser
   const [roomName, setRoomName] = useState('기본 채팅방') //채팅방 이름
   const [storeName, setStoreName] = useState('기본 식당이름') //식당이름
   const [delivLocation, setDelivLocation] = useState('기본 배달위치') //배달위치
-  const [endTime, setEndTime] = useState(0) //마감시간
+  const [endTime, setEndTime] = useState(0) //모집 마감시간
 
   function handleButtonPress() {
     if (roomName.length > 0) {
@@ -52,17 +52,23 @@ export default function CreateChat({ navigation }) {
           <Select.Item label='호원' value='호원' />
         </Select>
         <Input
-          style={styles.textInput}
+          bg='white'
+          minWidth={230}
+          marginTop='3'
           placeholder='채팅방 이름'
           onChangeText={roomName => setRoomName(roomName)}
         />
         <Input 
-          style={styles.textInput}
+          bg='white'
+          minWidth={230}
+          marginTop='3'
           placeholder='배달 위치'
           onChangeText={delivLocation => setDelivLocation(delivLocation)}
         />
-        <Input 
-          style={styles.textInput}
+        <Input
+          bg='white'
+          minWidth={230}
+          marginTop='3'
           placeholder='모집 마감시간'
           onChangeText={(endTime) => setEndTime(parseInt(endTime))}
         />
@@ -103,17 +109,4 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18
   },
-  textInput: {
-    backgroundColor: '#fff',
-    marginHorizontal: 20,
-    fontSize: 18,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderColor: '#aaa',
-    borderRadius: 10,
-    borderWidth: 1,
-    marginBottom: 5,
-    marginTop: 5,
-    width: 225
-  }
 })
