@@ -125,10 +125,7 @@ const CommentButton = (props) => {
       >
         <SafeAreaView style={style.commentView}>
           <Text style={style.commentHeader}>식당 리뷰</Text>
-          <ScrollView
-            style={{ marginBottom: 10 }}
-            showsVerticalScrollIndicator={false}
-          >
+          <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={style.commentText}>주문 방식</Text>
             <Button.Group alignSelf="center">
               <Button
@@ -150,6 +147,7 @@ const CommentButton = (props) => {
               imageSize={20}
               fractions={1}
               onSwipeRating={rating => setTaste(rating)}
+              onFinishRating={rating => setTaste(rating)}
             />
             <Text style={style.commentText}>가성비</Text>
             <Text style={style.ratingText}>{costPerf} / 5</Text>
@@ -158,6 +156,7 @@ const CommentButton = (props) => {
               imageSize={20}
               fractions={1}
               onSwipeRating={rating => setCostPerf(rating)}
+              onFinishRating={rating => setCostPerf(rating)}
             />
             <Text style={style.commentText}>서비스</Text>
             <Text style={style.ratingText}>{service} / 5</Text>
@@ -166,6 +165,7 @@ const CommentButton = (props) => {
               imageSize={20}
               fractions={1}
               onSwipeRating={rating => setService(rating)}
+              onFinishRating={rating => setService(rating)}
             />
             <Text style={style.commentText}>종합 평가</Text>
             <AirbnbRating
@@ -191,7 +191,7 @@ const CommentButton = (props) => {
               onChangeText={setTotal}
             />
           </ScrollView>
-          <Button.Group>
+          <Button.Group style={{ marginVertical: 10 }}>
             <Button
               colorScheme="rgb(14, 165, 233)"
               onPress={() => {
@@ -230,7 +230,7 @@ const style = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 25,
     width: '95%',
-    height: '80%',
+    height: '85%',
     alignItems: 'center',
     alignSelf: 'center',
   },
