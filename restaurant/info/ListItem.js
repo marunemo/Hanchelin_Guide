@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Text, View, ScrollView, SafeAreaView, RefreshControl, StyleSheet } from 'react-native';
+import { Text, View, ScrollView, SafeAreaView, RefreshControl, StyleSheet,Dimensions } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import { NativeBaseProvider, IconButton, Icon, Progress } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
@@ -11,6 +11,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
 import { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar } from './InfoElements';
+import { styles } from 'styled-system';
 
 const Stack = createNativeStackNavigator();
 
@@ -67,6 +68,10 @@ const RestComponent = (props) => {
   const navigation = useNavigation();
   return (
     <>
+      <MapView
+          restName={restData['official_name']}
+          position={{ latitude: restData['y'], longitude: restData['x'] }}
+        />
       <View style={style.partition}>
         <View style={style.horizontalLayout}>
           <IconButton
@@ -84,11 +89,38 @@ const RestComponent = (props) => {
               <Icon name="wechat" as={Font} size="sm" color="#4c1d95" />}
           />
         </View>
+        
         <View>
           <InfoView keyText="이름" value={restData['official_name']} />
           <InfoView keyText="주소" value={restData['address']} />
           <InfoView keyText="번호" value={restData['contact']} />
           <InfoView keyText="영업 시간" value={restData['opening_hours']} />
+          <RatingBar
+            bgText="#fbbf24"
+            ratingName="종합"
+            ratingData={restData['overall']}
+            theme="amber"
+          />
+        </View>
+      {/* </View> */}
+          
+          {/* <View style={style.horizontalLayout}> */}
+            <Text style={{ color: '#57534e', fontWeight: 'bold' }}>
+              총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.     
+            </Text>
+          </View>
+      
+      
+      <View style={style.partition}>
+        <View style={style.contexts}>
+          <KeyTextView keyText="메뉴" />
+        </View>
+        {menu}
+      </View>
+      
+      <View style={[style.partition, style.endMargin]}>
+        <View style={style.contexts}>
+          <KeyTextView keyText="댓글" />
         </View>
         <View>
           <RatingBar
@@ -102,7 +134,7 @@ const RestComponent = (props) => {
             ratingName="가성비"
             ratingData={restData['cost_performance']}
             theme="cyan"
-          />
+          /> 
           <RatingBar
             bgText="#67e8f9"
             ratingName="서비스"
@@ -115,31 +147,6 @@ const RestComponent = (props) => {
             ratingData={restData['overall']}
             theme="amber"
           />
-          <View style={style.horizontalLayout}>
-            <Text style={{ color: '#57534e', fontWeight: 'bold' }}>
-              총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View style={style.partition}>
-        <View style={style.contexts}>
-          <KeyTextView keyText="위치 정보" />
-        </View>
-        <MapView
-          restName={restData['official_name']}
-          position={{ latitude: restData['y'], longitude: restData['x'] }}
-        />
-      </View>
-      <View style={style.partition}>
-        <View style={style.contexts}>
-          <KeyTextView keyText="메뉴" />
-        </View>
-        {menu}
-      </View>
-      <View style={[style.partition, style.endMargin]}>
-        <View style={style.contexts}>
-          <KeyTextView keyText="댓글" />
         </View>
         {comments}
       </View>
@@ -275,5 +282,17 @@ const style = StyleSheet.create({
   },
   endMargin: {
     marginBottom: 100
+  },
+  greenBox: {
+    borderRadius: 25,
+    backgroundColor: '#59aa80',
+    marginVertical: 5,
+    marginHorizontal: 15,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+    shadowColor: '#666666',
+    shadowRadius: 1,
+    shadowOpacity: 0.3,
+    elevation: 8
   }
 })
