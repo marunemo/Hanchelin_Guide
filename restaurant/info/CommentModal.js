@@ -19,7 +19,7 @@ const CommentButton = (props) => {
   let commentList = props.restaurantData['comments'] ? props.restaurantData['comments'] : [];
   const commentsCount = props.restaurantData['comments_count'];
 
-  const [taste, setTaste] = useState(2.5); //맛
+  const [flavor, setFlavor] = useState(2.5); //맛
   const [costPerf, setCostPerf] = useState(2.5); //가성비
   const [service, setService] = useState(2.5); //서비스
   const [overall, setOverall] = useState(3); //종합
@@ -29,7 +29,7 @@ const CommentButton = (props) => {
 
   async function addReview() {
     await reviewRef.add({
-      맛: taste,
+      맛: flavor,
       가성비: costPerf,
       서비스: service,
       종합: overall,
@@ -41,7 +41,7 @@ const CommentButton = (props) => {
     })
       .then(querySnapshot => {
         commentList.push({
-          맛: taste,
+          맛: flavor,
           가성비: costPerf,
           서비스: service,
           종합: overall,
@@ -57,14 +57,14 @@ const CommentButton = (props) => {
         commentRef.update({
           comments: commentList,
           comments_count: commentsCount + 1,
-          flavor: (props.restaurantData['flavor'] * commentsCount + taste) / (commentsCount + 1),
+          flavor: (props.restaurantData['flavor'] * commentsCount + flavor) / (commentsCount + 1),
           cost_performance: (props.restaurantData['cost_performance'] * commentsCount + costPerf) / (commentsCount + 1),
           service: (props.restaurantData['service'] * commentsCount + service) / (commentsCount + 1),
           overall: (props.restaurantData['overall'] * commentsCount + overall) / (commentsCount + 1)
         });
       })
 
-    setTaste(2.5);
+    setFlavor(2.5);
     setCostPerf(2.5);
     setService(2.5);
     setOverall(3);
@@ -141,13 +141,13 @@ const CommentButton = (props) => {
             </Button.Group>
             <DeliverOption isDeliver={isDeliver} />
             <Text style={style.commentText}>맛</Text>
-            <Text style={style.ratingText}>{taste} / 5</Text>
+            <Text style={style.ratingText}>{flavor} / 5</Text>
             <Rating
-              startingValue={taste}
+              startingValue={flavor}
               imageSize={20}
               fractions={1}
-              onSwipeRating={rating => setTaste(rating)}
-              onFinishRating={rating => setTaste(rating)}
+              onSwipeRating={rating => setFlavor(rating)}
+              onFinishRating={rating => setFlavor(rating)}
             />
             <Text style={style.commentText}>가성비</Text>
             <Text style={style.ratingText}>{costPerf} / 5</Text>
