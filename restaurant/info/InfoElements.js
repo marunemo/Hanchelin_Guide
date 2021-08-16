@@ -16,7 +16,13 @@ const KeyTextView = (props) => {
 const InfoView = (props) => {
 	return (
 		<View style={style.contexts}>
-			<KeyTextView keyText={props.keyText} />
+			<View style={style.iconView}>
+				<Font
+					name={props.icon}
+					color="#666666"
+					size={22}
+				/>
+			</View>
 			<Text style={{ fontSize: 16, marginVertical: 3 }}>
 				{props.value}
 			</Text>
@@ -111,6 +117,12 @@ const style = StyleSheet.create({
 		backgroundColor: '#86efac',
 		borderRadius: 50,
 		marginHorizontal: 5
+	},
+	iconView: {
+		width: 18,
+		marginRight: 10,
+		justifyContent: "center",
+		alignItems: "center"
 	},
 	ratingView: {
 		flexDirection: 'row',

@@ -89,10 +89,10 @@ const RestComponent = (props) => {
           />
         </View>
         <View>
-          <InfoView keyText="이름" value={restData['official_name']} />
-          <InfoView keyText="주소" value={restData['address']} />
-          <InfoView keyText="번호" value={restData['contact']} />
-          <InfoView keyText="영업 시간" value={restData['opening_hours']} />
+          <InfoView icon="spoon" value={restData['official_name']} />
+          <InfoView icon="location-arrow" value={restData['address']} />
+          <InfoView icon="mobile-phone" value={restData['contact']} />
+          <InfoView icon="clock-o" value={restData['opening_hours']} />
         </View>
         <View>
           <RatingBar
