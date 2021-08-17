@@ -48,13 +48,16 @@ const RestComponent = (props) => {
   const menuList = restData['menu'];
   const commentsList = restData['comments'];
 
-  if (menuList != undefined) {
+  if (typeof(menuList) === 'object') {
     for (const [id, order] of Object.entries(menuList)) {
       menu.push(
-        <MenuListView key={id} id={id} order={order} />
+        <MenuListView key={id} order={order} />
       )
     }
+  } else if(typeof(menuList) === 'string') {
+    menu = <MenuListView order={menuList} />
   }
+
   if (commentsList !== undefined) {
     for (const [id, comment] of Object.entries(commentsList)) {
       if (comment != null) {
