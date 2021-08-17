@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Text, View, ScrollView, SafeAreaView, RefreshControl, StyleSheet } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
-import { NativeBaseProvider, IconButton, Icon, Progress } from 'native-base';
+import { NativeBaseProvider, HStack, Center, Button } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
@@ -65,8 +65,7 @@ const RestComponent = (props) => {
     }
   }
 
-  const [tog1, setTog1] = useState(false);
-  const [tog2, setTog2] = useState(false);
+  const [tog, setTog] = useState(false);
   const navigation = useNavigation();
   return (
     <>
@@ -75,22 +74,6 @@ const RestComponent = (props) => {
         position={{ latitude: restData['y'], longitude: restData['x'] }}
       />
       <View style={style.partition}>
-        <View style={style.horizontalLayout}>
-          <IconButton
-            onPress={() => setTog1(!tog1)}
-            icon={<Icon name={tog1 ? "thumbs-up" : "thumbs-o-up"} as={Font} size="sm" color="#30A9DE" />}
-          />
-          <IconButton
-            onPress={() => setTog2(!tog2)}
-            icon={
-              <Icon name={tog2 ? "heart" : "heart-o"} as={Font} size="sm" color="#f15c5c" />}
-          />
-          <IconButton
-            onPress={() => navigation.navigate("같이 배달", {screen: "새로운 채팅방 만들기"})}
-            icon={
-              <Icon name="wechat" as={Font} size="sm" color="#4c1d95" />}
-          />
-        </View>
         <View>
           <InfoView icon="spoon" value={restData['official_name']} />
           <InfoView icon="location-arrow" value={restData['address']} />
@@ -111,6 +94,23 @@ const RestComponent = (props) => {
             </Text>
           </View>
         </View>
+        <HStack>
+          <Center style={style.optionView}>
+            <Button style={style.optionButton} onPress={() => navigation.navigate("같이 배달", {screen: "새로운 채팅방 만들기"})}>
+              <Font name="wechat" size={30} color="#4c1d95" />
+            </Button>
+          </Center>
+          <Center style={style.optionView}>
+            <Button style={style.optionButton} onPress={() => setTog(!tog)}>
+              <Font name={tog ? "heart" : "heart-o"} size={30} color="#f15c5c" />
+            </Button>
+          </Center>
+          <Center style={style.optionView}>
+            <Button style={style.optionButton} onPress={() => setTog(!tog)}>
+              <Font name="share" size={30} color="#999999" />
+            </Button>
+          </Center>
+        </HStack>
       </View>
       <View style={style.partition}>
         <View style={style.contexts}>
@@ -275,5 +275,18 @@ const style = StyleSheet.create({
   },
   endMargin: {
     marginBottom: 100
+  },
+  optionView: {
+    borderColor: "#aaaaaa",
+    borderWidth: 1,
+    justifyContent: "center",
+    width: "33%",
+    aspectRatio: 1,
+    paddingVertical: 10
+  },
+  optionButton: {
+    width: "100%",
+    aspectRatio: 1,
+    backgroundColor: "white"
   }
 })
