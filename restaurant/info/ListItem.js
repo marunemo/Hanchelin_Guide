@@ -232,7 +232,18 @@ const ItemActivity = ({ route }) => {
       <Stack.Screen
         name="식당 정보 화면"
         component={RestInfo}
-        options={{ headerShown: false }}
+        options={{
+          headerTitle: route.params.title,
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor: '#BF2A52',
+          },
+          headerTintColor: '#f2f2f2',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+          }
+        }}
       />
       <Stack.Screen
         name="식당 위치"
