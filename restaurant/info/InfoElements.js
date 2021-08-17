@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { IconButton, Icon, Progress } from 'native-base';
+import { IconButton, Icon } from 'native-base';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Font from 'react-native-vector-icons/FontAwesome';
 
 const KeyTextView = (props) => {
@@ -78,22 +79,27 @@ const RatingBar = (props) => {
 	const textColor = props.textColor;
 	const ratingName = props.ratingName;
 	const ratingData = props.ratingData;
-	const theme = props.theme;
 
 	return (
 		<View style={style.ratingView}>
 			<View style={[style.ratingTextView, { backgroundColor: backgroundText }]}>
 				<Text style={[style.ratingText, { color: textColor }]}>{ratingName}</Text>
 			</View>
-			<Progress
-				rounded="0"
-				colorScheme={theme}
-				width={75}
-				height={14}
-				max={5}
-				value={ratingData}
-			/>
-			<Text>{ratingData}</Text>
+			<AnimatedCircularProgress
+				tintColor={props.color}
+				backgroundColor="#d4d4d4"
+				size={120}
+				width={15}
+				rotation={0}
+				fill={!ratingData ? 0 : ratingData * 20}
+				duration={1000}
+			>
+				{(fill) => (
+					<Text style={{ fontSize: 20 }}>
+						{Math.round(ratingData * 100) / 100}
+					</Text>
+				)}
+			</AnimatedCircularProgress>
 		</View>
 	)
 }
