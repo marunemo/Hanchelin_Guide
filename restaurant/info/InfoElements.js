@@ -16,7 +16,13 @@ const KeyTextView = (props) => {
 const InfoView = (props) => {
 	return (
 		<View style={style.contexts}>
-			<KeyTextView keyText={props.keyText} />
+			<View style={style.iconView}>
+				<Font
+					name={props.icon}
+					color="#666666"
+					size={22}
+				/>
+			</View>
 			<Text style={{ fontSize: 16, marginVertical: 3 }}>
 				{props.value}
 			</Text>
@@ -47,15 +53,15 @@ const CommentListView = (props) => {
 				size="sm"
 				borderRadius="full"
 				onPress={() => props.onPop(id, comment.query)}
-				icon={<Icon name="trash-o" as={Font} size="sm" color="#713f12" />}
+				icon={<Icon name="trash-o" as={Font} size="sm" color="#831843" />}
 			/>
 			<Text style={style.commentsText}>맛 : {comment['맛']}</Text>
 			<Text style={style.commentsText}>가성비 : {comment['가성비']}</Text>
 			<Text style={style.commentsText}>서비스 : {comment['서비스']}</Text>
 			<Text style={style.commentsText}>종합 : {comment['종합']}</Text>
-			{comment['총평'] !== '' &&
+			{comment['리뷰'] !== '' &&
 				<Text style={style.commentsText}>
-					총평 : {comment['총평']}
+					리뷰 : {comment['리뷰']}
 				</Text>
 			}
 			{comment['배달여부'] &&
@@ -69,7 +75,8 @@ const CommentListView = (props) => {
 }
 
 const RatingBar = (props) => {
-	const backgroundText = props.bgText
+	const backgroundText = props.bgText;
+	const textColor = props.textColor;
 	const ratingName = props.ratingName;
 	const ratingData = props.ratingData;
 	const theme = props.theme;
@@ -77,7 +84,7 @@ const RatingBar = (props) => {
 	return (
 		<View style={style.ratingView}>
 			<View style={[style.ratingTextView, { backgroundColor: backgroundText }]}>
-				<Text style={style.ratingText}>{ratingName}</Text>
+				<Text style={[style.ratingText, { color: textColor }]}>{ratingName}</Text>
 			</View>
 			<Progress
 				rounded="0"
@@ -111,6 +118,12 @@ const style = StyleSheet.create({
 		borderRadius: 50,
 		marginHorizontal: 5
 	},
+	iconView: {
+		width: 18,
+		marginRight: 10,
+		justifyContent: "center",
+		alignItems: "center"
+	},
 	ratingView: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
@@ -140,8 +153,8 @@ const style = StyleSheet.create({
 	commentsView: {
 		borderWidth: 1,
 		borderRadius: 20,
-		borderColor: '#65a30d',
-		backgroundColor: '#d9f99d',
+		borderColor: '#ec4899',
+		backgroundColor: '#fbcfe8',
 		width: '100%',
 		marginVertical: 5,
 		paddingVertical: 5,

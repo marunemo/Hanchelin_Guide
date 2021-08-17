@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Text, View, ScrollView, SafeAreaView, RefreshControl, StyleSheet, Dimensions } from 'react-native';
+import { Text, View, ScrollView, SafeAreaView, RefreshControl, StyleSheet } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
-import { NativeBaseProvider, IconButton, Icon, Progress } from 'native-base';
+import { NativeBaseProvider, HStack, Center, IconButton, Icon, Button } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
@@ -11,13 +11,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
 import { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar } from './InfoElements';
-import { styles } from 'styled-system';
 
 const Stack = createNativeStackNavigator();
 
 const MapView = (props) => {
   const navigation = useNavigation();
-
+  
   if (props.position['latitude'] == undefined) {
     return <View style={style.mapView} />;
   }
@@ -33,7 +32,10 @@ const MapView = (props) => {
       maxZoomLevel={19}
       onMapClick={() => navigation.navigate("식당 위치", { name: props.restName, coordinate: props.position })}
     >
-      <Marker coordinate={props.position} />
+      <Marker
+        coordinate={props.position}
+        caption={{ text: props.restName }}
+      />
     </NaverMapView>
   )
 }
@@ -63,8 +65,7 @@ const RestComponent = (props) => {
     }
   }
 
-  const [tog1, setTog1] = useState(false);
-  const [tog2, setTog2] = useState(false);
+  const [tog, setTog] = useState(false);
   const navigation = useNavigation();
   return (
     <>
@@ -73,80 +74,75 @@ const RestComponent = (props) => {
         position={{ latitude: restData['y'], longitude: restData['x'] }}
       />
       <View style={style.partition}>
-        <View style={style.horizontalLayout}>
-          <IconButton
-            onPress={() => setTog1(!tog1)}
-            icon={<Icon name={tog1 ? "thumbs-up" : "thumbs-o-up"} as={Font} size="sm" color="#30A9DE" />}
-          />
-          <IconButton
-            onPress={() => setTog2(!tog2)}
-            icon={
-              <Icon name={tog2 ? "heart" : "heart-o"} as={Font} size="sm" color="#f15c5c" />}
-          />
-          <IconButton
-            onPress={() => navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기" })}
-            icon={
-              <Icon name="wechat" as={Font} size="sm" color="#4c1d95" />}
-          />
-        </View>
-
         <View>
-          <InfoView keyText="이름" value={restData['official_name']} />
-          <InfoView keyText="주소" value={restData['address']} />
-          <InfoView keyText="번호" value={restData['contact']} />
-          <InfoView keyText="영업 시간" value={restData['opening_hours']} />
+          <InfoView icon="spoon" value={restData['official_name']} />
+          <InfoView icon="location-arrow" value={restData['address']} />
+          <InfoView icon="mobile-phone" value={restData['contact']} />
+          <InfoView icon="clock-o" value={restData['opening_hours']} />
+        </View>
+        <View>
           <RatingBar
             bgText="#fbbf24"
-            ratingName="종합"
-            ratingData={restData['overall']}
+            textColor="#4a1f07"
+            ratingName="평점"
+            ratingData={restData['total']}
             theme="amber"
           />
+          <View style={style.horizontalLayout}>
+            <Text style={{ color: '#57534e', fontWeight: 'bold' }}>
+              총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.
+            </Text>
+          </View>
         </View>
-        {/* </View> */}
-
-        {/* <View style={style.horizontalLayout}> */}
-        <Text style={{ color: '#57534e', fontWeight: 'bold' }}>
-          총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.
-        </Text>
+        <HStack>
+          <Center style={style.optionView}>
+            <Button style={style.optionButton} onPress={() => navigation.navigate("같이 배달", {screen: "새로운 채팅방 만들기"})}>
+              <Font name="wechat" size={30} color="#4c1d95" />
+            </Button>
+          </Center>
+          <Center style={style.optionView}>
+            <Button style={style.optionButton} onPress={() => setTog(!tog)}>
+              <Font name={tog ? "heart" : "heart-o"} size={30} color="#f15c5c" />
+            </Button>
+          </Center>
+          <Center style={style.optionView}>
+            <Button style={style.optionButton} onPress={() => setTog(!tog)}>
+              <Font name="share" size={30} color="#999999" />
+            </Button>
+          </Center>
+        </HStack>
       </View>
-
       <View style={style.partition}>
         <View style={style.contexts}>
           <KeyTextView keyText="메뉴" />
         </View>
         {menu}
       </View>
-
       <View style={[style.partition, style.endMargin]}>
         <View style={style.contexts}>
-          <KeyTextView keyText="댓글" />
+          <KeyTextView keyText="평점" />
         </View>
-        <View>
-          <RatingBar
-            bgText="#67e8f9"
-            ratingName="맛"
-            ratingData={restData['flavor']}
-            theme="cyan"
-          />
-          <RatingBar
-            bgText="#67e8f9"
-            ratingName="가성비"
-            ratingData={restData['cost_performance']}
-            theme="cyan"
-          />
-          <RatingBar
-            bgText="#67e8f9"
-            ratingName="서비스"
-            ratingData={restData['service']}
-            theme="cyan"
-          />
-          <RatingBar
-            bgText="#fbbf24"
-            ratingName="종합"
-            ratingData={restData['overall']}
-            theme="amber"
-          />
-        </View>
+        <RatingBar
+          bgText="#fda4af"
+          textColor="#540820"
+          ratingName="맛"
+          ratingData={restData['flavor']}
+          theme="rose"
+        />
+        <RatingBar
+          bgText="#67e8f9"
+          textColor="#053f4d"
+          ratingName="가성비"
+          ratingData={restData['cost_performance']}
+          theme="cyan"
+        />
+        <RatingBar
+          bgText="#6ee7b7"
+          textColor="#022e22"
+          ratingName="서비스"
+          ratingData={restData['service']}
+          theme="emerald"
+        />
         {comments}
       </View>
     </>
@@ -185,7 +181,7 @@ const RestaurantInfo = (props) => {
           flavor: 0,
           cost_performance: 0,
           service: 0,
-          overall: 0
+          total: 0
         }).then(onRefresh);
       } else {
         const comment = restData['comments'][commentId];
@@ -194,7 +190,7 @@ const RestaurantInfo = (props) => {
           flavor: (restData['flavor'] * commentsCount - comment['맛']) / (commentsCount - 1),
           cost_performance: (restData['cost_performance'] * commentsCount - comment['가성비']) / (commentsCount - 1),
           service: (restData['service'] * commentsCount - comment['서비스']) / (commentsCount - 1),
-          overall: (restData['overall'] * commentsCount - comment['종합']) / (commentsCount - 1)
+          total: (restData['total'] * commentsCount - comment['종합']) / (commentsCount - 1)
         }).then(onRefresh);
       }
     });
@@ -227,23 +223,27 @@ const RestaurantInfo = (props) => {
 }
 
 const ItemActivity = ({ route }) => {
+  const [favorite, setFavorite] = useState(false);
+
   const RestInfo = () => {
     return <RestaurantInfo restId={route.params.restId} />;
   }
 
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="식당 정보 화면"
-        component={RestInfo}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="식당 위치"
-        component={MapScreen}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+    <NativeBaseProvider>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="식당 정보 화면"
+          component={RestInfo}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="식당 위치"
+          component={MapScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NativeBaseProvider>
   );
 }
 
@@ -252,7 +252,7 @@ export default ItemActivity;
 const style = StyleSheet.create({
   containter: {
     height: '100%',
-    // backgroundColor: '#d1fae5'
+    backgroundColor: '#f7f7f7'
   },
   contexts: {
     flexDirection: 'row',
@@ -276,22 +276,21 @@ const style = StyleSheet.create({
   mapView: {
     width: '100%',
     aspectRatio: 1,
-    borderColor: '#aaaaaa',
-    borderWidth: 0.3
   },
   endMargin: {
     marginBottom: 100
   },
-  greenBox: {
-    borderRadius: 25,
-    backgroundColor: '#59aa80',
-    marginVertical: 5,
-    marginHorizontal: 15,
-    paddingVertical: 20,
-    paddingHorizontal: 30,
-    shadowColor: '#666666',
-    shadowRadius: 1,
-    shadowOpacity: 0.3,
-    elevation: 8
+  optionView: {
+    borderColor: "#aaaaaa",
+    borderWidth: 1,
+    justifyContent: "center",
+    width: "33%",
+    aspectRatio: 1,
+    paddingVertical: 10
+  },
+  optionButton: {
+    width: "100%",
+    aspectRatio: 1,
+    backgroundColor: "white"
   }
 })
