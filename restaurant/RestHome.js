@@ -128,7 +128,7 @@ class Home extends Component {
       .filter(createFilter(this.state.category, 'category'))
     return (
       <NativeBaseProvider>
-        <Box backgroundColor="#fff" mb={0.5}>
+        <Box backgroundColor="#fafafa" mb={0.5}>
           <VStack
             alignItems="flex-end"
             space={2}
@@ -189,6 +189,7 @@ class Home extends Component {
             onChangeText={(term) => { this.searchUpdated(term) }}
             style={styles.searchInput}
             placeholder="식당을 검색하세요."
+            placeholderTextColor="#555"
           />
         </Box>
         <Center flex={1}>
@@ -285,13 +286,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: "100%",
     height: 110,
-    backgroundColor: 'white'
+    backgroundColor: '#fff'
   },
   searchInput: {
-    margin: 4,
-    padding: 15,
+    marginHorizontal: 7,
+    marginBottom: 7,
+    paddingVertical: 12,
+    paddingHorizontal: 15,
+    fontSize: 17,
+    color: "#222",
     borderColor: '#BF2A52',
-    borderRadius: 7,
+    borderRadius: 4,
     borderWidth: 2
   }
 })
