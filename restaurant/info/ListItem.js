@@ -235,31 +235,7 @@ const ItemActivity = ({ route }) => {
         <Stack.Screen
           name="식당 정보 화면"
           component={RestInfo}
-          options={{
-            headerTitle: route.params.title,
-            headerStyle: {
-              backgroundColor: '#BF2A52',
-            },
-            headerTintColor: '#f2f2f2',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: 20,
-            },
-            headerLeft: () => (
-              <IconButton
-                size="sm"
-                onPress={useNavigation().goBack}
-                icon={<Icon name="reply" as={Font} size="sm" color="#f2f2f2" />}
-              />
-            ),
-            headerRight: () => (
-              <IconButton
-                size="sm"
-                onPress={() => setFavorite(!favorite)}
-                icon={<Icon name={favorite ? "heart" : "heart-o"} as={Font} size="sm" color="#f2f2f2" />}
-              />
-            )
-          }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="식당 위치"
