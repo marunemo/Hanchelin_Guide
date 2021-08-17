@@ -252,7 +252,7 @@ export default ItemActivity;
 const style = StyleSheet.create({
   containter: {
     height: '100%',
-    backgroundColor: '#d1fae5'
+    // backgroundColor: '#d1fae5'
   },
   contexts: {
     flexDirection: 'row',
@@ -277,7 +277,7 @@ const style = StyleSheet.create({
     width: '100%',
     aspectRatio: 1,
     borderColor: '#aaaaaa',
-    borderWidth: 1
+    borderWidth: 0.3
   },
   endMargin: {
     marginBottom: 100
