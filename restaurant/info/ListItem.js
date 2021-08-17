@@ -97,17 +97,17 @@ const RestComponent = (props) => {
           </View>
         </View>
         <HStack style={{ marginTop: 15 }}>
-          <Center style={style.optionView}>
+          <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => navigation.navigate("같이 배달", {screen: "새로운 채팅방 만들기"})}>
               <Font name="wechat" size={30} color="#4c1d95" />
             </Button>
           </Center>
-          <Center style={style.optionView}>
+          <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => setTog(!tog)}>
               <Font name={tog ? "heart" : "heart-o"} size={30} color="#f15c5c" />
             </Button>
           </Center>
-          <Center style={style.optionView}>
+          <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => setTog(!tog)}>
               <Font name="share" size={30} color="#999999" />
             </Button>
@@ -124,27 +124,35 @@ const RestComponent = (props) => {
         <View style={style.contexts}>
           <KeyTextView keyText="평점" />
         </View>
-        <RatingBar
-          color="#be123c"
-          bgText="#fda4af"
-          textColor="#540820"
-          ratingName="맛"
-          ratingData={restData['flavor']}
-        />
-        <RatingBar
-          color="#0e7490"
-          bgText="#67e8f9"
-          textColor="#053f4d"
-          ratingName="가성비"
-          ratingData={restData['cost_performance']}
-        />
-        <RatingBar
-          color="#047857"
-          bgText="#6ee7b7"
-          textColor="#022e22"
-          ratingName="서비스"
-          ratingData={restData['service']}
-        />
+        <HStack>
+          <Center style={[style.horizonStack, { height: 150 }]}>
+            <RatingBar
+              color="#be123c"
+              bgText="#fda4af"
+              textColor="#540820"
+              ratingName="맛"
+              ratingData={restData['flavor']}
+            />
+          </Center>
+          <Center style={[style.horizonStack, { height: 150 }]}>
+            <RatingBar
+              color="#0e7490"
+              bgText="#67e8f9"
+              textColor="#053f4d"
+              ratingName="가성비"
+              ratingData={restData['cost_performance']}
+            />
+          </Center>
+          <Center style={[style.horizonStack, { height: 150 }]}>
+            <RatingBar
+              color="#047857"
+              bgText="#6ee7b7"
+              textColor="#022e22"
+              ratingName="서비스"
+              ratingData={restData['service']}
+            />
+          </Center>
+        </HStack>
         {comments}
       </View>
     </>
@@ -225,8 +233,6 @@ const RestaurantInfo = (props) => {
 }
 
 const ItemActivity = ({ route }) => {
-  const [favorite, setFavorite] = useState(false);
-
   const RestInfo = () => {
     return <RestaurantInfo restId={route.params.restId} />;
   }
@@ -282,17 +288,19 @@ const style = StyleSheet.create({
   endMargin: {
     marginBottom: 100
   },
-  optionView: {
-    borderColor: "#aaaaaa",
-    borderWidth: 1,
+  horizonStack: {
     justifyContent: "center",
     width: "33%",
-    aspectRatio: 1,
+    height: 100,
     paddingVertical: 10
+  },
+  optionView: {
+    borderColor: "#aaaaaa",
+    borderWidth: 1
   },
   optionButton: {
     width: "100%",
     aspectRatio: 1,
     backgroundColor: "white"
-  }
+  },
 })

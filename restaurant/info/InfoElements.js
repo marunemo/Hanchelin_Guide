@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { IconButton, Icon } from 'native-base';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -88,8 +88,8 @@ const RatingBar = (props) => {
 			<AnimatedCircularProgress
 				tintColor={props.color}
 				backgroundColor="#d4d4d4"
-				size={120}
-				width={15}
+				size={80}
+				width={10}
 				rotation={0}
 				fill={!ratingData ? 0 : ratingData * 20}
 				duration={1000}
@@ -126,19 +126,20 @@ const style = StyleSheet.create({
 	iconView: {
 		width: 18,
 		marginRight: 10,
-		justifyContent: "center",
-		alignItems: "center"
+		justifyContent: 'center',
+		alignItems: 'center'
 	},
 	ratingView: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		marginVertical: 3
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginVertical: 5
 	},
 	ratingTextView: {
 		width: 52,
 		height: 22,
 		justifyContent: 'center',
 		borderRadius: 50,
+		marginVertical: 10,
 		marginHorizontal: 5
 	},
 	ratingText: {
