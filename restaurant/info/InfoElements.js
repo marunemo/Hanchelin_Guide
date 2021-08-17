@@ -103,7 +103,7 @@ export { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar };
 const style = StyleSheet.create({
 	contexts: {
 		flexDirection: 'row',
-		marginVertical: 3,
+		marginVertical: 6,
 	},
 	keyText: {
 		color: '#033326',

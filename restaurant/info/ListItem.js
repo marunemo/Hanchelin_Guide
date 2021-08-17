@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Text, View, ScrollView, SafeAreaView, RefreshControl, StyleSheet } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
-import { NativeBaseProvider, HStack, Center, IconButton, Icon, Button } from 'native-base';
+import { NativeBaseProvider, HStack, Center, Button } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
@@ -78,7 +78,6 @@ const RestComponent = (props) => {
       />
       <View style={style.partition}>
         <View>
-          <InfoView icon="spoon" value={restData['official_name']} />
           <InfoView icon="location-arrow" value={restData['address']} />
           <InfoView icon="mobile-phone" value={restData['contact']} />
           <InfoView icon="clock-o" value={restData['opening_hours']} />
@@ -97,7 +96,7 @@ const RestComponent = (props) => {
             </Text>
           </View>
         </View>
-        <HStack>
+        <HStack style={{ marginTop: 15 }}>
           <Center style={style.optionView}>
             <Button style={style.optionButton} onPress={() => navigation.navigate("같이 배달", {screen: "새로운 채팅방 만들기"})}>
               <Font name="wechat" size={30} color="#4c1d95" />
