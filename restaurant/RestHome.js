@@ -60,7 +60,7 @@ class RestaurantItem extends Component {
     return (
       <TouchableOpacity
         style={styles.itemContainer}
-        onPress={() => this.props.navigation.navigate('식당 정보', { restId: item.id })}
+        onPress={() => this.props.navigation.navigate('식당 정보', { restId: item.id, restName: item.name })}
       >
         <HStack>
           <Image
@@ -233,7 +233,8 @@ export default function App({ navigation }) {
         <Stack.Screen
           name="식당 정보"
           component={RestInfo}
-          options={{
+          options={({ route }) => ({
+            title: route.params.restName,
             headerBackTitleVisible: false,
             headerStyle: {
               backgroundColor: '#BF2A52',
@@ -243,7 +244,7 @@ export default function App({ navigation }) {
               fontWeight: 'bold',
               fontSize: 20,
             }
-          }}
+          })}
         />
         <Stack.Screen
           name="프로필"
