@@ -84,7 +84,7 @@ const RestComponent = (props) => {
         </View>
         <View>
           <RatingBar
-            color="#b45309"
+            color="#f59e0b"
             bgText="#fbbf24"
             textColor="#4a1f07"
             ratingName="평점"
@@ -127,7 +127,7 @@ const RestComponent = (props) => {
         <HStack>
           <Center style={[style.horizonStack, { height: 150 }]}>
             <RatingBar
-              color="#be123c"
+              color="#f43f5e"
               bgText="#fda4af"
               textColor="#540820"
               ratingName="맛"
@@ -136,7 +136,7 @@ const RestComponent = (props) => {
           </Center>
           <Center style={[style.horizonStack, { height: 150 }]}>
             <RatingBar
-              color="#0e7490"
+              color="#06b6d4"
               bgText="#67e8f9"
               textColor="#053f4d"
               ratingName="가성비"
@@ -145,7 +145,7 @@ const RestComponent = (props) => {
           </Center>
           <Center style={[style.horizonStack, { height: 150 }]}>
             <RatingBar
-              color="#047857"
+              color="#10b981"
               bgText="#6ee7b7"
               textColor="#022e22"
               ratingName="서비스"
