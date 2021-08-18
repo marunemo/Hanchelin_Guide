@@ -31,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
           packages.add(new RNCWebViewPackage());
           packages.add(new SafeAreaContextPackage());
+          packages.add(new RNDateTimePickerPackage());
           return packages;
         }
 
