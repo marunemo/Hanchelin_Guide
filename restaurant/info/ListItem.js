@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Text, View, ScrollView, SafeAreaView, RefreshControl, StyleSheet } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
+import { Rating } from 'react-native-ratings';
 import { NativeBaseProvider, HStack, Center, Button } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
 import database from '@react-native-firebase/database';
@@ -77,19 +78,21 @@ const RestComponent = (props) => {
         position={{ latitude: restData['y'], longitude: restData['x'] }}
       />
       <View style={style.partition}>
-        <View>
-          <RatingBar
-            color="#f59e0b"
-            bgText="#fbbf24"
-            textColor="#4a1f07"
-            ratingName="평점"
-            ratingData={restData['total']}
+        <View style={[style.partitionPadding, { marginBottom: 15 }]}>
+          <Rating
+            type="custom"
+            ratingImage={require('../../images/icon/hgu.png')}
+            ratingColor="rgb(32, 37,76)"
+            ratingBackgroundColor="rgb(202, 208,247)"
+            startingValue={restData['total'] ? restData['total'] : 0}
+            imageSize={50}
+            fractions={1}
+            readonly={true}
+            onFinishRating={console.log}
           />
-          <View style={style.horizontalLayout}>
-            <Text style={{ color: '#57534e', fontWeight: 'bold' }}>
-              총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.
-            </Text>
-          </View>
+          <Text style={{ fontSize: 20, textAlign: "center" }}>
+            {restData['total'] ? restData['total'] : 0} / 5
+          </Text>
         </View>
         <View style={style.partitionPadding}>
           <InfoView icon="location-arrow" value={restData['address']} />
@@ -98,7 +101,7 @@ const RestComponent = (props) => {
         </View>
         <HStack style={{ marginTop: 15 }}>
           <Center style={[style.optionView, style.horizonStack]}>
-            <Button style={style.optionButton} onPress={() => navigation.navigate("같이 배달", {screen: "새로운 채팅방 만들기"})}>
+            <Button style={style.optionButton} onPress={() => navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기" })}>
               <Font name="wechat" size={30} color="#4c1d95" />
             </Button>
           </Center>
@@ -153,6 +156,11 @@ const RestComponent = (props) => {
             />
           </Center>
         </HStack>
+        <View style={style.horizontalLayout}>
+          <Text style={{ color: '#57534e', fontWeight: 'bold' }}>
+            총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.
+          </Text>
+        </View>
         {comments}
       </View>
     </>
@@ -281,7 +289,8 @@ const style = StyleSheet.create({
     paddingHorizontal: 30
   },
   horizontalLayout: {
-    flexDirection: 'row-reverse'
+    flexDirection: 'row-reverse',
+    marginVertical: 10
   },
   mapView: {
     width: '100%',
