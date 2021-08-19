@@ -73,47 +73,6 @@ const CommentButton = (props) => {
     setDelivFee(0);
   }
 
-  function DeliverOption(props) {
-    if (props.isDeliver) {
-      return (
-        <>
-          <Text style={style.commentText}>배달시간</Text>
-          <Slider
-            w="80%"
-            alignSelf="center"
-            defaultValue={delivTime}
-            maxValue={60}
-            step={5}
-            onChange={time => setDelivTime(time)}
-          >
-            <Slider.Track>
-              <Slider.FilledTrack />
-            </Slider.Track>
-            <Slider.Thumb />
-          </Slider>
-          <Text style={{ textAlign: 'right' }}>
-            {delivTime}분{(delivTime == 60) ? ' 이상' : ''}
-          </Text>
-          <Text style={style.commentText}>배달비</Text>
-          <Input
-            size="sm"
-            w={250}
-            isRequired={true}
-            keyboardType="numeric"
-            variant="underlined"
-            alignSelf="flex-end"
-            textAlign="right"
-            multiline={false}
-            InputRightElement={<Text style={{ fontWeight: 'bold' }}>원</Text>}
-            placeholder="들었던 배달 비용을 적어주세요."
-            onChange={fee => setDelivFee(parseInt(fee))}
-          />
-        </>
-      );
-    }
-    return (<></>);
-  }
-
   return (
     <>
       <Modal
@@ -139,7 +98,39 @@ const CommentButton = (props) => {
                 방문
               </Button>
             </Button.Group>
-            <DeliverOption isDeliver={isDeliver} />
+            {isDeliver && <>
+              <Text style={style.commentText}>배달시간</Text>
+              <Slider
+                w="80%"
+                alignSelf="center"
+                defaultValue={delivTime}
+                maxValue={60}
+                step={5}
+                onChange={time => setDelivTime(time)}
+              >
+                <Slider.Track>
+                  <Slider.FilledTrack />
+                </Slider.Track>
+                <Slider.Thumb />
+              </Slider>
+              <Text style={{ textAlign: 'right' }}>
+                {delivTime}분{(delivTime == 60) ? ' 이상' : ''}
+              </Text>
+              <Text style={style.commentText}>배달비</Text>
+              <Input
+                size="sm"
+                w={250}
+                isRequired={true}
+                keyboardType="numeric"
+                variant="underlined"
+                alignSelf="flex-end"
+                textAlign="right"
+                multiline={false}
+                InputRightElement={<Text style={{ fontWeight: 'bold' }}>원</Text>}
+                placeholder="들었던 배달 비용을 적어주세요."
+                onChange={fee => setDelivFee(parseInt(fee))}
+              />
+            </>}
             <Text style={style.commentText}>맛</Text>
             <Text style={style.ratingText}>{flavor} / 5</Text>
             <Rating
