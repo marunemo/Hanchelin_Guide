@@ -78,11 +78,6 @@ const RestComponent = (props) => {
       />
       <View style={style.partition}>
         <View>
-          <InfoView icon="location-arrow" value={restData['address']} />
-          <InfoView icon="mobile-phone" value={restData['contact']} />
-          <InfoView icon="clock-o" value={restData['opening_hours']} />
-        </View>
-        <View>
           <RatingBar
             color="#f59e0b"
             bgText="#fbbf24"
@@ -95,6 +90,11 @@ const RestComponent = (props) => {
               총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.
             </Text>
           </View>
+        </View>
+        <View style={style.partitionPadding}>
+          <InfoView icon="location-arrow" value={restData['address']} />
+          <InfoView icon="mobile-phone" value={restData['contact']} />
+          <InfoView icon="clock-o" value={restData['opening_hours']} />
         </View>
         <HStack style={{ marginTop: 15 }}>
           <Center style={[style.optionView, style.horizonStack]}>
@@ -114,18 +114,18 @@ const RestComponent = (props) => {
           </Center>
         </HStack>
       </View>
-      <View style={style.partition}>
+      <View style={[style.partition, style.partitionPadding]}>
         <View style={style.contexts}>
           <KeyTextView keyText="메뉴" />
         </View>
         {menu}
       </View>
-      <View style={[style.partition, style.endMargin]}>
+      <View style={[style.partition, style.partitionPadding, style.endMargin]}>
         <View style={style.contexts}>
           <KeyTextView keyText="평점" />
         </View>
         <HStack>
-          <Center style={[style.horizonStack, { height: 150 }]}>
+          <Center style={style.horizonStack}>
             <RatingBar
               color="#f43f5e"
               bgText="#fda4af"
@@ -134,7 +134,7 @@ const RestComponent = (props) => {
               ratingData={restData['flavor']}
             />
           </Center>
-          <Center style={[style.horizonStack, { height: 150 }]}>
+          <Center style={style.horizonStack}>
             <RatingBar
               color="#06b6d4"
               bgText="#67e8f9"
@@ -143,7 +143,7 @@ const RestComponent = (props) => {
               ratingData={restData['cost_performance']}
             />
           </Center>
-          <Center style={[style.horizonStack, { height: 150 }]}>
+          <Center style={style.horizonStack}>
             <RatingBar
               color="#10b981"
               bgText="#6ee7b7"
@@ -272,11 +272,13 @@ const style = StyleSheet.create({
     marginVertical: 5,
     marginHorizontal: 15,
     paddingVertical: 20,
-    paddingHorizontal: 30,
     shadowColor: '#666666',
     shadowRadius: 1,
     shadowOpacity: 0.3,
     elevation: 8
+  },
+  partitionPadding: {
+    paddingHorizontal: 30
   },
   horizontalLayout: {
     flexDirection: 'row-reverse'
@@ -290,9 +292,7 @@ const style = StyleSheet.create({
   },
   horizonStack: {
     justifyContent: "center",
-    width: "33%",
-    height: 100,
-    paddingVertical: 10
+    width: "33.3%",
   },
   optionView: {
     borderColor: "#aaaaaa",
@@ -300,7 +300,7 @@ const style = StyleSheet.create({
   },
   optionButton: {
     width: "100%",
-    aspectRatio: 1,
+    paddingVertical: 15,
     backgroundColor: "white"
   },
 })
