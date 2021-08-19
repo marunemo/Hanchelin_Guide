@@ -102,17 +102,20 @@ const RestComponent = (props) => {
         <HStack style={{ marginTop: 15 }}>
           <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기" })}>
-              <Font name="wechat" size={30} color="#4c1d95" />
+              <Font style={{ textAlign: "center" }} name="wechat" size={30} color="#4c1d95" />
+              <Text style={{ textAlign: "center", marginTop: 5 }}>같이 배달 찾기</Text>
             </Button>
           </Center>
           <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => setTog(!tog)}>
-              <Font name={tog ? "heart" : "heart-o"} size={30} color="#f15c5c" />
+              <Font style={{ textAlign: "center" }} name={tog ? "heart" : "heart-o"} size={30} color="#f15c5c"/>
+              <Text style={{ textAlign: "center", marginTop: 5 }}>찜하기</Text>
             </Button>
           </Center>
           <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => setTog(!tog)}>
-              <Font name="share" size={30} color="#999999" />
+              <Font style={{ textAlign: "center" }} name="share" size={30} color="#999999" />
+              <Text style={{ textAlign: "center", marginTop: 5 }}>??? 공유</Text>
             </Button>
           </Center>
         </HStack>
@@ -300,16 +303,16 @@ const style = StyleSheet.create({
     marginBottom: 100
   },
   horizonStack: {
-    justifyContent: "center",
-    width: "33.3%",
+    justifyContent: 'center',
+    width: '33.3%',
   },
   optionView: {
-    borderColor: "#aaaaaa",
+    borderColor: '#aaaaaa',
     borderWidth: 1
   },
   optionButton: {
-    width: "100%",
+    width: '100%',
     paddingVertical: 15,
-    backgroundColor: "white"
+    backgroundColor: 'white'
   },
 })
