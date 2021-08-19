@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { IconButton, Icon, Progress } from 'native-base';
+import { IconButton, Icon } from 'native-base';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Font from 'react-native-vector-icons/FontAwesome';
 
 const KeyTextView = (props) => {
@@ -31,7 +32,6 @@ const InfoView = (props) => {
 }
 
 const MenuListView = (props) => {
-	const id = props.id;
 	const [food, price] = props.order.split(': ');
 
 	return (
@@ -79,22 +79,27 @@ const RatingBar = (props) => {
 	const textColor = props.textColor;
 	const ratingName = props.ratingName;
 	const ratingData = props.ratingData;
-	const theme = props.theme;
 
 	return (
 		<View style={style.ratingView}>
 			<View style={[style.ratingTextView, { backgroundColor: backgroundText }]}>
 				<Text style={[style.ratingText, { color: textColor }]}>{ratingName}</Text>
 			</View>
-			<Progress
-				rounded="0"
-				colorScheme={theme}
-				width={75}
-				height={14}
-				max={5}
-				value={ratingData}
-			/>
-			<Text>{ratingData}</Text>
+			<AnimatedCircularProgress
+				tintColor={props.color}
+				backgroundColor="#d4d4d4"
+				size={80}
+				width={10}
+				rotation={0}
+				fill={!ratingData ? 0 : ratingData * 20}
+				duration={1000}
+			>
+				{(fill) => (
+					<Text style={{ fontSize: 20 }}>
+						{Math.round(ratingData * 100) / 100}
+					</Text>
+				)}
+			</AnimatedCircularProgress>
 		</View>
 	)
 }
@@ -104,7 +109,7 @@ export { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar };
 const style = StyleSheet.create({
 	contexts: {
 		flexDirection: 'row',
-		marginVertical: 3,
+		marginVertical: 6,
 	},
 	keyText: {
 		color: '#033326',
@@ -121,19 +126,20 @@ const style = StyleSheet.create({
 	iconView: {
 		width: 18,
 		marginRight: 10,
-		justifyContent: "center",
-		alignItems: "center"
+		justifyContent: 'center',
+		alignItems: 'center'
 	},
 	ratingView: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		marginVertical: 3
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginVertical: 5
 	},
 	ratingTextView: {
 		width: 52,
 		height: 22,
 		justifyContent: 'center',
 		borderRadius: 50,
+		marginVertical: 10,
 		marginHorizontal: 5
 	},
 	ratingText: {

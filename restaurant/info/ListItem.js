@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Text, View, ScrollView, SafeAreaView, RefreshControl, StyleSheet } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
-import { NativeBaseProvider, HStack, Center, IconButton, Icon, Button } from 'native-base';
+import { Rating } from 'react-native-ratings';
+import { NativeBaseProvider, HStack, Center, Button } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
@@ -48,13 +49,16 @@ const RestComponent = (props) => {
   const menuList = restData['menu'];
   const commentsList = restData['comments'];
 
-  if (menuList != undefined) {
+  if (typeof(menuList) === 'object') {
     for (const [id, order] of Object.entries(menuList)) {
       menu.push(
-        <MenuListView key={id} id={id} order={order} />
+        <MenuListView key={id} order={order} />
       )
     }
+  } else if(typeof(menuList) === 'string') {
+    menu = <MenuListView order={menuList} />
   }
+
   if (commentsList !== undefined) {
     for (const [id, comment] of Object.entries(commentsList)) {
       if (comment != null) {
@@ -74,75 +78,92 @@ const RestComponent = (props) => {
         position={{ latitude: restData['y'], longitude: restData['x'] }}
       />
       <View style={style.partition}>
-        <View>
-          <InfoView icon="spoon" value={restData['official_name']} />
+        <View style={[style.partitionPadding, { marginBottom: 15 }]}>
+          <Rating
+            type="custom"
+            ratingImage={require('../../images/icon/hgu.png')}
+            ratingColor="rgb(32, 37,76)"
+            ratingBackgroundColor="rgb(202, 208,247)"
+            startingValue={restData['total'] ? restData['total'] : 0}
+            imageSize={50}
+            fractions={1}
+            readonly={true}
+            onFinishRating={console.log}
+          />
+          <Text style={{ fontSize: 20, textAlign: "center" }}>
+            {restData['total'] ? restData['total'] : 0} / 5
+          </Text>
+        </View>
+        <View style={style.partitionPadding}>
           <InfoView icon="location-arrow" value={restData['address']} />
           <InfoView icon="mobile-phone" value={restData['contact']} />
           <InfoView icon="clock-o" value={restData['opening_hours']} />
         </View>
-        <View>
-          <RatingBar
-            bgText="#fbbf24"
-            textColor="#4a1f07"
-            ratingName="평점"
-            ratingData={restData['total']}
-            theme="amber"
-          />
-          <View style={style.horizontalLayout}>
-            <Text style={{ color: '#57534e', fontWeight: 'bold' }}>
-              총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.
-            </Text>
-          </View>
-        </View>
-        <HStack>
-          <Center style={style.optionView}>
-            <Button style={style.optionButton} onPress={() => navigation.navigate("같이 배달", {screen: "새로운 채팅방 만들기"})}>
-              <Font name="wechat" size={30} color="#4c1d95" />
+        <HStack style={{ marginTop: 15 }}>
+          <Center style={[style.optionView, style.horizonStack]}>
+            <Button style={style.optionButton} onPress={() => navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기" })}>
+              <Font style={{ textAlign: "center" }} name="wechat" size={30} color="#4c1d95" />
+              <Text style={{ textAlign: "center", marginTop: 5 }}>같이 배달 찾기</Text>
             </Button>
           </Center>
-          <Center style={style.optionView}>
+          <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => setTog(!tog)}>
-              <Font name={tog ? "heart" : "heart-o"} size={30} color="#f15c5c" />
+              <Font style={{ textAlign: "center" }} name={tog ? "heart" : "heart-o"} size={30} color="#f15c5c"/>
+              <Text style={{ textAlign: "center", marginTop: 5 }}>찜하기</Text>
             </Button>
           </Center>
-          <Center style={style.optionView}>
+          <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => setTog(!tog)}>
-              <Font name="share" size={30} color="#999999" />
+              <Font style={{ textAlign: "center" }} name="share" size={30} color="#999999" />
+              <Text style={{ textAlign: "center", marginTop: 5 }}>??? 공유</Text>
             </Button>
           </Center>
         </HStack>
       </View>
-      <View style={style.partition}>
+      <View style={[style.partition, style.partitionPadding]}>
         <View style={style.contexts}>
           <KeyTextView keyText="메뉴" />
         </View>
         {menu}
       </View>
-      <View style={[style.partition, style.endMargin]}>
+      <View style={[style.partition, style.partitionPadding, style.endMargin]}>
         <View style={style.contexts}>
           <KeyTextView keyText="평점" />
         </View>
-        <RatingBar
-          bgText="#fda4af"
-          textColor="#540820"
-          ratingName="맛"
-          ratingData={restData['flavor']}
-          theme="rose"
-        />
-        <RatingBar
-          bgText="#67e8f9"
-          textColor="#053f4d"
-          ratingName="가성비"
-          ratingData={restData['cost_performance']}
-          theme="cyan"
-        />
-        <RatingBar
-          bgText="#6ee7b7"
-          textColor="#022e22"
-          ratingName="서비스"
-          ratingData={restData['service']}
-          theme="emerald"
-        />
+        <HStack>
+          <Center style={style.horizonStack}>
+            <RatingBar
+              color="#f43f5e"
+              bgText="#fda4af"
+              textColor="#540820"
+              ratingName="맛"
+              ratingData={restData['flavor']}
+            />
+          </Center>
+          <Center style={style.horizonStack}>
+            <RatingBar
+              color="#06b6d4"
+              bgText="#67e8f9"
+              textColor="#053f4d"
+              ratingName="가성비"
+              ratingData={restData['cost_performance']}
+            />
+          </Center>
+          <Center style={style.horizonStack}>
+            <RatingBar
+              color="#10b981"
+              bgText="#6ee7b7"
+              textColor="#022e22"
+              ratingName="서비스"
+              ratingData={restData['service']}
+            />
+          </Center>
+        </HStack>
+        <View style={style.horizontalLayout}>
+          <Text style={{ color: '#57534e', fontWeight: 'bold' }}>
+            총 <Text style={{ color: '#292524' }}>{restData['comments_count']}</Text>명이 참여해주셨습니다.
+          </Text>
+        </View>
         {comments}
       </View>
     </>
@@ -223,8 +244,6 @@ const RestaurantInfo = (props) => {
 }
 
 const ItemActivity = ({ route }) => {
-  const [favorite, setFavorite] = useState(false);
-
   const RestInfo = () => {
     return <RestaurantInfo restId={route.params.restId} />;
   }
@@ -264,14 +283,17 @@ const style = StyleSheet.create({
     marginVertical: 5,
     marginHorizontal: 15,
     paddingVertical: 20,
-    paddingHorizontal: 30,
     shadowColor: '#666666',
     shadowRadius: 1,
     shadowOpacity: 0.3,
     elevation: 8
   },
+  partitionPadding: {
+    paddingHorizontal: 30
+  },
   horizontalLayout: {
-    flexDirection: 'row-reverse'
+    flexDirection: 'row-reverse',
+    marginVertical: 10
   },
   mapView: {
     width: '100%',
@@ -280,17 +302,17 @@ const style = StyleSheet.create({
   endMargin: {
     marginBottom: 100
   },
+  horizonStack: {
+    justifyContent: 'center',
+    width: '33.3%',
+  },
   optionView: {
-    borderColor: "#aaaaaa",
-    borderWidth: 1,
-    justifyContent: "center",
-    width: "33%",
-    aspectRatio: 1,
-    paddingVertical: 10
+    borderColor: '#aaaaaa',
+    borderWidth: 1
   },
   optionButton: {
-    width: "100%",
-    aspectRatio: 1,
-    backgroundColor: "white"
-  }
+    width: '100%',
+    paddingVertical: 15,
+    backgroundColor: 'white'
+  },
 })
