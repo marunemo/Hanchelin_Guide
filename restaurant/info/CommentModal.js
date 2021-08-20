@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Text, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
+import { Text, SafeAreaView, StyleSheet } from 'react-native';
 import { IconButton, Icon, Input, Button } from 'native-base';
+import { KeyboardAwareScrollView as ScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Slider from '@react-native-community/slider';
 import Modal from 'react-native-modal';
 import { Rating, AirbnbRating } from 'react-native-ratings';
@@ -85,7 +86,12 @@ const CommentButton = (props) => {
       >
         <SafeAreaView style={style.commentView}>
           <Text style={style.commentHeader}>식당 리뷰</Text>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView
+            keyboardDismissMode="on-drag"
+            extraScrollHeight={150}
+            enableResetScrollToCoords={false}
+            showsVerticalScrollIndicator={false}
+          >
             <Text style={style.commentText}>주문 방식</Text>
             <Button.Group alignSelf="center">
               <Button
