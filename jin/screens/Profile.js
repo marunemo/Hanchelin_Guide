@@ -27,19 +27,7 @@ export default function Profile (props) {
     const [store, setStore] = useState([]);
 
     useEffect(() => {
-      /* 리뷰 데이터를 스토어에 업로드 할때 유저의 고유 아이디인 uid를 같이 업로드하여
-      .where()로 필터링하여 유저 개인 페이지에 표시한다*/
-      firestore().collection('가게').doc('9월애').collection('리뷰')
-
-        /* 
-        시간대별 정렬이랑 uid 필터가 따로하면 잘되는데 같이 하면 에러 뜸. SOF에서는 무슨 에러 핸들링 어쩌고 하는데
-        공홈 보니까 다른 필드에 있는 쿼리끼리는 호환이 안된다고 써있는거 같음. 그니까 uid 필드에서는 필터+정렬이
-        가능한데 uid 필드에서 필터링해오고 createdAt 필드에서 시간으로 정렬하는게 안된다는건가봐
-        
-        따라서 그냥 식당리스트+리뷰에서는 uid가 필요없으니까 이걸로 시간정렬이 가능하지만 유저 프로필에서는 따로
-        해야된다
-        */
-
+      firestore().collectionGroup('리뷰')
         //.orderBy('createdAt', 'desc')
         .where('uid', '==', user?.uid)
         .onSnapshot(querySnapshot => {
@@ -47,21 +35,20 @@ export default function Profile (props) {
 
           querySnapshot.forEach(documentSnapshot => {
             const item = documentSnapshot.data();
+            let storeName = documentSnapshot.ref.parent.parent.id
+
             review.push(
               <View style={styles.content} key={documentSnapshot.id}>
-                <Text>내용 : {item['총평']}</Text>
+                <Text>내용 : {item['리뷰']}</Text>
                 <Text>별점 : {'★'.repeat(item['종합'])}</Text>
-                <Text>식당 이름 : </Text>
+                <Text>식당 이름 : {storeName}</Text>
               </View>
             );
           });
 
           setReview(review)
         });
-      
-      /* 리뷰와 비슷하긴 하지만 각 음식점 콜렉션에 찜을 했는지의 여부 체크를 찜 버튼을 누르면 uid를 array로
-      업로드한 다음 array에 현재 유저의 uid가 있으면 표시한다.
-      찜 버튼을 눌렀을 때 collection 안에 있는 array에 data 추가/삭제 방법 알아보기 */
+
       firestore()
       .collection('store')
       .where('heart', 'array-contains', user?.uid)
@@ -96,7 +83,7 @@ export default function Profile (props) {
                 </VStack>
               </HStack>
             </Stack>
-            <Button style={styles.button} onPress={() => auth().signOut()} bg='#468966'>
+            <Button style={styles.button} onPress={() => auth().signOut()} bg='#BF2A52'>
               <Text style={{ color: 'white', fontWeight: 'bold'}}>로그아웃</Text>
             </Button>
             <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 쓴 리뷰</Text>
