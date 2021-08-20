@@ -98,7 +98,8 @@ class Home extends Component {
       switchValue: false,
       category: '',
       sortTerm: '가나다순',
-      data: []
+      data: [],
+      bars_visible: true
     }
   }
   componentDidMount() {
@@ -122,13 +123,23 @@ class Home extends Component {
     term == "리뷰많은순" && this.setState({ data: this.state.data.sort((a, b) => a.comments_count < b.comments_count) })
   }
   render() {
+    this.props.navigation.setOptions({
+      headerLeft: () => (
+        <Icon
+          name="bars"
+          size={24}
+          color="#f2f2f2"
+          onPress={() => this.setState({ bars_visible: !(this.state.bars_visible) })}
+        />
+      ),
+    });
     const filteredArr = (this.state.data)
       .filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
       .filter(createFilter(this.state.switchValue ? 'true' : '', 'delivery_availability'))
       .filter(createFilter(this.state.category, 'category'))
     return (
       <NativeBaseProvider>
-        <Box backgroundColor="#fafafa" mb={0.5}>
+        {this.state.bars_visible && <Box backgroundColor="#fafafa">
           <VStack
             alignItems="flex-end"
             space={2}
@@ -191,10 +202,10 @@ class Home extends Component {
             placeholder="식당을 검색하세요."
             placeholderTextColor="#555"
           />
-        </Box>
+        </Box>}
         <Center flex={1}>
           <ScrollView width="100%">
-            <VStack mb={0.5} space={0.5} alignItems="center">
+            <VStack my={0.5} space={0.5} alignItems="center">
               {filteredArr.map(item =>
                 <RestaurantItem
                   key={item.id.toString()}
@@ -228,13 +239,6 @@ export default function App({ navigation }) {
               fontWeight: 'bold',
               fontSize: 20,
             },
-            headerLeft: () => (
-              <Icon
-                name="bars"
-                size={24}
-                color="#f2f2f2"
-              />
-            ),
             headerRight: () => (
               <Icon
                 name="user"
