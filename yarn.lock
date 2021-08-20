@@ -1922,6 +1922,11 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/masked-view/-/masked-view-0.1.11.tgz"
   "version" "0.1.11"
 
+"@react-native-community/slider@^3.0.3":
+  "integrity" "sha512-8IeHfDwJ9/CTUwFs6x90VlobV3BfuPgNLjTgC6dRZovfCWigaZwVNIFFJnHBakK3pW2xErAPwhdvNR4JeNoYbw=="
+  "resolved" "https://registry.npmjs.org/@react-native-community/slider/-/slider-3.0.3.tgz"
+  "version" "3.0.3"
+
 "@react-native-firebase/app@^12.4.0", "@react-native-firebase/app@12.6.0":
   "integrity" "sha512-2DJG4LEto1lpcDxWo1Gen93+iDpCVd1KCaGuegqNOHozI7FRUEKN/rjqjgd3z+NnJWIhZaEmoQRVqx9Av4zYRw=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-12.6.0.tgz"

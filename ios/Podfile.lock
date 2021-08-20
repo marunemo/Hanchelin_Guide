@@ -705,6 +705,8 @@ PODS:
     - React
   - react-native-safe-area-context (3.3.0):
     - React-Core
+  - react-native-slider (3.0.3):
+    - React
   - react-native-webview (11.13.0):
     - React-Core
   - React-perflogger (0.64.2)
@@ -856,6 +858,7 @@ DEPENDENCIES:
   - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - react-native-nmap (from `../node_modules/react-native-nmap`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -947,6 +950,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-nmap"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-slider:
+    :path: "../node_modules/@react-native-community/slider"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-perflogger:
@@ -1043,6 +1048,7 @@ SPEC CHECKSUMS:
   react-native-geolocation-service: 4030de78cdeb93ebef1fdc1971668bea6c0bc59b
   react-native-nmap: cfcc5402746040494c544ea90a6062f49505acdf
   react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
+  react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-webview: 133a6a5149f963259646e710b4545c67ef35d7c9
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5

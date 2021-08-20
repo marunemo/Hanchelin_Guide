@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Text, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
-import { IconButton, Icon, Input, Button, Slider } from 'native-base';
+import { IconButton, Icon, Input, Button } from 'native-base';
+import Slider from '@react-native-community/slider';
 import Modal from 'react-native-modal';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import Font from 'react-native-vector-icons/FontAwesome5';
@@ -101,18 +102,12 @@ const CommentButton = (props) => {
             {isDeliver && <>
               <Text style={style.commentText}>배달시간</Text>
               <Slider
-                w="80%"
-                alignSelf="center"
-                defaultValue={delivTime}
-                maxValue={60}
+                style={{ width: "80%", alignSelf: "center" }}
+                value={delivTime}
+                maximumValue={60}
                 step={5}
-                onChange={time => setDelivTime(time)}
-              >
-                <Slider.Track>
-                  <Slider.FilledTrack />
-                </Slider.Track>
-                <Slider.Thumb />
-              </Slider>
+                onValueChange={time => setDelivTime(time)}
+              />
               <Text style={{ textAlign: 'right' }}>
                 {delivTime}분{(delivTime == 60) ? ' 이상' : ''}
               </Text>
