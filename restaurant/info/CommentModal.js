@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, SafeAreaView, StyleSheet } from 'react-native';
+import { Keyboard, Text, SafeAreaView, StyleSheet } from 'react-native';
 import { IconButton, Icon, Input, Button } from 'native-base';
 import { KeyboardAwareScrollView as ScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Slider from '@react-native-community/slider';
@@ -82,7 +82,7 @@ const CommentButton = (props) => {
         isVisible={onInput}
         onModalWillHide={props.onFinish}
         onBackButtonPress={() => showInput(false)}
-        onBackdropPress={() => showInput(false)}
+        onBackdropPress={Keyboard.dismiss}
       >
         <SafeAreaView style={style.commentView}>
           <Text style={style.commentHeader}>식당 리뷰</Text>
