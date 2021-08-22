@@ -121,6 +121,7 @@ const CommentButton = (props) => {
               <Text style={style.commentText}>배달시간</Text>
               <Slider
                 style={{ width: "90%", alignSelf: "center" }}
+                thumbImage={require('../../images/info-icon/bike.png')}
                 minimumTrackTintColor="#bf2a52"
                 thumbTintColor="#bf2a52"
                 value={delivTime}
@@ -134,6 +135,7 @@ const CommentButton = (props) => {
               <Text style={style.commentText}>배달비</Text>
               <Slider
                 style={{ width: "90%", alignSelf: "center" }}
+                thumbImage={require('../../images/info-icon/bike.png')}
                 minimumTrackTintColor="#bf2a52"
                 thumbTintColor="#bf2a52"
                 value={delivFee}
@@ -174,7 +176,7 @@ const CommentButton = (props) => {
             />
             <Text style={style.commentText}>종합 평가</Text>
             <AirbnbRating
-              starImage={require('../../images/icon/rice-icon.jpeg')}
+              starImage={require('../../images/info-icon/rice-icon.jpeg')}
               count={5}
               reviews={['다시는 안 먹어요..', '가끔씩은 괜찮을 듯?', '무난해요.', '꽤 자주 갈꺼 같아요', '없던 병이 낫는 식당']}
               defaultRating={3}
