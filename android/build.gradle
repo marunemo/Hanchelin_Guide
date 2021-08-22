@@ -10,7 +10,7 @@ buildscript {
     }
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         // The RepositoryHandler.jcenter() method has been deprecated. 
         maven {
             url 'https://naver.jfrog.io/artifactory/maven/'
@@ -37,7 +37,7 @@ allprojects {
         }
 
         google()
-        jcenter()
+        mavenCentral()
         maven {
             url 'https://www.jitpack.io' 
             url 'https://naver.jfrog.io/artifactory/maven/'
