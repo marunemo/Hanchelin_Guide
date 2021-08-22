@@ -1865,18 +1865,7 @@
     "@react-types/shared" "^3.8.0"
     "@react-types/table" "3.0.0-rc.7"
 
-"@react-stately/list@^3.2.2":
-  "integrity" "sha512-vp/+5C6ZTy6an0WqR/o0tr3wEbRFeFnZZcGseQps036Ir3XzWMs6CvdwfXCIWiZ03nOQPRvy8GbF8j1Qj4voYQ=="
-  "resolved" "https://registry.npmjs.org/@react-stately/list/-/list-3.3.0.tgz"
-  "version" "3.3.0"
-  dependencies:
-    "@babel/runtime" "^7.6.2"
-    "@react-stately/collections" "^3.3.3"
-    "@react-stately/selection" "^3.7.0"
-    "@react-stately/utils" "^3.2.2"
-    "@react-types/shared" "^3.8.0"
-
-"@react-stately/list@^3.3.0":
+"@react-stately/list@^3.2.2", "@react-stately/list@^3.3.0":
   "integrity" "sha512-vp/+5C6ZTy6an0WqR/o0tr3wEbRFeFnZZcGseQps036Ir3XzWMs6CvdwfXCIWiZ03nOQPRvy8GbF8j1Qj4voYQ=="
   "resolved" "https://registry.npmjs.org/@react-stately/list/-/list-3.3.0.tgz"
   "version" "3.3.0"
@@ -1951,6 +1940,16 @@
     "@react-stately/utils" "^3.2.2"
     "@react-types/slider" "^3.0.2"
 
+"@react-stately/tabs@^3.0.1":
+  "integrity" "sha512-XhF/5mt8eme3mu0+4nC7Du+e5OWSu0W8SeKfbH9JmTWTCayZpPtui68nRStJK6OkgHs28gA+j55RSsTqT/N1Fg=="
+  "resolved" "https://registry.npmjs.org/@react-stately/tabs/-/tabs-3.0.1.tgz"
+  "version" "3.0.1"
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-stately/list" "^3.3.0"
+    "@react-stately/utils" "^3.2.2"
+    "@react-types/tabs" "^3.0.1"
+
 "@react-stately/tabs@3.0.0-alpha.0":
   "integrity" "sha512-QJZ9N7DT89RkP18btvQhJvxWuv/JkSwtm14ftfk+5LBbzyxyLsD2KP6jDrNhXgmkRMmIyEaMt2w2VmI6fQ6UAA=="
   "resolved" "https://registry.npmjs.org/@react-stately/tabs/-/tabs-3.0.0-alpha.0.tgz"
@@ -1992,14 +1991,7 @@
     "@react-stately/utils" "^3.2.2"
     "@react-types/shared" "^3.8.0"
 
-"@react-stately/utils@^3.0.0-alpha.1":
-  "integrity" "sha512-7NCpRMAexDdgVqbrB9uDrkDpM4Tdw5BU6Gu6IKUXmKsoDYziE6mAjaGkCZBitsrln1Cezc6euI5YPa1JqxgpJg=="
-  "resolved" "https://registry.npmjs.org/@react-stately/utils/-/utils-3.2.2.tgz"
-  "version" "3.2.2"
-  dependencies:
-    "@babel/runtime" "^7.6.2"
-
-"@react-stately/utils@^3.2.0", "@react-stately/utils@^3.2.2":
+"@react-stately/utils@^3.0.0-alpha.1", "@react-stately/utils@^3.2.0", "@react-stately/utils@^3.2.2":
   "integrity" "sha512-7NCpRMAexDdgVqbrB9uDrkDpM4Tdw5BU6Gu6IKUXmKsoDYziE6mAjaGkCZBitsrln1Cezc6euI5YPa1JqxgpJg=="
   "resolved" "https://registry.npmjs.org/@react-stately/utils/-/utils-3.2.2.tgz"
   "version" "3.2.2"
@@ -2022,14 +2014,7 @@
   dependencies:
     "@react-types/shared" "^3.8.0"
 
-"@react-types/checkbox@^3.2.1":
-  "integrity" "sha512-YqeAFyrpaxI/eW6zQ7tVkKIASgzpywRrc6C/rV6Mw0zzGGSSvmYvdOBx9yHOEvpts7dLgaGlmLK6CeG7s4yGKg=="
-  "resolved" "https://registry.npmjs.org/@react-types/checkbox/-/checkbox-3.2.3.tgz"
-  "version" "3.2.3"
-  dependencies:
-    "@react-types/shared" "^3.8.0"
-
-"@react-types/checkbox@^3.2.3":
+"@react-types/checkbox@^3.2.1", "@react-types/checkbox@^3.2.3":
   "integrity" "sha512-YqeAFyrpaxI/eW6zQ7tVkKIASgzpywRrc6C/rV6Mw0zzGGSSvmYvdOBx9yHOEvpts7dLgaGlmLK6CeG7s4yGKg=="
   "resolved" "https://registry.npmjs.org/@react-types/checkbox/-/checkbox-3.2.3.tgz"
   "version" "3.2.3"
@@ -2119,6 +2104,13 @@
   "version" "3.0.0-rc.7"
   dependencies:
     "@react-types/grid" "3.0.0-rc.0"
+    "@react-types/shared" "^3.8.0"
+
+"@react-types/tabs@^3.0.1":
+  "integrity" "sha512-GvPVU9GAqImHFhU+Do+pdGK/vZA4kqA699Gly1V95DUmtdG3GSwTnwlvM/Sy80/F9fKZDGokZnQmBFo8MFZyIw=="
+  "resolved" "https://registry.npmjs.org/@react-types/tabs/-/tabs-3.0.1.tgz"
+  "version" "3.0.1"
+  dependencies:
     "@react-types/shared" "^3.8.0"
 
 "@react-types/tabs@3.0.0-alpha.2":
