@@ -224,6 +224,7 @@ export default function App({ navigation }) {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
+            headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
@@ -255,6 +256,7 @@ export default function App({ navigation }) {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
+            headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
