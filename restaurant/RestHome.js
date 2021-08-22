@@ -260,7 +260,8 @@ export default function App({ navigation }) {
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
-            }
+            },
+            animation: 'fade_from_bottom'
           })}
         />
         <Stack.Screen
@@ -275,7 +276,8 @@ export default function App({ navigation }) {
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
-            }
+            },
+            animation: 'slide_from_right'
           }}
         />
       </Stack.Navigator>
