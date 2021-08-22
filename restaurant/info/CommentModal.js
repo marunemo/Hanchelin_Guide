@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Text, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
-import { IconButton, Icon, Input, Button, Slider } from 'native-base';
+import { Text, SafeAreaView, StyleSheet } from 'react-native';
+import { IconButton, Icon, Input, Button } from 'native-base';
+import { KeyboardAwareScrollView as ScrollView } from 'react-native-keyboard-aware-scroll-view'
+import Slider from '@react-native-community/slider';
 import Modal from 'react-native-modal';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import Font from 'react-native-vector-icons/FontAwesome5';
@@ -73,47 +75,6 @@ const CommentButton = (props) => {
     setDelivFee(0);
   }
 
-  function DeliverOption(props) {
-    if (props.isDeliver) {
-      return (
-        <>
-          <Text style={style.commentText}>배달시간</Text>
-          <Slider
-            w="80%"
-            alignSelf="center"
-            defaultValue={delivTime}
-            maxValue={60}
-            step={5}
-            onChange={time => setDelivTime(time)}
-          >
-            <Slider.Track>
-              <Slider.FilledTrack />
-            </Slider.Track>
-            <Slider.Thumb />
-          </Slider>
-          <Text style={{ textAlign: 'right' }}>
-            {delivTime}분{(delivTime == 60) ? ' 이상' : ''}
-          </Text>
-          <Text style={style.commentText}>배달비</Text>
-          <Input
-            size="sm"
-            w={250}
-            isRequired={true}
-            keyboardType="numeric"
-            variant="underlined"
-            alignSelf="flex-end"
-            textAlign="right"
-            multiline={false}
-            InputRightElement={<Text style={{ fontWeight: 'bold' }}>원</Text>}
-            placeholder="들었던 배달 비용을 적어주세요."
-            onChange={fee => setDelivFee(parseInt(fee))}
-          />
-        </>
-      );
-    }
-    return (<></>);
-  }
-
   return (
     <>
       <Modal
@@ -125,7 +86,12 @@ const CommentButton = (props) => {
       >
         <SafeAreaView style={style.commentView}>
           <Text style={style.commentHeader}>식당 리뷰</Text>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView
+            keyboardDismissMode="on-drag"
+            extraScrollHeight={150}
+            enableResetScrollToCoords={false}
+            showsVerticalScrollIndicator={false}
+          >
             <Text style={style.commentText}>주문 방식</Text>
             <Button.Group alignSelf="center">
               <Button
@@ -139,7 +105,34 @@ const CommentButton = (props) => {
                 방문
               </Button>
             </Button.Group>
-            <DeliverOption isDeliver={isDeliver} />
+            {isDeliver && <>
+              <Text style={style.commentText}>배달시간</Text>
+              <Slider
+                style={{ width: "90%", alignSelf: "center" }}
+                minimumTrackTintColor="#bf2a52"
+                thumbTintColor="#bf2a52"
+                value={delivTime}
+                maximumValue={60}
+                step={5}
+                onSlidingComplete={setDelivTime}
+              />
+              <Text style={{ textAlign: 'right' }}>
+                {delivTime}분{(delivTime == 60) ? ' 이상' : ''}
+              </Text>
+              <Text style={style.commentText}>배달비</Text>
+              <Slider
+                style={{ width: "90%", alignSelf: "center" }}
+                minimumTrackTintColor="#bf2a52"
+                thumbTintColor="#bf2a52"
+                value={delivFee}
+                maximumValue={5000}
+                step={1000}
+                onSlidingComplete={setDelivFee}
+              />
+              <Text style={{ textAlign: 'right' }}>
+                {delivFee}원{(delivFee == 5000) ? ' 이상' : ''}
+              </Text>
+            </>}
             <Text style={style.commentText}>맛</Text>
             <Text style={style.ratingText}>{flavor} / 5</Text>
             <Rating
