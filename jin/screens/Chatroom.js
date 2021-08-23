@@ -124,6 +124,7 @@ export default function ({ navigation }) {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
+            headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
@@ -142,10 +143,12 @@ export default function ({ navigation }) {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
+            headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
             },
+            animation: 'slide_from_right'
           }} />
         <StackNav.Screen
           name="메시지"
@@ -157,10 +160,12 @@ export default function ({ navigation }) {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
+            headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
             },
+            animation: 'fade_from_bottom',
             headerRight: () => (
               <Icon name="times" size={24} color="#f2f2f2"
                 onPress={() => deleteChat(route.params.thread)}
