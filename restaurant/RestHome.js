@@ -224,6 +224,7 @@ export default function App({ navigation }) {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
+            headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
@@ -255,10 +256,12 @@ export default function App({ navigation }) {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
+            headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
-            }
+            },
+            animation: 'fade_from_bottom'
           })}
         />
         <Stack.Screen
@@ -273,7 +276,8 @@ export default function App({ navigation }) {
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
-            }
+            },
+            animation: 'slide_from_right'
           }}
         />
       </Stack.Navigator>

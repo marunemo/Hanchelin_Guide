@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Text, SafeAreaView, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Keyboard, Text, SafeAreaView, StyleSheet } from 'react-native';
 import { IconButton, Icon, Input, Button } from 'native-base';
 import { KeyboardAwareScrollView as ScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Slider from '@react-native-community/slider';
@@ -14,6 +14,7 @@ const CommentButton = (props) => {
   const user = auth().currentUser; //현재 유저 정보 불러오기
   const [onInput, showInput] = useState(false);
   const [isDeliver, setDeliver] = useState(false);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   // 여기서 가게 이름 (doc)을 현재 들어간 가게에 따라서 가져와야 한다
   let commentRef = database().ref(props.commentsDir);
@@ -75,6 +76,17 @@ const CommentButton = (props) => {
     setDelivFee(0);
   }
 
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
   return (
     <>
       <Modal
@@ -82,7 +94,7 @@ const CommentButton = (props) => {
         isVisible={onInput}
         onModalWillHide={props.onFinish}
         onBackButtonPress={() => showInput(false)}
-        onBackdropPress={() => showInput(false)}
+        onBackdropPress={isKeyboardVisible ? Keyboard.dismiss : (() => showInput(false))}
       >
         <SafeAreaView style={style.commentView}>
           <Text style={style.commentHeader}>식당 리뷰</Text>
@@ -109,6 +121,7 @@ const CommentButton = (props) => {
               <Text style={style.commentText}>배달시간</Text>
               <Slider
                 style={{ width: "90%", alignSelf: "center" }}
+                thumbImage={require('../../images/info-icon/bike.png')}
                 minimumTrackTintColor="#bf2a52"
                 thumbTintColor="#bf2a52"
                 value={delivTime}
@@ -122,6 +135,7 @@ const CommentButton = (props) => {
               <Text style={style.commentText}>배달비</Text>
               <Slider
                 style={{ width: "90%", alignSelf: "center" }}
+                thumbImage={require('../../images/info-icon/bike.png')}
                 minimumTrackTintColor="#bf2a52"
                 thumbTintColor="#bf2a52"
                 value={delivFee}
@@ -162,7 +176,7 @@ const CommentButton = (props) => {
             />
             <Text style={style.commentText}>종합 평가</Text>
             <AirbnbRating
-              starImage={require('../../images/icon/rice-icon.jpeg')}
+              starImage={require('../../images/info-icon/rice-icon.jpeg')}
               count={5}
               reviews={['다시는 안 먹어요..', '가끔씩은 괜찮을 듯?', '무난해요.', '꽤 자주 갈꺼 같아요', '없던 병이 낫는 식당']}
               defaultRating={3}
