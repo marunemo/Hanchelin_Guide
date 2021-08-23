@@ -127,7 +127,7 @@ const CommentButton = (props) => {
                 value={delivTime}
                 maximumValue={60}
                 step={5}
-                onSlidingComplete={setDelivTime}
+                onValueChange={setDelivTime}
               />
               <Text style={{ textAlign: 'right' }}>
                 {delivTime}분{(delivTime == 60) ? ' 이상' : ''}
@@ -141,7 +141,7 @@ const CommentButton = (props) => {
                 value={delivFee}
                 maximumValue={5000}
                 step={1000}
-                onSlidingComplete={setDelivFee}
+                onValueChange={setDelivFee}
               />
               <Text style={{ textAlign: 'right' }}>
                 {delivFee}원{(delivFee == 5000) ? ' 이상' : ''}
