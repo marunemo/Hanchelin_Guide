@@ -4,6 +4,7 @@ import NaverMapView, { Marker } from 'react-native-nmap';
 import { Rating } from 'react-native-ratings';
 import { NativeBaseProvider, HStack, Center, Button } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
+import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
@@ -42,6 +43,7 @@ const MapView = (props) => {
 }
 
 const RestComponent = (props) => {
+  const user = auth().currentUser;
   const restData = props.restData;
   const menuList = restData['menu'];
   const commentsList = restData['comments'];
@@ -62,7 +64,7 @@ const RestComponent = (props) => {
     for (const [id, comment] of Object.entries(commentsList)) {
       if (comment != null) {
         comments.push(
-          <CommentListView key={id} id={id} comment={comment} onPop={props.onPop} />
+          <CommentListView key={id} user={user} id={id} comment={comment} onPop={props.onPop} />
         )
       }
     }
