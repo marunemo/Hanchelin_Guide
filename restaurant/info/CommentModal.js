@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import { Text, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
-import { IconButton, Icon, Input, Button, Slider } from 'native-base';
+import React, { useState, useEffect } from 'react';
+import { Keyboard, Text, SafeAreaView, StyleSheet } from 'react-native';
+import { IconButton, Icon, Input, Button } from 'native-base';
+import { KeyboardAwareScrollView as ScrollView } from 'react-native-keyboard-aware-scroll-view'
+import Slider from '@react-native-community/slider';
 import Modal from 'react-native-modal';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import Font from 'react-native-vector-icons/FontAwesome5';
@@ -12,6 +14,7 @@ const CommentButton = (props) => {
   const user = auth().currentUser; //현재 유저 정보 불러오기
   const [onInput, showInput] = useState(false);
   const [isDeliver, setDeliver] = useState(false);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   // 여기서 가게 이름 (doc)을 현재 들어간 가게에 따라서 가져와야 한다
   let commentRef = database().ref(props.commentsDir);
@@ -73,46 +76,16 @@ const CommentButton = (props) => {
     setDelivFee(0);
   }
 
-  function DeliverOption(props) {
-    if (props.isDeliver) {
-      return (
-        <>
-          <Text style={style.commentText}>배달시간</Text>
-          <Slider
-            w="80%"
-            alignSelf="center"
-            defaultValue={delivTime}
-            maxValue={60}
-            step={5}
-            onChange={time => setDelivTime(time)}
-          >
-            <Slider.Track>
-              <Slider.FilledTrack />
-            </Slider.Track>
-            <Slider.Thumb />
-          </Slider>
-          <Text style={{ textAlign: 'right' }}>
-            {delivTime}분{(delivTime == 60) ? ' 이상' : ''}
-          </Text>
-          <Text style={style.commentText}>배달비</Text>
-          <Input
-            size="sm"
-            w={250}
-            isRequired={true}
-            keyboardType="numeric"
-            variant="underlined"
-            alignSelf="flex-end"
-            textAlign="right"
-            multiline={false}
-            InputRightElement={<Text style={{ fontWeight: 'bold' }}>원</Text>}
-            placeholder="들었던 배달 비용을 적어주세요."
-            onChange={fee => setDelivFee(parseInt(fee))}
-          />
-        </>
-      );
-    }
-    return (<></>);
-  }
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   return (
     <>
@@ -121,11 +94,16 @@ const CommentButton = (props) => {
         isVisible={onInput}
         onModalWillHide={props.onFinish}
         onBackButtonPress={() => showInput(false)}
-        onBackdropPress={() => showInput(false)}
+        onBackdropPress={isKeyboardVisible ? Keyboard.dismiss : (() => showInput(false))}
       >
         <SafeAreaView style={style.commentView}>
           <Text style={style.commentHeader}>식당 리뷰</Text>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView
+            keyboardDismissMode="on-drag"
+            extraScrollHeight={150}
+            enableResetScrollToCoords={false}
+            showsVerticalScrollIndicator={false}
+          >
             <Text style={style.commentText}>주문 방식</Text>
             <Button.Group alignSelf="center">
               <Button
@@ -139,7 +117,36 @@ const CommentButton = (props) => {
                 방문
               </Button>
             </Button.Group>
-            <DeliverOption isDeliver={isDeliver} />
+            {isDeliver && <>
+              <Text style={style.commentText}>배달시간</Text>
+              <Slider
+                style={{ width: "90%", alignSelf: "center" }}
+                thumbImage={require('../../images/info-icon/bike.png')}
+                minimumTrackTintColor="#bf2a52"
+                thumbTintColor="#bf2a52"
+                value={delivTime}
+                maximumValue={60}
+                step={5}
+                onSlidingComplete={setDelivTime}
+              />
+              <Text style={{ textAlign: 'right' }}>
+                {delivTime}분{(delivTime == 60) ? ' 이상' : ''}
+              </Text>
+              <Text style={style.commentText}>배달비</Text>
+              <Slider
+                style={{ width: "90%", alignSelf: "center" }}
+                thumbImage={require('../../images/info-icon/bike.png')}
+                minimumTrackTintColor="#bf2a52"
+                thumbTintColor="#bf2a52"
+                value={delivFee}
+                maximumValue={5000}
+                step={1000}
+                onSlidingComplete={setDelivFee}
+              />
+              <Text style={{ textAlign: 'right' }}>
+                {delivFee}원{(delivFee == 5000) ? ' 이상' : ''}
+              </Text>
+            </>}
             <Text style={style.commentText}>맛</Text>
             <Text style={style.ratingText}>{flavor} / 5</Text>
             <Rating
@@ -169,7 +176,7 @@ const CommentButton = (props) => {
             />
             <Text style={style.commentText}>종합 평가</Text>
             <AirbnbRating
-              starImage={require('../../images/icon/rice-icon.jpeg')}
+              starImage={require('../../images/info-icon/rice-icon.jpeg')}
               count={5}
               reviews={['다시는 안 먹어요..', '가끔씩은 괜찮을 듯?', '무난해요.', '꽤 자주 갈꺼 같아요', '없던 병이 낫는 식당']}
               defaultRating={3}
