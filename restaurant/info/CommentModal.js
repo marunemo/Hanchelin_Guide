@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Keyboard, Text, SafeAreaView, StyleSheet } from 'react-native';
+import { Keyboard, View, Text, SafeAreaView, StyleSheet } from 'react-native';
 import { IconButton, Icon, Input, Button } from 'native-base';
 import { KeyboardAwareScrollView as ScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Slider from '@react-native-community/slider';
@@ -67,6 +67,10 @@ const CommentButton = (props) => {
         });
       })
 
+    resetValues();
+  }
+
+  const resetValues = () => {
     setFlavor(2.5);
     setCostPerf(2.5);
     setService(2.5);
@@ -75,7 +79,6 @@ const CommentButton = (props) => {
     setDelivTime(30);
     setDelivFee(0);
   }
-
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
@@ -97,7 +100,21 @@ const CommentButton = (props) => {
         onBackdropPress={isKeyboardVisible ? Keyboard.dismiss : (() => showInput(false))}
       >
         <SafeAreaView style={style.commentView}>
-          <Text style={style.commentHeader}>식당 리뷰</Text>
+          <View style={style.commentHeader}>
+            <Button
+              style={style.resetButton}
+              variant="ghost"
+              isDisabled={true}
+            />
+            <Text style={style.headerTitle}>식당 리뷰</Text>
+            <Button
+              style={style.resetButton}
+              variant="ghost"
+              onPress={resetValues}
+            >
+              리셋
+            </Button>
+          </View>
           <ScrollView
             keyboardDismissMode="on-drag"
             extraScrollHeight={150}
@@ -251,9 +268,19 @@ const style = StyleSheet.create({
     elevation: 15
   },
   commentHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    marginVertical: 25
+  },
+  resetButton: {
+    flex: 1,
+    marginHorizontal: 30
+  },
+  headerTitle: {
     fontWeight: 'bold',
-    marginVertical: 25,
-    fontSize: 22
+    fontSize: 22,
+    textAlign: 'center'
   },
   commentText: {
     fontWeight: 'bold',
