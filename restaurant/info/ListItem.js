@@ -95,15 +95,15 @@ const RestComponent = (props) => {
           </Text>
         </View>
         <View style={style.partitionPadding}>
-          <InfoView icon="location-arrow" value={restData['address']} />
           <InfoView icon="mobile-phone" value={restData['contact']} />
+          <InfoView icon="location-arrow" value={restData['address']} />
           <InfoView icon="clock-o" value={restData['opening_hours']} />
         </View>
-        <HStack style={{ marginTop: 15 }}>
+        <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기" })}>
               <Font style={{ textAlign: "center" }} name="wechat" size={30} color="#4c1d95" />
-              <Text style={{ textAlign: "center", marginTop: 5 }}>같이 배달 찾기</Text>
+              <Text style={{ textAlign: "center", marginTop: 5 }}>같이배달 찾기</Text>
             </Button>
           </Center>
           <Center style={[style.optionView, style.horizonStack]}>
@@ -112,7 +112,7 @@ const RestComponent = (props) => {
               <Text style={{ textAlign: "center", marginTop: 5 }}>찜하기</Text>
             </Button>
           </Center>
-          <Center style={[style.optionView, style.horizonStack]}>
+          <Center style={[style.optionView, style.horizonStack, { borderRightWidth: 0 }]}>
             <Button style={style.optionButton} onPress={() => setTog(!tog)}>
               <Font style={{ textAlign: "center" }} name="share" size={30} color="#999999" />
               <Text style={{ textAlign: "center", marginTop: 5 }}>??? 공유</Text>
@@ -304,11 +304,11 @@ const style = StyleSheet.create({
   },
   horizonStack: {
     justifyContent: 'center',
-    width: '33.3%',
+    width: '33%',
   },
   optionView: {
     borderColor: '#aaaaaa',
-    borderWidth: 1
+    borderRightWidth : 2
   },
   optionButton: {
     width: '100%',
