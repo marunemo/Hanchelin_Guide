@@ -5,7 +5,7 @@ import { KeyboardAwareScrollView as ScrollView } from 'react-native-keyboard-awa
 import Slider from '@react-native-community/slider';
 import Modal from 'react-native-modal';
 import { Rating, AirbnbRating } from 'react-native-ratings';
-import Font from 'react-native-vector-icons/FontAwesome5';
+import Font from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
@@ -104,16 +104,18 @@ const CommentButton = (props) => {
             <Button
               style={style.resetButton}
               variant="ghost"
+              size="sm"
               isDisabled={true}
             />
             <Text style={style.headerTitle}>식당 리뷰</Text>
-            <Button
+            <IconButton
               style={style.resetButton}
+              borderRadius="full"
               variant="ghost"
+              size="sm"
               onPress={resetValues}
-            >
-              리셋
-            </Button>
+              icon={<Icon name="refresh" as={Font} size="sm" color="#0284c7" />}
+            />
           </View>
           <ScrollView
             keyboardDismissMode="on-drag"
@@ -241,7 +243,7 @@ const CommentButton = (props) => {
         variant="solid"
         size="lg"
         onPress={() => showInput(true)}
-        icon={<Icon name="comment-alt" as={Font} size="sm" />}
+        icon={<Icon name="pencil-square-o" as={Font} size="sm" />}
       />
     </>
   );
@@ -262,6 +264,8 @@ const style = StyleSheet.create({
     position: 'absolute',
     bottom: 30,
     right: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
     shadowColor: '#333333',
     shadowRadius: 2,
     shadowOpacity: 0.7,
@@ -275,7 +279,9 @@ const style = StyleSheet.create({
   },
   resetButton: {
     flex: 1,
-    marginHorizontal: 30
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 35
   },
   headerTitle: {
     fontWeight: 'bold',
