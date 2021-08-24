@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, TextInput, TouchableOpacity, Platform } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Platform } from 'react-native'
 import { NativeBaseProvider, Text, Input, Button, Select } from 'native-base'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import DateTimePicker from '@react-native-community/datetimepicker'
 
-export default function CreateChat({ navigation }) {
+export default function CreateChat({ route, navigation }) {
   const user = auth().currentUser
   const [roomName, setRoomName] = useState('기본 채팅방') //채팅방 이름
-  const [storeName, setStoreName] = useState('기본 식당이름') //식당이름
+  const [storeName, setStoreName] = useState(route.params?.restName ? route.params.restName : '기본 식당이름') //식당이름
   const [delivLocation, setDelivLocation] = useState('기본 배달위치') //배달위치
   const [endTime, setEndTime] = useState(0) //모집 마감시간
 
@@ -40,7 +40,10 @@ export default function CreateChat({ navigation }) {
 
   return (
     <NativeBaseProvider>
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
         <Input
           bg='white'
           minWidth={230}
@@ -72,7 +75,7 @@ export default function CreateChat({ navigation }) {
         <Button style={styles.button} onPress={handleButtonPress} bg='#BF2A52'>
           <Text style={{ color: 'white', fontWeight: 'bold'}}>채팅방 만들기</Text>
         </Button>
-      </View>
+      </KeyboardAvoidingView>
     </NativeBaseProvider>
   )
 }
