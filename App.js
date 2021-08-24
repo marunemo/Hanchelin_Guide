@@ -40,7 +40,7 @@ export default function App() {
     return (
       <Fragment>
         <SafeAreaView style={{ flex: 0, backgroundColor: '#BF2A52' }} />
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#555' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#efefef' }}>
           <StatusBar barStyle="light-content" />
           <NavigationContainer>
             <BTab.Navigator
@@ -55,10 +55,14 @@ export default function App() {
                   } else if (route.name == '같이 배달') {
                     iconName = 'automobile';
                   }
-                  return <Icon name={iconName} size={focused?20:16} color="#f2f2f2" />;
+                  if (focused) {
+                    return <Icon name={iconName} size={20} color="#BF2A52" />;
+                  } else {
+                    return <Icon name={iconName} size={16} color="#aaa" />;
+                  }
                 },
-                tabBarActiveBackgroundColor: '#555',
-                tabBarInactiveBackgroundColor: '#555',
+                tabBarActiveBackgroundColor: '#efefef',
+                tabBarInactiveBackgroundColor: '#efefef',
               })}>
               <BTab.Screen
                 name='식당'
@@ -83,10 +87,10 @@ const styles = StyleSheet.create({
   focusLabel: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#f2f2f2'
+    color: '#bf2a52'
   },
   unfocusLabel: {
     fontSize: 12,
-    color: '#f2f2f2'
+    color: '#aaaaaa'
   }
 })
