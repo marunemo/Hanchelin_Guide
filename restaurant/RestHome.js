@@ -98,16 +98,18 @@ class Home extends Component {
       switchValue: false,
       category: '',
       sortTerm: '가나다순',
-      data: []
+      data: [],
+      changeListener: null
     }
   }
   componentDidMount() {
     const ref = database().ref("/식당");
-    ref.once("value").then(snapshot => {
+    const onChildChange = ref.on("value", snapshot => {
       if (snapshot)
         this.setState({ data: snapshot.val() });
       // console.log(this.state.data)
-    })
+    });
+    this.setState({ changeListener: onChildChange });
   }
   searchUpdated(term) {
     this.setState({ searchTerm: term })
@@ -120,6 +122,9 @@ class Home extends Component {
     term == "가나다순" && this.setState({ data: this.state.data.sort((a, b) => a.name > b.name) })
     term == "추천순" && this.setState({ data: this.state.data.sort((a, b) => a.likes < b.likes) })
     term == "리뷰많은순" && this.setState({ data: this.state.data.sort((a, b) => a.comments_count < b.comments_count) })
+  }
+  componentWillUnmount() {
+    database().ref("/식당").off('value', this.state.changeListener);
   }
   render() {
     const filteredArr = (this.state.data)
