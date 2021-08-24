@@ -52,21 +52,21 @@ export default function CreateChat({ route, navigation }) {
           marginTop='3'
           placeholder='식당 이름'
           value={storeName}
-          onChangeText={itemValue => setStoreName(itemValue)}
+          onChangeText={setStoreName}
         />
         <Input
           bg='white'
           minWidth={230}
           marginTop='3'
           placeholder='채팅방 이름'
-          onChangeText={roomName => setRoomName(roomName)}
+          onChangeText={setRoomName}
         />
         <Input 
           bg='white'
           minWidth={230}
           marginTop='3'
           placeholder='배달 위치'
-          onChangeText={delivLocation => setDelivLocation(delivLocation)}
+          onChangeText={setDelivLocation}
         />
         <Button 
           bg='grey'

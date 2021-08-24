@@ -57,6 +57,12 @@ function Chatroom({ navigation }) {
     return <ActivityIndicator />
   }
 
+  function leftMinutes(deadLine) {
+    const deadSecond = new Date(deadLine.seconds * 1000);
+    const diffTime = new Date(deadSecond - new Date().getTime());
+    return diffTime.getHours() * 60 + diffTime.getMinutes();
+  }
+
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
@@ -77,7 +83,7 @@ function Chatroom({ navigation }) {
                     <HStack space={3}>
                       <Text>가게: {item.store}</Text>
                       <Text>위치: {item.location}</Text>
-                      <Text>모집마감: {item.endTime}</Text> 
+                      <Text>모집마감: {leftMinutes(item.endTime)}분 남았습니다.</Text> 
                     </HStack>
                   </Stack>
                 </View>
