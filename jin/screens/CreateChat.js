@@ -26,19 +26,20 @@ export default function CreateChat({ route, navigation }) {
     } else if ((endTime - new Date()) < 0) {
       toast.show({ description: '마감 시간이 현재 시간보다 전에 있습니다!', ...toastSetting })
     } else {
+      const chatThread = {
+        name: roomName,
+        store: storeName,
+        location: delivLocation,
+        initialUser: user?.uid,
+        latestMessage: {
+          text: roomName + ' 채팅방이 생성되었습니다.',
+          createdAt: new Date().getTime()
+        }
+      }
+
       firestore()
         .collection('Chat')
-        .add({
-          name: roomName,
-          store: storeName,
-          location: delivLocation,
-          endTime: endTime,
-          initialUser: user?.uid,
-          latestMessage: {
-            text: roomName + ' 채팅방이 생성되었습니다.',
-            createdAt: new Date().getTime()
-          }
-        })
+        .add({endTime: endTime, ...chatThread})
         .then(docRef => {
           docRef.collection('Messages').add({
             text: roomName + ' 채팅방이 생성되었습니다.',
@@ -46,7 +47,7 @@ export default function CreateChat({ route, navigation }) {
             system: true,
           })
           navigation.goBack();
-          navigation.navigate('메시지', { thread: { _id: docRef.id } });
+          navigation.navigate('메시지', { thread: { _id: docRef.id, ...chatThread } });
         })
     }
   }
