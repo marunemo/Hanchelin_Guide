@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Platform } from 'react-native'
-import { NativeBaseProvider, Text, Input, Button, Select } from 'native-base'
-import auth from '@react-native-firebase/auth'
-import firestore from '@react-native-firebase/firestore'
-import DateTimePicker from '@react-native-community/datetimepicker'
+import React, { useState } from 'react';
+import { KeyboardAvoidingView, StyleSheet, Platform } from 'react-native';
+import { NativeBaseProvider, Text, Input, Button } from 'native-base';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function CreateChat({ route, navigation }) {
   const user = auth().currentUser
-  const [roomName, setRoomName] = useState('기본 채팅방') //채팅방 이름
+  const [roomName, setRoomName] = useState('') //채팅방 이름
   const [storeName, setStoreName] = useState(route.params?.restName ? route.params.restName : '') //식당이름
-  const [delivLocation, setDelivLocation] = useState('기본 배달위치') //배달위치
-  const [endTime, setEndTime] = useState(0) //모집 마감시간
+  const [delivLocation, setDelivLocation] = useState('') //배달위치
+  const [endTime, setEndTime] = useState(new Date(new Date().getTime() + 10 * 60 * 1000)) //모집 마감시간
+                                                                // 1000 밀리초 * 10초 * 10분 
+  const [modalVisible, setModalVisible] = useState(false)
 
   function handleButtonPress() {
     if (roomName.length > 0) {
@@ -66,12 +68,24 @@ export default function CreateChat({ route, navigation }) {
           placeholder='배달 위치'
           onChangeText={delivLocation => setDelivLocation(delivLocation)}
         />
-        <Input
-          bg='white'
+        <Button 
+          bg='grey'
           minWidth={230}
           marginTop='3'
-          placeholder='모집 마감시간'
-          onChangeText={(endTime) => setEndTime(parseInt(endTime))}
+          textAlign="center"
+          onPress={() => setModalVisible(true)}
+        >
+          {endTime.getHours() + " : " + endTime.getMinutes()}
+        </Button>
+        <DateTimePickerModal
+          mode="time"
+          date={endTime}
+          isVisible={modalVisible}
+          onConfirm={endTime => {
+            setEndTime(endTime);
+            setModalVisible(false);
+          }}
+          onCancel={() => setModalVisible(false)}
         />
         <Button style={styles.button} onPress={handleButtonPress} bg='#BF2A52'>
           <Text style={{ color: 'white', fontWeight: 'bold'}}>채팅방 만들기</Text>
