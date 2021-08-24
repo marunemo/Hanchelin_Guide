@@ -3,17 +3,14 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  ScrollView,
-  TextInput,
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
 } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Divider, NativeBaseProvider, Stack, HStack, Modal, Button, } from 'native-base';
+import { Divider, NativeBaseProvider, Stack, HStack, Modal, Button } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import auth, { firebase } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import Authentication from './Authentication';
@@ -99,23 +96,16 @@ function Chatroom({ navigation }) {
 
 export default function ({ navigation }) {
   const user = auth().currentUser;
-  const [showModal, setShowModal] = useState(false); // 권한이 없을때의 modal 보여주기
-  const [showAuthModal, setShowAuthModal] = useState(false); // 권한이 있을때의 modal 보여주기
-  const [isFinal, setIsFinal] = useState(false); // 채팅방 삭제 최종 확인
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
-  async function deleteChat(props) {
-    if (user?.uid === props.initialUser) {
-      setShowAuthModal(true)
-
-      firestore()
-        .collection('Chat')
-        .doc(props._id)
-        .delete()
-
-      navigation.navigate('같이 배달 리스트')
-    } else {
-      setShowModal(true)
-    }
+  function deleteChat(id) {
+    firestore()
+      .collection('Chat')
+      .doc(id)
+      .delete().then(() => {
+        setShowAuthModal(false);
+        navigation.navigate('같이 배달 리스트');
+      })
   }
 
   return (
@@ -175,24 +165,21 @@ export default function ({ navigation }) {
             headerRight: () => (
               (user?.uid === route.params.thread.initialUser) &&
               <Icon name="trash" size={24} color="#f2f2f2"
-                onPress={() => deleteChat(route.params.thread)}
+                onPress={() => setShowAuthModal(route.params.thread)}
               />
             )
           })}
         />
       </StackNav.Navigator>
-
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-        <Modal.Content minWidth={200} minHeight={200}>
-          <Modal.CloseButton />
-          <Modal.Header alignItems='center'>삭제 권한이 없습니다.</Modal.Header>
-        </Modal.Content>
-      </Modal>
-
-      <Modal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)}>
+      <Modal isOpen={!!showAuthModal} onClose={() => setShowAuthModal(false)}>
         <Modal.Content minWidth={200} minHeight={200} alignItems='center'>
           <Modal.CloseButton />
-          <Modal.Header>채팅이 삭제되었습니다.</Modal.Header>
+          <Modal.Header>정말로 채팅방을 삭제하시겠습니까?</Modal.Header>
+          <Modal.Body>채팅방을 지우면 다시 되돌릴 수 없습니다. 신중히 선택해주세요.</Modal.Body>
+          <Modal.Footer>
+            <Button onPress={() => deleteChat(showAuthModal._id)}>예</Button>
+            <Button onPress={() => setShowAuthModal(false)}>아니요</Button>
+          </Modal.Footer>
         </Modal.Content>
       </Modal>
     </NativeBaseProvider>
