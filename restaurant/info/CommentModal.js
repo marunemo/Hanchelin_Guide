@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Keyboard, Text, SafeAreaView, StyleSheet } from 'react-native';
+import { Keyboard, View, Text, SafeAreaView, StyleSheet } from 'react-native';
 import { IconButton, Icon, Input, Button } from 'native-base';
 import { KeyboardAwareScrollView as ScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Slider from '@react-native-community/slider';
 import Modal from 'react-native-modal';
 import { Rating, AirbnbRating } from 'react-native-ratings';
-import Font from 'react-native-vector-icons/FontAwesome5';
+import Font from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
@@ -67,6 +67,10 @@ const CommentButton = (props) => {
         });
       })
 
+    resetValues();
+  }
+
+  const resetValues = () => {
     setFlavor(2.5);
     setCostPerf(2.5);
     setService(2.5);
@@ -75,7 +79,6 @@ const CommentButton = (props) => {
     setDelivTime(30);
     setDelivFee(0);
   }
-
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
@@ -97,7 +100,23 @@ const CommentButton = (props) => {
         onBackdropPress={isKeyboardVisible ? Keyboard.dismiss : (() => showInput(false))}
       >
         <SafeAreaView style={style.commentView}>
-          <Text style={style.commentHeader}>식당 리뷰</Text>
+          <View style={style.commentHeader}>
+            <Button
+              style={style.resetButton}
+              variant="ghost"
+              size="sm"
+              isDisabled={true}
+            />
+            <Text style={style.headerTitle}>식당 리뷰</Text>
+            <IconButton
+              style={style.resetButton}
+              borderRadius="full"
+              variant="ghost"
+              size="sm"
+              onPress={resetValues}
+              icon={<Icon name="refresh" as={Font} size="sm" color="#0284c7" />}
+            />
+          </View>
           <ScrollView
             keyboardDismissMode="on-drag"
             extraScrollHeight={150}
@@ -127,7 +146,7 @@ const CommentButton = (props) => {
                 value={delivTime}
                 maximumValue={60}
                 step={5}
-                onSlidingComplete={setDelivTime}
+                onValueChange={setDelivTime}
               />
               <Text style={{ textAlign: 'right' }}>
                 {delivTime}분{(delivTime == 60) ? ' 이상' : ''}
@@ -141,7 +160,7 @@ const CommentButton = (props) => {
                 value={delivFee}
                 maximumValue={5000}
                 step={1000}
-                onSlidingComplete={setDelivFee}
+                onValueChange={setDelivFee}
               />
               <Text style={{ textAlign: 'right' }}>
                 {delivFee}원{(delivFee == 5000) ? ' 이상' : ''}
@@ -224,7 +243,7 @@ const CommentButton = (props) => {
         variant="solid"
         size="lg"
         onPress={() => showInput(true)}
-        icon={<Icon name="comment-alt" as={Font} size="sm" />}
+        icon={<Icon name="pencil-square-o" as={Font} size="sm" />}
       />
     </>
   );
@@ -245,15 +264,29 @@ const style = StyleSheet.create({
     position: 'absolute',
     bottom: 30,
     right: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
     shadowColor: '#333333',
     shadowRadius: 2,
     shadowOpacity: 0.7,
     elevation: 15
   },
   commentHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    marginVertical: 25
+  },
+  resetButton: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 35
+  },
+  headerTitle: {
     fontWeight: 'bold',
-    marginVertical: 25,
-    fontSize: 22
+    fontSize: 22,
+    textAlign: 'center'
   },
   commentText: {
     fontWeight: 'bold',
