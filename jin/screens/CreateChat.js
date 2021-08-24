@@ -41,17 +41,13 @@ export default function CreateChat({ navigation }) {
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
-        <Select 
-          style={styles.select}
-          placeholder='식당 이름'
-          accessibilityLabel='식당 이름'
-          minWidth={230}
+        <Input
           bg='white'
-          onValueChange={itemValue => setStoreName(itemValue)}  
-        >
-          <Select.Item label='9월애' value='9월애' />
-          <Select.Item label='호원' value='호원' />
-        </Select>
+          minWidth={230}
+          marginTop='3'
+          placeholder='식당 이름'
+          onChangeText={itemValue => setStoreName(itemValue)}
+        />
         <Input
           bg='white'
           minWidth={230}
@@ -93,9 +89,6 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     fontSize: 28,
     fontWeight: '500'
-  },
-  select: {
-    paddingBottom: 10
   },
   button: {
     backgroundColor: '#BF2A52',
