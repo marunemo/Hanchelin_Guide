@@ -40,24 +40,30 @@ export default function App() {
     return (
       <Fragment>
         <SafeAreaView style={{ flex: 0, backgroundColor: '#BF2A52' }} />
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#BF2A52' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#fefefe' }}>
           <StatusBar barStyle="light-content" />
           <NavigationContainer>
             <BTab.Navigator
               screenOptions={({ route }) => ({
-                tabBarIcon: () => {
-                  let iconName;
+                tabBarIcon: ({ focused }) => {
+                  let iconName, iconColor;
                   if (route.name == '식당') {
                     iconName = 'cutlery';
                   } else if (route.name == '같이 배달') {
                     iconName = 'automobile';
                   }
-                  return <Icon name={iconName} size={20} color='#f5f5f5' />;
+                  if (focused) {
+                    iconColor = '#BF2A52';
+                  } else {
+                    iconColor = '#aaa';
+                  }
+                  return <Icon name={iconName} size={24} color={iconColor} />;
                 },
-                tabBarActiveTintColor: '#f5f5f5',
-                tabBarInactiveTintColor: '#f5f5f5',
-                tabBarActiveBackgroundColor: '#BF2A52',
-                tabBarInactiveBackgroundColor: '#BF2A52',
+                tabBarActiveTintColor: '#BF2A52',
+                tabBarInactiveTintColor: '#aaa',
+                tabBarActiveBackgroundColor: '#fefefe',
+                tabBarInactiveBackgroundColor: '#fefefe',
+                tabBatShowLabel: true
               })}>
               <BTab.Screen
                 name='식당'

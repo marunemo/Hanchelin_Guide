@@ -130,7 +130,7 @@ class Home extends Component {
       .filter(createFilter(this.state.category, 'category'))
     return (
       <NativeBaseProvider>
-        {this.state.barVisible && <Box backgroundColor="#f5f5f5">
+        {this.state.barVisible && <Box backgroundColor="#fff">
           <VStack
             alignItems="flex-end"
             space={2}
@@ -196,7 +196,7 @@ class Home extends Component {
           />
         </Box>
         <Center flex={1} backgroundColor='#fff'>
-          <ScrollView width="100%">
+          <ScrollView width="100%" mb={-0.5}>
             <VStack alignItems="center">
               {filteredArr.map(item =>
                 <RestaurantItem
@@ -227,7 +227,7 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f2f2f2',
+            headerTintColor: '#f5f5f5',
             headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -237,7 +237,7 @@ export default function App({ navigation }) {
               <Icon
                 name="user"
                 size={24}
-                color="#f2f2f2"
+                color="#f5f5f5"
                 onPress={() => navigation.navigate("프로필")}
               />
             )
@@ -252,7 +252,7 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f2f2f2',
+            headerTintColor: '#f5f5f5',
             headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -269,7 +269,7 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f2f2f2',
+            headerTintColor: '#f5f5f5',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
