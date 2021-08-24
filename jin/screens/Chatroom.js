@@ -173,7 +173,7 @@ export default function ({ navigation }) {
             },
             animation: 'fade_from_bottom',
             headerRight: () => (
-              <Icon name="times" size={24} color="#f2f2f2"
+              <Icon name="trash" size={24} color="#f2f2f2"
                 onPress={() => deleteChat(route.params.thread)}
               />
             )
