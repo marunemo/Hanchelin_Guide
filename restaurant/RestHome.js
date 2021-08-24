@@ -17,9 +17,10 @@ import {
   CheckIcon,
 } from "native-base";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import HeaderClassicSearchBar from "../lib/src/HeaderClassicSearchBar/HeaderClassicSearchBar";
 import database from '@react-native-firebase/database';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SearchInput, { createFilter } from 'react-native-search-filter';
+import { createFilter } from 'react-native-search-filter';
 import RestInfo from './info/ListItem';
 import Profile from "../jin/screens/Profile.js";
 
@@ -98,6 +99,7 @@ class Home extends Component {
       switchValue: false,
       category: '',
       sortTerm: '가나다순',
+      barVisible: false,
       data: []
     }
   }
@@ -128,7 +130,7 @@ class Home extends Component {
       .filter(createFilter(this.state.category, 'category'))
     return (
       <NativeBaseProvider>
-        <Box backgroundColor="#fafafa" mb={0.5}>
+        {this.state.barVisible && <Box backgroundColor="#fff">
           <VStack
             alignItems="flex-end"
             space={2}
@@ -185,16 +187,17 @@ class Home extends Component {
                 onValueChange={(switchValue) => this.setState({ switchValue })} />
             </HStack>
           </VStack>
-          <SearchInput
+        </Box>}
+        <Box backgroundColor='#fff'>
+          <HeaderClassicSearchBar
+            backgroundColor='#BF2A52'
             onChangeText={(term) => { this.searchUpdated(term) }}
-            style={styles.searchInput}
-            placeholder="식당을 검색하세요."
-            placeholderTextColor="#555"
+            onPress={() => this.setState({ barVisible: !(this.state.barVisible) })}
           />
         </Box>
-        <Center flex={1}>
-          <ScrollView width="100%">
-            <VStack mb={0.5} space={0.5} alignItems="center">
+        <Center flex={1} backgroundColor='#fff'>
+          <ScrollView width="100%" mb={-0.5}>
+            <VStack alignItems="center">
               {filteredArr.map(item =>
                 <RestaurantItem
                   key={item.id.toString()}
@@ -220,27 +223,21 @@ export default function App({ navigation }) {
           name="식당 리스트"
           component={Home}
           options={{
+            title: '한슐랭 가이드',
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f2f2f2',
+            headerTintColor: '#f5f5f5',
             headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
             },
-            headerLeft: () => (
-              <Icon
-                name="bars"
-                size={24}
-                color="#f2f2f2"
-              />
-            ),
             headerRight: () => (
               <Icon
                 name="user"
                 size={24}
-                color="#f2f2f2"
+                color="#f5f5f5"
                 onPress={() => navigation.navigate("프로필")}
               />
             )
@@ -255,7 +252,7 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f2f2f2',
+            headerTintColor: '#f5f5f5',
             headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -272,7 +269,7 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f2f2f2',
+            headerTintColor: '#f5f5f5',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
@@ -288,19 +285,11 @@ export default function App({ navigation }) {
 const styles = StyleSheet.create({
   itemContainer: {
     justifyContent: 'center',
-    width: "100%",
+    width: '100%',
     height: 110,
-    backgroundColor: '#fff'
-  },
-  searchInput: {
-    marginHorizontal: 7,
-    marginBottom: 7,
-    paddingVertical: 12,
-    paddingHorizontal: 15,
-    fontSize: 17,
-    color: "#222",
-    borderColor: '#BF2A52',
-    borderRadius: 4,
-    borderWidth: 2
+    backgroundColor: '#fff',
+    borderBottomColor: '#eee',
+    borderBottomWidth: 0.5,
+    borderRadius: 15
   }
 })
