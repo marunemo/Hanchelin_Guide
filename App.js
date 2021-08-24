@@ -40,7 +40,7 @@ export default function App() {
     return (
       <Fragment>
         <SafeAreaView style={{ flex: 0, backgroundColor: '#BF2A52' }} />
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#555' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#BF2A52' }}>
           <StatusBar barStyle="light-content" />
           <NavigationContainer>
             <BTab.Navigator
@@ -52,12 +52,12 @@ export default function App() {
                   } else if (route.name == '같이 배달') {
                     iconName = 'automobile';
                   }
-                  return <Icon name={iconName} size={20} color='#f2f2f2' />;
+                  return <Icon name={iconName} size={20} color='#f5f5f5' />;
                 },
-                tabBarActiveTintColor: '#f2f2f2',
-                tabBarInactiveTintColor: '#f2f2f2',
-                tabBarActiveBackgroundColor: '#555',
-                tabBarInactiveBackgroundColor: '#555',
+                tabBarActiveTintColor: '#f5f5f5',
+                tabBarInactiveTintColor: '#f5f5f5',
+                tabBarActiveBackgroundColor: '#BF2A52',
+                tabBarInactiveBackgroundColor: '#BF2A52',
               })}>
               <BTab.Screen
                 name='식당'

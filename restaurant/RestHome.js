@@ -99,7 +99,7 @@ class Home extends Component {
       switchValue: false,
       category: '',
       sortTerm: '가나다순',
-      barVisible: 'false',
+      barVisible: false,
       data: []
     }
   }
@@ -130,12 +130,11 @@ class Home extends Component {
       .filter(createFilter(this.state.category, 'category'))
     return (
       <NativeBaseProvider>
-        {this.state.barVisible && <Box backgroundColor="#fff">
+        {this.state.barVisible && <Box backgroundColor="#f5f5f5">
           <VStack
             alignItems="flex-end"
             space={2}
-            px={2}
-            pt={2}
+            p={2}
           >
             <Select
               width="100%"
@@ -189,11 +188,14 @@ class Home extends Component {
             </HStack>
           </VStack>
         </Box>}
-        <HeaderClassicSearchBar
-          onChangeText={(term) => { this.searchUpdated(term) }}
-          onPress={() => this.setState({ barVisible: !(this.state.barVisible) })}
-        />
-        <Center flex={1} mt={5}>
+        <Box backgroundColor='#fff'>
+          <HeaderClassicSearchBar
+            backgroundColor='#BF2A52'
+            onChangeText={(term) => { this.searchUpdated(term) }}
+            onPress={() => this.setState({ barVisible: !(this.state.barVisible) })}
+          />
+        </Box>
+        <Center flex={1} backgroundColor='#fff'>
           <ScrollView width="100%">
             <VStack alignItems="center">
               {filteredArr.map(item =>
@@ -286,7 +288,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 110,
     backgroundColor: '#fff',
-    borderBottomColor: '#ddd',
-    borderBottomWidth: 0.5
+    borderBottomColor: '#eee',
+    borderBottomWidth: 0.5,
+    borderRadius: 15
   }
 })
