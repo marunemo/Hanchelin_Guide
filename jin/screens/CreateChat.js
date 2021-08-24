@@ -16,7 +16,7 @@ export default function CreateChat({ route, navigation }) {
 
   function handleButtonPress() {
     const toastSetting = { title: '주의', status: 'error', isClosable: false, style: { width: 320 } }
-    
+
     if (roomName === '') {
       toast.show({ description: '채팅방 이름이 작성되지 않았습니다!', ...toastSetting })
     } else if (storeName === '') {
@@ -29,23 +29,24 @@ export default function CreateChat({ route, navigation }) {
       firestore()
         .collection('Chat')
         .add({
-            name: roomName,
-            store: storeName,
-            location: delivLocation,
-            endTime: endTime,
-            initialUser: user?.uid,
-            latestMessage: {
-                text: roomName + ' 채팅방이 생성되었습니다.',
-                createdAt: new Date().getTime()
-            }
+          name: roomName,
+          store: storeName,
+          location: delivLocation,
+          endTime: endTime,
+          initialUser: user?.uid,
+          latestMessage: {
+            text: roomName + ' 채팅방이 생성되었습니다.',
+            createdAt: new Date().getTime()
+          }
         })
         .then(docRef => {
-            docRef.collection('Messages').add({
-                text: roomName + ' 채팅방이 생성되었습니다.',
-                createdAt: new Date().getTime(),
-                system: true,
-            })
-            navigation.navigate('같이 배달 리스트');
+          docRef.collection('Messages').add({
+            text: roomName + ' 채팅방이 생성되었습니다.',
+            createdAt: new Date().getTime(),
+            system: true,
+          })
+          console.log(docRef.id)
+          navigation.navigate('메시지', { thread: { _id: docRef.id } });
         })
     }
   }
@@ -71,14 +72,14 @@ export default function CreateChat({ route, navigation }) {
           placeholder='채팅방 이름'
           onChangeText={setRoomName}
         />
-        <Input 
+        <Input
           bg='white'
           minWidth={230}
           marginTop='3'
           placeholder='배달 위치'
           onChangeText={setDelivLocation}
         />
-        <Button 
+        <Button
           bg='white'
           minWidth={230}
           marginTop='3'
@@ -91,7 +92,7 @@ export default function CreateChat({ route, navigation }) {
           }}
         >
           {(endTime.getHours() < 10 ? '0' : '') + endTime.getHours() + " : " +
-           (endTime.getMinutes() < 10 ? '0' : '') + endTime.getMinutes()}
+            (endTime.getMinutes() < 10 ? '0' : '') + endTime.getMinutes()}
         </Button>
         <DateTimePickerModal
           mode="time"
@@ -104,7 +105,7 @@ export default function CreateChat({ route, navigation }) {
           onCancel={() => setModalVisible(false)}
         />
         <Button style={styles.button} onPress={handleButtonPress} bg='#BF2A52'>
-          <Text style={{ color: 'white', fontWeight: 'bold'}}>채팅방 만들기</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold' }}>채팅방 만들기</Text>
         </Button>
       </KeyboardAvoidingView>
     </NativeBaseProvider>

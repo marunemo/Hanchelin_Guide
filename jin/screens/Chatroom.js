@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  Image,  
-  ScrollView, 
-  TextInput, 
-  TouchableOpacity, 
-  FlatList, 
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
   ActivityIndicator,
 } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -83,7 +83,7 @@ function Chatroom({ navigation }) {
                     <HStack space={3}>
                       <Text>가게: {item.store}</Text>
                       <Text>위치: {item.location}</Text>
-                      <Text>모집마감: {leftMinutes(item.endTime)}분 남았습니다.</Text> 
+                      <Text>모집마감: {leftMinutes(item.endTime)}분 남았습니다.</Text>
                     </HStack>
                   </Stack>
                 </View>
@@ -103,15 +103,15 @@ export default function ({ navigation }) {
   const [showAuthModal, setShowAuthModal] = useState(false); // 권한이 있을때의 modal 보여주기
   const [isFinal, setIsFinal] = useState(false); // 채팅방 삭제 최종 확인
 
-  async function deleteChat (props) {
+  async function deleteChat(props) {
     if (user?.uid === props.initialUser) {
       setShowAuthModal(true)
 
       firestore()
-      .collection('Chat')
-      .doc(props._id)
-      .delete()
-      
+        .collection('Chat')
+        .doc(props._id)
+        .delete()
+
       navigation.navigate('같이 배달 리스트')
     } else {
       setShowModal(true)
@@ -143,7 +143,7 @@ export default function ({ navigation }) {
         <StackNav.Screen
           name="새로운 채팅방 만들기"
           component={CreateChat}
-          options={{ 
+          options={{
             headerBackTitleVisible: false,
             headerStyle: {
               backgroundColor: '#BF2A52',
@@ -180,7 +180,7 @@ export default function ({ navigation }) {
           })}
         />
       </StackNav.Navigator>
-      
+
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content minWidth={200} minHeight={200}>
           <Modal.CloseButton />
