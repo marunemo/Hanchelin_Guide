@@ -69,11 +69,16 @@ export default function CreateChat({ route, navigation }) {
           onChangeText={setDelivLocation}
         />
         <Button 
-          bg='grey'
+          bg='white'
           minWidth={230}
           marginTop='3'
-          textAlign="center"
+          variant="outline"
           onPress={() => setModalVisible(true)}
+          _text={{
+            textAlign: 'center',
+            fontSize: 18,
+            color: '#333333'
+          }}
         >
           {endTime.getHours() + " : " + endTime.getMinutes()}
         </Button>
