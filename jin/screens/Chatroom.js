@@ -59,8 +59,8 @@ function Chatroom({ navigation }) {
 
   function leftMinutes(deadLine) {
     const deadSecond = new Date(deadLine.seconds * 1000);
-    const diffTime = new Date(deadSecond - new Date().getTime());
-    return diffTime.getHours() * 60 + diffTime.getMinutes();
+    const currTime = new Date();
+    return (deadSecond.getHours() - currTime.getHours()) * 60 + (deadSecond.getMinutes() - currTime.getMinutes())
   }
 
   return (
