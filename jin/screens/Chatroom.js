@@ -176,14 +176,14 @@ export default function ({ navigation }) {
       </StackNav.Navigator>
       
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-        <Modal.Content minWidth='200' minHeight='200'>
+        <Modal.Content minWidth={200} minHeight={200}>
           <Modal.CloseButton />
           <Modal.Header alignItems='center'>삭제 권한이 없습니다.</Modal.Header>
         </Modal.Content>
       </Modal>
 
       <Modal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)}>
-        <Modal.Content minWidth='200' minHeight='200' alignItems='center'>
+        <Modal.Content minWidth={200} minHeight={200} alignItems='center'>
           <Modal.CloseButton />
           <Modal.Header>채팅이 삭제되었습니다.</Modal.Header>
         </Modal.Content>

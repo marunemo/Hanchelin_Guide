@@ -3,6 +3,7 @@ import { View, StyleSheet, TextInput, TouchableOpacity, Platform } from 'react-n
 import { NativeBaseProvider, Text, Input, Button, Select } from 'native-base'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 export default function CreateChat({ navigation }) {
   const user = auth().currentUser
@@ -72,7 +73,7 @@ export default function CreateChat({ navigation }) {
           placeholder='모집 마감시간'
           onChangeText={(endTime) => setEndTime(parseInt(endTime))}
         />
-        <Button style={styles.button} onPress={handleButtonPress} bg='#468966'>
+        <Button style={styles.button} onPress={handleButtonPress} bg='#BF2A52'>
           <Text style={{ color: 'white', fontWeight: 'bold'}}>채팅방 만들기</Text>
         </Button>
       </View>
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10
   },
   button: {
-    backgroundColor: '#468966',
+    backgroundColor: '#BF2A52',
     textAlign: 'center',
     alignSelf: 'center',
     paddingHorizontal: 40,
