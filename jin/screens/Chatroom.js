@@ -172,13 +172,14 @@ export default function ({ navigation }) {
         />
       </StackNav.Navigator>
       <Modal isOpen={!!showAuthModal} onClose={() => setShowAuthModal(false)}>
-        <Modal.Content minWidth={200} minHeight={200} alignItems='center'>
-          <Modal.CloseButton />
+        <Modal.Content style={styles.modalContent}>
           <Modal.Header>정말로 채팅방을 삭제하시겠습니까?</Modal.Header>
           <Modal.Body>채팅방을 지우면 다시 되돌릴 수 없습니다. 신중히 선택해주세요.</Modal.Body>
           <Modal.Footer>
+            <Button.Group variant="ghost">
             <Button onPress={() => deleteChat(showAuthModal._id)}>예</Button>
             <Button onPress={() => setShowAuthModal(false)}>아니요</Button>
+            </Button.Group>
           </Modal.Footer>
         </Modal.Content>
       </Modal>
@@ -219,5 +220,13 @@ const styles = StyleSheet.create({
     color: '#949494',
     fontSize: 16,
     marginTop: 2
+  },
+  modalContent: {
+    minWidth: 100,
+    maxWidth: 250,
+    minHeight: 100,
+    maxHeight: 250,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
