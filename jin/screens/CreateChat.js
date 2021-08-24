@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, StyleSheet, Platform } from 'react-native';
-import { NativeBaseProvider, Text, Input, Button } from 'native-base';
+import { NativeBaseProvider, Text, Input, Button, useToast } from 'native-base';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function CreateChat({ route, navigation }) {
   const user = auth().currentUser
+  const toast = useToast()
   const [roomName, setRoomName] = useState('') //채팅방 이름
   const [storeName, setStoreName] = useState(route.params?.restName ? route.params.restName : '') //식당이름
   const [delivLocation, setDelivLocation] = useState('') //배달위치
-  const [endTime, setEndTime] = useState(new Date(new Date().getTime() + 10 * 60 * 1000)) //모집 마감시간
-                                                                // 1000 밀리초 * 10초 * 10분 
+  const [endTime, setEndTime] = useState(new Date(new Date().getTime() + 10 * 60 * 1000)) //모집 마감시간 (1000 밀리초 * 10초 * 10분)
   const [modalVisible, setModalVisible] = useState(false)
 
   function handleButtonPress() {
-    if (roomName.length > 0) {
+    const toastSetting = { title: '주의', status: 'error', isClosable: false, style: { width: 320 } }
+    
+    if (roomName === '') {
+      toast.show({ description: '채팅방 이름이 작성되지 않았습니다!', ...toastSetting })
+    } else if (storeName === '') {
+      toast.show({ description: '식당 이름이 작성되지 않았습니다!', ...toastSetting })
+    } else if (delivLocation === '') {
+      toast.show({ description: '배달 위치가 정해지지 않았습니다!', ...toastSetting })
+    } else if ((endTime - new Date()) < 0) {
+      toast.show({ description: '마감 시간이 현재 시간보다 전에 있습니다!', ...toastSetting })
+    } else {
       firestore()
         .collection('Chat')
         .add({
