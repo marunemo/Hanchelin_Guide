@@ -40,7 +40,7 @@ export default function App() {
     return (
       <Fragment>
         <SafeAreaView style={{ flex: 0, backgroundColor: '#BF2A52' }} />
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#fefefe' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#efefef' }}>
           <StatusBar barStyle="light-content" />
           <NavigationContainer>
             <BTab.Navigator
@@ -57,13 +57,14 @@ export default function App() {
                   } else {
                     iconColor = '#aaa';
                   }
-                  return <Icon name={iconName} size={24} color={iconColor} />;
+                  return <Icon name={iconName} size={20} color={iconColor} />;
                 },
                 tabBarActiveTintColor: '#BF2A52',
                 tabBarInactiveTintColor: '#aaa',
-                tabBarActiveBackgroundColor: '#fefefe',
-                tabBarInactiveBackgroundColor: '#fefefe',
-                tabBatShowLabel: true
+                tabBarActiveBackgroundColor: '#efefef',
+                tabBarInactiveBackgroundColor: '#efefef',
+                tabBatShowLabel: true,
+                tabBarStyle: { borderTopWidth: 0 }
               })}>
               <BTab.Screen
                 name='식당'
