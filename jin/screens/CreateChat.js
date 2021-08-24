@@ -90,7 +90,8 @@ export default function CreateChat({ route, navigation }) {
             color: '#333333'
           }}
         >
-          {endTime.getHours() + " : " + endTime.getMinutes()}
+          {(endTime.getHours() < 10 ? '0' : '') + endTime.getHours() + " : " +
+           (endTime.getMinutes() < 10 ? '0' : '') + endTime.getMinutes()}
         </Button>
         <DateTimePickerModal
           mode="time"
