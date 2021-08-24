@@ -8,7 +8,7 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 export default function CreateChat({ route, navigation }) {
   const user = auth().currentUser
   const [roomName, setRoomName] = useState('기본 채팅방') //채팅방 이름
-  const [storeName, setStoreName] = useState(route.params?.restName ? route.params.restName : '기본 식당이름') //식당이름
+  const [storeName, setStoreName] = useState(route.params?.restName ? route.params.restName : '') //식당이름
   const [delivLocation, setDelivLocation] = useState('기본 배달위치') //배달위치
   const [endTime, setEndTime] = useState(0) //모집 마감시간
 
@@ -49,6 +49,7 @@ export default function CreateChat({ route, navigation }) {
           minWidth={230}
           marginTop='3'
           placeholder='식당 이름'
+          value={storeName}
           onChangeText={itemValue => setStoreName(itemValue)}
         />
         <Input
