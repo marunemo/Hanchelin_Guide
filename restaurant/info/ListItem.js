@@ -71,10 +71,28 @@ const RestComponent = (props) => {
   }
 
   const [tog, setTog] = useState(false);
+  const screenWidth = Dimensions.get('window').width;
   const navigation = useNavigation();
   return (
     <>
-      <Animated.View style={style.mapContainter(props.scrollAnimation, Dimensions.get('window').width)}>
+      <Animated.View style={{
+          width: screenWidth,
+          height: screenWidth,
+          transform: [
+            {
+              translateY: props.scrollAnimation.interpolate({
+                inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
+                outputRange: [-screenWidth / 2, 0, screenWidth * 0.75, screenWidth * 0.75],
+              }),
+            },
+            {
+              scale: props.scrollAnimation.interpolate({
+                inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
+                outputRange: [2, 1, 0.5, 0.5],
+              }),
+            },
+          ]
+        }}>
         <MapView
           restName={restData['official_name']}
           position={{ latitude: restData['y'], longitude: restData['x'] }}
@@ -306,11 +324,6 @@ const style = StyleSheet.create({
     flexDirection: 'row-reverse',
     marginVertical: 10
   },
-  mapContainter: (scrollA, screenWidth) => ({
-    width: screenWidth,
-    height: screenWidth,
-    top: scrollA
-  }),
   mapView: {
     width: '100%',
     aspectRatio: 1,
