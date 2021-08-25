@@ -154,7 +154,14 @@ class Home extends Component {
               )}
             </VStack>
           </ScrollView>
-          {this.state.barVisible && <Box backgroundColor="#fff" width="100%">
+          {this.state.barVisible && <Box
+            backgroundColor="#efefef"
+            width="100%"
+            style={{
+              borderTopEndRadius: 15,
+              borderTopStartRadius: 15
+            }}
+          >
             <VStack
               alignItems="flex-end"
               space={2}
