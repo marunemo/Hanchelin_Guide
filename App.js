@@ -61,6 +61,9 @@ export default function App() {
                     return <Icon name={iconName} size={16} color="#aaa" />;
                   }
                 },
+                tabBarStyle: {
+                  height: '8%'
+                },
                 tabBarActiveBackgroundColor: '#efefef',
                 tabBarInactiveBackgroundColor: '#efefef',
                 tabBarHideOnKeyboard: true
