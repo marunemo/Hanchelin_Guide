@@ -63,6 +63,7 @@ export default function CreateChat({ route, navigation }) {
           minWidth={230}
           marginTop='3'
           placeholder='식당 이름'
+          returnKeyType='done'
           value={storeName}
           onChangeText={setStoreName}
         />
@@ -70,6 +71,7 @@ export default function CreateChat({ route, navigation }) {
           bg='white'
           minWidth={230}
           marginTop='3'
+          returnKeyType='done'
           placeholder='채팅방 이름'
           onChangeText={setRoomName}
         />
@@ -77,6 +79,7 @@ export default function CreateChat({ route, navigation }) {
           bg='white'
           minWidth={230}
           marginTop='3'
+          returnKeyType='done'
           placeholder='배달 위치'
           onChangeText={setDelivLocation}
         />
