@@ -182,7 +182,7 @@ const RestaurantInfo = (props) => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    setTimeout(() => setRefreshing(false), 2000);
+    setTimeout(() => setRefreshing(false), 1000);
   }, []);
 
   useEffect(() => {
