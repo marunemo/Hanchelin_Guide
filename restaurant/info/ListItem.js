@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Text, View, ScrollView, SafeAreaView, RefreshControl, StyleSheet } from 'react-native';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Text, View, SafeAreaView, RefreshControl, StyleSheet, Animated, Dimensions } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import { Rating } from 'react-native-ratings';
 import { NativeBaseProvider, HStack, Center, Button } from 'native-base';
@@ -74,10 +74,12 @@ const RestComponent = (props) => {
   const navigation = useNavigation();
   return (
     <>
-      <MapView
-        restName={restData['official_name']}
-        position={{ latitude: restData['y'], longitude: restData['x'] }}
-      />
+      <Animated.View style={style.mapContainter(props.scrollAnimation, Dimensions.get('window').width)}>
+        <MapView
+          restName={restData['official_name']}
+          position={{ latitude: restData['y'], longitude: restData['x'] }}
+        />
+      </Animated.View>
       <View style={style.partition}>
         <View style={[style.partitionPadding, { marginBottom: 15 }]}>
           <Rating
@@ -174,11 +176,11 @@ const RestComponent = (props) => {
 }
 
 const RestaurantInfo = (props) => {
+  const scrollAnimation = useRef(new Animated.Value(0)).current;
   const [refreshing, setRefreshing] = useState(false);
   const [restData, setData] = useState({});
   let restDir = '/식당/' + props.restId;
   const restRef = database().ref(restDir);
-
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -223,7 +225,12 @@ const RestaurantInfo = (props) => {
   return (
     <SafeAreaView style={style.containter}>
       <NativeBaseProvider>
-        <ScrollView
+        <Animated.ScrollView
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollAnimation } } }],
+            {useNativeDriver:false}
+          )}
+          scrollEventThrottle={16}
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
@@ -234,8 +241,9 @@ const RestaurantInfo = (props) => {
           <RestComponent
             restData={restData}
             onPop={(id, query) => removeComment(id, query)}
+            scrollAnimation={scrollAnimation}
           />
-        </ScrollView>
+        </Animated.ScrollView>
         <CommentButton
           restaurantData={restData}
           commentsDir={restDir}
@@ -298,6 +306,11 @@ const style = StyleSheet.create({
     flexDirection: 'row-reverse',
     marginVertical: 10
   },
+  mapContainter: (scrollA, screenWidth) => ({
+    width: screenWidth,
+    height: screenWidth,
+    top: scrollA
+  }),
   mapView: {
     width: '100%',
     aspectRatio: 1,
