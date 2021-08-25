@@ -45,8 +45,8 @@ export default function App() {
           <NavigationContainer>
             <BTab.Navigator
               screenOptions={({ route }) => ({
-                tabBarLabel: ({focused}) => {
-                  return <Text style={focused?styles.focusLabel:styles.unfocusLabel}>{route.name}</Text>
+                tabBarLabel: ({ focused }) => {
+                  return <Text style={focused ? styles.focusLabel : styles.unfocusLabel}>{route.name}</Text>
                 },
                 tabBarIcon: ({ focused }) => {
                   let iconName;
