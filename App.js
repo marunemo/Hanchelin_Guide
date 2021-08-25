@@ -63,6 +63,7 @@ export default function App() {
                 },
                 tabBarActiveBackgroundColor: '#efefef',
                 tabBarInactiveBackgroundColor: '#efefef',
+                tabBarHideOnKeyboard: true
               })}>
               <BTab.Screen
                 name='식당'
