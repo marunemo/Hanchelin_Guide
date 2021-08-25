@@ -72,23 +72,10 @@ const RestComponent = (props) => {
   }
 
   const [tog, setTog] = useState(false);
-  const screenWidth = Dimensions.get('window').width;
   const navigation = useNavigation();
   return (
     <>
-      <Animated.View style={{
-          width: screenWidth,
-          height: screenWidth,
-          overflow: 'hidden',
-          transform: [
-            {
-              translateY: props.scrollAnimation.interpolate({
-                inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
-                outputRange: [-screenWidth * 0.3, 0, screenWidth * 0.8, screenWidth * 0.8],
-              }),
-            }
-          ]
-        }}>
+      <Animated.View style={props.scrollAnimation}>
         <MapView
           restName={restData['official_name']}
           position={{ latitude: restData['y'], longitude: restData['x'] }}
@@ -190,7 +177,7 @@ const RestComponent = (props) => {
 }
 
 const RestaurantInfo = (props) => {
-  const scrollAnimation = useRef(new Animated.Value(0)).current;
+  const animatedScroll = useRef(new Animated.Value(0)).current;
   const [refreshing, setRefreshing] = useState(false);
   const [restData, setData] = useState({});
   let restDir = '/식당/' + props.restId;
@@ -235,13 +222,27 @@ const RestaurantInfo = (props) => {
       }
     });
   }
+  
+  const scrollAnimation = (animatedScroll, screenWidth) => {
+    return ({
+      width: screenWidth,
+      height: screenWidth,
+      overflow: 'hidden',
+      transform: [{
+        translateY: animatedScroll.interpolate({
+          inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
+          outputRange: [-screenWidth * 0.3, 0, screenWidth * 0.8, screenWidth * 0.8],
+        })
+      }]
+    })
+  }
 
   return (
     <SafeAreaView style={style.containter}>
       <NativeBaseProvider>
         <Animated.ScrollView
           onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollAnimation } } }],
+            [{ nativeEvent: { contentOffset: { y: animatedScroll } } }],
             {useNativeDriver:false}
           )}
           scrollEventThrottle={16}
@@ -255,7 +256,7 @@ const RestaurantInfo = (props) => {
           <RestComponent
             restData={restData}
             onPop={(id, query) => removeComment(id, query)}
-            scrollAnimation={scrollAnimation}
+            scrollAnimation={scrollAnimation(animatedScroll, Dimensions.get('window').width)}
           />
         </Animated.ScrollView>
         <CommentButton
