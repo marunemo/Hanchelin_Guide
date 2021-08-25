@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Text, View, SafeAreaView, RefreshControl, StyleSheet, Animated, Dimensions } from 'react-native';
+import { Text, View, SafeAreaView, RefreshControl, StyleSheet, Dimensions } from 'react-native';
+import Animated from 'react-native-reanimated';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import { Rating } from 'react-native-ratings';
 import { NativeBaseProvider, HStack, Center, Button } from 'native-base';
@@ -78,6 +79,7 @@ const RestComponent = (props) => {
       <Animated.View style={{
           width: screenWidth,
           height: screenWidth,
+          overflow: 'hidden',
           transform: [
             {
               translateY: props.scrollAnimation.interpolate({
