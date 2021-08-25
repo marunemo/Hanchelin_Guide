@@ -84,7 +84,7 @@ const RestComponent = (props) => {
             {
               translateY: props.scrollAnimation.interpolate({
                 inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
-                outputRange: [-screenWidth / 2, 0, screenWidth * 0.75, screenWidth * 0.75],
+                outputRange: [-screenWidth * 0.3, 0, screenWidth * 0.8, screenWidth * 0.8],
               }),
             }
           ]
