@@ -86,13 +86,7 @@ const RestComponent = (props) => {
                 inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
                 outputRange: [-screenWidth / 2, 0, screenWidth * 0.75, screenWidth * 0.75],
               }),
-            },
-            {
-              scale: props.scrollAnimation.interpolate({
-                inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
-                outputRange: [2, 1, 0.5, 0.5],
-              }),
-            },
+            }
           ]
         }}>
         <MapView
