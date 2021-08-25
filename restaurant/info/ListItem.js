@@ -102,7 +102,9 @@ const RestComponent = (props) => {
         </View>
         <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
-            <Button style={style.optionButton} onPress={() => navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기" })}>
+            <Button style={style.optionButton} onPress={() => {
+              navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기", params: { restName: restData['official_name'] } });
+            }}>
               <Font style={{ textAlign: "center" }} name="wechat" size={30} color="#4c1d95" />
               <Text style={{ textAlign: "center", marginTop: 5 }}>같이배달</Text>
             </Button>

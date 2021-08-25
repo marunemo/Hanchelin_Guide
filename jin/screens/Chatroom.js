@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  Image,  
-  ScrollView, 
-  TextInput, 
-  TouchableOpacity, 
-  FlatList, 
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
   ActivityIndicator,
 } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Divider, NativeBaseProvider, Stack, HStack, Modal, Button, } from 'native-base';
+import { Divider, NativeBaseProvider, Stack, HStack, Modal, Button } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import auth, { firebase } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import Authentication from './Authentication';
@@ -57,6 +54,12 @@ function Chatroom({ navigation }) {
     return <ActivityIndicator />
   }
 
+  function leftMinutes(deadLine) {
+    const deadSecond = new Date(deadLine.seconds * 1000);
+    const currTime = new Date();
+    return (deadSecond.getHours() - currTime.getHours()) * 60 + (deadSecond.getMinutes() - currTime.getMinutes())
+  }
+
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
@@ -77,7 +80,7 @@ function Chatroom({ navigation }) {
                     <HStack space={3}>
                       <Text>가게: {item.store}</Text>
                       <Text>위치: {item.location}</Text>
-                      <Text>모집마감: {item.endTime}</Text> 
+                      <Text>모집마감: {leftMinutes(item.endTime)}분 남았습니다.</Text>
                     </HStack>
                   </Stack>
                 </View>
@@ -93,23 +96,16 @@ function Chatroom({ navigation }) {
 
 export default function ({ navigation }) {
   const user = auth().currentUser;
-  const [showModal, setShowModal] = useState(false); // 권한이 없을때의 modal 보여주기
-  const [showAuthModal, setShowAuthModal] = useState(false); // 권한이 있을때의 modal 보여주기
-  const [isFinal, setIsFinal] = useState(false); // 채팅방 삭제 최종 확인
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
-  async function deleteChat (props) {
-    if (user?.uid === props.initialUser) {
-      setShowAuthModal(true)
-
-      firestore()
+  function deleteChat(id) {
+    firestore()
       .collection('Chat')
-      .doc(props._id)
-      .delete()
-      
-      navigation.navigate('같이 배달 리스트')
-    } else {
-      setShowModal(true)
-    }
+      .doc(id)
+      .delete().then(() => {
+        setShowAuthModal(false);
+        navigation.navigate('같이 배달 리스트');
+      })
   }
 
   return (
@@ -124,6 +120,7 @@ export default function ({ navigation }) {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
+            headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
@@ -136,16 +133,18 @@ export default function ({ navigation }) {
         <StackNav.Screen
           name="새로운 채팅방 만들기"
           component={CreateChat}
-          options={{ 
+          options={{
             headerBackTitleVisible: false,
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
+            headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
             },
+            animation: 'slide_from_right'
           }} />
         <StackNav.Screen
           name="메시지"
@@ -157,30 +156,31 @@ export default function ({ navigation }) {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
+            headerTitleAlign: 'center',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
             },
+            animation: 'fade_from_bottom',
             headerRight: () => (
-              <Icon name="times" size={24} color="#f2f2f2"
-                onPress={() => deleteChat(route.params.thread)}
+              (user?.uid === route.params.thread.initialUser) &&
+              <Icon name="trash" size={24} color="#f2f2f2"
+                onPress={() => setShowAuthModal(route.params.thread)}
               />
             )
           })}
         />
       </StackNav.Navigator>
-      
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-        <Modal.Content minWidth='200' minHeight='200'>
-          <Modal.CloseButton />
-          <Modal.Header alignItems='center'>삭제 권한이 없습니다.</Modal.Header>
-        </Modal.Content>
-      </Modal>
-
-      <Modal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)}>
-        <Modal.Content minWidth='200' minHeight='200' alignItems='center'>
-          <Modal.CloseButton />
-          <Modal.Header>채팅이 삭제되었습니다.</Modal.Header>
+      <Modal isOpen={!!showAuthModal} onClose={() => setShowAuthModal(false)}>
+        <Modal.Content style={styles.modalContent}>
+          <Modal.Header>정말로 채팅방을 삭제하시겠습니까?</Modal.Header>
+          <Modal.Body>채팅방을 지우면 다시 되돌릴 수 없습니다. 신중히 선택해주세요.</Modal.Body>
+          <Modal.Footer>
+            <Button.Group variant="ghost">
+            <Button onPress={() => deleteChat(showAuthModal._id)}>예</Button>
+            <Button onPress={() => setShowAuthModal(false)}>아니요</Button>
+            </Button.Group>
+          </Modal.Footer>
         </Modal.Content>
       </Modal>
     </NativeBaseProvider>
@@ -220,5 +220,13 @@ const styles = StyleSheet.create({
     color: '#949494',
     fontSize: 16,
     marginTop: 2
+  },
+  modalContent: {
+    minWidth: 100,
+    maxWidth: 250,
+    minHeight: 100,
+    maxHeight: 250,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })

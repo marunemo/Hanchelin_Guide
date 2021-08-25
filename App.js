@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
+import { SafeAreaView, StatusBar, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -45,26 +45,24 @@ export default function App() {
           <NavigationContainer>
             <BTab.Navigator
               screenOptions={({ route }) => ({
+                tabBarLabel: ({focused}) => {
+                  return <Text style={focused?styles.focusLabel:styles.unfocusLabel}>{route.name}</Text>
+                },
                 tabBarIcon: ({ focused }) => {
-                  let iconName, iconColor;
+                  let iconName;
                   if (route.name == '식당') {
                     iconName = 'cutlery';
                   } else if (route.name == '같이 배달') {
                     iconName = 'automobile';
                   }
                   if (focused) {
-                    iconColor = '#BF2A52';
+                    return <Icon name={iconName} size={20} color="#BF2A52" />;
                   } else {
-                    iconColor = '#aaa';
+                    return <Icon name={iconName} size={16} color="#aaa" />;
                   }
-                  return <Icon name={iconName} size={20} color={iconColor} />;
                 },
-                tabBarActiveTintColor: '#BF2A52',
-                tabBarInactiveTintColor: '#aaa',
                 tabBarActiveBackgroundColor: '#efefef',
                 tabBarInactiveBackgroundColor: '#efefef',
-                tabBatShowLabel: true,
-                tabBarStyle: { borderTopWidth: 0 }
               })}>
               <BTab.Screen
                 name='식당'
@@ -84,3 +82,15 @@ export default function App() {
   return <Authentication onGoogleButtonPress={onGoogleButtonPress} />
 
 }
+
+const styles = StyleSheet.create({
+  focusLabel: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#bf2a52'
+  },
+  unfocusLabel: {
+    fontSize: 12,
+    color: '#aaaaaa'
+  }
+})
