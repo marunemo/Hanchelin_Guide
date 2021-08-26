@@ -62,7 +62,10 @@ export default function App() {
                   }
                 },
                 tabBarStyle: {
-                  height: '8%'
+                  height: '8%',
+                  backgroundColor: '#efefef',
+                  paddingTop: 7,
+                  paddingBottom: 7
                 },
                 tabBarActiveBackgroundColor: '#efefef',
                 tabBarInactiveBackgroundColor: '#efefef',
