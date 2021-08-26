@@ -39,7 +39,15 @@ static void InitializeFlipper(UIApplication *application) {
   InitializeFlipper(application);
 #endif
 
-  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+  NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.js" fallbackResource:nil];
+
+  RCTBridge *bridge = [[RCTBridge alloc] initWithBundleURL:jsCodeLocation
+                                                moduleProvider:nil
+                                                launchOptions:launchOptions];
+  #if RCT_DEV
+   [bridge moduleForClass:[RCTDevLoadingView class]];
+  #endif
+
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"Hanchelin_Guide"
                                             initialProperties:nil];
