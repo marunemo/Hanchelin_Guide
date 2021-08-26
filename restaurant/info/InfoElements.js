@@ -48,13 +48,16 @@ const CommentListView = (props) => {
 
 	return (
 		<View style={style.commentsView}>
-			<IconButton
-				alignSelf="flex-end"
-				size="sm"
-				borderRadius="full"
-				onPress={() => props.onPop(id, comment.query)}
-				icon={<Icon name="trash-o" as={Font} size="sm" color="#831843" />}
-			/>
+			{props.user.uid === comment['uid']
+				? <IconButton
+						alignSelf="flex-end"
+						size="sm"
+						borderRadius="full"
+						onPress={() => props.onPop(id, comment.query)}
+						icon={<Icon name="trash-o" as={Font} size="sm" color="#831843" />}
+					/>
+				: <View style={{ marginBottom: 20 }} />
+			}
 			<Text style={style.commentsText}>맛 : {comment['맛']}</Text>
 			<Text style={style.commentsText}>가성비 : {comment['가성비']}</Text>
 			<Text style={style.commentsText}>서비스 : {comment['서비스']}</Text>

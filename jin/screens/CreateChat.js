@@ -1,82 +1,114 @@
-import React, { useState } from 'react'
-import { View, StyleSheet, TextInput, TouchableOpacity, Platform } from 'react-native'
-import { NativeBaseProvider, Text, Input, Button, Select } from 'native-base'
-import auth from '@react-native-firebase/auth'
-import firestore from '@react-native-firebase/firestore'
-import DateTimePicker from '@react-native-community/datetimepicker'
+import React, { useState } from 'react';
+import { KeyboardAvoidingView, StyleSheet, Platform } from 'react-native';
+import { NativeBaseProvider, Text, Input, Button, useToast } from 'native-base';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-export default function CreateChat({ navigation }) {
+export default function CreateChat({ route, navigation }) {
   const user = auth().currentUser
-  const [roomName, setRoomName] = useState('기본 채팅방') //채팅방 이름
-  const [storeName, setStoreName] = useState('기본 식당이름') //식당이름
-  const [delivLocation, setDelivLocation] = useState('기본 배달위치') //배달위치
-  const [endTime, setEndTime] = useState(0) //모집 마감시간
+  const toast = useToast()
+  const [roomName, setRoomName] = useState('') //채팅방 이름
+  const [storeName, setStoreName] = useState(route.params?.restName ? route.params.restName : '') //식당이름
+  const [delivLocation, setDelivLocation] = useState('') //배달위치
+  const [endTime, setEndTime] = useState(new Date(new Date().getTime() + 10 * 60 * 1000)) //모집 마감시간 (1000 밀리초 * 10초 * 10분)
+  const [modalVisible, setModalVisible] = useState(false)
 
   function handleButtonPress() {
-    if (roomName.length > 0) {
+    const toastSetting = { title: '주의', status: 'error', isClosable: false, style: { width: 320 } }
+
+    if (roomName === '') {
+      toast.show({ description: '채팅방 이름이 작성되지 않았습니다!', ...toastSetting })
+    } else if (storeName === '') {
+      toast.show({ description: '식당 이름이 작성되지 않았습니다!', ...toastSetting })
+    } else if (delivLocation === '') {
+      toast.show({ description: '배달 위치가 정해지지 않았습니다!', ...toastSetting })
+    } else if ((endTime - new Date()) < 0) {
+      toast.show({ description: '마감 시간이 현재 시간보다 전에 있습니다!', ...toastSetting })
+    } else {
+      const chatThread = {
+        name: roomName,
+        store: storeName,
+        location: delivLocation,
+        initialUser: user?.uid,
+        latestMessage: {
+          text: roomName + ' 채팅방이 생성되었습니다.',
+          createdAt: new Date().getTime()
+        }
+      }
+
       firestore()
         .collection('Chat')
-        .add({
-            name: roomName,
-            store: storeName,
-            location: delivLocation,
-            endTime: endTime,
-            initialUser: user?.uid,
-            latestMessage: {
-                text: roomName + ' 채팅방이 생성되었습니다.',
-                createdAt: new Date().getTime()
-            }
-        })
+        .add({endTime: endTime, ...chatThread})
         .then(docRef => {
-            docRef.collection('Messages').add({
-                text: roomName + ' 채팅방이 생성되었습니다.',
-                createdAt: new Date().getTime(),
-                system: true,
-            })
-            navigation.navigate('같이 배달 리스트');
+          docRef.collection('Messages').add({
+            text: roomName + ' 채팅방이 생성되었습니다.',
+            createdAt: new Date().getTime(),
+            system: true,
+          })
+          navigation.goBack();
+          navigation.navigate('메시지', { thread: { _id: docRef.id, ...chatThread } });
         })
     }
   }
 
   return (
     <NativeBaseProvider>
-      <View style={styles.container}>
-        <Select 
-          style={styles.select}
-          placeholder='식당 이름'
-          accessibilityLabel='식당 이름'
-          minWidth={230}
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <Input
           bg='white'
-          onValueChange={itemValue => setStoreName(itemValue)}  
-        >
-          <Select.Item label='9월애' value='9월애' />
-          <Select.Item label='호원' value='호원' />
-        </Select>
+          minWidth={230}
+          marginTop='3'
+          placeholder='식당 이름'
+          value={storeName}
+          onChangeText={setStoreName}
+        />
         <Input
           bg='white'
           minWidth={230}
           marginTop='3'
           placeholder='채팅방 이름'
-          onChangeText={roomName => setRoomName(roomName)}
-        />
-        <Input 
-          bg='white'
-          minWidth={230}
-          marginTop='3'
-          placeholder='배달 위치'
-          onChangeText={delivLocation => setDelivLocation(delivLocation)}
+          onChangeText={setRoomName}
         />
         <Input
           bg='white'
           minWidth={230}
           marginTop='3'
-          placeholder='모집 마감시간'
-          onChangeText={(endTime) => setEndTime(parseInt(endTime))}
+          placeholder='배달 위치'
+          onChangeText={setDelivLocation}
+        />
+        <Button
+          bg='white'
+          minWidth={230}
+          marginTop='3'
+          variant="outline"
+          onPress={() => setModalVisible(true)}
+          _text={{
+            textAlign: 'center',
+            fontSize: 18,
+            color: '#333333'
+          }}
+        >
+          {(endTime.getHours() < 10 ? '0' : '') + endTime.getHours() + " : " +
+            (endTime.getMinutes() < 10 ? '0' : '') + endTime.getMinutes()}
+        </Button>
+        <DateTimePickerModal
+          mode="time"
+          date={endTime}
+          isVisible={modalVisible}
+          onConfirm={endTime => {
+            setEndTime(endTime);
+            setModalVisible(false);
+          }}
+          onCancel={() => setModalVisible(false)}
         />
         <Button style={styles.button} onPress={handleButtonPress} bg='#BF2A52'>
-          <Text style={{ color: 'white', fontWeight: 'bold'}}>채팅방 만들기</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold' }}>채팅방 만들기</Text>
         </Button>
-      </View>
+      </KeyboardAvoidingView>
     </NativeBaseProvider>
   )
 }
@@ -93,9 +125,6 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     fontSize: 28,
     fontWeight: '500'
-  },
-  select: {
-    paddingBottom: 10
   },
   button: {
     backgroundColor: '#BF2A52',

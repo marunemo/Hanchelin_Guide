@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
+import { SafeAreaView, StatusBar, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -40,24 +40,29 @@ export default function App() {
     return (
       <Fragment>
         <SafeAreaView style={{ flex: 0, backgroundColor: '#BF2A52' }} />
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#555' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#efefef' }}>
           <StatusBar barStyle="light-content" />
           <NavigationContainer>
             <BTab.Navigator
               screenOptions={({ route }) => ({
-                tabBarIcon: () => {
+                tabBarLabel: ({ focused }) => {
+                  return <Text style={focused ? styles.focusLabel : styles.unfocusLabel}>{route.name}</Text>
+                },
+                tabBarIcon: ({ focused }) => {
                   let iconName;
                   if (route.name == '식당') {
                     iconName = 'cutlery';
                   } else if (route.name == '같이 배달') {
                     iconName = 'automobile';
                   }
-                  return <Icon name={iconName} size={20} color='#f2f2f2' />;
+                  if (focused) {
+                    return <Icon name={iconName} size={20} color="#BF2A52" />;
+                  } else {
+                    return <Icon name={iconName} size={16} color="#aaa" />;
+                  }
                 },
-                tabBarActiveTintColor: '#f2f2f2',
-                tabBarInactiveTintColor: '#f2f2f2',
-                tabBarActiveBackgroundColor: '#555',
-                tabBarInactiveBackgroundColor: '#555',
+                tabBarActiveBackgroundColor: '#efefef',
+                tabBarInactiveBackgroundColor: '#efefef',
               })}>
               <BTab.Screen
                 name='식당'
@@ -77,3 +82,15 @@ export default function App() {
   return <Authentication onGoogleButtonPress={onGoogleButtonPress} />
 
 }
+
+const styles = StyleSheet.create({
+  focusLabel: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#bf2a52'
+  },
+  unfocusLabel: {
+    fontSize: 12,
+    color: '#aaaaaa'
+  }
+})

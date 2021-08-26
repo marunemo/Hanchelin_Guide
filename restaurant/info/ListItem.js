@@ -4,6 +4,7 @@ import NaverMapView, { Marker } from 'react-native-nmap';
 import { Rating } from 'react-native-ratings';
 import { NativeBaseProvider, HStack, Center, Button } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
+import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
@@ -42,12 +43,12 @@ const MapView = (props) => {
 }
 
 const RestComponent = (props) => {
+  const user = auth().currentUser;
   const restData = props.restData;
-  let menu = [];
-  let comments = [];
-
   const menuList = restData['menu'];
   const commentsList = restData['comments'];
+  let menu = [];
+  let comments = [];
 
   if (typeof(menuList) === 'object') {
     for (const [id, order] of Object.entries(menuList)) {
@@ -63,7 +64,7 @@ const RestComponent = (props) => {
     for (const [id, comment] of Object.entries(commentsList)) {
       if (comment != null) {
         comments.push(
-          <CommentListView key={id} id={id} comment={comment} onPop={props.onPop} />
+          <CommentListView key={id} user={user} id={id} comment={comment} onPop={props.onPop} />
         )
       }
     }
@@ -95,15 +96,17 @@ const RestComponent = (props) => {
           </Text>
         </View>
         <View style={style.partitionPadding}>
-          <InfoView icon="location-arrow" value={restData['address']} />
           <InfoView icon="mobile-phone" value={restData['contact']} />
+          <InfoView icon="location-arrow" value={restData['address']} />
           <InfoView icon="clock-o" value={restData['opening_hours']} />
         </View>
-        <HStack style={{ marginTop: 15 }}>
+        <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
-            <Button style={style.optionButton} onPress={() => navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기" })}>
+            <Button style={style.optionButton} onPress={() => {
+              navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기", params: { restName: restData['official_name'] } });
+            }}>
               <Font style={{ textAlign: "center" }} name="wechat" size={30} color="#4c1d95" />
-              <Text style={{ textAlign: "center", marginTop: 5 }}>같이 배달 찾기</Text>
+              <Text style={{ textAlign: "center", marginTop: 5 }}>같이배달</Text>
             </Button>
           </Center>
           <Center style={[style.optionView, style.horizonStack]}>
@@ -112,7 +115,7 @@ const RestComponent = (props) => {
               <Text style={{ textAlign: "center", marginTop: 5 }}>찜하기</Text>
             </Button>
           </Center>
-          <Center style={[style.optionView, style.horizonStack]}>
+          <Center style={[style.optionView, style.horizonStack, { borderRightWidth: 0 }]}>
             <Button style={style.optionButton} onPress={() => setTog(!tog)}>
               <Font style={{ textAlign: "center" }} name="share" size={30} color="#999999" />
               <Text style={{ textAlign: "center", marginTop: 5 }}>??? 공유</Text>
@@ -304,11 +307,11 @@ const style = StyleSheet.create({
   },
   horizonStack: {
     justifyContent: 'center',
-    width: '33.3%',
+    width: '33%',
   },
   optionView: {
     borderColor: '#aaaaaa',
-    borderWidth: 1
+    borderRightWidth : 2
   },
   optionButton: {
     width: '100%',

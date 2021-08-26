@@ -705,8 +705,8 @@ PODS:
     - React
   - react-native-safe-area-context (3.3.0):
     - React-Core
-  - react-native-slider (3.0.3):
-    - React
+  - react-native-slider (4.1.1):
+    - React-Core
   - react-native-webview (11.13.0):
     - React-Core
   - React-perflogger (0.64.2)
@@ -1012,7 +1012,7 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
-  FBReactNativeSpec: 3d5c145ce063a09b0cf91fbf69d27f7e052db852
+  FBReactNativeSpec: 57280c9d63109495908f7d42d8dc0a445cfbea3b
   Firebase: 21ac9f28b09a8bdfc005f34c984fca84e7e8786d
   FirebaseAnalytics: 8f32ae54ad42754f503354782575c4ddfc1425c3
   FirebaseAuth: 223adeeb2262b417532e89bf06a960e3a0a1e9e4
@@ -1048,7 +1048,7 @@ SPEC CHECKSUMS:
   react-native-geolocation-service: 4030de78cdeb93ebef1fdc1971668bea6c0bc59b
   react-native-nmap: cfcc5402746040494c544ea90a6062f49505acdf
   react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
-  react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
+  react-native-slider: 4f759d111693442fa662098fded7304fc98fb720
   react-native-webview: 133a6a5149f963259646e710b4545c67ef35d7c9
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
@@ -1078,4 +1078,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: afec682aa0274d03970f165fd5d5bb950fd8d4d0
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.10.1
