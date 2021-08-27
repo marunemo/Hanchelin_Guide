@@ -61,8 +61,15 @@ export default function App() {
                     return <Icon name={iconName} size={16} color="#aaa" />;
                   }
                 },
+                tabBarStyle: {
+                  height: '8%',
+                  backgroundColor: '#efefef',
+                  paddingTop: 7,
+                  paddingBottom: 7
+                },
                 tabBarActiveBackgroundColor: '#efefef',
                 tabBarInactiveBackgroundColor: '#efefef',
+                tabBarHideOnKeyboard: true
               })}>
               <BTab.Screen
                 name='식당'

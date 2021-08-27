@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Divider, NativeBaseProvider, Stack, HStack, Modal, Button } from 'native-base';
+import { NativeBaseProvider, Stack, HStack, Modal, Button } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -68,26 +68,28 @@ function Chatroom({ navigation }) {
           keyExtractor={item => item._id}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => navigation.navigate('메시지', { thread: item })}>
-              <View style={styles.row}>
-                <View style={styles.content}>
-                  <View style={styles.header}>
+              <View style={styles.listContainer}>
+                <View style={styles.listContent}>
+                  <View style={styles.listHeader}>
                     <Text style={styles.nameText}>{item.name}</Text>
+                    <View style={styles.deadLineView}>
+                      <Text style={styles.deadlineText}>{leftMinutes(item.endTime)}분 남음</Text>
+                    </View>
                   </View>
                   <Text style={styles.contentText}>
                     {item.latestMessage.text != undefined && item.latestMessage.text.slice(0, 90)}
                   </Text>
                   <Stack>
-                    <HStack space={3}>
-                      <Text>가게: {item.store}</Text>
-                      <Text>위치: {item.location}</Text>
-                      <Text>모집마감: {leftMinutes(item.endTime)}분 남았습니다.</Text>
+                    <HStack marginRight={3} alignSelf="flex-end" space={3}>
+                      <Text>가게명: {item.store}</Text>
+                      <Text style={{fontWeight:'bold'}}>|</Text>
+                      <Text>배달 위치: {item.location}</Text>
                     </HStack>
                   </Stack>
                 </View>
               </View>
             </TouchableOpacity>
           )}
-          ItemSeparatorComponent={() => <Divider bg='black' />}
         />
       </View>
     </NativeBaseProvider>
@@ -177,8 +179,8 @@ export default function ({ navigation }) {
           <Modal.Body>채팅방을 지우면 다시 되돌릴 수 없습니다. 신중히 선택해주세요.</Modal.Body>
           <Modal.Footer>
             <Button.Group variant="ghost">
-            <Button onPress={() => deleteChat(showAuthModal._id)}>예</Button>
-            <Button onPress={() => setShowAuthModal(false)}>아니요</Button>
+              <Button onPress={() => deleteChat(showAuthModal._id)}>예</Button>
+              <Button onPress={() => setShowAuthModal(false)}>아니요</Button>
             </Button.Group>
           </Modal.Footer>
         </Modal.Content>
@@ -197,29 +199,40 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '500'
   },
-  row: {
-    paddingRight: 10,
-    paddingLeft: 5,
-    paddingVertical: 5,
-    flexDirection: 'row',
-    alignItems: 'center'
+  listContainer: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    justifyContent: 'center',
+    borderBottomWidth: 2,
+    borderColor: '#999999'
   },
-  content: {
+  listContent: {
     flexShrink: 1
   },
-  header: {
-    flexDirection: 'row'
+  listHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   nameText: {
     fontWeight: '600',
     fontSize: 18,
     color: '#000'
   },
-  dateText: {},
+  deadLineView: {
+    backgroundColor: '#6ee7b7',
+    borderRadius: 10,
+    paddingVertical: 3,
+    paddingHorizontal: 15,
+  },
+  deadlineText: {
+    fontWeight: '500',
+    textAlign: 'center',
+  },
   contentText: {
-    color: '#949494',
+    color: '#777777',
     fontSize: 16,
-    marginTop: 2
+    marginVertical: 6,
+    marginLeft: 5
   },
   modalContent: {
     minWidth: 100,
