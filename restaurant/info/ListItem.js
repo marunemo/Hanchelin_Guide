@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Text, View, SafeAreaView, RefreshControl, StyleSheet, Dimensions } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { Text, View, SafeAreaView, RefreshControl, StyleSheet, Dimensions, Animated } from 'react-native';
+// import Animated from 'react-native-reanimated';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import { Rating } from 'react-native-ratings';
 import { NativeBaseProvider, HStack, Center, Button } from 'native-base';
@@ -19,7 +19,7 @@ const Stack = createNativeStackNavigator();
 
 const MapView = (props) => {
   const navigation = useNavigation();
-  
+
   if (props.position['latitude'] == undefined) {
     return <View style={style.mapView} />;
   }
@@ -51,13 +51,13 @@ const RestComponent = (props) => {
   let menu = [];
   let comments = [];
 
-  if (typeof(menuList) === 'object') {
+  if (typeof (menuList) === 'object') {
     for (const [id, order] of Object.entries(menuList)) {
       menu.push(
         <MenuListView key={id} order={order} />
       )
     }
-  } else if(typeof(menuList) === 'string') {
+  } else if (typeof (menuList) === 'string') {
     menu = <MenuListView order={menuList} />
   }
 
@@ -114,7 +114,7 @@ const RestComponent = (props) => {
           </Center>
           <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => setTog(!tog)}>
-              <Font style={{ textAlign: "center" }} name={tog ? "heart" : "heart-o"} size={30} color="#f15c5c"/>
+              <Font style={{ textAlign: "center" }} name={tog ? "heart" : "heart-o"} size={30} color="#f15c5c" />
               <Text style={{ textAlign: "center", marginTop: 5 }}>찜하기</Text>
             </Button>
           </Center>
@@ -222,7 +222,7 @@ const RestaurantInfo = (props) => {
       }
     });
   }
-  
+
   const scrollAnimation = (animatedScroll, screenWidth) => {
     return ({
       width: screenWidth,
@@ -232,6 +232,12 @@ const RestaurantInfo = (props) => {
         translateY: animatedScroll.interpolate({
           inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
           outputRange: [-screenWidth * 0.3, 0, screenWidth * 0.8, screenWidth * 0.8],
+        }),
+      },
+      {
+        scale: animatedScroll.interpolate({
+          inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
+          outputRange: [1.1, 1, 0.9, 0.9]
         })
       }]
     })
@@ -243,7 +249,7 @@ const RestaurantInfo = (props) => {
         <Animated.ScrollView
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: animatedScroll } } }],
-            {useNativeDriver:false}
+            { useNativeDriver: true }
           )}
           scrollEventThrottle={16}
           refreshControl={
@@ -334,7 +340,7 @@ const style = StyleSheet.create({
   },
   optionView: {
     borderColor: '#aaaaaa',
-    borderRightWidth : 2
+    borderRightWidth: 2
   },
   optionButton: {
     width: '100%',
