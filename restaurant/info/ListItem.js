@@ -232,6 +232,10 @@ const RestaurantInfo = (props) => {
         translateY: animatedScroll.interpolate({
           inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
           outputRange: [-screenWidth * 0.3, 0, screenWidth * 0.8, screenWidth * 0.8],
+        }),
+        scale: animatedScroll.interpolate({
+          inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
+          outputRange: [1.1, 1, 0.9, 0.9]
         })
       }]
     })
