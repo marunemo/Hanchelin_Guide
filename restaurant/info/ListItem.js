@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Text, View, SafeAreaView, RefreshControl, StyleSheet, Dimensions } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { Text, View, SafeAreaView, RefreshControl, StyleSheet, Dimensions, Animated } from 'react-native';
+// import Animated from 'react-native-reanimated';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import { Rating } from 'react-native-ratings';
 import { NativeBaseProvider, HStack, Center, Button } from 'native-base';
@@ -233,6 +233,8 @@ const RestaurantInfo = (props) => {
           inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
           outputRange: [-screenWidth * 0.3, 0, screenWidth * 0.8, screenWidth * 0.8],
         }),
+      },
+      {
         scale: animatedScroll.interpolate({
           inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
           outputRange: [1.1, 1, 0.9, 0.9]
@@ -247,7 +249,7 @@ const RestaurantInfo = (props) => {
         <Animated.ScrollView
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: animatedScroll } } }],
-            {useNativeDriver:false}
+            {useNativeDriver:true}
           )}
           scrollEventThrottle={16}
           refreshControl={
