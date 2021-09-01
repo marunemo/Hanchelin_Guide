@@ -71,7 +71,44 @@ const RestComponent = (props) => {
     }
   }
 
-  const [tog, setTog] = useState(false);
+  
+  let uidArray = [];
+  const [togHeart, setTogHeart] = useState(!uidArray.includes(user?.uid) ? true : false);
+  const [heart, setHeart] = useState(0);
+  let heartRef = firestore().collection('가게').doc(restData['official_name']).collection('찜');
+  let [heartName, setHeartName] = useState('');
+
+  useEffect(() => {
+    heartRef
+      .onSnapshot(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          uidArray = documentSnapshot.get('userId');
+          console.log(uidArray);
+        })
+      })
+  })
+
+  async function addHeart () {
+    if (!uidArray.includes(user?.uid)) {
+      setHeart(heart + 1)
+
+      heartRef.doc('정보').set({
+        찜: firestore.FieldValue.increment(1),
+        userId: firestore.FieldValue.arrayUnion(user?.uid),
+      }, { merge: true })
+    } else {
+      setHeart(heart - 1)
+
+      heartRef.doc('정보').set({
+        찜: firestore.FieldValue.increment(-1),
+        userId: firestore.FieldValue.arrayRemove(user?.uid),
+      }, { merge: true })
+    }
+    
+    setHeart(heart)
+    setTogHeart(togHeart)
+  }
+
   const navigation = useNavigation();
   return (
     <>
@@ -113,8 +150,8 @@ const RestComponent = (props) => {
             </Button>
           </Center>
           <Center style={[style.optionView, style.horizonStack]}>
-            <Button style={style.optionButton} onPress={() => setTog(!tog)}>
-              <Font style={{ textAlign: "center" }} name={tog ? "heart" : "heart-o"} size={30} color="#f15c5c"/>
+            <Button style={style.optionButton} onPress={addHeart}>
+              <Font style={{ textAlign: "center" }} name={togHeart ? "heart" : "heart-o"} size={30} color="#f15c5c"/>
               <Text style={{ textAlign: "center", marginTop: 5 }}>찜하기</Text>
             </Button>
           </Center>
@@ -194,7 +231,7 @@ const RestaurantInfo = (props) => {
         setData(data.val());
       }
     });
-    console.log(refreshing)
+    //console.log(refreshing)
   }, [refreshing]);
 
   async function removeComment(commentId, queryId) {

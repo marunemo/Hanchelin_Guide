@@ -50,16 +50,18 @@ export default function Profile (props) {
         });
 
       firestore()
-      .collection('store')
-      .where('heart', 'array-contains', user?.uid)
+      .collectionGroup('찜')
+      .where('userId', 'array-contains', user?.uid)
       .onSnapshot(querySnapshot => {
         let store = []
 
         querySnapshot.forEach(documentSnapshot => {
           const item = documentSnapshot.data();
+          let storeName = documentSnapshot.ref.parent.parent.id
+
           store.push(
             <View style={styles.content} key={documentSnapshot.id}>
-              <Text>가게 이름 : {item.name}</Text>
+              <Text>{storeName}</Text>
             </View>
           );
         });
