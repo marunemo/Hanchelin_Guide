@@ -16,7 +16,7 @@ export default class CustomText extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  fontText : {
-    fontStyle: 'italic'
+  fontText: {
+    fontFamily: 'ELAND 초이스 M'
   }
 });
