@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Text, View, SafeAreaView, RefreshControl, StyleSheet, Dimensions, Animated } from 'react-native';
+import { View, SafeAreaView, RefreshControl, StyleSheet, Dimensions, Animated } from 'react-native';
+import Text from '../../defaultSetting/FontText';
 // import Animated from 'react-native-reanimated';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import { Rating } from 'react-native-ratings';

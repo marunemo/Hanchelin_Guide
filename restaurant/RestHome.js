@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import {
-  Text,
   Box,
   Image,
   Center,
@@ -16,6 +15,7 @@ import {
   Select,
   CheckIcon,
 } from "native-base";
+import Text from '../defaultSetting/FontText';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import HeaderClassicSearchBar from "../lib/src/HeaderClassicSearchBar/HeaderClassicSearchBar";
 import database from '@react-native-firebase/database';

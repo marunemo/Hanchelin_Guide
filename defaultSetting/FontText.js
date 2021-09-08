@@ -8,7 +8,7 @@ export default class CustomText extends React.Component {
 
   render() {
     return (
-      <Text style={[styles.defaultStyle, this.props.style]}>
+      <Text style={[styles.fontText, this.props.style]}>
         {this.props.children}
       </Text>
     );
@@ -17,6 +17,6 @@ export default class CustomText extends React.Component {
 
 const styles = StyleSheet.create({
   fontText : {
-    fontFamily : 'fantasy'
+    fontStyle: 'italic'
   }
 });
