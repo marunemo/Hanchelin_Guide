@@ -73,7 +73,7 @@ class RestaurantItem extends Component {
             size="md"
           />
           <VStack space={1} style={{ flex: 5 }}>
-            <Text bold>{item.name}</Text>
+            <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
             <Text>{item.category}</Text>
             <Text>{item.dong}</Text>
           </VStack>
@@ -244,6 +244,7 @@ export default function App({ navigation }) {
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
+              fontFamily: 'ELAND 초이스 M'
             },
             headerRight: () => (
               <Icon
@@ -269,6 +270,7 @@ export default function App({ navigation }) {
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
+              fontFamily: 'ELAND 초이스 M'
             },
             animation: 'fade_from_bottom'
           })}
@@ -286,6 +288,7 @@ export default function App({ navigation }) {
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
+              fontFamily: 'ELAND 초이스 M'
             },
             animation: 'slide_from_right'
           }}
