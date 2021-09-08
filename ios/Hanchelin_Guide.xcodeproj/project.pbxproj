@@ -14,8 +14,8 @@
 		2A050E088830A97948D4ABBE /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 804630251A2AB5259F8887C0 /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a */; };
 		3D1ADC953BB868FC99B33C78 /* libPods-Hanchelin_Guide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B32DD365C3680CC0E896679C /* libPods-Hanchelin_Guide.a */; };
 		506F603B26E5059D00250BED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 506F603A26E5057700250BED /* GoogleService-Info.plist */; };
-		50B3792926E90EFA004A18E5 /* ELANDchoiceM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50B3792826E90EFA004A18E5 /* ELANDchoiceM.ttf */; };
-		50B3792D26E91BFE004A18E5 /* ELANDchoiceB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50B3792C26E91AB3004A18E5 /* ELANDchoiceB.ttf */; };
+		50B3793026E922F2004A18E5 /* ELANDChoiceM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50B3792E26E922CB004A18E5 /* ELANDChoiceM.ttf */; };
+		50B3793126E922F2004A18E5 /* ELANDChoiceB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50B3792F26E922CB004A18E5 /* ELANDChoiceB.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -46,8 +46,8 @@
 		4D8583F1E529461DAD23E993 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		503C0A1426BEAD5500D4665E /* Hanchelin_Guide-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hanchelin_Guide-Bridging-Header.h"; sourceTree = "<group>"; };
 		506F603A26E5057700250BED /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		50B3792826E90EFA004A18E5 /* ELANDchoiceM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ELANDchoiceM.ttf; path = Fonts/ELANDchoiceM.ttf; sourceTree = "<group>"; };
-		50B3792C26E91AB3004A18E5 /* ELANDchoiceB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ELANDchoiceB.ttf; path = Fonts/ELANDchoiceB.ttf; sourceTree = "<group>"; };
+		50B3792E26E922CB004A18E5 /* ELANDChoiceM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ELANDChoiceM.ttf; path = Fonts/ELANDChoiceM.ttf; sourceTree = "<group>"; };
+		50B3792F26E922CB004A18E5 /* ELANDChoiceB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ELANDChoiceB.ttf; path = Fonts/ELANDChoiceB.ttf; sourceTree = "<group>"; };
 		53D3C237EAD356C0470A41AF /* Pods-Hanchelin_Guide-Hanchelin_GuideTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hanchelin_Guide-Hanchelin_GuideTests.release.xcconfig"; path = "Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests.release.xcconfig"; sourceTree = "<group>"; };
 		6C5BFD49D57D438B9FD955F7 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		70BF5D21F8A24154B8541526 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
@@ -122,8 +122,8 @@
 		24E4F48177504405A4C6DCAC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				50B3792826E90EFA004A18E5 /* ELANDchoiceM.ttf */,
-				50B3792C26E91AB3004A18E5 /* ELANDchoiceB.ttf */,
+				50B3792E26E922CB004A18E5 /* ELANDChoiceM.ttf */,
+				50B3792F26E922CB004A18E5 /* ELANDChoiceB.ttf */,
 				70BF5D21F8A24154B8541526 /* AntDesign.ttf */,
 				C98E283B0B7945BABB4135A2 /* Entypo.ttf */,
 				9037E0FC094B4724A94BCC66 /* EvilIcons.ttf */,
@@ -294,8 +294,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50B3792D26E91BFE004A18E5 /* ELANDchoiceB.ttf in Resources */,
-				50B3792926E90EFA004A18E5 /* ELANDchoiceM.ttf in Resources */,
+				50B3793026E922F2004A18E5 /* ELANDChoiceM.ttf in Resources */,
+				50B3793126E922F2004A18E5 /* ELANDChoiceB.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				506F603B26E5059D00250BED /* GoogleService-Info.plist in Resources */,

@@ -20,9 +20,9 @@ export default class CustomText extends React.Component {
 
 const styles = StyleSheet.create({
   fontText: {
-    fontFamily: 'ELANDchoiceM'
+    fontFamily: 'ELANDChoiceM'
   },
   boldFontText: {
-    fontFamily: 'ELANDchoiceB'
+    fontFamily: 'ELANDChoiceB'
   }
 });
