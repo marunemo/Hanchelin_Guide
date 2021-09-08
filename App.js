@@ -94,9 +94,8 @@ export default function App() {
 const styles = StyleSheet.create({
   focusLabel: {
     fontSize: 14,
-    fontWeight: 'bold',
     color: '#bf2a52',
-    fontFamily: 'ELANDchoiceM'
+    fontFamily: 'ELANDChoiceB',
   },
   unfocusLabel: {
     fontSize: 12,

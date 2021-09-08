@@ -242,7 +242,7 @@ export default function App({ navigation }) {
             headerTintColor: '#f5f5f5',
             headerTitleAlign: 'center',
             headerTitleStyle: {
-              fontFamily: 'ELANDchoiceB',
+              fontFamily: 'ELANDChoiceB',
               fontSize: 20,
             },
             headerRight: () => (
@@ -267,7 +267,7 @@ export default function App({ navigation }) {
             headerTintColor: '#f5f5f5',
             headerTitleAlign: 'center',
             headerTitleStyle: {
-              fontFamily: 'ELANDchoiceB',
+              fontFamily: 'ELANDChoiceB',
               fontSize: 20,
             },
             animation: 'fade_from_bottom'
@@ -284,7 +284,7 @@ export default function App({ navigation }) {
             headerTintColor: '#f5f5f5',
             headerTitleAlign: 'center',
             headerTitleStyle: {
-              fontFamily: 'ELANDchoiceB',
+              fontFamily: 'ELANDChoiceB',
               fontSize: 20,
             },
             animation: 'slide_from_right'
