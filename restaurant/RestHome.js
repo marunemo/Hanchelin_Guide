@@ -242,9 +242,8 @@ export default function App({ navigation }) {
             headerTintColor: '#f5f5f5',
             headerTitleAlign: 'center',
             headerTitleStyle: {
-              fontWeight: 'bold',
+              fontFamily: 'ELANDchoiceB',
               fontSize: 20,
-              fontFamily: 'ELANDchoiceM'
             },
             headerRight: () => (
               <Icon
@@ -268,9 +267,8 @@ export default function App({ navigation }) {
             headerTintColor: '#f5f5f5',
             headerTitleAlign: 'center',
             headerTitleStyle: {
-              fontWeight: 'bold',
+              fontFamily: 'ELANDchoiceB',
               fontSize: 20,
-              fontFamily: 'ELANDchoiceM'
             },
             animation: 'fade_from_bottom'
           })}
@@ -286,9 +284,8 @@ export default function App({ navigation }) {
             headerTintColor: '#f5f5f5',
             headerTitleAlign: 'center',
             headerTitleStyle: {
-              fontWeight: 'bold',
+              fontFamily: 'ELANDchoiceB',
               fontSize: 20,
-              fontFamily: 'ELANDchoiceM'
             },
             animation: 'slide_from_right'
           }}

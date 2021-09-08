@@ -8,7 +8,10 @@ export default class CustomText extends React.Component {
 
   render() {
     return (
-      <Text style={[styles.fontText, this.props.style]}>
+      <Text style={[
+        this.props.style,
+        (this.props.style?.fontWeight == 'bold') ? styles.boldFontText : styles.fontText
+      ]}>
         {this.props.children}
       </Text>
     );
@@ -18,5 +21,8 @@ export default class CustomText extends React.Component {
 const styles = StyleSheet.create({
   fontText: {
     fontFamily: 'ELANDchoiceM'
+  },
+  boldFontText: {
+    fontFamily: 'ELANDchoiceB'
   }
 });
