@@ -17,6 +17,6 @@ export default class CustomText extends React.Component {
 
 const styles = StyleSheet.create({
   fontText: {
-    fontFamily: 'ELAND 초이스 M'
+    fontFamily: 'ELANDchoiceM'
   }
 });

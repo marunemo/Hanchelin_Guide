@@ -244,7 +244,7 @@ export default function App({ navigation }) {
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
-              fontFamily: 'ELAND 초이스 M'
+              fontFamily: 'ELANDchoiceM'
             },
             headerRight: () => (
               <Icon
@@ -270,7 +270,7 @@ export default function App({ navigation }) {
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
-              fontFamily: 'ELAND 초이스 M'
+              fontFamily: 'ELANDchoiceM'
             },
             animation: 'fade_from_bottom'
           })}
@@ -288,7 +288,7 @@ export default function App({ navigation }) {
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 20,
-              fontFamily: 'ELAND 초이스 M'
+              fontFamily: 'ELANDchoiceM'
             },
             animation: 'slide_from_right'
           }}

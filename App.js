@@ -96,11 +96,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: '#bf2a52',
-    fontFamily: 'ELAND 초이스 M'
+    fontFamily: 'ELANDchoiceM'
   },
   unfocusLabel: {
     fontSize: 12,
     color: '#aaaaaa',
-    fontFamily: 'ELAND 초이스 M'
+    fontFamily: 'ELANDchoiceM'
   }
 })
