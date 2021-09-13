@@ -78,11 +78,34 @@ class RestaurantItem extends Component {
             <Text>{item.dong}</Text>
           </VStack>
           <HStack style={{ flex: 4, alignItems: 'flex-end' }} space={1}>
-            <Icon name="thumbs-up" size={24} color="#30A9DE" />
+            <Image
+              resizeMode="contain"
+              source={require('../images/good.png')}
+              alt="Alternate Text"
+              size="20px"
+              style={{ tintColor: "#333" }}
+              mr={0.5}
+            />
             <Text>{item.likes}</Text>
-            <Icon name="heart" size={24} color="#f15c5c" />
+            <Image
+              resizeMode="contain"
+              source={require('../images/heart.png')}
+              alt="Alternate Text"
+              size="20px"
+              style={{ tintColor: "#333" }}
+              ml={1}
+              mr={0.5}
+            />
             <Text>{item.bookmark_count}</Text>
-            <Icon name="comments" size={24} color="#8b8687" />
+            <Image
+              resizeMode="contain"
+              source={require('../images/comments.png')}
+              alt="Alternate Text"
+              size="20px"
+              style={{ tintColor: "#333" }}
+              ml={1}
+              mr={0.5}
+            />
             <Text>{item.comments_count}</Text>
           </HStack>
         </HStack>
