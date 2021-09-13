@@ -192,6 +192,7 @@ export default function ({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff"
   },
   title: {
     marginTop: 20,
@@ -203,8 +204,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     justifyContent: 'center',
-    borderBottomWidth: 2,
-    borderColor: '#999999'
+    height: 100,
+    borderBottomColor: '#ededed',
+    borderBottomWidth: 0.5,
+    borderRadius: 15
   },
   listContent: {
     flexShrink: 1
@@ -219,12 +222,13 @@ const styles = StyleSheet.create({
     color: '#000'
   },
   deadLineView: {
-    backgroundColor: '#6ee7b7',
+    backgroundColor: '#aaa',
     borderRadius: 10,
     paddingVertical: 3,
     paddingHorizontal: 15,
   },
   deadlineText: {
+    color: '#fff',
     fontWeight: '500',
     textAlign: 'center',
   },

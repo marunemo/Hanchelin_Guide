@@ -83,30 +83,30 @@ class RestaurantItem extends Component {
               source={require('../images/good.png')}
               alt="Alternate Text"
               size="20px"
-              style={{ tintColor: "#333" }}
+              style={{ tintColor: "#555" }}
               mr={0.5}
             />
-            <Text>{item.likes}</Text>
+            <Text color='#555'>{item.likes}</Text>
             <Image
               resizeMode="contain"
               source={require('../images/heart.png')}
               alt="Alternate Text"
               size="20px"
-              style={{ tintColor: "#333" }}
+              style={{ tintColor: "#555" }}
               ml={1}
               mr={0.5}
             />
-            <Text>{item.bookmark_count}</Text>
+            <Text color='#555'>{item.bookmark_count}</Text>
             <Image
               resizeMode="contain"
               source={require('../images/comments.png')}
               alt="Alternate Text"
               size="20px"
-              style={{ tintColor: "#333" }}
+              style={{ tintColor: "#555" }}
               ml={1}
               mr={0.5}
             />
-            <Text>{item.comments_count}</Text>
+            <Text color='#555'>{item.comments_count}</Text>
           </HStack>
         </HStack>
       </TouchableOpacity>
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 110,
     backgroundColor: '#fff',
-    borderBottomColor: '#eee',
+    borderBottomColor: '#ededed',
     borderBottomWidth: 0.5,
     borderRadius: 15
   }
