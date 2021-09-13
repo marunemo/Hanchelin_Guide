@@ -66,7 +66,7 @@ class RestaurantItem extends Component {
       >
         <HStack>
           <Image
-            style={{ flex: 3 }}
+            style={{ flex: 4 }}
             resizeMode="contain"
             source={img_source}
             alt="Alternate Text"
@@ -77,7 +77,7 @@ class RestaurantItem extends Component {
             <Text>{item.category}</Text>
             <Text>{item.dong}</Text>
           </VStack>
-          <HStack style={{ flex: 4, alignItems: 'flex-end' }} space={1}>
+          <HStack style={{ flex: 5, alignItems: 'flex-end' }} space={1}>
             <Image
               resizeMode="contain"
               source={require('../images/good.png')}
