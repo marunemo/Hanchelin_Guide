@@ -132,7 +132,6 @@ class Home extends Component {
     const onChildChange = ref.on("value", snapshot => {
       if (snapshot)
         this.setState({ data: snapshot.val() });
-      // console.log(this.state.data)
     });
     this.setState({ changeListener: onChildChange });
   }
@@ -252,7 +251,6 @@ export default function App({ navigation }) {
           name="식당 리스트"
           component={Home}
           options={{
-            // headerShown: false,
             title: '한슐랭 가이드',
             headerStyle: {
               backgroundColor: '#BF2A52',
