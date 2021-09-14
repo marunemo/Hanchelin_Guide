@@ -235,16 +235,14 @@ export default function App({ navigation }) {
           name="식당 리스트"
           component={Home}
           options={{
-            title: '한슐랭 가이드',
+            headerTitle: () => (
+              <Text style={styles.headerTitle}>한슐랭 가이드</Text>
+            ),
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f5f5f5',
             headerTitleAlign: 'center',
-            headerTitleStyle: {
-              fontFamily: 'ELANDChoiceB',
-              fontSize: 20,
-            },
             headerRight: () => (
               <Icon
                 name="user"
@@ -259,17 +257,15 @@ export default function App({ navigation }) {
           name="식당 정보"
           component={RestInfo}
           options={({ route }) => ({
-            title: route.params.title,
+            headerTitle: () => (
+              <Text style={styles.headerTitle}>{route.params.title}</Text>
+            ),
             headerBackTitleVisible: false,
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f5f5f5',
             headerTitleAlign: 'center',
-            headerTitleStyle: {
-              fontFamily: 'ELANDChoiceB',
-              fontSize: 20,
-            },
             animation: 'fade_from_bottom'
           })}
         />
@@ -277,16 +273,15 @@ export default function App({ navigation }) {
           name="프로필"
           component={Profile}
           options={{
+            headerTitle: () => (
+              <Text style={styles.headerTitle}>프로필</Text>
+            ),
             headerBackTitleVisible: false,
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f5f5f5',
             headerTitleAlign: 'center',
-            headerTitleStyle: {
-              fontFamily: 'ELANDChoiceB',
-              fontSize: 20,
-            },
             animation: 'slide_from_right'
           }}
         />
@@ -304,5 +299,9 @@ const styles = StyleSheet.create({
     borderBottomColor: '#eee',
     borderBottomWidth: 0.5,
     borderRadius: 15
+  },
+  headerTitle: {
+    fontSize: 20,
+    color: '#f5f5f5'
   }
 })
