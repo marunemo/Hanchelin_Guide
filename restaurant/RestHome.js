@@ -73,7 +73,7 @@ class RestaurantItem extends Component {
             size="md"
           />
           <VStack space={1} style={{ flex: 5 }}>
-            <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
+            <Text bold>{item.name}</Text>
             <Text>{item.category}</Text>
             <Text>{item.dong}</Text>
           </VStack>
@@ -236,7 +236,7 @@ export default function App({ navigation }) {
           component={Home}
           options={{
             headerTitle: () => (
-              <Text style={styles.headerTitle}>한슐랭 가이드</Text>
+              <Text style={styles.headerTitle} bold>한슐랭 가이드</Text>
             ),
             headerStyle: {
               backgroundColor: '#BF2A52',
@@ -258,7 +258,7 @@ export default function App({ navigation }) {
           component={RestInfo}
           options={({ route }) => ({
             headerTitle: () => (
-              <Text style={styles.headerTitle}>{route.params.title}</Text>
+              <Text style={styles.headerTitle} bold>{route.params.title}</Text>
             ),
             headerBackTitleVisible: false,
             headerStyle: {
@@ -274,7 +274,7 @@ export default function App({ navigation }) {
           component={Profile}
           options={{
             headerTitle: () => (
-              <Text style={styles.headerTitle}>프로필</Text>
+              <Text style={styles.headerTitle} bold>프로필</Text>
             ),
             headerBackTitleVisible: false,
             headerStyle: {

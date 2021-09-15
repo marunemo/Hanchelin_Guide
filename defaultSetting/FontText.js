@@ -10,9 +10,9 @@ export default class CustomText extends React.Component {
     return (
       <Text style={[
         this.props.style,
-        (this.props.style?.fontWeight == 'bold') ? styles.boldFontText : styles.fontText
+        this.props.bold ? styles.boldFontText : styles.fontText
       ]}>
-        {this.props.children}
+        {this.props.bold ? this.props.children + 'bold' : this.props.children}
       </Text>
     );
   }
