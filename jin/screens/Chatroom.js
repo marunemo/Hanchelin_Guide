@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
 } from 'react-native';
+import Text from '../../defaultSetting/FontText';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NativeBaseProvider, Stack, HStack, Modal, Button } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -82,7 +82,7 @@ function Chatroom({ navigation }) {
                   <Stack>
                     <HStack marginRight={3} alignSelf="flex-end" space={3}>
                       <Text>가게명: {item.store}</Text>
-                      <Text style={{fontWeight:'bold'}}>|</Text>
+                      <Text bold>|</Text>
                       <Text>배달 위치: {item.location}</Text>
                     </HStack>
                   </Stack>
