@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Switch,
   TouchableOpacity,
 } from "react-native";
 import {
@@ -25,6 +24,8 @@ import RestInfo from './info/ListItem';
 import Profile from "../jin/screens/Profile.js";
 
 const KEYS_TO_FILTERS = ['name', 'dong', 'category'];
+//const [headerColor, iconActiveColor, iconInActiveColor] = ["#BF2A52", "#00FF00", "#f5f5f5"];
+const [headerColor, iconActiveColor, iconInActiveColor] = ["#efefef", "#BF2A52", "#bbb"];
 
 class RestaurantItem extends Component {
   constructor(props) {
@@ -80,13 +81,13 @@ class RestaurantItem extends Component {
           <HStack style={{ flex: 5, alignItems: 'flex-end' }} space={1}>
             <Image
               resizeMode="contain"
-              source={require('../images/good.png')}
+              source={require('../images/star.png')}
               alt="Alternate Text"
               size="20px"
               style={{ tintColor: "#555" }}
               mr={0.5}
             />
-            <Text color='#555'>{item.likes}</Text>
+            <Text color='#555'>{item.total}</Text>
             <Image
               resizeMode="contain"
               source={require('../images/heart.png')}
@@ -145,6 +146,7 @@ class Home extends Component {
     this.setState({ sortTerm: term })
     term == "가나다순" && this.setState({ data: this.state.data.sort((a, b) => a.name > b.name) })
     term == "추천순" && this.setState({ data: this.state.data.sort((a, b) => a.likes < b.likes) })
+    term == "별점순" && this.setState({ data: this.state.data.sort((a, b) => a.total < b.total) })
     term == "리뷰많은순" && this.setState({ data: this.state.data.sort((a, b) => a.comments_count < b.comments_count) })
   }
   componentWillUnmount() {
@@ -157,7 +159,7 @@ class Home extends Component {
       .filter(createFilter(this.state.category, 'category'))
     return (
       <NativeBaseProvider>
-        <Box backgroundColor='#efefef'>
+        <Box backgroundColor={headerColor}>
           <HStack
             space={3}
             alignSelf='center'
@@ -210,14 +212,16 @@ class Home extends Component {
             >
               <Select.Item label="가나다순" value="가나다순" />
               <Select.Item label="추천순" value="추천순" />
-              <Select.Item label="리뷰많은순" value="리뷰많은순" />
               <Select.Item label="별점순" value="별점순" />
+              <Select.Item label="리뷰많은순" value="리뷰많은순" />
             </Select>
           </HStack>
         </Box>
-        <Box backgroundColor='#fff'>
+        <Box backgroundColor="#fff">
           <HeaderClassicSearchBar
-            backgroundColor='#efefef'
+            backgroundColor={headerColor}
+            iconActiveColor={iconActiveColor}
+            iconInactiveColor={iconInActiveColor}
             switchValue={this.state.switchValue}
             onChangeText={(term) => { this.searchUpdated(term) }}
             onPress={() => this.setState({ switchValue: !(this.state.switchValue) })}
