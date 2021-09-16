@@ -73,7 +73,7 @@ class RestaurantItem extends Component {
             alt="Alternate Text"
             size="md"
           />
-          <VStack space={1} style={{ flex: 5 }}>
+          <VStack space={1} style={{ flex: 4 }}>
             <Text bold>{item.name}</Text>
             <Text>{item.category}</Text>
             <Text>{item.dong}</Text>
