@@ -22,7 +22,7 @@ const StackNav = createNativeStackNavigator();
 function Chatroom({ navigation }) {
   const [threads, setThreads] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [timer, setTimer] = useState(false);
+  const [timer, setTimer] = useState(new Date().getMinutes());
 
   useEffect(() => {
     const unsubscribe = firestore()
@@ -49,8 +49,9 @@ function Chatroom({ navigation }) {
       })
 
     const refreshTimer = setInterval(() => {
-      setTimer(!timer);
-    }, 60 * 1000);
+      if(new Date().getMinutes() != timer)
+        setTimer(new Date().getMinutes());
+    }, 1000);
 
     return () => {
       unsubscribe();
