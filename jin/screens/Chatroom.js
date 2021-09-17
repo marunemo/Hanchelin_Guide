@@ -22,6 +22,7 @@ const StackNav = createNativeStackNavigator();
 function Chatroom({ navigation }) {
   const [threads, setThreads] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [timer, setTimer] = useState(false);
 
   useEffect(() => {
     const unsubscribe = firestore()
@@ -47,7 +48,14 @@ function Chatroom({ navigation }) {
         }
       })
 
-    return () => unsubscribe();
+    const refreshTimer = setInterval(() => {
+      setTimer(!timer);
+    }, 60 * 1000);
+
+    return () => {
+      unsubscribe();
+      clearInterval(refreshTimer);
+    }
   }, []);
 
   if (loading) {
@@ -66,6 +74,7 @@ function Chatroom({ navigation }) {
         <FlatList
           data={threads}
           keyExtractor={item => item._id}
+          extraData={timer}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => navigation.navigate('메시지', { thread: item })}>
               <View style={styles.listContainer}>
