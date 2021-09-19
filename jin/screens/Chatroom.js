@@ -49,8 +49,9 @@ function Chatroom({ navigation }) {
       })
 
     const refreshTimer = setInterval(() => {
-      if(new Date().getMinutes() != timer)
-        setTimer(new Date().getMinutes());
+      let currentMinutes = new Date().getMinutes();
+      if (currentMinutes != timer)
+        setTimer(currentMinutes);
     }, 1000);
 
     return () => {
@@ -69,6 +70,15 @@ function Chatroom({ navigation }) {
     return (deadSecond.getHours() - currTime.getHours()) * 60 + (deadSecond.getMinutes() - currTime.getMinutes())
   }
 
+  function isClosed(item) {
+    if (leftMinutes(item.endTime) >= 0) {
+      return true;
+    }
+
+    firestore().collection('Chat').doc(item._id).delete();
+    return false;
+  }
+
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
@@ -77,6 +87,7 @@ function Chatroom({ navigation }) {
           keyExtractor={item => item._id}
           extraData={timer}
           renderItem={({ item }) => (
+            isClosed(item) &&
             <TouchableOpacity onPress={() => navigation.navigate('메시지', { thread: item })}>
               <View style={styles.listContainer}>
                 <View style={styles.listContent}>
