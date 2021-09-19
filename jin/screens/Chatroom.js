@@ -62,11 +62,22 @@ function Chatroom({ navigation }) {
 
   if (loading) {
     return <ActivityIndicator />
+  } else if (!threads.length) {
+    return (
+      <NativeBaseProvider>
+        <View style={styles.emptyView}>
+          <ActivityIndicator />
+          <Text style={styles.emptyText}>생성된 채팅방이 없습니다.</Text>
+        </View>
+      </NativeBaseProvider>
+    )
   }
 
   function leftMinutes(deadLine) {
     const deadSecond = new Date(deadLine.seconds * 1000);
     const currTime = new Date();
+    if (currTime > deadSecond)
+      return -1;
     return (deadSecond.getHours() - currTime.getHours()) * 60 + (deadSecond.getMinutes() - currTime.getMinutes())
   }
 
@@ -261,5 +272,15 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     color: '#f5f5f5'
+  },
+  emptyView: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    marginVertical: 20
+  },
+  emptyText: {
+    fontSize: 21,
+    color: '#4f4f4f',
+    marginLeft: 12
   }
 })
