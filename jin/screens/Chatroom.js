@@ -106,7 +106,7 @@ function Chatroom({ navigation }) {
                   <View style={styles.listContent}>
                     <View style={styles.listHeader}>
                       <Text style={styles.nameText}>{item.name}</Text>
-                      <View style={styles.deadlineView}>
+                      <View style={styles.deadlineView(leftMin)}>
                         <Text style={styles.deadlineText}>{leftMin}분 남음</Text>
                       </View>
                     </View>
@@ -248,12 +248,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000'
   },
-  deadlineView: {
-    backgroundColor: '#6ee7b7',
+  deadlineView: (leftMin) => ({
+    backgroundColor:
+      leftMin >= 10 ?
+        '#6ee7b7' :
+      leftMin >= 5 ?
+        '#fde047' :
+      leftMin >= 3 ?
+        '#fdba74' :
+      leftMin >= 1 ?
+        '#f87171' :
+      leftMin >= 0 ?
+        '#ef4444' :
+      '#dc2626'
+    ,
     borderRadius: 10,
     paddingVertical: 3,
     paddingHorizontal: 15,
-  },
+  }),
   deadlineText: {
     fontWeight: '500',
     textAlign: 'center',
