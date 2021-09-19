@@ -75,14 +75,15 @@ function Chatroom({ navigation }) {
 
   function leftMinutes(deadLine) {
     const deadSecond = new Date(deadLine.seconds * 1000);
+    const gracePeriod = deadSecond.getTime + 5 * 60 * 1000;
     const currTime = new Date();
-    if (currTime > deadSecond)
-      return -1;
+    if (currTime > gracePeriod)
+      return -10;
     return (deadSecond.getHours() - currTime.getHours()) * 60 + (deadSecond.getMinutes() - currTime.getMinutes())
   }
 
   function isClosed(itemId, leftMin) {
-    if (leftMin >= 0) {
+    if (leftMin >= -5) {
       return true;
     }
 
@@ -107,7 +108,7 @@ function Chatroom({ navigation }) {
                     <View style={styles.listHeader}>
                       <Text style={styles.nameText}>{item.name}</Text>
                       <View style={styles.deadlineView(leftMin)}>
-                        <Text style={styles.deadlineText}>{leftMin}분 남음</Text>
+                        <Text style={styles.deadlineText}>{leftMin >= 0 ? +leftMin + '분 남음' : '마감'}</Text>
                       </View>
                     </View>
                     <Text style={styles.contentText}>
