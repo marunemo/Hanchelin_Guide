@@ -83,7 +83,7 @@ export default function Chat({ route }) {
     await firestore()
       .collection('Chat')
       .doc(thread._id)
-      .set({ endTime: new Date(new Date(thread.endTime.seconds).getTime() + 5 * 60 * 1000) })
+      .update({ endTime: new Date(new Date(thread.endTime.seconds * 1000).getTime() + 5 * 60 * 1000) })
       .then(() => {
         setTimeout(() => {
           setDeadline(true);
