@@ -47,7 +47,7 @@ export default function CreateChat({ route, navigation }) {
             system: true,
           })
           navigation.goBack();
-          navigation.navigate('메시지', { thread: { _id: docRef.id, ...chatThread } });
+          navigation.navigate('메시지', { thread: { _id: docRef.id, endTime: endTime, ...chatThread } });
         })
     }
   }
