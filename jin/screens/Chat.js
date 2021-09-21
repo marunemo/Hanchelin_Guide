@@ -44,7 +44,7 @@ export default function Chat({ route }) {
 
     setTimeout(() => {
       setDeadline(true);
-    }, new Date(thread.endTime.seconds) - new Date());
+    }, new Date(thread.endTime.seconds * 1000) - new Date());
 
     return () => unsubscribeListener();
   }, [])
