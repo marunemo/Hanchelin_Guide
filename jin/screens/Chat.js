@@ -10,7 +10,7 @@ export default function Chat({ route }) {
   const { thread } = route.params;
   const user = auth().currentUser;
   const [messages, setMessages] = useState([]);
-  const [deadline, setDeadline] = useState(true);
+  const [deadline, setDeadline] = useState(false);
 
   useEffect(() => {
     const unsubscribeListener = firestore()
@@ -43,7 +43,7 @@ export default function Chat({ route }) {
       })
 
     setTimeout(() => {
-      setDeadline(false);
+      setDeadline(true);
     }, new Date(thread.endTime.seconds) - new Date());
 
     return () => unsubscribeListener();
@@ -83,7 +83,13 @@ export default function Chat({ route }) {
     await firestore()
       .collection('Chat')
       .doc(thread._id)
-      .set({endTime: new Date(new Date(thread.endTime.seconds).getTime() + 5 * 60 * 1000)})
+      .set({ endTime: new Date(new Date(thread.endTime.seconds).getTime() + 5 * 60 * 1000) })
+      .then(() => {
+        setTimeout(() => {
+          setDeadline(true);
+        }, 5000);
+        setDeadline(false);
+      })
   }
 
   return (
@@ -99,25 +105,27 @@ export default function Chat({ route }) {
         renderUsernameOnMessage
         placeholder={'메시지를 입력하세요...'}
       />
-      <Modal isOpen={deadline}>
-        <Modal.Header>시간 연장</Modal.Header>
-        <Modal.Body>확인 버튼을 누르면 채팅방 유지 시간을 5분 더 연장하실 수 있습니다.</Modal.Body>
-        <Modal.Footer>
-          <Button.Group>
-            <Button
-              variant="solid"
-              onPress={extendTime}
-            >
-              확인
-            </Button>
-            <Button
-              variant="ghost"
-              onPress={useNavigation().goBack}
-            >
-              취소
-            </Button>
-          </Button.Group>
-        </Modal.Footer>
+      <Modal isOpen={deadline} onClose={() => setDeadline(false)}>
+        <Modal.Content>
+          <Modal.Header>시간 연장</Modal.Header>
+          <Modal.Body>확인 버튼을 누르면 채팅방 유지 시간을 5분 더 연장하실 수 있습니다.</Modal.Body>
+          <Modal.Footer>
+            <Button.Group>
+              <Button
+                variant="solid"
+                onPress={extendTime}
+              >
+                확인
+              </Button>
+              <Button
+                variant="ghost"
+                onPress={useNavigation().goBack}
+              >
+                취소
+              </Button>
+            </Button.Group>
+          </Modal.Footer>
+        </Modal.Content>
       </Modal>
     </NativeBaseProvider>
   );
