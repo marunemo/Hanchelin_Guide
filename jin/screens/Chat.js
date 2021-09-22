@@ -87,7 +87,7 @@ export default function Chat({ route }) {
       .then(() => {
         setTimeout(() => {
           setDeadline(true);
-        }, 5000);
+        }, 5 * 60 * 1000);
         setDeadline(false);
       })
   }
