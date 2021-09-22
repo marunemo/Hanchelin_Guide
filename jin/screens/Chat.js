@@ -105,7 +105,12 @@ export default function Chat({ route }) {
         renderUsernameOnMessage
         placeholder={'메시지를 입력하세요...'}
       />
-      <Modal isOpen={deadline} onClose={() => setDeadline(false)}>
+      <Modal
+        isOpen={deadline}
+        onClose={() => setDeadline(false)}
+        avoidKeyboard={true}
+        closeOnOverlayClick={false}
+      >
         <Modal.Content>
           <Modal.Header>시간 연장</Modal.Header>
           <Modal.Body>확인 버튼을 누르면 채팅방 유지 시간을 5분 더 연장하실 수 있습니다.</Modal.Body>
