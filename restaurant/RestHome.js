@@ -121,9 +121,8 @@ class Home extends Component {
     this.state = {
       searchTerm: '',
       switchValue: false,
-      category: '',
+      category: '한식',
       sortTerm: '가나다순',
-      barVisible: false,
       data: [],
       changeListener: null
     }
@@ -182,7 +181,6 @@ class Home extends Component {
                 endIcon: <CheckIcon size={4} />,
               }}
             >
-              <Select.Item label="전체" value="전체" />
               <Select.Item label="한식" value="한식" />
               <Select.Item label="양식" value="양식" />
               <Select.Item label="돈까스 / 회 / 일식" value="돈까스 / 회 / 일식" />
