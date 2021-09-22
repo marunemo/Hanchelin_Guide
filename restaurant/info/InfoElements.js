@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import Text from '../../defaultSetting/FontText';
 import { IconButton, Icon } from 'native-base';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Font from 'react-native-vector-icons/FontAwesome';

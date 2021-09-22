@@ -1,9 +1,10 @@
 import React from 'react';
 import {
     StyleSheet,
-    Text, Modal,
+    Modal,
     View, TouchableOpacity, Dimensions, ScrollView
 } from 'react-native';
+import Text from '../defaultSetting/FontText';
 
 const OPTIONS = ['모두', '한식', '중식', '일식', '양식', '디저트', '기타']
 const WIDTH = Dimensions.get('window').width;

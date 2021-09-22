@@ -11,9 +11,9 @@ import {
   ScrollView, 
   Button, 
   Stack, 
-  Text, 
   View, 
   Image } from 'native-base';
+import Text from '../../defaultSetting/FontText';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { NavigationContainer } from '@react-navigation/native';
@@ -84,7 +84,7 @@ export default function Profile (props) {
               </HStack>
             </Stack>
             <Button style={styles.button} onPress={() => auth().signOut()} bg='#BF2A52'>
-              <Text style={{ color: 'white', fontWeight: 'bold'}}>로그아웃</Text>
+              <Text style={{ color: 'white' }} bold>로그아웃</Text>
             </Button>
             <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 쓴 리뷰</Text>
               {review}
