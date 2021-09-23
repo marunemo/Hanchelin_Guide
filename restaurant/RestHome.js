@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Switch,
   TouchableOpacity,
 } from "react-native";
 import {
@@ -25,6 +24,8 @@ import RestInfo from './info/ListItem';
 import Profile from "../jin/screens/Profile.js";
 
 const KEYS_TO_FILTERS = ['name', 'dong', 'category'];
+//const [headerColor, iconActiveColor, iconInActiveColor] = ["#BF2A52", "#00FF00", "#f5f5f5"];
+const [headerColor, iconActiveColor, iconInActiveColor] = ["#efefef", "#BF2A52", "#bbb"];
 
 class RestaurantItem extends Component {
   constructor(props) {
@@ -66,24 +67,47 @@ class RestaurantItem extends Component {
       >
         <HStack>
           <Image
-            style={{ flex: 3 }}
+            style={{ flex: 4 }}
             resizeMode="contain"
             source={img_source}
             alt="Alternate Text"
             size="md"
           />
-          <VStack space={1} style={{ flex: 5 }}>
+          <VStack space={1} style={{ flex: 4 }}>
             <Text bold>{item.name}</Text>
             <Text>{item.category}</Text>
             <Text>{item.dong}</Text>
           </VStack>
-          <HStack style={{ flex: 4, alignItems: 'flex-end' }} space={1}>
-            <Icon name="thumbs-up" size={24} color="#30A9DE" />
-            <Text>{item.likes}</Text>
-            <Icon name="heart" size={24} color="#f15c5c" />
-            <Text>{item.bookmark_count}</Text>
-            <Icon name="comments" size={24} color="#8b8687" />
-            <Text>{item.comments_count}</Text>
+          <HStack style={{ flex: 5, alignItems: 'flex-end' }} space={1}>
+            <Image
+              resizeMode="contain"
+              source={require('../images/star.png')}
+              alt="Alternate Text"
+              size="20px"
+              style={{ tintColor: "#555" }}
+              mr={0.5}
+            />
+            <Text color='#555'>{item.total}</Text>
+            <Image
+              resizeMode="contain"
+              source={require('../images/heart.png')}
+              alt="Alternate Text"
+              size="20px"
+              style={{ tintColor: "#555" }}
+              ml={1}
+              mr={0.5}
+            />
+            <Text color='#555'>{item.bookmark_count}</Text>
+            <Image
+              resizeMode="contain"
+              source={require('../images/comments.png')}
+              alt="Alternate Text"
+              size="20px"
+              style={{ tintColor: "#555" }}
+              ml={1}
+              mr={0.5}
+            />
+            <Text color='#555'>{item.comments_count}</Text>
           </HStack>
         </HStack>
       </TouchableOpacity>
@@ -97,9 +121,8 @@ class Home extends Component {
     this.state = {
       searchTerm: '',
       switchValue: false,
-      category: '',
+      category: '한식',
       sortTerm: '가나다순',
-      barVisible: false,
       data: [],
       changeListener: null
     }
@@ -109,7 +132,6 @@ class Home extends Component {
     const onChildChange = ref.on("value", snapshot => {
       if (snapshot)
         this.setState({ data: snapshot.val() });
-      // console.log(this.state.data)
     });
     this.setState({ changeListener: onChildChange });
   }
@@ -123,6 +145,7 @@ class Home extends Component {
     this.setState({ sortTerm: term })
     term == "가나다순" && this.setState({ data: this.state.data.sort((a, b) => a.name > b.name) })
     term == "추천순" && this.setState({ data: this.state.data.sort((a, b) => a.likes < b.likes) })
+    term == "별점순" && this.setState({ data: this.state.data.sort((a, b) => a.total < b.total) })
     term == "리뷰많은순" && this.setState({ data: this.state.data.sort((a, b) => a.comments_count < b.comments_count) })
   }
   componentWillUnmount() {
@@ -135,11 +158,71 @@ class Home extends Component {
       .filter(createFilter(this.state.category, 'category'))
     return (
       <NativeBaseProvider>
-        <Box backgroundColor='#fff'>
+        <Box backgroundColor={headerColor}>
+          <HStack
+            space={3}
+            alignSelf='center'
+            pl={2}
+            pr={1}
+            pt={3}
+          >
+            <Select
+              width="57%"
+              height={10}
+              color="#555"
+              style={{ fontSize: 15, flex: 1 }}
+              placeholderTextColor="#555"
+              variant="filled"
+              selectedValue={this.state.category}
+              placeholder="카테고리를 선택하세요"
+              onValueChange={(itemValue) => this.setCategory(itemValue)}
+              _selectedItem={{
+                bg: "#BF2A52",
+                endIcon: <CheckIcon size={4} />,
+              }}
+            >
+              <Select.Item label="한식" value="한식" />
+              <Select.Item label="양식" value="양식" />
+              <Select.Item label="돈까스 / 회 / 일식" value="돈까스 / 회 / 일식" />
+              <Select.Item label="중식" value="중식" />
+              <Select.Item label="치킨" value="치킨" />
+              <Select.Item label="육류 / 고기" value="육류 / 고기" />
+              <Select.Item label="족발 / 보쌈" value="족발 / 보쌈" />
+              <Select.Item label="분식" value="분식" />
+              <Select.Item label="술집" value="술집" />
+              <Select.Item label="아시안" value="아시안" />
+              <Select.Item label="카페 / 디저트" value="카페 / 디저트" />
+            </Select>
+            <Select
+              width="35%"
+              height={10}
+              color="#555"
+              style={{ fontSize: 15, flex: 1 }}
+              placeholderTextColor="#555"
+              variant="filled"
+              selectedValue={this.state.sortTerm}
+              placeholder="정렬"
+              onValueChange={(itemValue) => this.setSortTerm(itemValue)}
+              _selectedItem={{
+                bg: "#BF2A52",
+                endIcon: <CheckIcon size={4} />,
+              }}
+            >
+              <Select.Item label="가나다순" value="가나다순" />
+              <Select.Item label="추천순" value="추천순" />
+              <Select.Item label="별점순" value="별점순" />
+              <Select.Item label="리뷰많은순" value="리뷰많은순" />
+            </Select>
+          </HStack>
+        </Box>
+        <Box backgroundColor="#fff">
           <HeaderClassicSearchBar
-            backgroundColor='#BF2A52'
+            backgroundColor={headerColor}
+            iconActiveColor={iconActiveColor}
+            iconInactiveColor={iconInActiveColor}
+            switchValue={this.state.switchValue}
             onChangeText={(term) => { this.searchUpdated(term) }}
-            onPress={() => this.setState({ barVisible: !(this.state.barVisible) })}
+            onPress={() => this.setState({ switchValue: !(this.state.switchValue) })}
           />
         </Box>
         <Center flex={1} backgroundColor='#fff'>
@@ -154,71 +237,6 @@ class Home extends Component {
               )}
             </VStack>
           </ScrollView>
-          {this.state.barVisible && <Box
-            backgroundColor="#efefef"
-            width="100%"
-            style={{
-              borderTopEndRadius: 15,
-              borderTopStartRadius: 15
-            }}
-          >
-            <VStack
-              alignItems="flex-end"
-              space={2}
-              p={2}
-            >
-              <Select
-                width="100%"
-                color="#222"
-                placeholderTextColor="#222"
-                variant="underlined"
-                selectedValue={this.state.sortTerm}
-                placeholder="정렬"
-                onValueChange={(itemValue) => this.setSortTerm(itemValue)}
-                _selectedItem={{
-                  bg: "#BF2A52",
-                  endIcon: <CheckIcon size={4} />,
-                }}
-              >
-                <Select.Item label="가나다순" value="가나다순" />
-                <Select.Item label="추천순" value="추천순" />
-                <Select.Item label="리뷰많은순" value="리뷰많은순" />
-                <Select.Item label="별점순" value="별점순" />
-              </Select>
-              <Select
-                width="100%"
-                color="#222"
-                placeholderTextColor="#222"
-                variant="underlined"
-                selectedValue={this.state.category}
-                placeholder="카테고리를 선택하세요"
-                onValueChange={(itemValue) => this.setCategory(itemValue)}
-                _selectedItem={{
-                  bg: "#BF2A52",
-                  endIcon: <CheckIcon size={4} />,
-                }}
-              >
-                <Select.Item label="전체" value="전체" />
-                <Select.Item label="한식" value="한식" />
-                <Select.Item label="양식" value="양식" />
-                <Select.Item label="돈까스 / 회 / 일식" value="돈까스 / 회 / 일식" />
-                <Select.Item label="중식" value="중식" />
-                <Select.Item label="치킨" value="치킨" />
-                <Select.Item label="육류 / 고기" value="육류 / 고기" />
-                <Select.Item label="족발 / 보쌈" value="족발 / 보쌈" />
-                <Select.Item label="분식" value="분식" />
-                <Select.Item label="술집" value="술집" />
-                <Select.Item label="아시안" value="아시안" />
-                <Select.Item label="카페 / 디저트" value="카페 / 디저트" />
-              </Select>
-              <HStack alignItems="center" space={1}>
-                <Text>배달가능만 보기</Text>
-                <Switch
-                  value={this.state.switchValue}
-                  onValueChange={(switchValue) => this.setState({ switchValue })} />
-              </HStack>
-            </VStack>
-          </Box>}
         </Center>
       </NativeBaseProvider>
     )
@@ -296,7 +314,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 110,
     backgroundColor: '#fff',
-    borderBottomColor: '#eee',
+    borderBottomColor: '#ededed',
     borderBottomWidth: 0.5,
     borderRadius: 15
   },
