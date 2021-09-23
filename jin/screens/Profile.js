@@ -12,7 +12,6 @@ import {
   ScrollView,
   Button,
   Stack,
-  Text,
   View,
   Image
 } from 'native-base';
