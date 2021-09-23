@@ -16,6 +16,7 @@ import {
   View,
   Image
 } from 'native-base';
+import Text from '../../defaultSetting/FontText';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { NavigationContainer } from '@react-navigation/native';
@@ -69,7 +70,6 @@ export default function Profile(props) {
         setStore(store)
       });
   }, []);
-
 
   // 가져 올 리뷰와 찜이 없을때 에러 안뜨게 하기
   return (

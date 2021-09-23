@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Keyboard, View, Text, SafeAreaView, StyleSheet } from 'react-native';
+import { Keyboard, View, SafeAreaView, StyleSheet } from 'react-native';
+import Text from '../../defaultSetting/FontText';
 import { IconButton, Icon, Input, Button } from 'native-base';
 import { KeyboardAwareScrollView as ScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Slider from '@react-native-community/slider';

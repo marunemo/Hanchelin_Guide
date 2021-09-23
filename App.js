@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { SafeAreaView, StatusBar, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import Text from './defaultSetting/FontText'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -93,11 +94,12 @@ export default function App() {
 const styles = StyleSheet.create({
   focusLabel: {
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#bf2a52'
+    color: '#bf2a52',
+    fontFamily: 'ELANDChoiceB',
   },
   unfocusLabel: {
     fontSize: 12,
-    color: '#aaaaaa'
+    color: '#aaaaaa',
+    fontFamily: 'ELANDchoiceM'
   }
 })

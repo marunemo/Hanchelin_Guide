@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
 } from 'react-native';
+import Text from '../../defaultSetting/FontText';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NativeBaseProvider, Stack, HStack, Modal, Button } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -82,7 +82,7 @@ function Chatroom({ navigation }) {
                   <Stack>
                     <HStack marginRight={3} alignSelf="flex-end" space={3}>
                       <Text>가게명: {item.store}</Text>
-                      <Text style={{fontWeight:'bold'}}>|</Text>
+                      <Text bold>|</Text>
                       <Text>배달 위치: {item.location}</Text>
                     </HStack>
                   </Stack>
@@ -117,16 +117,14 @@ export default function ({ navigation }) {
           name="같이 배달 리스트"
           component={Chatroom}
           options={{
-            title: '같이 배달',
+            headerTitle: () => (
+              <Text style={styles.headerTitle} bold>같이 배달</Text>
+            ),
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
             headerTitleAlign: 'center',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: 20,
-            },
             headerRight: () => (
               <Icon name="plus" size={24} color="#f2f2f2"
                 onPress={() => navigation.navigate('새로운 채팅방 만들기')} />
@@ -136,33 +134,30 @@ export default function ({ navigation }) {
           name="새로운 채팅방 만들기"
           component={CreateChat}
           options={{
+            headerTitle: () => (
+              <Text style={styles.headerTitle} bold>{"새로운 채팅방 만들기"}</Text>
+            ),
             headerBackTitleVisible: false,
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
             headerTitleAlign: 'center',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: 20,
-            },
             animation: 'slide_from_right'
           }} />
         <StackNav.Screen
           name="메시지"
           component={Chat}
           options={({ route }) => ({
-            title: route.params.thread.name,
+            headerTitle: () => (
+              <Text style={styles.headerTitle} bold>{route.params.thread.name}</Text>
+            ),
             headerBackTitleVisible: false,
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
             headerTintColor: '#f2f2f2',
             headerTitleAlign: 'center',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: 20,
-            },
             animation: 'fade_from_bottom',
             headerRight: () => (
               (user?.uid === route.params.thread.initialUser) &&
@@ -245,5 +240,9 @@ const styles = StyleSheet.create({
     maxHeight: 250,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  headerTitle: {
+    fontSize: 20,
+    color: '#f5f5f5'
   }
 })
