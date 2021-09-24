@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
-import { NativeBaseProvider, Popover } from 'native-base';
+import { NativeBaseProvider, Modal, Button } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
+import Text from '../../defaultSetting/FontText';
 
 export default function Chat({ route }) {
   const { thread } = route.params;
   const user = auth().currentUser;
   const [messages, setMessages] = useState([]);
+  const [deadline, setDeadline] = useState(false);
 
   useEffect(() => {
     const unsubscribeListener = firestore()
@@ -39,7 +42,11 @@ export default function Chat({ route }) {
         setMessages(messages);
       })
 
-      return () => unsubscribeListener();
+    setTimeout(() => {
+      setDeadline(true);
+    }, new Date(thread.endTime.seconds * 1000) - new Date());
+
+    return () => unsubscribeListener();
   }, [])
 
   async function handleSend(messages) {
@@ -64,7 +71,7 @@ export default function Chat({ route }) {
       .set(
         {
           latestMessage: {
-            text, 
+            text,
             createdAt: new Date().getTime(),
           }
         },
@@ -72,17 +79,59 @@ export default function Chat({ route }) {
       )
   }
 
+  async function extendTime() {
+    await firestore()
+      .collection('Chat')
+      .doc(thread._id)
+      .update({ endTime: new Date(new Date(thread.endTime.seconds * 1000).getTime() + 5 * 60 * 1000) })
+      .then(() => {
+        setTimeout(() => {
+          setDeadline(true);
+        }, 5 * 60 * 1000);
+        setDeadline(false);
+      })
+  }
+
   return (
-    <GiftedChat
-      messages={messages}
-      onSend={handleSend}
-      user={{
-        _id: user?.uid,
-        name: user?.displayName,
-        avatar: user?.photoURL,
-      }}
-      renderUsernameOnMessage
-      placeholder={'메시지를 입력하세요...'}
-    />
+    <NativeBaseProvider>
+      <GiftedChat
+        messages={messages}
+        onSend={handleSend}
+        user={{
+          _id: user?.uid,
+          name: user?.displayName,
+          avatar: user?.photoURL,
+        }}
+        renderUsernameOnMessage
+        placeholder={'메시지를 입력하세요...'}
+      />
+      <Modal
+        isOpen={deadline}
+        onClose={() => setDeadline(false)}
+        avoidKeyboard={true}
+        closeOnOverlayClick={false}
+      >
+        <Modal.Content>
+          <Modal.Header>시간 연장</Modal.Header>
+          <Modal.Body>확인 버튼을 누르면 채팅방 유지 시간을 5분 더 연장하실 수 있습니다.</Modal.Body>
+          <Modal.Footer>
+            <Button.Group>
+              <Button
+                variant="solid"
+                onPress={extendTime}
+              >
+                확인
+              </Button>
+              <Button
+                variant="ghost"
+                onPress={useNavigation().goBack}
+              >
+                취소
+              </Button>
+            </Button.Group>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
+    </NativeBaseProvider>
   );
 }

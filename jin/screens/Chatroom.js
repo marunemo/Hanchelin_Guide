@@ -22,6 +22,7 @@ const StackNav = createNativeStackNavigator();
 function Chatroom({ navigation }) {
   const [threads, setThreads] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [timer, setTimer] = useState(new Date().getMinutes());
 
   useEffect(() => {
     const unsubscribe = firestore()
@@ -47,17 +48,47 @@ function Chatroom({ navigation }) {
         }
       })
 
-    return () => unsubscribe();
+    const refreshTimer = setInterval(() => {
+      let currentMinutes = new Date().getMinutes();
+      if (currentMinutes != timer)
+        setTimer(currentMinutes);
+    }, 1000);
+
+    return () => {
+      unsubscribe();
+      clearInterval(refreshTimer);
+    }
   }, []);
 
   if (loading) {
     return <ActivityIndicator />
+  } else if (!threads.length) {
+    return (
+      <NativeBaseProvider>
+        <View style={styles.emptyView}>
+          <ActivityIndicator />
+          <Text style={styles.emptyText}>생성된 채팅방이 없습니다.</Text>
+        </View>
+      </NativeBaseProvider>
+    )
   }
 
   function leftMinutes(deadLine) {
     const deadSecond = new Date(deadLine.seconds * 1000);
+    const gracePeriod = deadSecond.getTime + 5 * 60 * 1000;
     const currTime = new Date();
+    if (currTime > gracePeriod)
+      return -10;
     return (deadSecond.getHours() - currTime.getHours()) * 60 + (deadSecond.getMinutes() - currTime.getMinutes())
+  }
+
+  function isClosed(itemId, leftMin) {
+    if (leftMin >= -5) {
+      return true;
+    }
+
+    firestore().collection('Chat').doc(itemId).delete();
+    return false;
   }
 
   return (
@@ -66,30 +97,35 @@ function Chatroom({ navigation }) {
         <FlatList
           data={threads}
           keyExtractor={item => item._id}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => navigation.navigate('메시지', { thread: item })}>
-              <View style={styles.listContainer}>
-                <View style={styles.listContent}>
-                  <View style={styles.listHeader}>
-                    <Text style={styles.nameText}>{item.name}</Text>
-                    <View style={styles.deadLineView}>
-                      <Text style={styles.deadlineText}>{leftMinutes(item.endTime)}분 남음</Text>
+          extraData={timer}
+          renderItem={({ item }) => {
+            const leftMin = leftMinutes(item.endTime);
+            return (
+              isClosed(item._id, leftMin) &&
+              <TouchableOpacity onPress={() => navigation.navigate('메시지', { thread: item })}>
+                <View style={styles.listContainer}>
+                  <View style={styles.listContent}>
+                    <View style={styles.listHeader}>
+                      <Text style={styles.nameText}>{item.name}</Text>
+                      <View style={styles.deadlineView(leftMin)}>
+                        <Text style={styles.deadlineText}>{leftMin >= 0 ? +leftMin + '분 남음' : '마감'}</Text>
+                      </View>
                     </View>
+                    <Text style={styles.contentText}>
+                      {item.latestMessage.text != undefined && item.latestMessage.text.slice(0, 90)}
+                    </Text>
+                    <Stack>
+                      <HStack marginRight={3} alignSelf="flex-end" space={3}>
+                        <Text>가게명: {item.store}</Text>
+                        <Text bold>|</Text>
+                        <Text>배달 위치: {item.location}</Text>
+                      </HStack>
+                    </Stack>
                   </View>
-                  <Text style={styles.contentText}>
-                    {item.latestMessage.text != undefined && item.latestMessage.text.slice(0, 90)}
-                  </Text>
-                  <Stack>
-                    <HStack marginRight={3} alignSelf="flex-end" space={3}>
-                      <Text>가게명: {item.store}</Text>
-                      <Text bold>|</Text>
-                      <Text>배달 위치: {item.location}</Text>
-                    </HStack>
-                  </Stack>
                 </View>
-              </View>
-            </TouchableOpacity>
-          )}
+              </TouchableOpacity>
+            )
+          }}
         />
       </View>
     </NativeBaseProvider>
@@ -216,12 +252,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000'
   },
-  deadLineView: {
-    backgroundColor: '#aaa',
+  deadlineView: (leftMin) => ({
+    backgroundColor:
+      leftMin >= 10 ?
+        '#6ee7b7' :
+      leftMin >= 5 ?
+        '#fde047' :
+      leftMin >= 3 ?
+        '#fdba74' :
+      leftMin >= 1 ?
+        '#f87171' :
+      leftMin >= 0 ?
+        '#ef4444' :
+      '#dc2626'
+    ,
     borderRadius: 10,
     paddingVertical: 3,
     paddingHorizontal: 15,
-  },
+  }),
   deadlineText: {
     color: '#fff',
     fontWeight: '500',
@@ -244,5 +292,15 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     color: '#f5f5f5'
+  },
+  emptyView: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    marginVertical: 20
+  },
+  emptyText: {
+    fontSize: 21,
+    color: '#4f4f4f',
+    marginLeft: 12
   }
 })
