@@ -13,6 +13,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2A050E088830A97948D4ABBE /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 804630251A2AB5259F8887C0 /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a */; };
 		3D1ADC953BB868FC99B33C78 /* libPods-Hanchelin_Guide.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B32DD365C3680CC0E896679C /* libPods-Hanchelin_Guide.a */; };
+		5034EBB526FE1EE000EAC98D /* NewFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034EBB426FE1EE000EAC98D /* NewFile.swift */; };
 		506F603B26E5059D00250BED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 506F603A26E5057700250BED /* GoogleService-Info.plist */; };
 		50B3793026E922F2004A18E5 /* ELANDChoiceM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50B3792E26E922CB004A18E5 /* ELANDChoiceM.ttf */; };
 		50B3793126E922F2004A18E5 /* ELANDChoiceB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50B3792F26E922CB004A18E5 /* ELANDChoiceB.ttf */; };
@@ -44,6 +45,7 @@
 		2B15CAC5759C48E7811CA1D4 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		4933786ED3846D0E65FF1CD5 /* Pods-Hanchelin_Guide-Hanchelin_GuideTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hanchelin_Guide-Hanchelin_GuideTests.debug.xcconfig"; path = "Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4D8583F1E529461DAD23E993 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		5034EBB426FE1EE000EAC98D /* NewFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFile.swift; sourceTree = "<group>"; };
 		503C0A1426BEAD5500D4665E /* Hanchelin_Guide-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hanchelin_Guide-Bridging-Header.h"; sourceTree = "<group>"; };
 		506F603A26E5057700250BED /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50B3792E26E922CB004A18E5 /* ELANDChoiceM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ELANDChoiceM.ttf; path = Fonts/ELANDChoiceM.ttf; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				5034EBB426FE1EE000EAC98D /* NewFile.swift */,
 			);
 			name = Hanchelin_Guide;
 			sourceTree = "<group>";
@@ -480,6 +483,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				5034EBB526FE1EE000EAC98D /* NewFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +502,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4933786ED3846D0E65FF1CD5 /* Pods-Hanchelin_Guide-Hanchelin_GuideTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -525,6 +530,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 53D3C237EAD356C0470A41AF /* Pods-Hanchelin_Guide-Hanchelin_GuideTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = Hanchelin_GuideTests/Info.plist;
