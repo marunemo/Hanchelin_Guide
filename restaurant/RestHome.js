@@ -23,7 +23,7 @@ import { createFilter } from 'react-native-search-filter';
 import RestInfo from './info/ListItem';
 import Profile from "../jin/screens/Profile.js";
 
-const KEYS_TO_FILTERS = ['name', 'dong', 'category'];
+const KEYS_TO_FILTERS = ['name'];
 //const [headerColor, iconActiveColor, iconInActiveColor] = ["#BF2A52", "#00FF00", "#f5f5f5"];
 const [headerColor, iconActiveColor, iconInActiveColor] = ["#efefef", "#BF2A52", "#bbb"];
 
@@ -152,10 +152,11 @@ class Home extends Component {
     database().ref("/식당").off('value', this.state.changeListener);
   }
   render() {
-    const filteredArr = (this.state.data)
-      .filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
-      .filter(createFilter(this.state.switchValue ? 'true' : '', 'delivery_availability'))
-      .filter(createFilter(this.state.category, 'category'))
+    var filteredArr = (this.state.data).filter(createFilter(this.state.category, 'category'))
+    if (this.state.searchTerm != '') {
+      filteredArr = (this.state.data).filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+    }
+    filteredArr = filteredArr.filter(createFilter(this.state.switchValue ? 'true' : '', 'delivery_availability'))
     return (
       <NativeBaseProvider>
         <Box backgroundColor={headerColor}>
