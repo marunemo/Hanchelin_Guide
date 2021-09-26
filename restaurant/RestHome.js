@@ -223,6 +223,7 @@ class Home extends Component {
             iconActiveColor={iconActiveColor}
             iconInactiveColor={iconInActiveColor}
             switchValue={this.state.switchValue}
+            iconBool={true}
             onChangeText={(term) => { this.searchUpdated(term) }}
             onPress={() => this.setState({ switchValue: !(this.state.switchValue) })}
           />
