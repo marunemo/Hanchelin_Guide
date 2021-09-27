@@ -3,10 +3,9 @@ import { GiftedChat } from 'react-native-gifted-chat'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import { NativeBaseProvider, Modal, Button } from 'native-base';
-import { useNavigation } from '@react-navigation/native';
 import Text from '../../defaultSetting/FontText';
 
-export default function Chat({ route }) {
+export default function Chat({ navigation, route }) {
   const { thread } = route.params;
   const user = auth().currentUser;
   const [messages, setMessages] = useState([]);
@@ -90,6 +89,13 @@ export default function Chat({ route }) {
         }, 5 * 60 * 1000);
         setDeadline(false);
       })
+      .catch(err => {
+        if (err.message == '[firestore/not-found] Some requested document was not found.') {
+          navigation.navigate('같이 배달 리스트', { response: 1 });
+        } else {
+          console.log(err)
+        }
+      })
   }
 
   return (
@@ -124,7 +130,7 @@ export default function Chat({ route }) {
               </Button>
               <Button
                 variant="ghost"
-                onPress={useNavigation().goBack}
+                onPress={navigation.goBack}
               >
                 취소
               </Button>

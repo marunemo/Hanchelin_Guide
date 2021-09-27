@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Text from '../../defaultSetting/FontText';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NativeBaseProvider, Stack, HStack, Modal, Button } from 'native-base';
+import { NativeBaseProvider, Stack, HStack, Modal, Button, useToast } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -19,10 +19,11 @@ import Chat from "./Chat";
 
 const StackNav = createNativeStackNavigator();
 
-function Chatroom({ navigation }) {
+function Chatroom({ navigation, route }) {
   const [threads, setThreads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [timer, setTimer] = useState(new Date().getMinutes());
+  const toast = useToast();
 
   useEffect(() => {
     const unsubscribe = firestore()
@@ -47,6 +48,25 @@ function Chatroom({ navigation }) {
           setLoading(false);
         }
       })
+    
+    const { response } = route.params;
+    if (response === 0) {
+      toast.show({
+        title: '삭제 완료',
+        description: '채팅방이 완전히 삭제되었습니다.',
+        status: 'success',
+        style: { width: 320 }
+      })
+      navigation.setParams({ response: -1 })
+    } else if (response === 1) {
+      toast.show({
+        title: '연장 오류',
+        description: '채팅방의 연장 시간이 마감되어, 채팅방이 삭제되었습니다.',
+        status: 'error',
+        style: { width: 320 }
+      })
+      navigation.setParams({ response: -1 })
+    }
 
     const refreshTimer = setInterval(() => {
       let currentMinutes = new Date().getMinutes();
@@ -58,7 +78,7 @@ function Chatroom({ navigation }) {
       unsubscribe();
       clearInterval(refreshTimer);
     }
-  }, []);
+  }, [route.params.response]);
 
   if (loading) {
     return <ActivityIndicator />
@@ -142,7 +162,7 @@ export default function ({ navigation }) {
       .doc(id)
       .delete().then(() => {
         setShowAuthModal(false);
-        navigation.navigate('같이 배달 리스트');
+        navigation.navigate('같이 배달 리스트', { response: 0 });
       })
   }
 
@@ -152,6 +172,7 @@ export default function ({ navigation }) {
         <StackNav.Screen
           name="같이 배달 리스트"
           component={Chatroom}
+          initialParams={{ response: -1 }}
           options={{
             headerTitle: () => (
               <Text style={styles.headerTitle} bold>같이 배달</Text>
