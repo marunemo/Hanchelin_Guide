@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Text from '../../defaultSetting/FontText';
-import { useIsFocused } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NativeBaseProvider, Stack, HStack, Modal, Button, useToast } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -25,7 +24,6 @@ function Chatroom({ navigation, route }) {
   const [loading, setLoading] = useState(true);
   const [timer, setTimer] = useState(new Date().getMinutes());
   const toast = useToast();
-  const isFocused = useIsFocused();
 
   useEffect(() => {
     const unsubscribe = firestore()
@@ -51,7 +49,6 @@ function Chatroom({ navigation, route }) {
         }
       })
     
-    console.log(route.params)
     const { response } = route.params;
     if (response === 0) {
       toast.show({
@@ -64,7 +61,7 @@ function Chatroom({ navigation, route }) {
     } else if (response === 1) {
       toast.show({
         title: '연장 오류',
-        description: '채팅방의 연장 시간이 마감되었습니다.',
+        description: '채팅방의 연장 시간이 마감되어, 채팅방이 삭제되었습니다.',
         status: 'error',
         style: { width: 320 }
       })
