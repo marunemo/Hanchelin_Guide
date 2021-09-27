@@ -91,7 +91,7 @@ export default function Chat({ navigation, route }) {
       })
       .catch(err => {
         if (err.message == '[firestore/not-found] Some requested document was not found.') {
-          navigation.goBack();
+          navigation.navigate('같이 배달 리스트', { response: 1 });
         } else {
           console.log(err)
         }
