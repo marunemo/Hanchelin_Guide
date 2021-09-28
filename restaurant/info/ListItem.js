@@ -234,12 +234,6 @@ const RestaurantInfo = (props) => {
           inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
           outputRange: [-screenWidth * 0.3, 0, screenWidth * 0.8, screenWidth * 0.8],
         }),
-      },
-      {
-        scale: animatedScroll.interpolate({
-          inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
-          outputRange: [1.1, 1, 0.9, 0.9]
-        })
       }]
     })
   }
@@ -311,15 +305,9 @@ const style = StyleSheet.create({
     marginVertical: 18,
   },
   partition: {
-    borderRadius: 25,
     backgroundColor: '#ffffff',
     marginVertical: 5,
-    marginHorizontal: 15,
     paddingVertical: 20,
-    shadowColor: '#666666',
-    shadowRadius: 1,
-    shadowOpacity: 0.3,
-    elevation: 8
   },
   partitionPadding: {
     paddingHorizontal: 30
