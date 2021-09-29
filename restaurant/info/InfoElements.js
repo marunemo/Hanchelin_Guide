@@ -63,9 +63,9 @@ const CommentListView = (props) => {
 				</View>
 				{props.user.uid === commentUser['uid'] &&
 					<IconButton
-						alignSelf="flex-end"
 						size="sm"
 						borderRadius="full"
+						borderWidth={1}
 						onPress={() => props.onPop(id, comment.query)}
 						icon={<Icon name="trash-o" as={Font} size="sm" color="#831843" />}
 					/>
