@@ -71,17 +71,21 @@ const CommentListView = (props) => {
 					/>
 				}
 			</View>
-			<Text style={style.commentsText}>맛 : {comment['맛']}</Text>
-			<Text style={style.commentsText}>가성비 : {comment['가성비']}</Text>
-			<Text style={style.commentsText}>서비스 : {comment['서비스']}</Text>
+			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+				<Text style={style.commentsText}>맛 : {comment['맛']}</Text>
+				<Text style={style.commentsText}>가성비 : {comment['가성비']}</Text>
+				<Text style={style.commentsText}>서비스 : {comment['서비스']}</Text>
+			</View>
 			<Text style={style.commentsText}>종합 : {comment['종합']}</Text>
 			{comment['리뷰'] !== '' &&
-				<Text style={style.commentsText}>
-					리뷰 : {comment['리뷰']}
-				</Text>
+				<View style={style.commentsReview}>
+					<Text style={style.commentsText}>
+						{comment['리뷰']}
+					</Text>
+				</View>
 			}
 			{comment['배달여부'] &&
-				<Text style={style.commentsText}>
+				<Text style={[style.commentsText, { textAlign: 'right' }]}>
 					배달 시간 : {comment['배달시간']}분    배달비 : {comment['배달비']}원
 				</Text>
 			}
@@ -187,6 +191,12 @@ const style = StyleSheet.create({
 		color: '#1c1917',
 		fontSize: 14,
 		marginVertical: 3
+	},
+	commentsReview: {
+		borderWidth: 1,
+		paddingVertical: 5,
+		paddingHorizontal: 10,
+		marginVertical: 5,
 	},
 	userProfile: {
 		height: 40,
