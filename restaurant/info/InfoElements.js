@@ -46,6 +46,7 @@ const MenuListView = (props) => {
 const CommentListView = (props) => {
 	const id = props.id;
 	const comment = props.comment;
+	const commentUser = comment['user'];
 
 	return (
 		<View style={style.commentsView}>
@@ -53,14 +54,14 @@ const CommentListView = (props) => {
 				<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 					<Image
 						style={style.userProfile}
-						source={{ uri: props.user?.photoURL }}
+						source={{ uri: commentUser['profile'] }}
 					/>
 					<View>
-						<Text style={{ fontSize: 16, marginBottom: 3 }} bold>{props.user?.displayName}</Text>
+						<Text style={{ fontSize: 16, marginBottom: 3 }} bold>{commentUser['name']}</Text>
 						<Text style={{ fontSize: 12, textAlign: 'right', color: '#4b4b4b' }}>{comment['작성시간']}</Text>
 					</View>
 				</View>
-				{props.user.uid === comment['uid'] &&
+				{props.user.uid === commentUser['uid'] &&
 					<IconButton
 						alignSelf="flex-end"
 						size="sm"
