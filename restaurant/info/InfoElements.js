@@ -161,10 +161,8 @@ const style = StyleSheet.create({
 		marginHorizontal: 10
 	},
 	commentsView: {
-		borderWidth: 1,
-		borderRadius: 20,
-		borderColor: '#ec4899',
-		backgroundColor: '#fbcfe8',
+		borderTopWidth: 1,
+		borderColor: '#7b7b7b',
 		width: '100%',
 		marginVertical: 5,
 		paddingVertical: 5,
