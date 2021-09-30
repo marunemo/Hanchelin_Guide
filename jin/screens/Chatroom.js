@@ -60,7 +60,7 @@ function Chatroom({ navigation, route }) {
       navigation.setParams({ response: -1 })
     } else if (response === 1) {
       toast.show({
-        title: '연장 오류',
+        title: '연장 실패',
         description: '채팅방의 연장 시간이 마감되어, 채팅방이 삭제되었습니다.',
         status: 'error',
         style: { width: 320 }

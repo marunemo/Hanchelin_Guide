@@ -3,7 +3,6 @@ import { GiftedChat } from 'react-native-gifted-chat'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import { NativeBaseProvider, Modal, Button } from 'native-base';
-import Text from '../../defaultSetting/FontText';
 
 export default function Chat({ navigation, route }) {
   const { thread } = route.params;

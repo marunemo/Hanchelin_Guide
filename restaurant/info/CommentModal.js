@@ -41,7 +41,11 @@ const CommentButton = (props) => {
       배달시간: delivTime,
       배달비: delivFee,
       작성시간: new Date(),
-      uid: user?.uid,
+      user: {
+        uid: user?.uid,
+        name: user?.displayName,
+        profile: user?.photoURL,
+      }
     })
       .then(querySnapshot => {
         commentList.push({
@@ -54,7 +58,11 @@ const CommentButton = (props) => {
           배달시간: delivTime,
           배달비: delivFee,
           작성시간: new Date().toLocaleString(),
-          uid: user?.uid,
+          user: {
+            uid: user?.uid,
+            name: user?.displayName,
+            profile: user?.photoURL,
+          },
           query: querySnapshot.id
         });
 
