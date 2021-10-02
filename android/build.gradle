@@ -7,6 +7,7 @@ buildscript {
         compileSdkVersion = 30
         targetSdkVersion = 30
         ndkVersion = "20.1.5948944"
+        multiDexEnabled = true
     }
     repositories {
         google()
@@ -41,6 +42,8 @@ allprojects {
         maven {
             url 'https://www.jitpack.io' 
             url 'https://naver.jfrog.io/artifactory/maven/'
+        }
+        maven {
             url 'https://devrepo.kakao.com/nexus/content/groups/public/'
         }
     }
