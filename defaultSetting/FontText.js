@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
+import { fontSize } from 'styled-system';
 
 export default class CustomText extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export default class CustomText extends React.Component {
         this.props.style,
         this.props.bold ? styles.boldFontText : styles.fontText
       ]}>
-        {this.props.bold ? this.props.children + 'bold' : this.props.children}
+        {this.props.bold ? this.props.children : this.props.children}
       </Text>
     );
   }
@@ -20,7 +21,6 @@ export default class CustomText extends React.Component {
 
 const styles = StyleSheet.create({
   fontText: {
-    fontFamily: 'ELANDChoiceM'
   },
   boldFontText: {
     fontFamily: 'ELANDChoiceB'

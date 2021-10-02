@@ -16,6 +16,8 @@ import firestore from '@react-native-firebase/firestore';
 import Authentication from './Authentication';
 import CreateChat from "./CreateChat";
 import Chat from "./Chat";
+import HeaderClassicSearchBar from "../../lib/src/HeaderClassicSearchBar/HeaderClassicSearchBar";
+const [headerColor, iconActiveColor, iconInActiveColor] = ["#efefef", "#BF2A52", "#bbb"];
 
 const StackNav = createNativeStackNavigator();
 
@@ -114,6 +116,15 @@ function Chatroom({ navigation, route }) {
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
+        <HeaderClassicSearchBar
+          backgroundColor={headerColor}
+          iconActiveColor={iconActiveColor}
+          iconInactiveColor={iconInActiveColor}
+          iconBool={false}
+        // switchValue={this.state.switchValue}
+        // onChangeText={(term) => { this.searchUpdated(term) }}
+        // onPress={() => this.setState({ switchValue: !(this.state.switchValue) })}
+        />
         <FlatList
           data={threads}
           keyExtractor={item => item._id}
@@ -277,15 +288,15 @@ const styles = StyleSheet.create({
     backgroundColor:
       leftMin >= 10 ?
         '#6ee7b7' :
-      leftMin >= 5 ?
-        '#fde047' :
-      leftMin >= 3 ?
-        '#fdba74' :
-      leftMin >= 1 ?
-        '#f87171' :
-      leftMin >= 0 ?
-        '#ef4444' :
-      '#dc2626'
+        leftMin >= 5 ?
+          '#fde047' :
+          leftMin >= 3 ?
+            '#fdba74' :
+            leftMin >= 1 ?
+              '#f87171' :
+              leftMin >= 0 ?
+                '#ef4444' :
+                '#dc2626'
     ,
     borderRadius: 10,
     paddingVertical: 3,

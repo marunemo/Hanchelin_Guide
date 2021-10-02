@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Image } from "native-base";
 import { View, SafeAreaView, RefreshControl, StyleSheet, Dimensions, Animated } from 'react-native';
 import Text from '../../defaultSetting/FontText';
 // import Animated from 'react-native-reanimated';
@@ -109,7 +110,13 @@ const RestComponent = (props) => {
             <Button style={style.optionButton} onPress={() => {
               navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기", params: { restName: restData['official_name'] } });
             }}>
-              <Font style={{ textAlign: "center" }} name="wechat" size={30} color="#4c1d95" />
+              <Image
+                alignSelf="center"
+                resizeMode="contain"
+                source={require('../../images/together.png')}
+                alt="Alternate Text"
+                size="40px"
+              />
               <Text style={{ textAlign: "center", marginTop: 5 }}>같이배달</Text>
             </Button>
           </Center>
