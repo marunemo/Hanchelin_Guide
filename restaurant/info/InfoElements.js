@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import Text from '../../defaultSetting/FontText';
 import { IconButton, Icon } from 'native-base';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -8,7 +8,7 @@ import Font from 'react-native-vector-icons/FontAwesome';
 const KeyTextView = (props) => {
 	return (
 		<View style={style.titleView}>
-			<Text style={style.keyText}>
+			<Text style={style.keyText} bold>
 				{props.keyText}
 			</Text>
 		</View>
@@ -37,7 +37,7 @@ const MenuListView = (props) => {
 
 	return (
 		<View style={style.menuView}>
-			<Text style={{ fontWeight: 'bold' }}>{food}</Text>
+			<Text bold>{food}</Text>
 			<Text>{price}원</Text>
 		</View>
 	)
@@ -46,34 +46,49 @@ const MenuListView = (props) => {
 const CommentListView = (props) => {
 	const id = props.id;
 	const comment = props.comment;
+	const commentUser = comment['user'];
 
 	return (
 		<View style={style.commentsView}>
-			{props.user.uid === comment['uid']
-				? <IconButton
-						alignSelf="flex-end"
+			<View style={style.commentHeader}>
+				<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+					<Image
+						style={style.userProfile}
+						source={{ uri: commentUser['profile'] }}
+					/>
+					<View>
+						<Text style={{ fontSize: 16, marginBottom: 3 }} bold>{commentUser['name']}</Text>
+						<Text style={{ fontSize: 12, textAlign: 'right', color: '#4b4b4b' }}>{comment['작성시간']}</Text>
+					</View>
+				</View>
+				{props.user.uid === commentUser['uid'] &&
+					<IconButton
 						size="sm"
 						borderRadius="full"
+						borderWidth={1}
 						onPress={() => props.onPop(id, comment.query)}
 						icon={<Icon name="trash-o" as={Font} size="sm" color="#831843" />}
 					/>
-				: <View style={{ marginBottom: 20 }} />
-			}
-			<Text style={style.commentsText}>맛 : {comment['맛']}</Text>
-			<Text style={style.commentsText}>가성비 : {comment['가성비']}</Text>
-			<Text style={style.commentsText}>서비스 : {comment['서비스']}</Text>
+				}
+			</View>
+			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+				<Text style={style.commentsText}>맛 : {comment['맛']}</Text>
+				<Text style={style.commentsText}>가성비 : {comment['가성비']}</Text>
+				<Text style={style.commentsText}>서비스 : {comment['서비스']}</Text>
+			</View>
 			<Text style={style.commentsText}>종합 : {comment['종합']}</Text>
 			{comment['리뷰'] !== '' &&
-				<Text style={style.commentsText}>
-					리뷰 : {comment['리뷰']}
-				</Text>
+				<View style={style.commentsReview}>
+					<Text style={style.commentsText}>
+						{comment['리뷰']}
+					</Text>
+				</View>
 			}
 			{comment['배달여부'] &&
-				<Text style={style.commentsText}>
+				<Text style={[style.commentsText, { textAlign: 'right' }]}>
 					배달 시간 : {comment['배달시간']}분    배달비 : {comment['배달비']}원
 				</Text>
 			}
-			<Text style={{ textAlign: 'right', color: '#4b4b4b' }}>{comment['작성시간']}</Text>
 		</View>
 	)
 }
@@ -87,7 +102,7 @@ const RatingBar = (props) => {
 	return (
 		<View style={style.ratingView}>
 			<View style={[style.ratingTextView, { backgroundColor: backgroundText }]}>
-				<Text style={[style.ratingText, { color: textColor }]}>{ratingName}</Text>
+				<Text style={[style.ratingText, { color: textColor }]} bold>{ratingName}</Text>
 			</View>
 			<AnimatedCircularProgress
 				tintColor={props.color}
@@ -118,7 +133,6 @@ const style = StyleSheet.create({
 	keyText: {
 		color: '#033326',
 		fontSize: 16,
-		fontWeight: 'bold',
 		marginVertical: 3,
 		marginHorizontal: 10
 	},
@@ -149,7 +163,6 @@ const style = StyleSheet.create({
 	ratingText: {
 		textAlign: 'center',
 		fontSize: 14,
-		fontWeight: 'bold'
 	},
 	menuView: {
 		flexDirection: 'row',
@@ -161,18 +174,35 @@ const style = StyleSheet.create({
 		marginHorizontal: 10
 	},
 	commentsView: {
-		borderWidth: 1,
-		borderRadius: 20,
-		borderColor: '#ec4899',
-		backgroundColor: '#fbcfe8',
+		borderTopWidth: 1,
+		borderColor: '#7b7b7b',
 		width: '100%',
 		marginVertical: 5,
 		paddingVertical: 5,
 		paddingHorizontal: 20
 	},
+	commentHeader: {
+		height: 50,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center'
+	},
 	commentsText: {
 		color: '#1c1917',
 		fontSize: 14,
 		marginVertical: 3
+	},
+	commentsReview: {
+		borderWidth: 1,
+		paddingVertical: 5,
+		paddingHorizontal: 10,
+		marginVertical: 5,
+	},
+	userProfile: {
+		height: 40,
+		aspectRatio: 1,
+		borderRadius: 20,
+		marginVertical: 5,
+		marginRight: 10
 	}
 })
