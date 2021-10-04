@@ -87,7 +87,7 @@ class RestaurantItem extends Component {
               style={{ tintColor: "#555" }}
               mr={0.5}
             />
-            <Text color='#555'>{item.total}</Text>
+            <Text color='#555'>{item.total.toFixed(1)}</Text>
             <Image
               resizeMode="contain"
               source={require('../images/heart.png')}

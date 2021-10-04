@@ -72,11 +72,11 @@ const CommentListView = (props) => {
 				}
 			</View>
 			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+				<Text style={style.commentsText}>종합 : {comment['종합']}</Text>
 				<Text style={style.commentsText}>맛 : {comment['맛']}</Text>
 				<Text style={style.commentsText}>가성비 : {comment['가성비']}</Text>
 				<Text style={style.commentsText}>서비스 : {comment['서비스']}</Text>
 			</View>
-			<Text style={style.commentsText}>종합 : {comment['종합']}</Text>
 			{comment['리뷰'] !== '' &&
 				<View style={style.commentsReview}>
 					<Text style={style.commentsText}>
@@ -131,14 +131,14 @@ const style = StyleSheet.create({
 		marginVertical: 6,
 	},
 	keyText: {
-		color: '#033326',
+		color: '#f2f2f2',
 		fontSize: 16,
-		marginVertical: 3,
+		marginVertical: 4,
 		marginHorizontal: 10
 	},
 	titleView: {
 		backgroundColor: '#86efac',
-		borderRadius: 50,
+		borderRadius: 7,
 		marginHorizontal: 5
 	},
 	iconView: {
@@ -167,19 +167,20 @@ const style = StyleSheet.create({
 	menuView: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		backgroundColor: '#d1d1d1',
+		borderBottomColor: '#ddd',
+		borderBottomWidth: 1,
 		paddingVertical: 5,
 		paddingHorizontal: 10,
 		marginBottom: 5,
-		marginHorizontal: 10
+		marginHorizontal: 25
 	},
 	commentsView: {
 		borderTopWidth: 1,
 		borderColor: '#7b7b7b',
 		width: '100%',
-		marginVertical: 5,
-		paddingVertical: 5,
-		paddingHorizontal: 20
+		paddingTop: 15,
+		paddingBottom: 10,
+		paddingHorizontal: 17
 	},
 	commentHeader: {
 		height: 50,
@@ -190,7 +191,7 @@ const style = StyleSheet.create({
 	commentsText: {
 		color: '#1c1917',
 		fontSize: 14,
-		marginVertical: 3
+		marginVertical: 7
 	},
 	commentsReview: {
 		borderWidth: 1,

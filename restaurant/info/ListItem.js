@@ -100,7 +100,7 @@ const RestComponent = (props) => {
             {restData['total'] ? restData['total'] : 0} / 5
           </Text>
         </View>
-        <View style={style.partitionPadding}>
+        <View style={style.basicInfoPadding}>
           <InfoView icon="mobile-phone" value={restData['contact']} />
           <InfoView icon="location-arrow" value={restData['address']} />
           <InfoView icon="clock-o" value={restData['opening_hours']} />
@@ -305,23 +305,27 @@ export default ItemActivity;
 const style = StyleSheet.create({
   containter: {
     height: '100%',
-    backgroundColor: '#f7f7f7'
+    backgroundColor: '#f5f5f5'
   },
   contexts: {
     flexDirection: 'row',
-    marginVertical: 18,
+    marginBottom: 18,
   },
   partition: {
     backgroundColor: '#ffffff',
-    marginVertical: 5,
-    paddingVertical: 20,
+    marginTop: 3,
+    paddingVertical: 18,
   },
   partitionPadding: {
+    paddingHorizontal: 18
+  },
+  basicInfoPadding: {
     paddingHorizontal: 30
   },
   horizontalLayout: {
     flexDirection: 'row-reverse',
-    marginVertical: 10
+    marginVertical: 10,
+    paddingBottom: 10
   },
   mapView: {
     width: '100%',
