@@ -4,6 +4,7 @@ import Text from '../../defaultSetting/FontText';
 import { IconButton, Icon } from 'native-base';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Font from 'react-native-vector-icons/FontAwesome';
+import { marginBottom } from 'styled-system';
 
 const KeyTextView = (props) => {
 	return (
@@ -139,7 +140,8 @@ const style = StyleSheet.create({
 	titleView: {
 		backgroundColor: '#86efac',
 		borderRadius: 7,
-		marginHorizontal: 5
+		marginHorizontal: 5,
+		marginBottom: 5
 	},
 	iconView: {
 		width: 18,
@@ -167,16 +169,16 @@ const style = StyleSheet.create({
 	menuView: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		borderBottomColor: '#ddd',
-		borderBottomWidth: 1,
+		borderBottomColor: '#ededed',
+		borderBottomWidth: 0.5,
 		paddingVertical: 5,
 		paddingHorizontal: 10,
 		marginBottom: 5,
 		marginHorizontal: 25
 	},
 	commentsView: {
-		borderTopWidth: 1,
-		borderColor: '#7b7b7b',
+		borderTopWidth: 0.5,
+		borderColor: '#ededed',
 		width: '100%',
 		paddingTop: 15,
 		paddingBottom: 10,
@@ -204,6 +206,6 @@ const style = StyleSheet.create({
 		aspectRatio: 1,
 		borderRadius: 20,
 		marginVertical: 5,
-		marginRight: 10
+		marginRight: 12
 	}
 })

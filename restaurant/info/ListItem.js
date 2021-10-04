@@ -314,7 +314,8 @@ const style = StyleSheet.create({
   partition: {
     backgroundColor: '#ffffff',
     marginTop: 3,
-    paddingVertical: 18,
+    paddingTop: 18,
+    paddingBottom: 40
   },
   partitionPadding: {
     paddingHorizontal: 18
