@@ -102,6 +102,13 @@ const RestComponent = (props) => {
           status: 'error',
           style: { width: 320 }
         })
+      } else {
+        toast.show({
+          title: '오류 발생',
+          description: e.message,
+          status: 'error',
+          style: { width: 320 }
+        })
       }
     }
   }
