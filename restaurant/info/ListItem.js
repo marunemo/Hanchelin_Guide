@@ -89,12 +89,11 @@ const RestComponent = (props) => {
             webUrl: 'https://developers.kakao.com/',
             mobileWebUrl: 'https://developers.kakao.com/',
           },
-          description: restData['official_name'],
+          description: restData['address'],
         },
       });
       console.log(response);
     } catch (e) {
-      // console.error(e.message);
       if (e.message == '카카오톡이 설치되어있지 않습니다.') {
         toast.show({
           title: '공유 실패',
