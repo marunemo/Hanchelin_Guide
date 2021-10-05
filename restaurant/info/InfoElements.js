@@ -65,10 +65,18 @@ const CommentListView = (props) => {
 				{props.user.uid === commentUser['uid'] &&
 					<IconButton
 						size="sm"
+						variant="outline"
+						colorScheme="dark"
 						borderRadius="full"
+						borderColor="#71717a"
 						borderWidth={1}
 						onPress={() => props.onPop(id, comment.query)}
-						icon={<Icon name="trash-o" as={Font} size="sm" color="#831843" />}
+						icon={<Image
+							source={require('../../images/trash.png')}
+							alt="Alternate Text"
+							style={{ width: 23, height: 23, tintColor: "#71717a" }}
+						/>
+						}
 					/>
 				}
 			</View>
@@ -191,9 +199,10 @@ const style = StyleSheet.create({
 		alignItems: 'center'
 	},
 	commentsText: {
-		color: '#1c1917',
+		color: '#333',
 		fontSize: 14,
-		marginVertical: 7
+		marginVertical: 8,
+		paddingHorizontal: 10
 	},
 	commentsReview: {
 		borderWidth: 1,
