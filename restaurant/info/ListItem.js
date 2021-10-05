@@ -309,7 +309,7 @@ const style = StyleSheet.create({
   },
   contexts: {
     flexDirection: 'row',
-    marginBottom: 18,
+    marginBottom: 27,
   },
   partition: {
     backgroundColor: '#ffffff',

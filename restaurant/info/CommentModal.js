@@ -248,11 +248,11 @@ const CommentButton = (props) => {
       <IconButton
         style={style.commentButton}
         borderRadius="full"
-        colorScheme="cyan"
+        colorScheme="rose"
         variant="solid"
         size="lg"
         onPress={() => showInput(true)}
-        icon={<Icon name="pencil-square-o" as={Font} size="sm" />}
+        icon={<Icon name="pencil" as={Font} size="sm" />}
       />
     </>
   );
@@ -277,7 +277,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
     shadowColor: '#333333',
     shadowRadius: 2,
-    shadowOpacity: 0.7,
+    shadowOpacity: 0.2,
     elevation: 15
   },
   commentHeader: {
