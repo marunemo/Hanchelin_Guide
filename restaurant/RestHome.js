@@ -152,11 +152,10 @@ class Home extends Component {
     database().ref("/식당").off('value', this.state.changeListener);
   }
   render() {
-    var filteredArr = (this.state.data).filter(createFilter(this.state.category, 'category'))
-    if (this.state.searchTerm != '') {
-      filteredArr = (this.state.data).filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
-    }
-    filteredArr = filteredArr.filter(createFilter(this.state.switchValue ? 'true' : '', 'delivery_availability'))
+    const filteredArr = (this.state.data)
+      .filter(createFilter(this.state.category, 'category'))
+      .filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+      .filter(createFilter(this.state.switchValue ? 'true' : '', 'delivery_availability'))
     return (
       <NativeBaseProvider>
         <Box backgroundColor={headerColor}>

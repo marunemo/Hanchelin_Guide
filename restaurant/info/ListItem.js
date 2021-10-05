@@ -96,7 +96,7 @@ const RestComponent = (props) => {
             readonly={true}
             onFinishRating={console.log}
           />
-          <Text style={{ fontSize: 20, textAlign: "center" }}>
+          <Text style={{ marginTop: 10, fontSize: 20, textAlign: "center" }}>
             {restData['total'] ? Math.round(restData['total'] * 10) / 10 : 0} / 5
           </Text>
         </View>
@@ -147,27 +147,27 @@ const RestComponent = (props) => {
         <HStack>
           <Center style={style.horizonStack}>
             <RatingBar
-              color="#f43f5e"
-              bgText="#fda4af"
-              textColor="#540820"
+              color="#eab308"
+              bgText="#eab308"
+              textColor="#fff"
               ratingName="맛"
               ratingData={restData['flavor']}
             />
           </Center>
           <Center style={style.horizonStack}>
             <RatingBar
-              color="#06b6d4"
-              bgText="#67e8f9"
-              textColor="#053f4d"
+              color="#d97706"
+              bgText="#d97706"
+              textColor="#fff"
               ratingName="가성비"
               ratingData={restData['cost_performance']}
             />
           </Center>
           <Center style={style.horizonStack}>
             <RatingBar
-              color="#10b981"
-              bgText="#6ee7b7"
-              textColor="#022e22"
+              color="#65a30d"
+              bgText="#65a30d"
+              textColor="#fff"
               ratingName="서비스"
               ratingData={restData['service']}
             />
@@ -340,8 +340,8 @@ const style = StyleSheet.create({
     width: '33%',
   },
   optionView: {
-    borderColor: '#aaaaaa',
-    borderRightWidth: 2
+    borderColor: '#ededed',
+    borderRightWidth: 1.5
   },
   optionButton: {
     width: '100%',

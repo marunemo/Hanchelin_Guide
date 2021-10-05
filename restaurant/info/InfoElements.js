@@ -58,7 +58,7 @@ const CommentListView = (props) => {
 						source={{ uri: commentUser['profile'] }}
 					/>
 					<View>
-						<Text style={{ fontSize: 16, marginBottom: 3 }} bold>{commentUser['name']}</Text>
+						<Text style={{ fontSize: 16, marginBottom: 4 }} bold>{commentUser['name']}</Text>
 						<Text style={{ fontSize: 12, textAlign: 'right', color: '#4b4b4b' }}>{comment['작성시간']}</Text>
 					</View>
 				</View>
@@ -107,7 +107,7 @@ const RatingBar = (props) => {
 			</View>
 			<AnimatedCircularProgress
 				tintColor={props.color}
-				backgroundColor="#d4d4d4"
+				backgroundColor="#ddd"
 				size={80}
 				width={10}
 				rotation={0}
@@ -134,8 +134,8 @@ const style = StyleSheet.create({
 	keyText: {
 		color: '#fff',
 		fontSize: 16,
-		marginVertical: 4,
-		marginHorizontal: 10
+		marginVertical: 7,
+		marginHorizontal: 12
 	},
 	titleView: {
 		backgroundColor: '#BF2A52',
@@ -155,11 +155,12 @@ const style = StyleSheet.create({
 		marginVertical: 5
 	},
 	ratingTextView: {
-		width: 52,
-		height: 22,
+		width: 60,
+		height: 28,
 		justifyContent: 'center',
 		borderRadius: 50,
-		marginVertical: 10,
+		marginTop: 10,
+		marginBottom: 20,
 		marginHorizontal: 5
 	},
 	ratingText: {
