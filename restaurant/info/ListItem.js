@@ -87,9 +87,9 @@ const RestComponent = (props) => {
         <View style={[style.partitionPadding, { marginBottom: 15 }]}>
           <Rating
             type="custom"
-            ratingImage={require('../../images/info-icon/hgu.png')}
-            ratingColor="rgb(32, 37,76)"
-            ratingBackgroundColor="rgb(202, 208,247)"
+            ratingImage={require('../../images/info-icon/star.png')}
+            ratingColor="#BF2A52"
+            ratingBackgroundColor="#ccc"
             startingValue={restData['total'] ? restData['total'] : 0}
             imageSize={50}
             fractions={1}

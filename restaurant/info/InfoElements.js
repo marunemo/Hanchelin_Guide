@@ -132,16 +132,16 @@ const style = StyleSheet.create({
 		marginVertical: 6,
 	},
 	keyText: {
-		color: '#f2f2f2',
+		color: '#fff',
 		fontSize: 16,
 		marginVertical: 4,
 		marginHorizontal: 10
 	},
 	titleView: {
-		backgroundColor: '#86efac',
+		backgroundColor: '#BF2A52',
 		borderRadius: 7,
-		marginHorizontal: 5,
-		marginBottom: 5
+		marginVertical: 5,
+		marginHorizontal: 10
 	},
 	iconView: {
 		width: 18,
@@ -196,6 +196,8 @@ const style = StyleSheet.create({
 	},
 	commentsReview: {
 		borderWidth: 1,
+		borderColor: '#ccc',
+		borderRadius: 7,
 		paddingVertical: 5,
 		paddingHorizontal: 10,
 		marginVertical: 5,

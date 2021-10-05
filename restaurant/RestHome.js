@@ -262,13 +262,13 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f5f5f5',
+            headerTintColor: '#fff',
             headerTitleAlign: 'center',
             headerRight: () => (
               <Icon
                 name="user"
                 size={24}
-                color="#f5f5f5"
+                color="#fff"
                 onPress={() => navigation.navigate("프로필")}
               />
             )
@@ -285,7 +285,7 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f5f5f5',
+            headerTintColor: '#fff',
             headerTitleAlign: 'center',
             animation: 'fade_from_bottom'
           })}
@@ -301,7 +301,7 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f5f5f5',
+            headerTintColor: '#fff',
             headerTitleAlign: 'center',
             animation: 'slide_from_right'
           }}
