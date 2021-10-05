@@ -87,20 +87,20 @@ const RestComponent = (props) => {
         <View style={[style.partitionPadding, { marginBottom: 15 }]}>
           <Rating
             type="custom"
-            ratingImage={require('../../images/info-icon/hgu.png')}
-            ratingColor="rgb(32, 37,76)"
-            ratingBackgroundColor="rgb(202, 208,247)"
+            ratingImage={require('../../images/info-icon/star.png')}
+            ratingColor="#BF2A52"
+            ratingBackgroundColor="#ccc"
             startingValue={restData['total'] ? restData['total'] : 0}
             imageSize={50}
             fractions={1}
             readonly={true}
             onFinishRating={console.log}
           />
-          <Text style={{ fontSize: 20, textAlign: "center" }}>
-            {restData['total'] ? restData['total'] : 0} / 5
+          <Text style={{ marginTop: 10, fontSize: 20, textAlign: "center" }}>
+            {restData['total'] ? Math.round(restData['total'] * 10) / 10 : 0} / 5
           </Text>
         </View>
-        <View style={style.partitionPadding}>
+        <View style={style.basicInfoPadding}>
           <InfoView icon="mobile-phone" value={restData['contact']} />
           <InfoView icon="location-arrow" value={restData['address']} />
           <InfoView icon="clock-o" value={restData['opening_hours']} />
@@ -147,27 +147,27 @@ const RestComponent = (props) => {
         <HStack>
           <Center style={style.horizonStack}>
             <RatingBar
-              color="#f43f5e"
-              bgText="#fda4af"
-              textColor="#540820"
+              color="#eab308"
+              bgText="#eab308"
+              textColor="#fff"
               ratingName="맛"
               ratingData={restData['flavor']}
             />
           </Center>
           <Center style={style.horizonStack}>
             <RatingBar
-              color="#06b6d4"
-              bgText="#67e8f9"
-              textColor="#053f4d"
+              color="#d97706"
+              bgText="#d97706"
+              textColor="#fff"
               ratingName="가성비"
               ratingData={restData['cost_performance']}
             />
           </Center>
           <Center style={style.horizonStack}>
             <RatingBar
-              color="#10b981"
-              bgText="#6ee7b7"
-              textColor="#022e22"
+              color="#65a30d"
+              bgText="#65a30d"
+              textColor="#fff"
               ratingName="서비스"
               ratingData={restData['service']}
             />
@@ -305,23 +305,28 @@ export default ItemActivity;
 const style = StyleSheet.create({
   containter: {
     height: '100%',
-    backgroundColor: '#f7f7f7'
+    backgroundColor: '#f5f5f5'
   },
   contexts: {
     flexDirection: 'row',
-    marginVertical: 18,
+    marginBottom: 27,
   },
   partition: {
     backgroundColor: '#ffffff',
-    marginVertical: 5,
-    paddingVertical: 20,
+    marginTop: 3,
+    paddingTop: 18,
+    paddingBottom: 40
   },
   partitionPadding: {
+    paddingHorizontal: 18
+  },
+  basicInfoPadding: {
     paddingHorizontal: 30
   },
   horizontalLayout: {
     flexDirection: 'row-reverse',
-    marginVertical: 10
+    marginVertical: 10,
+    paddingBottom: 10
   },
   mapView: {
     width: '100%',
@@ -335,8 +340,8 @@ const style = StyleSheet.create({
     width: '33%',
   },
   optionView: {
-    borderColor: '#aaaaaa',
-    borderRightWidth: 2
+    borderColor: '#ededed',
+    borderRightWidth: 1.5
   },
   optionButton: {
     width: '100%',

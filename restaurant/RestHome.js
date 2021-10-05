@@ -87,7 +87,7 @@ class RestaurantItem extends Component {
               style={{ tintColor: "#555" }}
               mr={0.5}
             />
-            <Text color='#555'>{item.total}</Text>
+            <Text color='#555'>{item.total.toFixed(1)}</Text>
             <Image
               resizeMode="contain"
               source={require('../images/heart.png')}
@@ -152,11 +152,10 @@ class Home extends Component {
     database().ref("/식당").off('value', this.state.changeListener);
   }
   render() {
-    var filteredArr = (this.state.data).filter(createFilter(this.state.category, 'category'))
-    if (this.state.searchTerm != '') {
-      filteredArr = (this.state.data).filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
-    }
-    filteredArr = filteredArr.filter(createFilter(this.state.switchValue ? 'true' : '', 'delivery_availability'))
+    const filteredArr = (this.state.data)
+      .filter(createFilter(this.state.category, 'category'))
+      .filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+      .filter(createFilter(this.state.switchValue ? 'true' : '', 'delivery_availability'))
     return (
       <NativeBaseProvider>
         <Box backgroundColor={headerColor}>
@@ -262,13 +261,13 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f5f5f5',
+            headerTintColor: '#fff',
             headerTitleAlign: 'center',
             headerRight: () => (
               <Icon
                 name="user"
                 size={24}
-                color="#f5f5f5"
+                color="#fff"
                 onPress={() => navigation.navigate("프로필")}
               />
             )
@@ -285,7 +284,7 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f5f5f5',
+            headerTintColor: '#fff',
             headerTitleAlign: 'center',
             animation: 'fade_from_bottom'
           })}
@@ -301,7 +300,7 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f5f5f5',
+            headerTintColor: '#fff',
             headerTitleAlign: 'center',
             animation: 'slide_from_right'
           }}

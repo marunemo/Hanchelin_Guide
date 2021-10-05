@@ -4,6 +4,7 @@ import Text from '../../defaultSetting/FontText';
 import { IconButton, Icon } from 'native-base';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Font from 'react-native-vector-icons/FontAwesome';
+import { marginBottom } from 'styled-system';
 
 const KeyTextView = (props) => {
 	return (
@@ -37,7 +38,7 @@ const MenuListView = (props) => {
 
 	return (
 		<View style={style.menuView}>
-			<Text bold>{food}</Text>
+			<Text style={{ fontWeight: 'bold' }}>{food}</Text>
 			<Text>{price}원</Text>
 		</View>
 	)
@@ -57,7 +58,7 @@ const CommentListView = (props) => {
 						source={{ uri: commentUser['profile'] }}
 					/>
 					<View>
-						<Text style={{ fontSize: 16, marginBottom: 3 }} bold>{commentUser['name']}</Text>
+						<Text style={{ fontSize: 16, marginBottom: 4 }} bold>{commentUser['name']}</Text>
 						<Text style={{ fontSize: 12, textAlign: 'right', color: '#4b4b4b' }}>{comment['작성시간']}</Text>
 					</View>
 				</View>
@@ -72,11 +73,11 @@ const CommentListView = (props) => {
 				}
 			</View>
 			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+				<Text style={style.commentsText}>종합 : {comment['종합']}</Text>
 				<Text style={style.commentsText}>맛 : {comment['맛']}</Text>
 				<Text style={style.commentsText}>가성비 : {comment['가성비']}</Text>
 				<Text style={style.commentsText}>서비스 : {comment['서비스']}</Text>
 			</View>
-			<Text style={style.commentsText}>종합 : {comment['종합']}</Text>
 			{comment['리뷰'] !== '' &&
 				<View style={style.commentsReview}>
 					<Text style={style.commentsText}>
@@ -106,7 +107,7 @@ const RatingBar = (props) => {
 			</View>
 			<AnimatedCircularProgress
 				tintColor={props.color}
-				backgroundColor="#d4d4d4"
+				backgroundColor="#ddd"
 				size={80}
 				width={10}
 				rotation={0}
@@ -115,7 +116,7 @@ const RatingBar = (props) => {
 			>
 				{(fill) => (
 					<Text style={{ fontSize: 20 }}>
-						{Math.round(ratingData * 100) / 100}
+						{Math.round(ratingData * 10) / 10}
 					</Text>
 				)}
 			</AnimatedCircularProgress>
@@ -131,15 +132,16 @@ const style = StyleSheet.create({
 		marginVertical: 6,
 	},
 	keyText: {
-		color: '#033326',
+		color: '#fff',
 		fontSize: 16,
-		marginVertical: 3,
-		marginHorizontal: 10
+		marginVertical: 7,
+		marginHorizontal: 12
 	},
 	titleView: {
-		backgroundColor: '#86efac',
-		borderRadius: 50,
-		marginHorizontal: 5
+		backgroundColor: '#BF2A52',
+		borderRadius: 7,
+		marginVertical: 5,
+		marginHorizontal: 10
 	},
 	iconView: {
 		width: 18,
@@ -153,11 +155,12 @@ const style = StyleSheet.create({
 		marginVertical: 5
 	},
 	ratingTextView: {
-		width: 52,
-		height: 22,
+		width: 60,
+		height: 28,
 		justifyContent: 'center',
 		borderRadius: 50,
-		marginVertical: 10,
+		marginTop: 10,
+		marginBottom: 20,
 		marginHorizontal: 5
 	},
 	ratingText: {
@@ -167,19 +170,19 @@ const style = StyleSheet.create({
 	menuView: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		backgroundColor: '#d1d1d1',
+		borderBottomColor: '#ededed',
+		borderBottomWidth: 0.5,
 		paddingVertical: 5,
 		paddingHorizontal: 10,
 		marginBottom: 5,
-		marginHorizontal: 10
+		marginHorizontal: 25
 	},
 	commentsView: {
-		borderTopWidth: 1,
-		borderColor: '#7b7b7b',
+		borderTopWidth: 0.5,
+		borderColor: '#ededed',
 		width: '100%',
-		marginVertical: 5,
-		paddingVertical: 5,
-		paddingHorizontal: 20
+		paddingVertical: 20,
+		paddingHorizontal: 17
 	},
 	commentHeader: {
 		height: 50,
@@ -190,10 +193,12 @@ const style = StyleSheet.create({
 	commentsText: {
 		color: '#1c1917',
 		fontSize: 14,
-		marginVertical: 3
+		marginVertical: 7
 	},
 	commentsReview: {
 		borderWidth: 1,
+		borderColor: '#ccc',
+		borderRadius: 7,
 		paddingVertical: 5,
 		paddingHorizontal: 10,
 		marginVertical: 5,
@@ -203,6 +208,6 @@ const style = StyleSheet.create({
 		aspectRatio: 1,
 		borderRadius: 20,
 		marginVertical: 5,
-		marginRight: 10
+		marginRight: 12
 	}
 })

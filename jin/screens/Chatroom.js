@@ -191,10 +191,10 @@ export default function ({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f2f2f2',
+            headerTintColor: '#fff',
             headerTitleAlign: 'center',
             headerRight: () => (
-              <Icon name="plus" size={24} color="#f2f2f2"
+              <Icon name="plus" size={24} color="#fff"
                 onPress={() => navigation.navigate('새로운 채팅방 만들기')} />
             )
           }} />
@@ -209,7 +209,7 @@ export default function ({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f2f2f2',
+            headerTintColor: '#fff',
             headerTitleAlign: 'center',
             animation: 'slide_from_right'
           }} />
@@ -224,12 +224,12 @@ export default function ({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f2f2f2',
+            headerTintColor: '#fff',
             headerTitleAlign: 'center',
             animation: 'fade_from_bottom',
             headerRight: () => (
               (user?.uid === route.params.thread.initialUser) &&
-              <Icon name="trash" size={24} color="#f2f2f2"
+              <Icon name="trash" size={24} color="#fff"
                 onPress={() => setShowAuthModal(route.params.thread)}
               />
             )
