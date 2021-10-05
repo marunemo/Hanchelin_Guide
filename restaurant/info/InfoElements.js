@@ -38,7 +38,7 @@ const MenuListView = (props) => {
 
 	return (
 		<View style={style.menuView}>
-			<Text bold>{food}</Text>
+			<Text style={{ fontWeight: 'bold' }}>{food}</Text>
 			<Text>{price}원</Text>
 		</View>
 	)
@@ -116,7 +116,7 @@ const RatingBar = (props) => {
 			>
 				{(fill) => (
 					<Text style={{ fontSize: 20 }}>
-						{Math.round(ratingData * 100) / 100}
+						{Math.round(ratingData * 10) / 10}
 					</Text>
 				)}
 			</AnimatedCircularProgress>
@@ -180,8 +180,7 @@ const style = StyleSheet.create({
 		borderTopWidth: 0.5,
 		borderColor: '#ededed',
 		width: '100%',
-		paddingTop: 15,
-		paddingBottom: 10,
+		paddingVertical: 20,
 		paddingHorizontal: 17
 	},
 	commentHeader: {

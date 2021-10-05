@@ -97,7 +97,7 @@ const RestComponent = (props) => {
             onFinishRating={console.log}
           />
           <Text style={{ fontSize: 20, textAlign: "center" }}>
-            {restData['total'] ? restData['total'] : 0} / 5
+            {restData['total'] ? Math.round(restData['total'] * 10) / 10 : 0} / 5
           </Text>
         </View>
         <View style={style.basicInfoPadding}>
