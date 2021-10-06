@@ -21,7 +21,6 @@ import firestore from '@react-native-firebase/firestore';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { black } from 'color-name';
-import { fontStyle, fontWeight } from 'styled-system';
 
 export default function Profile(props) {
   const user = auth().currentUser;

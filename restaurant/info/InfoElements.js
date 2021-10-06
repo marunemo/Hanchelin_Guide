@@ -4,7 +4,6 @@ import Text from '../../defaultSetting/FontText';
 import { IconButton, Icon } from 'native-base';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Font from 'react-native-vector-icons/FontAwesome';
-import { marginBottom } from 'styled-system';
 
 const KeyTextView = (props) => {
 	return (
