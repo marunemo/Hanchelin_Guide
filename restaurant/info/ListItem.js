@@ -91,21 +91,20 @@ const RestComponent = (props) => {
           },
           description: restData['address'],
         },
-        buttons: {
-          title: '앱에서 보기',
+        buttons: [{
+          title: '앱으로 연결',
           link: {
-            androidExecutionParams: [
-              { key: 'title', value: restData['name'] },
-              { key: 'restId', value: restData['id'] },
-            ],
-            iosExecutionParams: [
-              { key: 'title', value: restData['name'] },
-              { key: 'restId', value: restData['id'] },
-            ],
+            // androidExecutionParams: [
+            //   { key: 'title', value: restData['name'] },
+            //   { key: 'restId', value: restData['id'] },
+            // ],
+            // iosExecutionParams: [
+            //   { key: 'title', value: restData['name'] },
+            //   { key: 'restId', value: restData['id'] },
+            // ],
           },
-        },
+        }],
       });
-      console.log(response);
     } catch (e) {
       if (e.message == '카카오톡이 설치되어있지 않습니다.') {
         toast.show({
