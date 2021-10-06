@@ -23,7 +23,7 @@ import { createFilter } from 'react-native-search-filter';
 import RestInfo from './info/ListItem';
 import Profile from "../jin/screens/Profile.js";
 
-const KEYS_TO_FILTERS = ['name', 'dong', 'category'];
+const KEYS_TO_FILTERS = ['name'];
 //const [headerColor, iconActiveColor, iconInActiveColor] = ["#BF2A52", "#00FF00", "#f5f5f5"];
 const [headerColor, iconActiveColor, iconInActiveColor] = ["#efefef", "#BF2A52", "#bbb"];
 
@@ -87,7 +87,7 @@ class RestaurantItem extends Component {
               style={{ tintColor: "#555" }}
               mr={0.5}
             />
-            <Text color='#555'>{item.total}</Text>
+            <Text color='#555'>{item.total.toFixed(1)}</Text>
             <Image
               resizeMode="contain"
               source={require('../images/heart.png')}
@@ -121,7 +121,7 @@ class Home extends Component {
     this.state = {
       searchTerm: '',
       switchValue: false,
-      category: '한식',
+      category: '',
       sortTerm: '가나다순',
       data: [],
       changeListener: null
@@ -153,9 +153,9 @@ class Home extends Component {
   }
   render() {
     const filteredArr = (this.state.data)
+      .filter(createFilter(this.state.category, 'category'))
       .filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
       .filter(createFilter(this.state.switchValue ? 'true' : '', 'delivery_availability'))
-      .filter(createFilter(this.state.category, 'category'))
     return (
       <NativeBaseProvider>
         <Box backgroundColor={headerColor}>
@@ -181,6 +181,7 @@ class Home extends Component {
                 endIcon: <CheckIcon size={4} />,
               }}
             >
+              <Select.Item label="전체" value="전체" />
               <Select.Item label="한식" value="한식" />
               <Select.Item label="양식" value="양식" />
               <Select.Item label="돈까스 / 회 / 일식" value="돈까스 / 회 / 일식" />
@@ -221,6 +222,7 @@ class Home extends Component {
             iconActiveColor={iconActiveColor}
             iconInactiveColor={iconInActiveColor}
             switchValue={this.state.switchValue}
+            iconBool={true}
             onChangeText={(term) => { this.searchUpdated(term) }}
             onPress={() => this.setState({ switchValue: !(this.state.switchValue) })}
           />
@@ -259,13 +261,13 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f5f5f5',
+            headerTintColor: '#fff',
             headerTitleAlign: 'center',
             headerRight: () => (
               <Icon
                 name="user"
                 size={24}
-                color="#f5f5f5"
+                color="#fff"
                 onPress={() => navigation.navigate("프로필")}
               />
             )
@@ -282,7 +284,7 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f5f5f5',
+            headerTintColor: '#fff',
             headerTitleAlign: 'center',
             animation: 'fade_from_bottom'
           })}
@@ -298,7 +300,7 @@ export default function App({ navigation }) {
             headerStyle: {
               backgroundColor: '#BF2A52',
             },
-            headerTintColor: '#f5f5f5',
+            headerTintColor: '#fff',
             headerTitleAlign: 'center',
             animation: 'slide_from_right'
           }}
