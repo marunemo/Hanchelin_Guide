@@ -48,6 +48,21 @@ const CommentListView = (props) => {
 	const comment = props.comment;
 	const commentUser = comment['user'];
 
+	const dateTimeFormat = (writtenDate) => {
+		const date = Date.parse(writtenDate);
+		const diffDate = new Date(new Date() - date);
+		if (diffDate.getTime() < 60 * 1000) {
+			return "·····  " + diffDate.getSeconds().toString() + "초 전";
+		} else if (diffDate.getTime() < 60 * 60 * 1000) {
+			return "·····  " + diffDate.getMinutes().toString() + "분 전";
+		} else if (diffDate.getTime() < 24 * 60 * 60 * 1000) {
+			return "·····  " + diffDate.getHours().toString() + "시간 전";
+		} else {
+			return date.getFullYear().toString() + "/" + date.getMonth().toString() + "/" + date.getDay().toString()
+				+ " " + date.getHours().toString() + ":" + date.getMinutes().toString();
+		}
+	}
+
 	return (
 		<View style={style.commentsView}>
 			<View style={style.commentHeader}>
@@ -58,7 +73,7 @@ const CommentListView = (props) => {
 					/>
 					<View>
 						<Text style={{ fontSize: 16, marginBottom: 4 }} bold>{commentUser['name']}</Text>
-						<Text style={{ fontSize: 12, textAlign: 'right', color: '#4b4b4b' }}>{comment['작성시간']}</Text>
+						<Text style={{ fontSize: 12, textAlign: 'right', color: '#4b4b4b' }}>{dateTimeFormat(comment['작성시간'])}</Text>
 					</View>
 				</View>
 				{props.user.uid === commentUser['uid'] &&
