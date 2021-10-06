@@ -124,6 +124,7 @@ function Chatroom({ navigation, route }) {
         // switchValue={this.state.switchValue}
         // onChangeText={(term) => { this.searchUpdated(term) }}
         // onPress={() => this.setState({ switchValue: !(this.state.switchValue) })}
+        // TODO::필터 기능 추가하기
         />
         <FlatList
           data={threads}

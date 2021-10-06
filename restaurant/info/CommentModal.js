@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Keyboard, View, SafeAreaView, StyleSheet } from 'react-native';
+import { Keyboard, View, SafeAreaView, StyleSheet, Image } from 'react-native';
 import Text from '../../defaultSetting/FontText';
 import { IconButton, Icon, Input, Button } from 'native-base';
 import { KeyboardAwareScrollView as ScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -248,11 +248,16 @@ const CommentButton = (props) => {
       <IconButton
         style={style.commentButton}
         borderRadius="full"
-        colorScheme="rose"
+        colorScheme="orange"
         variant="solid"
         size="lg"
         onPress={() => showInput(true)}
-        icon={<Icon name="pencil" as={Font} size="sm" />}
+        icon={<Image
+          source={require('../../images/pencil.png')}
+          alt="Alternate Text"
+          style={{ width: 24, height: 24, tintColor: "#fff" }}
+        />
+        }
       />
     </>
   );
