@@ -73,10 +73,7 @@ const RestComponent = (props) => {
 
   
   let uidArray = [];
-  const [togHeart, setTogHeart] = useState(!uidArray.includes(user?.uid) ? true : false);
-  const [heart, setHeart] = useState(0);
   let heartRef = firestore().collection('가게').doc(restData['official_name']).collection('찜');
-  let [heartName, setHeartName] = useState('');
 
   useEffect(() => {
     heartRef
@@ -88,9 +85,14 @@ const RestComponent = (props) => {
       })
   })
 
+  const [togHeart, setTogHeart] = useState(uidArray.includes(user?.uid) ? true : false);
+  const [heart, setHeart] = useState(0);
+
+
   async function addHeart () {
     if (!uidArray.includes(user?.uid)) {
       setHeart(heart + 1)
+      setTogHeart(true)
 
       heartRef.doc('정보').set({
         찜: firestore.FieldValue.increment(1),
@@ -98,15 +100,13 @@ const RestComponent = (props) => {
       }, { merge: true })
     } else {
       setHeart(heart - 1)
+      setTogHeart(false)
 
       heartRef.doc('정보').set({
         찜: firestore.FieldValue.increment(-1),
         userId: firestore.FieldValue.arrayRemove(user?.uid),
       }, { merge: true })
     }
-    
-    setHeart(heart)
-    setTogHeart(togHeart)
   }
 
   const navigation = useNavigation();
