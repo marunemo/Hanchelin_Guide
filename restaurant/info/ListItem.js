@@ -326,7 +326,7 @@ const style = StyleSheet.create({
   horizontalLayout: {
     flexDirection: 'row-reverse',
     marginVertical: 10,
-    paddingBottom: 10
+    paddingVertical: 10
   },
   mapView: {
     width: '100%',
