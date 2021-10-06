@@ -91,6 +91,19 @@ const RestComponent = (props) => {
           },
           description: restData['address'],
         },
+        buttons: {
+          title: '앱에서 보기',
+          link: {
+            androidExecutionParams: [
+              { key: 'title', value: restData['name'] },
+              { key: 'restId', value: restData['id'] },
+            ],
+            iosExecutionParams: [
+              { key: 'title', value: restData['name'] },
+              { key: 'restId', value: restData['id'] },
+            ],
+          },
+        },
       });
       console.log(response);
     } catch (e) {

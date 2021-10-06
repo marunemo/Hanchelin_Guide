@@ -8,6 +8,7 @@ ios/Fonts/
 
 ### for Security ###
 
+defaultSetting/secure.json
 android/app/src/main/AndroidManifest.xml
 android/app/src/main/res/values/strings.xml
 ios/Hanchelin_Guide/Info.plist
