@@ -321,7 +321,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 18
   },
   basicInfoPadding: {
-    paddingHorizontal: 30
+    paddingHorizontal: 35
   },
   horizontalLayout: {
     flexDirection: 'row-reverse',
