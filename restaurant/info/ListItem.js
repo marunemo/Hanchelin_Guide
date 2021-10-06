@@ -89,14 +89,14 @@ const RestComponent = (props) => {
             type="custom"
             ratingImage={require('../../images/info-icon/star.png')}
             ratingColor="#BF2A52"
-            ratingBackgroundColor="#ccc"
+            ratingBackgroundColor="#ddd"
             startingValue={restData['total'] ? restData['total'] : 0}
             imageSize={50}
             fractions={1}
             readonly={true}
             onFinishRating={console.log}
           />
-          <Text style={{ marginTop: 10, fontSize: 20, textAlign: "center" }}>
+          <Text style={{ marginTop: 10, fontSize: 20, textAlign: "center", fontWeight: 'bold', color: '#444' }}>
             {restData['total'] ? Math.round(restData['total'] * 10) / 10 : 0} / 5
           </Text>
         </View>
@@ -313,7 +313,7 @@ const style = StyleSheet.create({
   },
   partition: {
     backgroundColor: '#ffffff',
-    marginTop: 3,
+    marginTop: 1.5,
     paddingTop: 18,
     paddingBottom: 40
   },

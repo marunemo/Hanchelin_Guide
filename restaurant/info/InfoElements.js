@@ -22,11 +22,11 @@ const InfoView = (props) => {
 			<View style={style.iconView}>
 				<Font
 					name={props.icon}
-					color="#666666"
+					color="#555"
 					size={22}
 				/>
 			</View>
-			<Text style={{ fontSize: 16, marginVertical: 3 }}>
+			<Text style={{ fontSize: 16, marginVertical: 3, color: '#444' }}>
 				{props.value}
 			</Text>
 		</View>
@@ -38,8 +38,8 @@ const MenuListView = (props) => {
 
 	return (
 		<View style={style.menuView}>
-			<Text style={{ fontWeight: 'bold' }}>{food}</Text>
-			<Text>{price}원</Text>
+			<Text style={{ fontWeight: 'bold', color: '#333' }}>{food}</Text>
+			<Text style={{ color: '#333' }}>{price}원</Text>
 		</View>
 	)
 }
@@ -58,7 +58,7 @@ const CommentListView = (props) => {
 						source={{ uri: commentUser['profile'] }}
 					/>
 					<View>
-						<Text style={{ fontSize: 16, marginBottom: 4 }} bold>{commentUser['name']}</Text>
+						<Text style={{ fontSize: 16, marginBottom: 4, color: '#222' }} bold>{commentUser['name']}</Text>
 						<Text style={{ fontSize: 12, textAlign: 'right', color: '#4b4b4b' }}>{comment['작성시간']}</Text>
 					</View>
 				</View>
@@ -153,7 +153,7 @@ const style = StyleSheet.create({
 	},
 	iconView: {
 		width: 18,
-		marginRight: 10,
+		marginRight: 12,
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
