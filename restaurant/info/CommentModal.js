@@ -132,15 +132,19 @@ const CommentButton = (props) => {
             enableResetScrollToCoords={false}
             showsVerticalScrollIndicator={false}
           >
-            <Text style={style.commentText}>주문 방식</Text>
+            <Text style={style.commentText}>방식</Text>
             <Button.Group alignSelf="center">
               <Button
-                colorScheme={isDeliver ? "rgb(4, 120, 87)" : "rgb(52, 211, 153)"}
-                onPress={() => setDeliver(true)}>
+                colorScheme={"rgb(4, 120, 87)"}
+                variant={isDeliver ? "solid" : "outline"}
+                onPress={() => setDeliver(true)}
+                mr={1}
+              >
                 배달
               </Button>
               <Button
-                colorScheme={!isDeliver ? "rgb(4, 120, 87)" : "rgb(52, 211, 153)"}
+                colorScheme={"rgb(4, 120, 87)"}
+                variant={isDeliver ? "outline" : "solid"}
                 onPress={() => setDeliver(false)}>
                 방문
               </Button>
@@ -226,19 +230,26 @@ const CommentButton = (props) => {
               onChangeText={setReview}
             />
           </ScrollView>
-          <Button.Group style={{ marginVertical: 10 }}>
+          <Button.Group style={{ marginTop: 15, marginBottom: 10 }}>
             <Button
-              colorScheme="rgb(14, 165, 233)"
+              colorScheme="teal"
               onPress={() => {
                 addReview();
                 showInput(false);
               }}
+              _text={{
+                color: "#fff",
+              }}
+              mr={1}
             >
               완료
             </Button>
             <Button
-              colorScheme="rgb(251, 113, 133)"
+              colorScheme="danger"
               onPress={() => showInput(false)}
+              _text={{
+                color: "#fff",
+              }}
             >
               취소
             </Button>
@@ -300,12 +311,14 @@ const style = StyleSheet.create({
   headerTitle: {
     fontWeight: 'bold',
     fontSize: 22,
+    color: '#333',
     textAlign: 'center'
   },
   commentText: {
     fontWeight: 'bold',
     alignSelf: 'flex-start',
     fontSize: 16,
+    color: '#333',
     paddingHorizontal: 16,
     marginTop: 15,
     marginBottom: 8
