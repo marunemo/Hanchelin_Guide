@@ -287,8 +287,8 @@ const style = StyleSheet.create({
   },
   commentButton: {
     position: 'absolute',
-    bottom: 30,
-    right: 30,
+    bottom: 20,
+    right: 20,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#333333',
