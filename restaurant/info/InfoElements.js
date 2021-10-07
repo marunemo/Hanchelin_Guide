@@ -49,7 +49,7 @@ const CommentListView = (props) => {
 	const commentUser = comment['user'];
 
 	const dateTimeFormat = (writtenDate) => {
-		const date = Date.parse(writtenDate);
+		const date = new Date(writtenDate);
 		const diffDate = new Date(new Date() - date);
 		if (diffDate.getTime() < 60 * 1000) {
 			return "·····  " + diffDate.getSeconds().toString() + "초 전";

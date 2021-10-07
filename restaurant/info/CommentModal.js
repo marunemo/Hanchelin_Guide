@@ -57,7 +57,7 @@ const CommentButton = (props) => {
           배달여부: isDeliver,
           배달시간: delivTime,
           배달비: delivFee,
-          작성시간: new Date().toISOString(),
+          작성시간: new Date().toLocaleString(),
           user: {
             uid: user?.uid,
             name: user?.displayName,
