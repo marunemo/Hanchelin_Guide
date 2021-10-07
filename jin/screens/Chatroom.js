@@ -4,11 +4,10 @@ import {
   View,
   TouchableOpacity,
   FlatList,
-  ActivityIndicator,
 } from 'react-native';
 import Text from '../../defaultSetting/FontText';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NativeBaseProvider, Stack, HStack, Modal, Button, useToast } from 'native-base';
+import { NativeBaseProvider, Stack, HStack, Modal, Button, useToast, Spinner } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -50,7 +49,7 @@ function Chatroom({ navigation, route }) {
           setLoading(false);
         }
       })
-    
+
     const { response } = route.params;
     if (response === 0) {
       toast.show({
@@ -83,12 +82,12 @@ function Chatroom({ navigation, route }) {
   }, [route.params.response]);
 
   if (loading) {
-    return <ActivityIndicator />
+    return <Spinner size="lg" color="gray.300" />
   } else if (!threads.length) {
     return (
       <NativeBaseProvider>
         <View style={styles.emptyView}>
-          <ActivityIndicator />
+          <Spinner size="sm" color="rose.500" />
           <Text style={styles.emptyText}>생성된 채팅방이 없습니다.</Text>
         </View>
       </NativeBaseProvider>
