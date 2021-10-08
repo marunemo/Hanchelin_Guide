@@ -80,7 +80,6 @@ const RestComponent = (props) => {
   function openingParse(breaktime) {
     if (breaktime == undefined)
       return '연중무휴';
-    console.log(breaktime)
     const week = '월화수목금토일';
     const dateData = typeof (breaktime) == 'object' ? breaktime : [breaktime]
     let weekHours = new Map();
@@ -97,8 +96,7 @@ const RestComponent = (props) => {
         hours = dateHours.substring(dateHours.indexOf(' ') + 1);
       } else if (weekRange.length == 1) {
         let index = 0;
-        while (isNaN(Number(dateHours[index]))) index++;
-        console.log(index)
+        while (dateHours[index] == ' ' || isNaN(Number(dateHours[index]))) index++;
         validWeek = dateHours.substring(0, index).replace(/\s/g, '');
         hours = dateHours.substring(index + 1);
       } else {
