@@ -97,9 +97,10 @@ const RestComponent = (props) => {
         hours = dateHours.substring(dateHours.indexOf(' ') + 1);
       } else if (weekRange.length == 1) {
         let index = 0;
-        while (!isNaN(Number(hours[index]))) index++;
+        while (isNaN(Number(dateHours[index]))) index++;
+        console.log(index)
         validWeek = dateHours.substring(0, index).replace(/\s/g, '');
-        hours = dateHours.substring(index);
+        hours = dateHours.substring(index + 1);
       } else {
         return (weekRange == '휴무일:') ? dateData : '휴무일: ' + dateData;
       }
