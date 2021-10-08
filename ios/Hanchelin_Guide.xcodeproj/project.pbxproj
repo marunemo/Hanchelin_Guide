@@ -15,6 +15,7 @@
 		236E22BB26FD9E83006506EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 236E22B926FD9E83006506EA /* GoogleService-Info.plist */; };
 		236E22BD26FD9E9A006506EA /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 236E22BC26FD9E99006506EA /* Fonts */; };
 		236E22BE26FD9E9A006506EA /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 236E22BC26FD9E99006506EA /* Fonts */; };
+		50730EB2270D971D006876C7 /* libswiftWebKit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 50730EB1270D971D006876C7 /* libswiftWebKit.tbd */; };
 		50B3793026E922F2004A18E5 /* ELANDChoiceM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50B3792E26E922CB004A18E5 /* ELANDChoiceM.ttf */; };
 		50B3793126E922F2004A18E5 /* ELANDChoiceB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50B3792F26E922CB004A18E5 /* ELANDChoiceB.ttf */; };
 		60A099611B96CB16A5920A1C /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1678DC2CA1F4BA219C0DD133 /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a */; };
@@ -52,6 +53,7 @@
 		3A74CF01FAC7F41BA925AF8E /* Pods-Hanchelin_Guide.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hanchelin_Guide.release.xcconfig"; path = "Target Support Files/Pods-Hanchelin_Guide/Pods-Hanchelin_Guide.release.xcconfig"; sourceTree = "<group>"; };
 		4D8583F1E529461DAD23E993 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		503C0A1426BEAD5500D4665E /* Hanchelin_Guide-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hanchelin_Guide-Bridging-Header.h"; sourceTree = "<group>"; };
+		50730EB1270D971D006876C7 /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
 		50B3792E26E922CB004A18E5 /* ELANDChoiceM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ELANDChoiceM.ttf; path = Fonts/ELANDChoiceM.ttf; sourceTree = "<group>"; };
 		50B3792F26E922CB004A18E5 /* ELANDChoiceB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ELANDChoiceB.ttf; path = Fonts/ELANDChoiceB.ttf; sourceTree = "<group>"; };
 		622990AE1325FD5C26217DB5 /* libPods-Hanchelin_Guide.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Hanchelin_Guide.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50730EB2270D971D006876C7 /* libswiftWebKit.tbd in Frameworks */,
 				E7FA51B2EE591BBA7BF37B3E /* libPods-Hanchelin_Guide.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,6 +154,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50730EB1270D971D006876C7 /* libswiftWebKit.tbd */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				622990AE1325FD5C26217DB5 /* libPods-Hanchelin_Guide.a */,
 				1678DC2CA1F4BA219C0DD133 /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a */,
@@ -513,7 +517,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Hanchelin_GuideTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -538,7 +542,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 4C4PBP93YJ;
 				INFOPLIST_FILE = Hanchelin_GuideTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -565,10 +569,14 @@
 				DEVELOPMENT_TEAM = 4C4PBP93YJ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Hanchelin_Guide/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/swift",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -593,10 +601,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4C4PBP93YJ;
 				INFOPLIST_FILE = Hanchelin_Guide/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/swift",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -660,7 +672,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -718,7 +730,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",

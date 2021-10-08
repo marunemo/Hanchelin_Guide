@@ -135,6 +135,7 @@ android {
         applicationId "com.hanchelin_guide"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        multiDexEnabled rootProject.ext.multiDexEnabled
         versionCode 1
         versionName "1.0"
     }
@@ -209,6 +210,9 @@ dependencies {
 
     // Import date time picker
     implementation project(':@react-native-community_datetimepicker')
+
+    // For com.google.gson.TypeAdapter error
+    implementation 'com.google.code.gson:gson:2.8.5'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

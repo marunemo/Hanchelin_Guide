@@ -5,13 +5,14 @@ import Text from '../../defaultSetting/FontText';
 // import Animated from 'react-native-reanimated';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import { Rating } from 'react-native-ratings';
-import { NativeBaseProvider, HStack, Center, Button } from 'native-base';
+import { NativeBaseProvider, HStack, Center, Button, useToast } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import KakaoShareLink from 'react-native-kakao-share-link';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
@@ -46,6 +47,9 @@ const MapView = (props) => {
 }
 
 const RestComponent = (props) => {
+  const [tog, setTog] = useState(false);
+  const navigation = useNavigation();
+  const toast = useToast();
   const user = auth().currentUser;
   const restData = props.restData;
   const menuList = restData['menu'];
@@ -73,8 +77,54 @@ const RestComponent = (props) => {
     }
   }
 
-  const [tog, setTog] = useState(false);
-  const navigation = useNavigation();
+  async function kakaoSharing() {
+    try {
+      const response = await KakaoShareLink.sendLocation({
+        address: restData['address'],
+        addressTitle: restData['official_name'],
+        content: {
+          title: restData['official_name'],
+          imageUrl:
+            'http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg',
+          link: {
+            webUrl: 'https://developers.kakao.com/',
+            mobileWebUrl: 'https://developers.kakao.com/',
+          },
+          description: restData['address'],
+        },
+        buttons: [{
+          title: '앱으로 연결',
+          link: {
+            // androidExecutionParams: [
+            //   { key: 'title', value: restData['name'] },
+            //   { key: 'restId', value: restData['id'] },
+            // ],
+            // iosExecutionParams: [
+            //   { key: 'title', value: restData['name'] },
+            //   { key: 'restId', value: restData['id'] },
+            // ],
+          },
+        }],
+      });
+    } catch (e) {
+      if (e.message == '카카오톡이 설치되어있지 않습니다.') {
+        toast.show({
+          title: '공유 실패',
+          description: '카카오톡이 설치되어 있지 않습니다.',
+          status: 'error',
+          style: { width: 320 }
+        })
+      } else {
+        toast.show({
+          title: '오류 발생',
+          description: e.message,
+          status: 'error',
+          style: { width: 320 }
+        })
+      }
+    }
+  }
+
   return (
     <>
       <Animated.View style={props.scrollAnimation}>
@@ -127,9 +177,9 @@ const RestComponent = (props) => {
             </Button>
           </Center>
           <Center style={[style.optionView, style.horizonStack, { borderRightWidth: 0 }]}>
-            <Button style={style.optionButton} onPress={() => setTog(!tog)}>
+            <Button style={style.optionButton} onPress={kakaoSharing}>
               <Font style={{ textAlign: "center" }} name="share" size={30} color="#999999" />
-              <Text style={{ textAlign: "center", marginTop: 5 }}>??? 공유</Text>
+              <Text style={{ textAlign: "center", marginTop: 5 }}>카카오톡 공유</Text>
             </Button>
           </Center>
         </HStack>
