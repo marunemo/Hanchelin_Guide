@@ -128,6 +128,8 @@ const RestComponent = (props) => {
         for (const hour of weekHours[day])
           result += hour.toString().replace(',', '~') + ', ';
         result = result.substring(0, result.length - 2) + '\n';
+      } else {
+        result += "휴무\n"
       }
     }
     return result;
