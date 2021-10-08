@@ -80,11 +80,12 @@ const RestComponent = (props) => {
   function openingParse(breaktime) {
     if (breaktime == undefined)
       return '연중무휴';
+    console.log(breaktime)
     const week = '월화수목금토일';
     const dateData = typeof (breaktime) == 'object' ? breaktime : [breaktime]
     let weekHours = new Map();
-    for (i of week) weekHours.set(i, [[]])
-    for (dateHours of dateData) {
+    for (const i of week) weekHours.set(i, [[]])
+    for (const dateHours of dateData) {
       const weekRange = dateHours.substring(0, dateHours.indexOf(' '));
       let validWeek = '';
       let hours = '';
@@ -105,7 +106,7 @@ const RestComponent = (props) => {
 
       if (hours.includes('브레이크타임')) {
         const spliter = hours.substring(hours.indexOf(' ') + 1).split(' ~ ');
-        for (day of validWeek) {
+        for (const day of validWeek) {
           weekHours[day].forEach((openingHour, i) => {
             if (openingHour[1] > spliter[0] && openingHour[0] < spliter[0]) {
               weekHours[day].push([spliter[1], openingHour[1]])
@@ -115,19 +116,20 @@ const RestComponent = (props) => {
         }
       }
       else {
-        for (day of validWeek)
+        for (const day of validWeek)
           weekHours[day] = [hours.split(' ~ ')];
       }
     }
 
     let result = '';
-    console.log(weekHours)
-    for (day of week) {
+    for (const day of week) {
       result += day + ' : ';
-      weekHours[day].sort();
-      for (hour of weekHours[day])
-        result += hour.toString().replace(',', '~') + ', ';
-      result = result.substring(0, result.length - 2) + '\n';
+      if (weekHours[day]) {
+        weekHours[day].sort();
+        for (const hour of weekHours[day])
+          result += hour.toString().replace(',', '~') + ', ';
+        result = result.substring(0, result.length - 2) + '\n';
+      }
     }
     return result;
   }
