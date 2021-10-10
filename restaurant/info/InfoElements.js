@@ -52,14 +52,14 @@ const CommentListView = (props) => {
     const date = new Date(writtenDate);
     const diffDate = new Date(new Date() - date);
     if (diffDate.getTime() < 60 * 1000) {
-      return "·····  " + diffDate.getSeconds().toString() + "초 전";
+      return '·····  ' + diffDate.getSeconds().toString() + '초 전';
     } else if (diffDate.getTime() < 60 * 60 * 1000) {
-      return "·····  " + diffDate.getMinutes().toString() + "분 전";
+      return '·····  ' + diffDate.getMinutes().toString() + '분 전';
     } else if (diffDate.getTime() < 24 * 60 * 60 * 1000) {
-      return "·····  " + diffDate.getUTCHours().toString() + "시간 전";
+      return '·····  ' + diffDate.getUTCHours().toString() + '시간 전';
     } else {
-      return date.getFullYear().toString() + "/" + date.getMonth().toString() + "/" + date.getDate().toString()
-        + " " + date.getHours().toString() + ":" + date.getMinutes().toString();
+      return date.getFullYear().toString() + '/' + date.getMonth().toString() + '/' + date.getDate().toString()
+        + ' ' + (date.getHours()<10?'0':'') + date.getHours().toString() + ':' + (date.getMinutes()<10?'0':'') + date.getMinutes().toString();
     }
   }
 
