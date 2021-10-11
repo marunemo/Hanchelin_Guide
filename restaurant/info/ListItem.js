@@ -16,7 +16,7 @@ import KakaoShareLink from 'react-native-kakao-share-link';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
-import { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar } from './InfoElements';
+import { KeyTextView, InfoView, MenuListView, CommentListView, CommentListSetting, RatingBar } from './InfoElements';
 
 const Stack = createNativeStackNavigator();
 

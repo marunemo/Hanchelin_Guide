@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import Text from '../../defaultSetting/FontText';
-import { IconButton, Icon } from 'native-base';
+import { IconButton, Icon, Modal, Button } from 'native-base';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Font from 'react-native-vector-icons/FontAwesome';
 
@@ -59,7 +59,7 @@ const CommentListView = (props) => {
       return '·····  ' + diffDate.getUTCHours().toString() + '시간 전';
     } else {
       return date.getFullYear().toString() + '/' + date.getMonth().toString() + '/' + date.getDate().toString()
-        + ' ' + (date.getHours()<10?'0':'') + date.getHours().toString() + ':' + (date.getMinutes()<10?'0':'') + date.getMinutes().toString();
+        + ' ' + (date.getHours() < 10 ? '0' : '') + date.getHours().toString() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes().toString();
     }
   }
 
@@ -81,7 +81,6 @@ const CommentListView = (props) => {
             size="sm"
             borderRadius="full"
             borderWidth={1}
-            justifyContent="center"
             onPress={() => props.onPop(id, comment.query)}
             icon={<Icon name="ellipsis-v" as={Font} size="sm" color="#831843" />}
           />
@@ -106,6 +105,51 @@ const CommentListView = (props) => {
         </Text>
       }
     </View>
+  )
+}
+
+const CommentListSetting = (props) => {
+  const SettingButton = (props) => {
+    if (props.isMine) {
+      return (
+        <Button.Group>
+          <Button>
+            대댓글
+          </Button>
+          <Button>
+            삭제
+          </Button>
+        </Button.Group>
+      )
+    } else {
+      return (
+        <Button.Group>
+          <Button>
+            대댓글
+          </Button>
+          <Button>
+            공감?
+          </Button>
+          <Button>
+            신고
+          </Button>
+        </Button.Group>
+      )
+    }
+  }
+
+  return (
+    <Modal>
+      <Modal.Content>
+        <Modal.Header>
+          {props.commentUid}님의 리뷰
+        </Modal.Header>
+        <Modal.CloseButton />
+        <Modal.Body>
+          <SettingButton isMine={props.uid == props.commentUid} />
+        </Modal.Body>
+      </Modal.Content>
+    </Modal>
   )
 }
 
@@ -139,7 +183,7 @@ const RatingBar = (props) => {
   )
 }
 
-export { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar };
+export { KeyTextView, InfoView, MenuListView, CommentListView, CommentListSetting, RatingBar };
 
 const style = StyleSheet.create({
   contexts: {
