@@ -16,31 +16,31 @@ const KeyTextView = (props) => {
 }
 
 const InfoView = (props) => {
-	return (
-		<View style={style.contexts}>
-			<View style={style.iconView}>
-				<Font
-					name={props.icon}
-					color="#555"
-					size={22}
-				/>
-			</View>
-			<Text style={{ fontSize: 16, marginVertical: 3, color: '#444' }}>
-				{props.value}
-			</Text>
-		</View>
-	)
+  return (
+    <View style={style.contexts}>
+      <View style={style.iconView}>
+        <Font
+          name={props.icon}
+          color="#555"
+          size={22}
+        />
+      </View>
+      <Text style={{ fontSize: 16, marginVertical: 3, color: '#444' }}>
+        {props.value}
+      </Text>
+    </View>
+  )
 }
 
 const MenuListView = (props) => {
   const [food, price] = props.order.split(': ');
 
-	return (
-		<View style={style.menuView}>
-			<Text style={{ fontWeight: 'bold', color: '#444' }}>{food}</Text>
-			<Text style={{ color: '#444' }}>{price}원</Text>
-		</View>
-	)
+  return (
+    <View style={style.menuView}>
+      <Text style={{ fontWeight: 'bold', color: '#444' }}>{food}</Text>
+      <Text style={{ color: '#444' }}>{price}원</Text>
+    </View>
+  )
 }
 
 const CommentListView = (props) => {
@@ -73,24 +73,24 @@ const CommentListView = (props) => {
             source={{ uri: commentUser['profile'] }}
           />
           <View>
-          <Text style={{ fontSize: 16, marginBottom: 4, color: '#222' }} bold>{commentUser['name']}</Text>
-						<Text style={{ fontSize: 12, textAlign: 'right', color: '#4b4b4b' }}>{dateTimeFormat(comment['작성시간'])}</Text>
+            <Text style={{ fontSize: 16, marginBottom: 4, color: '#222' }} bold>{commentUser['name']}</Text>
+            <Text style={{ fontSize: 12, textAlign: 'right', color: '#4b4b4b' }}>{dateTimeFormat(comment['작성시간'])}</Text>
           </View>
         </View>
         <IconButton
-						size="sm"
-						variant="outline"
-						colorScheme="dark"
-						borderRadius="full"
-						borderColor="#71717a"
-						borderWidth={1}
-						onPress={() => props.onPop(id, comment.query)}
-						icon={<Image
-							source={require('../../images/trash.png')}
-							alt="Alternate Text"
-							style={{ width: 23, height: 23, tintColor: "#71717a" }}
-						/>}
-          />
+          size="sm"
+          variant="outline"
+          colorScheme="dark"
+          borderRadius="full"
+          borderColor="#71717a"
+          borderWidth={1}
+          onPress={() => setSettingVisible(true)}
+          icon={<Image
+            source={require('../../images/trash.png')}
+            alt="Alternate Text"
+            style={{ width: 23, height: 23, tintColor: "#71717a" }}
+          />}
+        />
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Text style={style.commentsText}>종합 : {comment['종합']}</Text>
@@ -218,90 +218,90 @@ const RatingBar = (props) => {
 export { KeyTextView, InfoView, MenuListView, CommentListView, CommentListSetting, RatingBar };
 
 const style = StyleSheet.create({
-	contexts: {
-		flexDirection: 'row',
-		marginVertical: 6,
-	},
-	keyText: {
-		color: '#fff',
-		fontSize: 16,
-		marginVertical: 7,
-		marginHorizontal: 12
-	},
-	titleView: {
-		backgroundColor: '#BF2A52',
-		borderRadius: 7,
-		marginVertical: 5,
-		marginHorizontal: 10
-	},
-	iconView: {
-		width: 18,
-		marginRight: 12,
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
-	ratingView: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginVertical: 5
-	},
-	ratingTextView: {
-		width: 60,
-		height: 28,
-		justifyContent: 'center',
-		borderRadius: 50,
-		marginTop: 10,
-		marginBottom: 20,
-		marginHorizontal: 5
-	},
-	ratingText: {
-		textAlign: 'center',
-		fontSize: 14,
-	},
-	menuView: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		borderBottomColor: '#ededed',
-		borderBottomWidth: 0.5,
-		paddingVertical: 5,
-		paddingHorizontal: 10,
-		marginBottom: 5,
-		marginHorizontal: 25
-	},
-	commentsView: {
-		borderTopWidth: 0.5,
-		borderColor: '#ededed',
-		width: '100%',
-		paddingVertical: 20,
-		paddingHorizontal: 17
-	},
-	commentHeader: {
-		height: 50,
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center'
-	},
-	commentsText: {
-		color: '#333',
-		fontSize: 14,
-		marginVertical: 8,
-		paddingHorizontal: 10
-	},
-	commentsReview: {
-		borderWidth: 1,
-		borderColor: '#ccc',
-		borderRadius: 7,
-		paddingVertical: 5,
-		paddingHorizontal: 10,
-		marginVertical: 5,
-	},
-	userProfile: {
-		height: 40,
-		aspectRatio: 1,
-		borderRadius: 20,
-		marginVertical: 5,
-		marginRight: 12
-	},
+  contexts: {
+    flexDirection: 'row',
+    marginVertical: 6,
+  },
+  keyText: {
+    color: '#fff',
+    fontSize: 16,
+    marginVertical: 7,
+    marginHorizontal: 12
+  },
+  titleView: {
+    backgroundColor: '#BF2A52',
+    borderRadius: 7,
+    marginVertical: 5,
+    marginHorizontal: 10
+  },
+  iconView: {
+    width: 18,
+    marginRight: 12,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  ratingView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 5
+  },
+  ratingTextView: {
+    width: 60,
+    height: 28,
+    justifyContent: 'center',
+    borderRadius: 50,
+    marginTop: 10,
+    marginBottom: 20,
+    marginHorizontal: 5
+  },
+  ratingText: {
+    textAlign: 'center',
+    fontSize: 14,
+  },
+  menuView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderBottomColor: '#ededed',
+    borderBottomWidth: 0.5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginBottom: 5,
+    marginHorizontal: 25
+  },
+  commentsView: {
+    borderTopWidth: 0.5,
+    borderColor: '#ededed',
+    width: '100%',
+    paddingVertical: 20,
+    paddingHorizontal: 17
+  },
+  commentHeader: {
+    height: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  commentsText: {
+    color: '#333',
+    fontSize: 14,
+    marginVertical: 8,
+    paddingHorizontal: 10
+  },
+  commentsReview: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 7,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+  },
+  userProfile: {
+    height: 40,
+    aspectRatio: 1,
+    borderRadius: 20,
+    marginVertical: 5,
+    marginRight: 12
+  },
   modalButtonGroup: {
     flexDirection: 'column'
   },
