@@ -59,7 +59,7 @@ const CommentListView = (props) => {
     } else if (diffDate.getTime() < 24 * 60 * 60 * 1000) {
       return '·····  ' + diffDate.getUTCHours().toString() + '시간 전';
     } else {
-      return date.getFullYear().toString() + '/' + date.getMonth().toString() + '/' + date.getDate().toString()
+      return date.getFullYear().toString() + '/' + (date.getMonth() + 1).toString() + '/' + date.getDate().toString()
         + ' ' + (date.getHours() < 10 ? '0' : '') + date.getHours().toString() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes().toString();
     }
   }
