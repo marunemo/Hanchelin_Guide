@@ -109,8 +109,8 @@ const CommentListView = (props) => {
       <CommentListSetting
         isVisible={settingVisible}
         setVisible={setSettingVisible}
-        uid={props.user.uid}
-        commentUid={commentUser['uid']}
+        userName={commentUser['name']}
+        isMine={props.user.uid === commentUser['uid']}
       />
     </View>
   )
@@ -118,29 +118,41 @@ const CommentListView = (props) => {
 
 const CommentListSetting = (props) => {
   const SettingButton = (props) => {
+    return (
+      <Button
+        style={style.modalButton}
+        variant="ghost"
+        colorScheme={props.color}
+      >
+        {props.children}
+      </Button>
+    )
+  }
+
+  const SettingButtonGroup = (props) => {
     if (props.isMine) {
       return (
-        <Button.Group>
-          <Button>
+        <Button.Group style={style.modalButtonGroup}>
+          <SettingButton>
             대댓글
-          </Button>
-          <Button>
+          </SettingButton>
+          <SettingButton color="rose">
             삭제
-          </Button>
+          </SettingButton>
         </Button.Group>
       )
     } else {
       return (
-        <Button.Group>
-          <Button>
+        <Button.Group style={style.modalButtonGroup}>
+          <SettingButton>
             대댓글
-          </Button>
-          <Button>
+          </SettingButton>
+          <SettingButton>
             공감?
-          </Button>
-          <Button>
+          </SettingButton>
+          <SettingButton>
             신고
-          </Button>
+          </SettingButton>
         </Button.Group>
       )
     }
@@ -148,13 +160,13 @@ const CommentListSetting = (props) => {
 
   return (
     <Modal isOpen={props.isVisible} onClose={props.setVisible}>
-      <Modal.Content>
+      <Modal.Content style={style.modalContent}>
         <Modal.Header>
-          {props.commentUid}님의 리뷰
+          {props.userName + '님의 리뷰'}
         </Modal.Header>
         <Modal.CloseButton />
         <Modal.Body>
-          <SettingButton isMine={props.uid == props.commentUid} />
+          <SettingButtonGroup isMine={props.isMine} />
         </Modal.Body>
       </Modal.Content>
     </Modal>
@@ -276,5 +288,14 @@ const style = StyleSheet.create({
     borderRadius: 20,
     marginVertical: 5,
     marginRight: 12
+  },
+  modalContent: {
+
+  },
+  modalButtonGroup: {
+    flexDirection: 'column'
+  },
+  modalButton: {
+    width: '100%'
   }
 })
