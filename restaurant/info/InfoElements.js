@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import Text from '../../defaultSetting/FontText';
 import { IconButton, Icon, Modal, Button } from 'native-base';
@@ -44,6 +44,7 @@ const MenuListView = (props) => {
 }
 
 const CommentListView = (props) => {
+  const [settingVisible, setSettingVisible] = useState(false);
   const id = props.id;
   const comment = props.comment;
   const commentUser = comment['user'];
@@ -81,7 +82,8 @@ const CommentListView = (props) => {
             size="sm"
             borderRadius="full"
             borderWidth={1}
-            onPress={() => props.onPop(id, comment.query)}
+            // onPress={() => props.onPop(id, comment.query)}
+            onPress={() => setSettingVisible(true)}
             icon={<Icon name="ellipsis-v" as={Font} size="sm" color="#831843" />}
           />
         }
@@ -104,6 +106,12 @@ const CommentListView = (props) => {
           배달 시간 : {comment['배달시간']}분    배달비 : {comment['배달비']}원
         </Text>
       }
+      <CommentListSetting
+        isVisible={settingVisible}
+        setVisible={setSettingVisible}
+        uid={props.user.uid}
+        commentUid={commentUser['uid']}
+      />
     </View>
   )
 }
@@ -139,7 +147,7 @@ const CommentListSetting = (props) => {
   }
 
   return (
-    <Modal>
+    <Modal isOpen={props.isVisible} onClose={props.setVisible}>
       <Modal.Content>
         <Modal.Header>
           {props.commentUid}님의 리뷰
