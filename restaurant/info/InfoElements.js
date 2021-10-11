@@ -81,7 +81,6 @@ const CommentListView = (props) => {
             size="sm"
             borderRadius="full"
             borderWidth={1}
-            // onPress={() => props.onPop(id, comment.query)}
             onPress={() => setSettingVisible(true)}
             icon={<Icon name="ellipsis-v" as={Font} size="sm" color="#831843" />}
           />
@@ -109,6 +108,10 @@ const CommentListView = (props) => {
         setVisible={setSettingVisible}
         userName={commentUser['name']}
         isMine={props.user.uid === commentUser['uid']}
+        onPop={() => {
+          props.onPop(id, comment.query);
+          setSettingVisible(false);
+        }}
       />
     </View>
   )
@@ -121,6 +124,7 @@ const CommentListSetting = (props) => {
         style={style.modalButton}
         variant="ghost"
         colorScheme={props.color}
+        onPress={props.onPress}
       >
         {props.children}
       </Button>
@@ -134,7 +138,7 @@ const CommentListSetting = (props) => {
           <SettingButton color="cyan">
             대댓글
           </SettingButton>
-          <SettingButton color="rose">
+          <SettingButton color="rose" onPress={props.onPop}>
             삭제
           </SettingButton>
         </Button.Group>
@@ -164,7 +168,10 @@ const CommentListSetting = (props) => {
         </Modal.Header>
         <Modal.CloseButton />
         <Modal.Body>
-          <SettingButtonGroup isMine={props.isMine} />
+          <SettingButtonGroup
+            isMine={props.isMine}
+            onPop={props.onPop}
+          />
         </Modal.Body>
       </Modal.Content>
     </Modal>
