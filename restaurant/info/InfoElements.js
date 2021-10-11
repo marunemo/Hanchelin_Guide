@@ -77,7 +77,6 @@ const CommentListView = (props) => {
             <Text style={{ fontSize: 12, textAlign: 'right', color: '#4b4b4b' }}>{dateTimeFormat(comment['작성시간'])}</Text>
           </View>
         </View>
-        {props.user.uid === commentUser['uid'] &&
           <IconButton
             size="sm"
             borderRadius="full"
@@ -86,7 +85,6 @@ const CommentListView = (props) => {
             onPress={() => setSettingVisible(true)}
             icon={<Icon name="ellipsis-v" as={Font} size="sm" color="#831843" />}
           />
-        }
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Text style={style.commentsText}>종합 : {comment['종합']}</Text>
@@ -133,7 +131,7 @@ const CommentListSetting = (props) => {
     if (props.isMine) {
       return (
         <Button.Group style={style.modalButtonGroup}>
-          <SettingButton>
+          <SettingButton color="cyan">
             대댓글
           </SettingButton>
           <SettingButton color="rose">
@@ -144,13 +142,13 @@ const CommentListSetting = (props) => {
     } else {
       return (
         <Button.Group style={style.modalButtonGroup}>
-          <SettingButton>
+          <SettingButton color="cyan">
             대댓글
           </SettingButton>
-          <SettingButton>
-            공감?
+          <SettingButton color="cyan">
+            공감
           </SettingButton>
-          <SettingButton>
+          <SettingButton color="rose">
             신고
           </SettingButton>
         </Button.Group>
