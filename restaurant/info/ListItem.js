@@ -82,8 +82,11 @@ const RestComponent = (props) => {
       return '연중무휴';
     const week = '월화수목금토일';
     const dateData = typeof (breaktime) == 'object' ? breaktime : [breaktime]
+    let onlyBreak = true;
+    let breakDate = '';
     let weekHours = new Map();
     for (const i of week) weekHours.set(i, [[]])
+
     for (const dateHours of dateData) {
       const weekRange = dateHours.substring(0, dateHours.indexOf(' '));
       let validWeek = '';
@@ -100,7 +103,7 @@ const RestComponent = (props) => {
         validWeek = dateHours.substring(0, index).replace(/\s/g, '');
         hours = dateHours.substring(index + 1);
       } else {
-        return (weekRange == '휴무일:') ? dateData : '휴무일: ' + dateData;
+        breakDate = (weekRange == '휴무일:') ? dateHours : '휴무일: ' + dateHours;
       }
 
       if (hours.includes('브레이크타임')) {
@@ -114,25 +117,30 @@ const RestComponent = (props) => {
           })
         }
       }
-      else {
+      else if (validWeek) {
+        onlyBreak = false;
         for (const day of validWeek)
           weekHours[day] = [hours.split(' ~ ')];
       }
     }
 
     let result = '';
-    for (const day of week) {
-      result += day + ' : ';
-      if (weekHours[day]) {
-        weekHours[day].sort();
-        for (const hour of weekHours[day])
-          result += hour.toString().replace(',', '~') + ', ';
-        result = result.substring(0, result.length - 2) + '\n';
-      } else {
-        result += "휴무\n"
+    if (!onlyBreak) {
+      for (const day of week) {
+        result += day + ' : ';
+        if (weekHours[day]) {
+          weekHours[day].sort();
+          for (const hour of weekHours[day])
+            result += hour.toString().replace(',', '~') + ', ';
+          result = result.substring(0, result.length - 2) + '\n';
+        } else {
+          result += '휴무\n'
+        }
       }
     }
-    return result;
+    if (breakDate)
+      result += breakDate + '\n';
+    return result.substring(0, result.length - 1);
   }
 
   async function kakaoSharing() {
