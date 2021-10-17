@@ -16,7 +16,7 @@ import KakaoShareLink from 'react-native-kakao-share-link';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
-import { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar } from './InfoElements';
+import { KeyTextView, InfoView, MenuListView, CommentListView, CommentListSetting, RatingBar } from './InfoElements';
 
 const Stack = createNativeStackNavigator();
 
@@ -75,6 +75,72 @@ const RestComponent = (props) => {
         )
       }
     }
+  }
+
+  function openingParse(breaktime) {
+    if (breaktime == undefined)
+      return '연중무휴';
+    const week = '월화수목금토일';
+    const dateData = typeof (breaktime) == 'object' ? breaktime : [breaktime]
+    let onlyBreak = true;
+    let breakDate = '';
+    let weekHours = new Map();
+    for (const i of week) weekHours.set(i, [[]])
+
+    for (const dateHours of dateData) {
+      const weekRange = dateHours.substring(0, dateHours.indexOf(' '));
+      let validWeek = '';
+      let hours = '';
+      if (weekRange == '매일') {
+        validWeek = week;
+        hours = dateHours.substring(dateHours.indexOf(' ') + 1);
+      } else if (weekRange[1] == '~') {
+        validWeek = week.substring(week.indexOf(weekRange[0]), week.indexOf(weekRange[2]) + 1);
+        hours = dateHours.substring(dateHours.indexOf(' ') + 1);
+      } else if (weekRange.length == 1) {
+        let index = 0;
+        while (dateHours[index] == ' ' || isNaN(Number(dateHours[index]))) index++;
+        validWeek = dateHours.substring(0, index).replace(/\s/g, '');
+        hours = dateHours.substring(index + 1);
+      } else {
+        breakDate = (weekRange == '휴무일:') ? dateHours : '휴무일: ' + dateHours;
+      }
+
+      if (hours.includes('브레이크타임')) {
+        const spliter = hours.substring(hours.indexOf(' ') + 1).split(' ~ ');
+        for (const day of validWeek) {
+          weekHours[day].forEach((openingHour, i) => {
+            if (openingHour[1] > spliter[0] && openingHour[0] < spliter[0]) {
+              weekHours[day].push([spliter[1], openingHour[1]])
+              weekHours[day][i][1] = spliter[0]
+            }
+          })
+        }
+      }
+      else if (validWeek) {
+        onlyBreak = false;
+        for (const day of validWeek)
+          weekHours[day] = [hours.split(' ~ ')];
+      }
+    }
+
+    let result = '';
+    if (!onlyBreak) {
+      for (const day of week) {
+        result += day + ' : ';
+        if (weekHours[day]) {
+          weekHours[day].sort();
+          for (const hour of weekHours[day])
+            result += hour.toString().replace(',', '~') + ', ';
+          result = result.substring(0, result.length - 2) + '\n';
+        } else {
+          result += '휴무\n'
+        }
+      }
+    }
+    if (breakDate)
+      result += breakDate + '\n';
+    return result.substring(0, result.length - 1);
   }
 
   async function kakaoSharing() {
@@ -153,7 +219,7 @@ const RestComponent = (props) => {
         <View style={style.basicInfoPadding}>
           <InfoView icon="mobile-phone" value={restData['contact']} />
           <InfoView icon="location-arrow" value={restData['address']} />
-          <InfoView icon="clock-o" value={restData['opening_hours']} />
+          <InfoView icon="clock-o" value={openingParse(restData['opening_hours'])} />
         </View>
         <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
