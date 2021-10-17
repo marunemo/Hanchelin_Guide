@@ -73,10 +73,10 @@ class RestaurantItem extends Component {
             alt="Alternate Text"
             size="md"
           />
-          <VStack space={1} style={{ flex: 4 }}>
-            <Text bold>{item.name}</Text>
-            <Text>{item.category}</Text>
-            <Text>{item.dong}</Text>
+          <VStack space={1} style={{ flex: 4 }} mt={1}>
+            <Text bold style={{ color: '#333' }}>{item.name}</Text>
+            <Text style={{ color: '#333' }}>{item.category}</Text>
+            <Text style={{ color: '#333' }}>{item.dong}</Text>
           </VStack>
           <HStack style={{ flex: 5, alignItems: 'flex-end' }} space={1}>
             <Image
@@ -87,7 +87,7 @@ class RestaurantItem extends Component {
               style={{ tintColor: "#555" }}
               mr={0.5}
             />
-            <Text color='#555'>{item.total.toFixed(1)}</Text>
+            <Text style={{ color: '#555' }}>{item.total.toFixed(1)}</Text>
             <Image
               resizeMode="contain"
               source={require('../images/heart.png')}
@@ -97,7 +97,7 @@ class RestaurantItem extends Component {
               ml={1}
               mr={0.5}
             />
-            <Text color='#555'>{item.bookmark_count}</Text>
+            <Text style={{ color: '#555' }}>{item.bookmark_count}</Text>
             <Image
               resizeMode="contain"
               source={require('../images/comments.png')}
@@ -107,7 +107,7 @@ class RestaurantItem extends Component {
               ml={1}
               mr={0.5}
             />
-            <Text color='#555'>{item.comments_count}</Text>
+            <Text style={{ color: '#555' }}>{item.comments_count}</Text>
           </HStack>
         </HStack>
       </TouchableOpacity>

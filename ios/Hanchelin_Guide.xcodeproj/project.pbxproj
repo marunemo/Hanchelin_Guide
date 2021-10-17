@@ -15,7 +15,6 @@
 		236E22BB26FD9E83006506EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 236E22B926FD9E83006506EA /* GoogleService-Info.plist */; };
 		236E22BD26FD9E9A006506EA /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 236E22BC26FD9E99006506EA /* Fonts */; };
 		236E22BE26FD9E9A006506EA /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 236E22BC26FD9E99006506EA /* Fonts */; };
-		50730EB2270D971D006876C7 /* libswiftWebKit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 50730EB1270D971D006876C7 /* libswiftWebKit.tbd */; };
 		50B3793026E922F2004A18E5 /* ELANDChoiceM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50B3792E26E922CB004A18E5 /* ELANDChoiceM.ttf */; };
 		50B3793126E922F2004A18E5 /* ELANDChoiceB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50B3792F26E922CB004A18E5 /* ELANDChoiceB.ttf */; };
 		60A099611B96CB16A5920A1C /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1678DC2CA1F4BA219C0DD133 /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a */; };
@@ -53,7 +52,6 @@
 		3A74CF01FAC7F41BA925AF8E /* Pods-Hanchelin_Guide.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hanchelin_Guide.release.xcconfig"; path = "Target Support Files/Pods-Hanchelin_Guide/Pods-Hanchelin_Guide.release.xcconfig"; sourceTree = "<group>"; };
 		4D8583F1E529461DAD23E993 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		503C0A1426BEAD5500D4665E /* Hanchelin_Guide-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hanchelin_Guide-Bridging-Header.h"; sourceTree = "<group>"; };
-		50730EB1270D971D006876C7 /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
 		50B3792E26E922CB004A18E5 /* ELANDChoiceM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ELANDChoiceM.ttf; path = Fonts/ELANDChoiceM.ttf; sourceTree = "<group>"; };
 		50B3792F26E922CB004A18E5 /* ELANDChoiceB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ELANDChoiceB.ttf; path = Fonts/ELANDChoiceB.ttf; sourceTree = "<group>"; };
 		622990AE1325FD5C26217DB5 /* libPods-Hanchelin_Guide.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Hanchelin_Guide.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,7 +86,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50730EB2270D971D006876C7 /* libswiftWebKit.tbd in Frameworks */,
 				E7FA51B2EE591BBA7BF37B3E /* libPods-Hanchelin_Guide.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,7 +151,6 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				50730EB1270D971D006876C7 /* libswiftWebKit.tbd */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				622990AE1325FD5C26217DB5 /* libPods-Hanchelin_Guide.a */,
 				1678DC2CA1F4BA219C0DD133 /* libPods-Hanchelin_Guide-Hanchelin_GuideTests.a */,
@@ -219,7 +215,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				1F8E885D74B597EF2C024E5E /* [CP] Embed Pods Frameworks */,
 				A4D9E572BCFE9B02E3EFE845 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -242,7 +237,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				FD8CDB084C564053E4CE1CA0 /* [CP] Embed Pods Frameworks */,
 				59576708D234432338918813 /* [CP] Copy Pods Resources */,
 				334D0356DC129AFE92F15E81 /* [CP-User] [RNFB] Core Configuration */,
 			);
@@ -330,23 +324,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
-		};
-		1F8E885D74B597EF2C024E5E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		200273E14DD2E94F5FB72C8F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -458,23 +435,6 @@
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		FD8CDB084C564053E4CE1CA0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide/Pods-Hanchelin_Guide-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide/Pods-Hanchelin_Guide-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide/Pods-Hanchelin_Guide-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -517,7 +477,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Hanchelin_GuideTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -542,7 +502,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 4C4PBP93YJ;
 				INFOPLIST_FILE = Hanchelin_GuideTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -569,14 +529,10 @@
 				DEVELOPMENT_TEAM = 4C4PBP93YJ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Hanchelin_Guide/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SDKROOT)/usr/lib/swift",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -601,14 +557,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4C4PBP93YJ;
 				INFOPLIST_FILE = Hanchelin_Guide/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SDKROOT)/usr/lib/swift",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -672,7 +624,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -730,7 +682,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
