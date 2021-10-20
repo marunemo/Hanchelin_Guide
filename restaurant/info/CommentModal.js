@@ -119,11 +119,16 @@ const CommentButton = (props) => {
             <Text style={style.headerTitle}>식당 리뷰</Text>
             <IconButton
               style={style.resetButton}
-              borderRadius="full"
-              variant="ghost"
               size="sm"
+              variant="ghost"
+              colorScheme="blue"
+              borderRadius="full"
               onPress={resetValues}
-              icon={<Icon name="refresh" as={Font} size="sm" color="#0284c7" />}
+              icon={<Image
+                source={require('../../images/refresh.png')}
+                alt="Alternate Text"
+                style={{ width: 24, height: 24 }}
+              />}
             />
           </View>
           <ScrollView
@@ -306,7 +311,7 @@ const style = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 35
+    marginHorizontal: 40
   },
   headerTitle: {
     fontWeight: 'bold',
