@@ -78,14 +78,17 @@ class RestaurantItem extends Component {
             <Text style={{ color: '#333' }}>{item.category}</Text>
             <Text style={{ color: '#333' }}>{item.dong}</Text>
           </VStack>
-          <HStack style={{ flex: 5, alignItems: 'flex-end' }} space={1}>
+          <HStack
+            style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'space-between' }}
+            mr={3}
+            space={1}
+          >
             <Image
               resizeMode="contain"
               source={require('../images/star.png')}
               alt="Alternate Text"
               size="20px"
               style={{ tintColor: "#555" }}
-              mr={0.5}
             />
             <Text style={{ color: '#555' }}>{item.total.toFixed(1)}</Text>
             <Image
@@ -94,8 +97,6 @@ class RestaurantItem extends Component {
               alt="Alternate Text"
               size="20px"
               style={{ tintColor: "#555" }}
-              ml={1}
-              mr={0.5}
             />
             <Text style={{ color: '#555' }}>{item.bookmark_count}</Text>
             <Image
@@ -104,8 +105,6 @@ class RestaurantItem extends Component {
               alt="Alternate Text"
               size="20px"
               style={{ tintColor: "#555" }}
-              ml={1}
-              mr={0.5}
             />
             <Text style={{ color: '#555' }}>{item.comments_count}</Text>
           </HStack>
