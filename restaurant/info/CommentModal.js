@@ -10,6 +10,7 @@ import Font from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
+import { marginRight } from 'styled-system';
 
 const CommentButton = (props) => {
   const user = auth().currentUser; //현재 유저 정보 불러오기
@@ -311,7 +312,8 @@ const style = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 40
+    marginLeft: 60,
+    marginRight: 20
   },
   headerTitle: {
     fontWeight: 'bold',

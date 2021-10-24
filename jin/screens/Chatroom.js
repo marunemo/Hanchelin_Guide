@@ -15,7 +15,7 @@ import firestore from '@react-native-firebase/firestore';
 import Authentication from './Authentication';
 import CreateChat from "./CreateChat";
 import Chat from "./Chat";
-import HeaderClassicSearchBar from "../../lib/src/HeaderClassicSearchBar/HeaderClassicSearchBar";
+// import HeaderClassicSearchBar from "../../lib/src/HeaderClassicSearchBar/HeaderClassicSearchBar";
 const [headerColor, iconActiveColor, iconInActiveColor] = ["#efefef", "#BF2A52", "#bbb"];
 
 const StackNav = createNativeStackNavigator();
@@ -87,7 +87,7 @@ function Chatroom({ navigation, route }) {
     return (
       <NativeBaseProvider>
         <View style={styles.emptyView}>
-          <Spinner size="sm" color="rose.500" />
+          <Spinner size="sm" color="gray.500" />
           <Text style={styles.emptyText}>생성된 채팅방이 없습니다.</Text>
         </View>
       </NativeBaseProvider>
@@ -115,7 +115,7 @@ function Chatroom({ navigation, route }) {
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
-        <HeaderClassicSearchBar
+        {/* <HeaderClassicSearchBar
           backgroundColor={headerColor}
           iconActiveColor={iconActiveColor}
           iconInactiveColor={iconInActiveColor}
@@ -124,7 +124,7 @@ function Chatroom({ navigation, route }) {
         // onChangeText={(term) => { this.searchUpdated(term) }}
         // onPress={() => this.setState({ switchValue: !(this.state.switchValue) })}
         // TODO::필터 기능 추가하기
-        />
+        /> */}
         <FlatList
           data={threads}
           keyExtractor={item => item._id}

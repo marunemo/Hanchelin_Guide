@@ -158,17 +158,15 @@ class Home extends Component {
       <NativeBaseProvider>
         <Box backgroundColor={headerColor}>
           <HStack
-            space={3}
-            alignSelf='center'
-            pl={2}
-            pr={1}
+            style={{ justifyContent: 'space-between' }}
+            px={4}
             pt={3}
           >
             <Select
               width="57%"
               height={10}
               color="#555"
-              style={{ fontSize: 15, flex: 1 }}
+              style={{ fontSize: 15 }}
               placeholderTextColor="#555"
               variant="filled"
               selectedValue={this.state.category}
@@ -193,10 +191,10 @@ class Home extends Component {
               <Select.Item label="카페 / 디저트" value="카페 / 디저트" />
             </Select>
             <Select
-              width="35%"
+              width="40%"
               height={10}
               color="#555"
-              style={{ fontSize: 15, flex: 1 }}
+              style={{ fontSize: 15 }}
               placeholderTextColor="#555"
               variant="filled"
               selectedValue={this.state.sortTerm}
