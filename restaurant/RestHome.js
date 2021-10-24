@@ -65,27 +65,29 @@ class RestaurantItem extends Component {
         style={styles.itemContainer}
         onPress={() => this.props.navigation.navigate('식당 정보', { title: item.name, restId: item.id })}
       >
-        <HStack>
+        <HStack pl={4} pr={3} pt={1.5}>
           <Image
-            style={{ flex: 4 }}
+            style={{ flex: 3 }}
             resizeMode="contain"
             source={img_source}
             alt="Alternate Text"
             size="md"
           />
-          <VStack space={1} style={{ flex: 4 }} mt={1}>
+          <VStack space={1} style={{ flex: 5 }} pl={4}>
             <Text bold style={{ color: '#333' }}>{item.name}</Text>
             <Text style={{ color: '#333' }}>{item.category}</Text>
             <Text style={{ color: '#333' }}>{item.dong}</Text>
           </VStack>
-          <HStack style={{ flex: 5, alignItems: 'flex-end' }} space={1}>
+          <HStack
+            style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'space-between' }}
+            space={1}
+          >
             <Image
               resizeMode="contain"
               source={require('../images/star.png')}
               alt="Alternate Text"
               size="20px"
               style={{ tintColor: "#555" }}
-              mr={0.5}
             />
             <Text style={{ color: '#555' }}>{item.total.toFixed(1)}</Text>
             <Image
@@ -94,8 +96,6 @@ class RestaurantItem extends Component {
               alt="Alternate Text"
               size="20px"
               style={{ tintColor: "#555" }}
-              ml={1}
-              mr={0.5}
             />
             <Text style={{ color: '#555' }}>{item.bookmark_count}</Text>
             <Image
@@ -104,8 +104,6 @@ class RestaurantItem extends Component {
               alt="Alternate Text"
               size="20px"
               style={{ tintColor: "#555" }}
-              ml={1}
-              mr={0.5}
             />
             <Text style={{ color: '#555' }}>{item.comments_count}</Text>
           </HStack>
@@ -160,17 +158,15 @@ class Home extends Component {
       <NativeBaseProvider>
         <Box backgroundColor={headerColor}>
           <HStack
-            space={3}
-            alignSelf='center'
-            pl={2}
-            pr={1}
+            style={{ justifyContent: 'space-between' }}
+            px={4}
             pt={3}
           >
             <Select
               width="57%"
               height={10}
               color="#555"
-              style={{ fontSize: 15, flex: 1 }}
+              style={{ fontSize: 15 }}
               placeholderTextColor="#555"
               variant="filled"
               selectedValue={this.state.category}
@@ -195,10 +191,10 @@ class Home extends Component {
               <Select.Item label="카페 / 디저트" value="카페 / 디저트" />
             </Select>
             <Select
-              width="35%"
+              width="40%"
               height={10}
               color="#555"
-              style={{ fontSize: 15, flex: 1 }}
+              style={{ fontSize: 15 }}
               placeholderTextColor="#555"
               variant="filled"
               selectedValue={this.state.sortTerm}
