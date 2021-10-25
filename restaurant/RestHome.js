@@ -9,7 +9,7 @@ import {
   Center,
   VStack,
   HStack,
-  ScrollView,
+  FlatList,
   NativeBaseProvider,
   Select,
   CheckIcon,
@@ -22,6 +22,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createFilter } from 'react-native-search-filter';
 import RestInfo from './info/ListItem';
 import Profile from "../jin/screens/Profile.js";
+import RestImg from "./RestImg.js"
 
 const KEYS_TO_FILTERS = ['name'];
 //const [headerColor, iconActiveColor, iconInActiveColor] = ["#BF2A52", "#00FF00", "#f5f5f5"];
@@ -35,45 +36,14 @@ class RestaurantItem extends Component {
   render() {
     const item = this.props.restItem;
 
-    if (item.category == "한식")
-      img_source = require('../images/food/1.png')
-    else if (item.category == "양식")
-      img_source = require('../images/food/2.png')
-    else if (item.category == "돈까스 / 회 / 일식")
-      img_source = require('../images/food/3.png')
-    else if (item.category == "중식")
-      img_source = require('../images/food/4.png')
-    else if (item.category == "치킨")
-      img_source = require('../images/food/5.png')
-    else if (item.category == "육류 / 고기")
-      img_source = require('../images/food/6.png')
-    else if (item.category == "족발 / 보쌈")
-      img_source = require('../images/food/7.png')
-    else if (item.category == "분식")
-      img_source = require('../images/food/8.png')
-    else if (item.category == "술집")
-      img_source = require('../images/food/9.png')
-    else if (item.category == "아시안")
-      img_source = require('../images/food/10.png')
-    else if (item.category == "카페 / 디저트")
-      img_source = require('../images/food/11.png')
-    else
-      img_source = require('../images/none.jpeg')
-
     return (
       <TouchableOpacity
         style={styles.itemContainer}
         onPress={() => this.props.navigation.navigate('식당 정보', { title: item.name, restId: item.id })}
       >
-        <HStack pl={4} pr={3} pt={1.5}>
-          <Image
-            style={{ flex: 3 }}
-            resizeMode="contain"
-            source={img_source}
-            alt="Alternate Text"
-            size="md"
-          />
-          <VStack space={1} style={{ flex: 5 }} pl={4}>
+        <HStack pl={4} pr={3}>
+          <RestImg item={this.props.restItem} />
+          <VStack space={1} style={{ flex: 5 }} pt={1.5} pl={4}>
             <Text bold style={{ color: '#333' }}>{item.name}</Text>
             <Text style={{ color: '#333' }}>{item.category}</Text>
             <Text style={{ color: '#333' }}>{item.dong}</Text>
@@ -224,17 +194,17 @@ class Home extends Component {
           />
         </Box>
         <Center flex={1} backgroundColor='#fff'>
-          <ScrollView width="100%" mb={-0.5}>
-            <VStack alignItems="center">
-              {filteredArr.map(item =>
-                <RestaurantItem
-                  key={item.id.toString()}
-                  restItem={item}
-                  navigation={this.props.navigation}
-                />
-              )}
-            </VStack>
-          </ScrollView>
+          <FlatList width="100%" mb={-0.5}
+            data={filteredArr}
+            renderItem={({ item }) => (
+              <RestaurantItem
+                key={item.id.toString()}
+                restItem={item}
+                navigation={this.props.navigation}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+          />
         </Center>
       </NativeBaseProvider>
     )
