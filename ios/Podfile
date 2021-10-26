@@ -24,6 +24,8 @@ target 'Hanchelin_Guide' do
 
   pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
 
+  pod 'react-native-kakao-share-link', :path => '../node_modules/react-native-kakao-share-link'
+
   target 'Hanchelin_GuideTests' do
     inherit! :complete
     # Pods for testing
