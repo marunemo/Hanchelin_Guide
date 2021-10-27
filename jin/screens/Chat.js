@@ -3,8 +3,11 @@ import { GiftedChat } from 'react-native-gifted-chat'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import { NativeBaseProvider, Modal, Button } from 'native-base';
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
-export default function Chat({ navigation, route }) {
+const Drawer = createDrawerNavigator();
+
+function Chat({ navigation, route }) {
   const { thread } = route.params;
   const user = auth().currentUser;
   const [messages, setMessages] = useState([]);
@@ -139,4 +142,31 @@ export default function Chat({ navigation, route }) {
       </Modal>
     </NativeBaseProvider>
   );
+}
+
+export default function() {
+  <Drawer.Navigator>
+    <Drawer.Screen
+          name="메시지"
+          component={Chat}
+          options={({ route }) => ({
+            headerTitle: () => (
+              <Text style={styles.headerTitle} bold>{route.params.thread.name}</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#BF2A52',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+            animation: 'fade_from_bottom',
+            headerRight: () => (
+              (user?.uid === route.params.thread.initialUser) &&
+              <Icon name="trash" size={24} color="#fff"
+                onPress={() => setShowAuthModal(route.params.thread)}
+              />
+            )
+          })}
+        />
+  </Drawer.Navigator>
 }
