@@ -54,7 +54,7 @@ class RestaurantItem extends Component {
           >
             <Image
               resizeMode="contain"
-              source={require('../images/star.png')}
+              source={require('../images/home-icon/star.png')}
               alt="Alternate Text"
               size="20px"
               style={{ tintColor: "#555" }}
@@ -62,7 +62,7 @@ class RestaurantItem extends Component {
             <Text style={{ color: '#555' }}>{item.total.toFixed(1)}</Text>
             <Image
               resizeMode="contain"
-              source={require('../images/heart.png')}
+              source={require('../images/home-icon/heart.png')}
               alt="Alternate Text"
               size="20px"
               style={{ tintColor: "#555" }}
@@ -70,7 +70,7 @@ class RestaurantItem extends Component {
             <Text style={{ color: '#555' }}>{item.bookmark_count}</Text>
             <Image
               resizeMode="contain"
-              source={require('../images/comments.png')}
+              source={require('../images/home-icon/comments.png')}
               alt="Alternate Text"
               size="20px"
               style={{ tintColor: "#555" }}
@@ -90,7 +90,7 @@ class Home extends Component {
       searchTerm: '',
       switchValue: false,
       category: '',
-      sortTerm: '가나다순',
+      sortTerm: '',
       data: [],
       changeListener: null
     }

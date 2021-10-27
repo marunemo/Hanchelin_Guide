@@ -217,7 +217,7 @@ const RestComponent = (props) => {
           </Text>
         </View>
         <View style={style.basicInfoPadding}>
-          <InfoView icon="mobile-phone" value={restData['contact']} />
+          <InfoView icon="phone" value={restData['contact']} />
           <InfoView icon="location-arrow" value={restData['address']} />
           <InfoView icon="clock-o" value={openingParse(restData['opening_hours'])} />
         </View>
@@ -229,9 +229,9 @@ const RestComponent = (props) => {
               <Image
                 alignSelf="center"
                 resizeMode="contain"
-                source={require('../../images/together.png')}
+                source={require('../../images/info-icon/food-delivery.png')}
                 alt="Alternate Text"
-                size="40px"
+                size="30px"
               />
               <Text style={{ textAlign: "center", marginTop: 5 }}>같이배달</Text>
             </Button>
@@ -244,7 +244,13 @@ const RestComponent = (props) => {
           </Center>
           <Center style={[style.optionView, style.horizonStack, { borderRightWidth: 0 }]}>
             <Button style={style.optionButton} onPress={kakaoSharing}>
-              <Font style={{ textAlign: "center" }} name="share" size={30} color="#999999" />
+            <Image
+                alignSelf="center"
+                resizeMode="contain"
+                source={require('../../images/info-icon/share.png')}
+                alt="Alternate Text"
+                size="30px"
+              />
               <Text style={{ textAlign: "center", marginTop: 5 }}>카카오톡 공유</Text>
             </Button>
           </Center>

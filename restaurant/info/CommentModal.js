@@ -125,7 +125,7 @@ const CommentButton = (props) => {
               borderRadius="full"
               onPress={resetValues}
               icon={<Image
-                source={require('../../images/refresh.png')}
+                source={require('../../images/info-icon/refresh.png')}
                 alt="Alternate Text"
                 style={{ width: 24, height: 24 }}
               />}
@@ -269,7 +269,7 @@ const CommentButton = (props) => {
         size="lg"
         onPress={() => showInput(true)}
         icon={<Image
-          source={require('../../images/pencil.png')}
+          source={require('../../images/info-icon/pencil.png')}
           alt="Alternate Text"
           style={{ width: 24, height: 24, tintColor: "#fff" }}
         />
