@@ -120,6 +120,7 @@ class Home extends Component {
     database().ref("/식당").off('value', this.state.changeListener);
   }
   render() {
+    this.state.data.sort((a, b) => a.name > b.name)
     const filteredArr = (this.state.data)
       .filter(createFilter(this.state.category, 'category'))
       .filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
