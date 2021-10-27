@@ -216,7 +216,7 @@ export default function ({ navigation }) {
         <StackNav.Screen
           name="메시지"
           component={Chat}
-          options={({ route }) => ({
+          options={({ navigation, route }) => ({
             headerTitle: () => (
               <Text style={styles.headerTitle} bold>{route.params.thread.name}</Text>
             ),
@@ -230,7 +230,8 @@ export default function ({ navigation }) {
             headerRight: () => (
               (user?.uid === route.params.thread.initialUser) &&
               <Icon name="trash" size={24} color="#fff"
-                onPress={() => setShowAuthModal(route.params.thread)}
+                // onPress={() => setShowAuthModal(route.params.thread)}
+                onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
               />
             )
           })}

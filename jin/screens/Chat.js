@@ -144,29 +144,36 @@ function Chat({ navigation, route }) {
   );
 }
 
-export default function() {
-  <Drawer.Navigator>
-    <Drawer.Screen
-          name="메시지"
-          component={Chat}
-          options={({ route }) => ({
-            headerTitle: () => (
-              <Text style={styles.headerTitle} bold>{route.params.thread.name}</Text>
-            ),
-            headerBackTitleVisible: false,
-            headerStyle: {
-              backgroundColor: '#BF2A52',
-            },
-            headerTintColor: '#fff',
-            headerTitleAlign: 'center',
-            animation: 'fade_from_bottom',
-            headerRight: () => (
-              (user?.uid === route.params.thread.initialUser) &&
-              <Icon name="trash" size={24} color="#fff"
-                onPress={() => setShowAuthModal(route.params.thread)}
-              />
-            )
-          })}
-        />
-  </Drawer.Navigator>
+export default function ChatDrawer({ route }) {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        drawerPosition: 'right'
+      }}
+    >
+      <Drawer.Screen
+        name="메시지 화면"
+        component={Chat}
+        initialParams={route.params}
+      // options={({ route }) => ({
+      //   headerTitle: () => (
+      //     <Text style={styles.headerTitle} bold>{route.params.thread.name}</Text>
+      //   ),
+      //   headerBackTitleVisible: false,
+      //   headerStyle: {
+      //     backgroundColor: '#BF2A52',
+      //   },
+      //   headerTintColor: '#fff',
+      //   headerTitleAlign: 'center',
+      //   animation: 'fade_from_bottom',
+      //   headerRight: () => (
+      //     (user?.uid === route.params.thread.initialUser) &&
+      //     <Icon name="trash" size={24} color="#fff"
+      //       onPress={() => setShowAuthModal(route.params.thread)}
+      //     />
+      //   )
+      // })}
+      />
+    </Drawer.Navigator>
+  )
 }
