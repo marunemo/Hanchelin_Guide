@@ -207,84 +207,84 @@ var imgPath = [
     // "restImg": require('../images/food/2.png')
   },
   {
-    // "restImg": require('../images/restuarants/51.jpeg'),
-    "restImg": require('../images/food/5.png')
+    "restImg": require('../images/restuarants/51.jpeg'),
+    // "restImg": require('../images/food/5.png')
   },
   {
-    // "restImg": require('../images/restuarants/52.jpeg'),
-    "restImg": require('../images/food/1.png')
+    "restImg": require('../images/restuarants/52.jpeg'),
+    // "restImg": require('../images/food/1.png')
   },
   {
-    // "restImg": require('../images/restuarants/53.jpeg'),
-    "restImg": require('../images/food/3.png')
+    "restImg": require('../images/restuarants/53.png'),
+    // "restImg": require('../images/food/3.png')
   },
   {
-    // "restImg": require('../images/restuarants/54.jpeg'),
-    "restImg": require('../images/food/3.png')
+    "restImg": require('../images/restuarants/54.jpeg'),
+    // "restImg": require('../images/food/3.png')
   },
   {
-    // "restImg": require('../images/restuarants/55.jpeg'),
-    "restImg": require('../images/food/1.png')
+    "restImg": require('../images/restuarants/55.jpeg'),
+    // "restImg": require('../images/food/1.png')
   },
   {
-    // "restImg": require('../images/restuarants/56.jpeg'),
-    "restImg": require('../images/food/4.png')
+    "restImg": require('../images/restuarants/56.jpeg'),
+    // "restImg": require('../images/food/4.png')
   },
   {
-    // "restImg": require('../images/restuarants/57.jpeg'),
-    "restImg": require('../images/food/1.png')
+    "restImg": require('../images/restuarants/57.jpeg'),
+    // "restImg": require('../images/food/1.png')
   },
   {
-    // "restImg": require('../images/restuarants/58.jpeg'),
-    "restImg": require('../images/food/1.png')
+    "restImg": require('../images/restuarants/58.jpeg'),
+    // "restImg": require('../images/food/1.png')
   },
   {
-    // "restImg": require('../images/restuarants/59.jpeg'),
-    "restImg": require('../images/food/6.png')
+    "restImg": require('../images/restuarants/59.jpeg'),
+    // "restImg": require('../images/food/6.png')
   },
   {
-    // "restImg": require('../images/restuarants/60.jpeg'),
-    "restImg": require('../images/food/11.png')
+    "restImg": require('../images/restuarants/60.png'),
+    // "restImg": require('../images/food/11.png')
   },
   {
-    // "restImg": require('../images/restuarants/61.jpeg'),
-    "restImg": require('../images/food/3.png')
+    "restImg": require('../images/restuarants/61.jpeg'),
+    // "restImg": require('../images/food/3.png')
   },
   {
-    // "restImg": require('../images/restuarants/62.jpeg'),
-    "restImg": require('../images/food/3.png')
+    "restImg": require('../images/restuarants/62.jpeg'),
+    // "restImg": require('../images/food/3.png')
   },
   {
-    // "restImg": require('../images/restuarants/63.jpeg'),
-    "restImg": require('../images/food/3.png')
+    "restImg": require('../images/restuarants/63.jpeg'),
+    // "restImg": require('../images/food/3.png')
   },
   {
-    // "restImg": require('../images/restuarants/64.jpeg'),
-    "restImg": require('../images/food/1.png')
+    "restImg": require('../images/restuarants/64.jpeg'),
+    // "restImg": require('../images/food/1.png')
   },
   {
     // "restImg": require('../images/restuarants/65.jpeg'),
     "restImg": require('../images/food/1.png')
   },
   {
-    // "restImg": require('../images/restuarants/66.jpeg'),
-    "restImg": require('../images/food/1.png')
+    "restImg": require('../images/restuarants/66.jpeg'),
+    // "restImg": require('../images/food/1.png')
   },
   {
-    // "restImg": require('../images/restuarants/67.jpeg'),
-    "restImg": require('../images/food/6.png')
+    "restImg": require('../images/restuarants/67.jpeg'),
+    // "restImg": require('../images/food/6.png')
   },
   {
-    // "restImg": require('../images/restuarants/68.jpeg'),
-    "restImg": require('../images/food/2.png')
+    "restImg": require('../images/restuarants/68.jpeg'),
+    // "restImg": require('../images/food/2.png')
   },
   {
-    // "restImg": require('../images/restuarants/69.jpeg'),
-    "restImg": require('../images/food/1.png')
+    "restImg": require('../images/restuarants/69.jpeg'),
+    // "restImg": require('../images/food/1.png')
   },
   {
-    // "restImg": require('../images/restuarants/70.jpeg'),
-    "restImg": require('../images/food/8.png')
+    "restImg": require('../images/restuarants/70.jpeg'),
+    // "restImg": require('../images/food/8.png')
   },
   {
     // "restImg": require('../images/restuarants/71.jpeg'),
