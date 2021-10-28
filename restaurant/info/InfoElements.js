@@ -86,7 +86,7 @@ const CommentListView = (props) => {
           borderWidth={1}
           onPress={() => setSettingVisible(true)}
           icon={<Image
-            source={require('../../images/trash.png')}
+            source={require('../../images/info-icon/trash.png')}
             alt="Alternate Text"
             style={{ width: 23, height: 23, tintColor: "#71717a" }}
           />}
