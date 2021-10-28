@@ -74,7 +74,11 @@ export default function Chatroom({ navigation, route }) {
   }, [route.params.response]);
 
   if (loading) {
-    return <Spinner size="lg" color="gray.300" />
+    return (
+      <NativeBaseProvider>
+        <Spinner size="lg" color="gray.300" />
+      </NativeBaseProvider>
+    )
   } else if (!threads.length) {
     return (
       <NativeBaseProvider>

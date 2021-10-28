@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import Text from '../defaultSetting/FontText';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NativeBaseProvider, Modal, Button } from 'native-base';
-import firestore from '@react-native-firebase/firestore';
 
 import ChatRoom from './ChatListMenu';
 import Chat from './ChatMenu';
@@ -12,20 +10,7 @@ import CreateChat from './screens/CreateChat';
 const StackNav = createNativeStackNavigator();
 
 export default function ({ navigation }) {
-  const [showAuthModal, setShowAuthModal] = useState(false);
-
-  function deleteChat(id) {
-    firestore()
-      .collection('Chat')
-      .doc(id)
-      .delete().then(() => {
-        setShowAuthModal(false);
-        navigation.navigate('같이 배달 리스트', { response: 0 });
-      })
-  }
-
-  return (
-    <NativeBaseProvider>
+    return (
       <StackNav.Navigator
         // screenOptions={{ headerShown: false }}
       >
@@ -54,19 +39,6 @@ export default function ({ navigation }) {
           component={Chat}
         />
       </StackNav.Navigator>
-      <Modal isOpen={!!showAuthModal} onClose={() => setShowAuthModal(false)}>
-        <Modal.Content style={styles.modalContent}>
-          <Modal.Header>정말로 채팅방을 삭제하시겠습니까?</Modal.Header>
-          <Modal.Body>채팅방을 지우면 다시 되돌릴 수 없습니다. 신중히 선택해주세요.</Modal.Body>
-          <Modal.Footer>
-            <Button.Group variant="ghost">
-              <Button onPress={() => deleteChat(showAuthModal._id)}>예</Button>
-              <Button onPress={() => setShowAuthModal(false)}>아니요</Button>
-            </Button.Group>
-          </Modal.Footer>
-        </Modal.Content>
-      </Modal>
-    </NativeBaseProvider>
   )
 }
 
