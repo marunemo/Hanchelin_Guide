@@ -3,14 +3,15 @@ import { StyleSheet } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Text from '../defaultSetting/FontText';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-import ChatRoom from './screens/Chatroom';
+import auth from '@react-native-firebase/auth';
 
 import Chat from './screens/Chat';
 
 const Drawer = createDrawerNavigator();
 
 export default function ChatDrawer({ route }) {
+  const user = auth().currentUser;
+
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -36,8 +37,7 @@ export default function ChatDrawer({ route }) {
             (user?.uid === route.params.thread.initialUser) &&
             <Icon name="trash" size={24} color="#fff"
               onPress={() => setShowAuthModal(route.params.thread)}
-            />
-          )
+            />)
         })}
       />
     </Drawer.Navigator>

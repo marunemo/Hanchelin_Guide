@@ -3,8 +3,6 @@ import { StyleSheet } from 'react-native';
 import Text from '../defaultSetting/FontText';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NativeBaseProvider, Modal, Button } from 'native-base';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import ChatRoom from './ChatListMenu';
@@ -14,7 +12,6 @@ import CreateChat from './screens/CreateChat';
 const StackNav = createNativeStackNavigator();
 
 export default function ({ navigation }) {
-  const user = auth().currentUser;
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   function deleteChat(id) {
@@ -30,7 +27,7 @@ export default function ({ navigation }) {
   return (
     <NativeBaseProvider>
       <StackNav.Navigator
-        screenOptions={{ headerShown: false }}
+        // screenOptions={{ headerShown: false }}
       >
         <StackNav.Screen
           name="같이 배달 리스트"
