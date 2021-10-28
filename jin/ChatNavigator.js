@@ -29,25 +29,13 @@ export default function ({ navigation }) {
 
   return (
     <NativeBaseProvider>
-      <StackNav.Navigator>
+      <StackNav.Navigator
+        screenOptions={{ headerShown: false }}
+      >
         <StackNav.Screen
           name="같이 배달 리스트"
           component={ChatRoom}
-          // initialParams={{ response: -1 }}
-          options={{
-            headerTitle: () => (
-              <Text style={styles.headerTitle} bold>같이 배달</Text>
-            ),
-            headerStyle: {
-              backgroundColor: '#BF2A52',
-            },
-            headerTintColor: '#fff',
-            headerTitleAlign: 'center',
-            headerRight: () => (
-              <Icon name="plus" size={24} color="#fff"
-                onPress={() => navigation.navigate('새로운 채팅방 만들기')} />
-            )
-          }} />
+        />
         <StackNav.Screen
           name="새로운 채팅방 만들기"
           component={CreateChat}
@@ -62,29 +50,11 @@ export default function ({ navigation }) {
             headerTintColor: '#fff',
             headerTitleAlign: 'center',
             animation: 'slide_from_right'
-          }} />
+          }}
+        />
         <StackNav.Screen
           name="메시지"
           component={Chat}
-          options={({ navigation, route }) => ({
-            headerTitle: () => (
-              <Text style={styles.headerTitle} bold>{route.params.thread.name}</Text>
-            ),
-            headerBackTitleVisible: false,
-            headerStyle: {
-              backgroundColor: '#BF2A52',
-            },
-            headerTintColor: '#fff',
-            headerTitleAlign: 'center',
-            animation: 'fade_from_bottom',
-            headerRight: () => (
-              (user?.uid === route.params.thread.initialUser) &&
-              <Icon name="trash" size={24} color="#fff"
-                // onPress={() => setShowAuthModal(route.params.thread)}
-                onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-              />
-            )
-          })}
         />
       </StackNav.Navigator>
       <Modal isOpen={!!showAuthModal} onClose={() => setShowAuthModal(false)}>
