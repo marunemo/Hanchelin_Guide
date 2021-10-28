@@ -4,6 +4,8 @@ import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import { NativeBaseProvider, Modal, Button } from 'native-base';
 
+let timer = null;
+
 export default function Chat({ navigation, route }) {
   const { thread } = route.params;
   const user = auth().currentUser;
@@ -40,11 +42,14 @@ export default function Chat({ navigation, route }) {
         setMessages(messages);
       })
 
-    setTimeout(() => {
+    timer = setTimeout(() => {
       setDeadline(true);
     }, new Date(thread.endTime.seconds * 1000) - new Date());
 
-    return () => unsubscribeListener();
+    return () => {
+      unsubscribeListener();
+      clearTimeout(timer);
+    }
   }, [])
 
   async function handleSend(messages) {
@@ -83,7 +88,7 @@ export default function Chat({ navigation, route }) {
       .doc(thread._id)
       .update({ endTime: new Date(new Date(thread.endTime.seconds * 1000).getTime() + 5 * 60 * 1000) })
       .then(() => {
-        setTimeout(() => {
+        timer = setTimeout(() => {
           setDeadline(true);
         }, 5 * 60 * 1000);
         setDeadline(false);
