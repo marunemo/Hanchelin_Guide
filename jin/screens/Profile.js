@@ -20,7 +20,6 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { black } from 'color-name';
 
 export default function Profile(props) {
   const user = auth().currentUser;
@@ -72,18 +71,23 @@ export default function Profile(props) {
   // 가져 올 리뷰와 찜이 없을때 에러 안뜨게 하기
   return (
     <NativeBaseProvider>
-      <Center flex={1} width="100%">
-        <ScrollView>
+      <Center flex={1}>
+        <ScrollView width="100%" p={5}>
           <Stack alignItems='center' style={styles.stack}>
             <HStack alignItems='center'>
               <Image source={{ uri: user?.photoURL }} style={styles.image} alt='사진 없음' />
-              <VStack alignItems='center' style={styles.vstack}>
+              <VStack style={styles.vstack}>
                 <Text style={styles.text}>{user?.displayName}</Text>
                 <Text style={styles.text}>{user?.email}</Text>
               </VStack>
             </HStack>
           </Stack>
-          <Button style={styles.button} onPress={() => auth().signOut()} bg='#BF2A52' width="80%">
+          <Button style={styles.button}
+            onPress={() => auth().signOut()}
+            bg='#BF2A52'
+            width="80%"
+            colorScheme="gray"
+          >
             <Text style={{ color: 'white', fontWeight: 'bold' }}>로그아웃</Text>
           </Button>
           <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 쓴 리뷰</Text>
@@ -105,6 +109,7 @@ const styles = StyleSheet.create({
   },
   vstack: {
     marginLeft: 20,
+    alignItems: 'center'
   },
   button: {
     justifyContent: 'center',
@@ -125,6 +130,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+    marginBottom: 5
   },
   header: {
     fontSize: 25,
@@ -134,9 +140,10 @@ const styles = StyleSheet.create({
   },
   content: {
     fontSize: 18,
-    padding: 10,
+    padding: 15,
     margin: 10,
-    borderColor: black,
-    borderWidth: 1,
+    borderColor: "#aaa",
+    borderRadius: 3,
+    borderWidth: 0.5,
   }
 });
