@@ -44,38 +44,37 @@ class RestaurantItem extends Component {
         <HStack pl={4} pr={3}>
           <RestImg item={this.props.restItem} />
           <VStack space={1} style={{ flex: 5 }} pt={1.5} pl={4}>
-            <Text bold style={{ color: '#333' }}>{item.name}</Text>
+            <Text bold style={{ color: '#111' }}>{item.name}</Text>
             <Text style={{ color: '#333' }}>{item.category}</Text>
             <Text style={{ color: '#333' }}>{item.dong}</Text>
           </VStack>
           <HStack
             style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'space-between' }}
-            space={1}
           >
             <Image
               resizeMode="contain"
               source={require('../images/home-icon/star.png')}
               alt="Alternate Text"
-              size="20px"
-              style={{ tintColor: "#555" }}
+              size="19px"
+              style={{ tintColor: "#F2CB05" }}
             />
-            <Text style={{ color: '#555' }}>{item.total.toFixed(1)}</Text>
+            <Text style={{ color: '#333', fontSize: 14.5 }}>{item.total.toFixed(1)}</Text>
             <Image
               resizeMode="contain"
               source={require('../images/home-icon/heart.png')}
               alt="Alternate Text"
-              size="20px"
-              style={{ tintColor: "#555" }}
+              size="18.5px"
+              style={{ tintColor: "#D90404" }}
             />
-            <Text style={{ color: '#555' }}>{item.bookmark_count}</Text>
+            <Text style={{ color: '#333', fontSize: 14.5 }}>{item.bookmark_count}</Text>
             <Image
               resizeMode="contain"
               source={require('../images/home-icon/comments.png')}
               alt="Alternate Text"
-              size="20px"
-              style={{ tintColor: "#555" }}
+              size="19px"
+              style={{ tintColor: "#306773" }}
             />
-            <Text style={{ color: '#555' }}>{item.comments_count}</Text>
+            <Text style={{ color: '#333', fontSize: 14.5 }}>{item.comments_count}</Text>
           </HStack>
         </HStack>
       </TouchableOpacity>

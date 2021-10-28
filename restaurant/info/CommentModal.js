@@ -121,13 +121,13 @@ const CommentButton = (props) => {
               style={style.resetButton}
               size="sm"
               variant="ghost"
-              colorScheme="blue"
+              colorScheme="teal"
               borderRadius="full"
               onPress={resetValues}
               icon={<Image
-                source={require('../../images/info-icon/refresh.png')}
+                source={require('../../images/info-icon/reset.png')}
                 alt="Alternate Text"
-                style={{ width: 24, height: 24 }}
+                style={{ width: 24, height: 24, tintColor: "#14b8a6"}}
               />}
             />
           </View>
@@ -237,6 +237,15 @@ const CommentButton = (props) => {
           </ScrollView>
           <Button.Group style={{ marginTop: 15, marginBottom: 10 }}>
             <Button
+              colorScheme="danger"
+              onPress={() => showInput(false)}
+              _text={{
+                color: "#fff",
+              }}
+            >
+              취소
+            </Button>
+            <Button
               colorScheme="teal"
               onPress={() => {
                 addReview();
@@ -248,15 +257,6 @@ const CommentButton = (props) => {
               mr={1}
             >
               완료
-            </Button>
-            <Button
-              colorScheme="danger"
-              onPress={() => showInput(false)}
-              _text={{
-                color: "#fff",
-              }}
-            >
-              취소
             </Button>
           </Button.Group>
         </SafeAreaView>
