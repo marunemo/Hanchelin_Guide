@@ -5,7 +5,7 @@ const AppInfoWebWiew = () => {
     return (
         <WebView
             onShouldStartLoadWithRequest={() => true}
-            source={{ uri: 'https://www.notion.so/f6b6fe484295414c95c57d362fcb0180' }}
+            source={{ uri: 'https://seokmin01.github.io/' }}
         />
     );
 };
