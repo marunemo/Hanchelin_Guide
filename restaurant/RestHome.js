@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
+  TouchableHighlight,
 } from "react-native";
 import {
   Box,
@@ -21,6 +22,7 @@ import database from '@react-native-firebase/database';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createFilter } from 'react-native-search-filter';
 import RestInfo from './info/ListItem';
+import AppInfo from "./AppInfo";
 import Profile from "../jin/screens/Profile.js";
 import RestImg from "./RestImg.js"
 
@@ -228,13 +230,33 @@ export default function App({ navigation }) {
             },
             headerTintColor: '#fff',
             headerTitleAlign: 'center',
+            headerLeft: () => (
+              <TouchableHighlight
+                activeOpacity={0.4}
+                underlayColor="#BF2A52"
+                onPress={() => navigation.navigate("프로필")}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../images/home-icon/user.png')}
+                  alt="Alternate Text"
+                  size="24px"
+                  style={{ tintColor: "#fff" }}
+                />
+              </TouchableHighlight>
+            ),
             headerRight: () => (
-              <Icon
-                name="user"
-                size={24}
-                color="#fff"
-                onPress={() => navigation.navigate("프로필")}
-              />
+              <TouchableHighlight
+                activeOpacity={0.4}
+                underlayColor="#BF2A52"
+                onPress={() => navigation.navigate("앱정보")}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../images/home-icon/more.png')}
+                  alt="Alternate Text"
+                  size="24px"
+                  style={{ tintColor: "#fff" }}
+                />
+              </TouchableHighlight>
             )
           }}
         />
@@ -255,6 +277,22 @@ export default function App({ navigation }) {
           })}
         />
         <Stack.Screen
+          name="앱정보"
+          component={AppInfo}
+          options={{
+            headerTitle: () => (
+              <Text style={styles.headerTitle} bold>더보기</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#BF2A52',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+            animation: 'slide_from_right'
+          }}
+        />
+        <Stack.Screen
           name="프로필"
           component={Profile}
           options={{
@@ -267,7 +305,7 @@ export default function App({ navigation }) {
             },
             headerTintColor: '#fff',
             headerTitleAlign: 'center',
-            animation: 'slide_from_right'
+            animation: 'fade'
           }}
         />
       </Stack.Navigator>
