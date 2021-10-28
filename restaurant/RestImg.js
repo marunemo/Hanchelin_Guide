@@ -120,7 +120,32 @@ var imgPath = [
 
 function RestImg(props) {
   const item = props.item;
-  img_source = imgPath[item.id]
+  if (item.id <= 113)
+    img_source = imgPath[item.id]
+  else if (item.category == "한식")
+    img_source = require('../images/food/1.png')
+  else if (item.category == "양식")
+    img_source = require('../images/food/2.png')
+  else if (item.category == "돈까스 / 회 / 일식")
+    img_source = require('../images/food/3.png')
+  else if (item.category == "중식")
+    img_source = require('../images/food/4.png')
+  else if (item.category == "치킨")
+    img_source = require('../images/food/5.png')
+  else if (item.category == "육류 / 고기")
+    img_source = require('../images/food/6.png')
+  else if (item.category == "족발 / 보쌈")
+    img_source = require('../images/food/7.png')
+  else if (item.category == "분식")
+    img_source = require('../images/food/8.png')
+  else if (item.category == "술집")
+    img_source = require('../images/food/9.png')
+  else if (item.category == "아시안")
+    img_source = require('../images/food/10.png')
+  else if (item.category == "카페 / 디저트")
+    img_source = require('../images/food/11.png')
+  else
+    img_source = require('../images/food/none.png')
   return <Image
     style={{ flex: 3 }}
     resizeMode="contain"

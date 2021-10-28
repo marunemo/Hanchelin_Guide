@@ -127,7 +127,7 @@ const CommentButton = (props) => {
               icon={<Image
                 source={require('../../images/info-icon/reset.png')}
                 alt="Alternate Text"
-                style={{ width: 24, height: 24, tintColor: "#14b8a6"}}
+                style={{ width: 24, height: 24, tintColor: "#14b8a6" }}
               />}
             />
           </View>
