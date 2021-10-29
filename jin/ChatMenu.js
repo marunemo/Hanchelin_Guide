@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { NativeBaseProvider, Modal, Button } from 'native-base';
+import { DrawerActions } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Text from '../defaultSetting/FontText';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -29,7 +30,8 @@ export default function ChatDrawer({ navigation, route }) {
     <NativeBaseProvider>
       <Drawer.Navigator
         screenOptions={{
-          drawerPosition: 'right'
+          drawerPosition: 'right',
+          drawerType: 'front'
         }}
       >
         <Drawer.Screen
@@ -46,10 +48,24 @@ export default function ChatDrawer({ navigation, route }) {
             },
             headerTintColor: '#fff',
             headerTitleAlign: 'center',
+            headerLeft: () => (
+              <Icon
+                style={{ padding: 10 }}
+                name="arrow-left"
+                size={24}
+                color="#fff"
+                onPress={navigation.goBack}
+              />
+            ),
             headerRight: () => (
-              (user?.uid === route.params.thread.initialUser) &&
-              <Icon name="trash" size={24} color="#fff"
-                onPress={() => setShowAuthModal(route.params.thread)}
+              // (user?.uid === route.params.thread.initialUser) &&
+              <Icon
+                style={{ padding: 10 }}
+                name="bars"
+                size={24}
+                color="#fff"
+                // onPress={() => setShowAuthModal(route.params.thread)}
+                onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
               />)
           })}
         />
