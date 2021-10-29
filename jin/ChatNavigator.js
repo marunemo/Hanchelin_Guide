@@ -9,7 +9,7 @@ import CreateChat from './screens/CreateChat';
 
 const StackNav = createNativeStackNavigator();
 
-export default function ({ navigation }) {
+export default function () {
     return (
       <StackNav.Navigator
         // screenOptions={{ headerShown: false }}

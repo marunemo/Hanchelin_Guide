@@ -8,7 +8,7 @@ import ChatRoom from './screens/Chatroom';
 
 const Drawer = createDrawerNavigator();
 
-export default function ChatRoomDrawer({ navigation }) {
+export default function ChatRoomDrawer({ navigation, route }) {
   return (
     <Drawer.Navigator
       screenOptions={{
