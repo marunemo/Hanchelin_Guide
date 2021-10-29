@@ -5,14 +5,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import ChatRoom from './ChatListMenu';
 import Chat from './ChatMenu';
-import CreateChat from './screens/CreateChat';
+import CreateChat from './AddChatNavigation';
 
 const StackNav = createNativeStackNavigator();
 
 export default function () {
     return (
       <StackNav.Navigator
-        // screenOptions={{ headerShown: false }}
+        screenOptions={{ headerShown: false }}
       >
         <StackNav.Screen
           name="같이 배달 리스트"
@@ -21,22 +21,12 @@ export default function () {
         <StackNav.Screen
           name="새로운 채팅방 만들기"
           component={CreateChat}
-          options={{
-            headerTitle: () => (
-              <Text style={styles.headerTitle} bold>{"새로운 채팅방 만들기"}</Text>
-            ),
-            headerBackTitleVisible: false,
-            headerStyle: {
-              backgroundColor: '#BF2A52',
-            },
-            headerTintColor: '#fff',
-            headerTitleAlign: 'center',
-            animation: 'slide_from_right'
-          }}
+          options={{ animation: 'slide_from_right' }}
         />
         <StackNav.Screen
           name="메시지"
           component={Chat}
+          options={{ animation: 'fade_from_bottom' }}
         />
       </StackNav.Navigator>
   )

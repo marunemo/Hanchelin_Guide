@@ -46,7 +46,6 @@ export default function ChatDrawer({ navigation, route }) {
             },
             headerTintColor: '#fff',
             headerTitleAlign: 'center',
-            animation: 'fade_from_bottom',
             headerRight: () => (
               (user?.uid === route.params.thread.initialUser) &&
               <Icon name="trash" size={24} color="#fff"
