@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet } from 'react-native'
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { View, StyleSheet } from 'react-native'
+import { createDrawerNavigator, DrawerContentScrollView } from '@react-navigation/drawer';
 import Text from '../defaultSetting/FontText';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -8,9 +8,20 @@ import ChatRoom from './screens/Chatroom';
 
 const Drawer = createDrawerNavigator();
 
+function DrawerMenu(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <View>
+        <Text>Temp</Text>
+      </View>
+    </DrawerContentScrollView>
+  );
+}
+
 export default function ChatRoomDrawer({ navigation, route }) {
   return (
     <Drawer.Navigator
+      drawerContent={(props) => <DrawerMenu {...props} />}
       screenOptions={{
         drawerPosition: 'left'
       }}

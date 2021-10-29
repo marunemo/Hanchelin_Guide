@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { NativeBaseProvider, Modal, Button } from 'native-base';
 import { DrawerActions } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView } from '@react-navigation/drawer';
 import Text from '../defaultSetting/FontText';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
@@ -11,6 +11,38 @@ import firestore from '@react-native-firebase/firestore';
 import Chat from './screens/Chat';
 
 const Drawer = createDrawerNavigator();
+
+function DrawerMenu(props) {
+  return (
+    <DrawerContentScrollView
+      style={styles.drawerContainer}
+      {...props}
+    >
+      <NativeBaseProvider>
+        <Text style={styles.joinHeader}>
+          같이 배달 신청자
+        </Text>
+        <View style={styles.joinList}>
+          <Text style={styles.joinUser}>
+            test
+          </Text>
+        </View>
+        <View>
+          {(props.isOwner) &&
+            <Button
+              style={styles.deleteButton}
+              onPress={props.onPress}
+            >
+              <Text style={styles.deleteButtonText}>
+                채팅방 삭제
+              </Text>
+            </Button>
+          }
+        </View>
+      </NativeBaseProvider>
+    </DrawerContentScrollView>
+  );
+}
 
 export default function ChatDrawer({ navigation, route }) {
   const user = auth().currentUser;
@@ -29,6 +61,16 @@ export default function ChatDrawer({ navigation, route }) {
   return (
     <NativeBaseProvider>
       <Drawer.Navigator
+        drawerContent={(props) => (
+          <DrawerMenu
+            isOwner={user?.uid === route.params.thread.initialUser}
+            onPress={() => {
+              navigation.dispatch(DrawerActions.closeDrawer());
+              setShowAuthModal(route.params.thread);
+            }}
+            {...props}
+          />
+        )}
         screenOptions={{
           drawerPosition: 'right',
           drawerType: 'front'
@@ -87,8 +129,27 @@ export default function ChatDrawer({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
+  drawerContainer: {
+    padding: 10,
+  },
   headerTitle: {
     fontSize: 20,
     color: '#f5f5f5'
+  },
+  joinHeader: {
+    fontSize: 20
+  },
+  joinList: {
+
+  },
+  joinUser: {
+    fontSize: 20
+  },
+  deleteButton: {
+    width: '100%',
+    marginTop: '200%'
+  },
+  deleteButtonText: {
+    fontSize: 20
   }
 })
