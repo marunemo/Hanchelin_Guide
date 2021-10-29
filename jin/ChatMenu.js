@@ -28,16 +28,32 @@ function DrawerMenu(props) {
           </Text>
         </View>
         <View>
+          <Button
+            style={styles.deleteButton}
+            // onPress={props.onPress}
+          >
+            <Text style={styles.deleteButtonText}>
+              배달원 모집 완료
+            </Text>
+          </Button>
           {(props.isOwner) &&
             <Button
               style={styles.deleteButton}
-              onPress={props.onPress}
+              onPress={props.onDelete}
             >
               <Text style={styles.deleteButtonText}>
                 채팅방 삭제
               </Text>
             </Button>
           }
+          <Button
+            style={styles.deleteButton}
+            // onPress={props.onPress}
+          >
+            <Text style={styles.deleteButtonText}>
+              채팅방 나가기
+            </Text>
+          </Button>
         </View>
       </NativeBaseProvider>
     </DrawerContentScrollView>
@@ -64,7 +80,7 @@ export default function ChatDrawer({ navigation, route }) {
         drawerContent={(props) => (
           <DrawerMenu
             isOwner={user?.uid === route.params.thread.initialUser}
-            onPress={() => {
+            onDelete={() => {
               navigation.dispatch(DrawerActions.closeDrawer());
               setShowAuthModal(route.params.thread);
             }}
@@ -147,7 +163,7 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     width: '100%',
-    marginTop: '200%'
+    marginVertical: 3
   },
   deleteButtonText: {
     fontSize: 20
