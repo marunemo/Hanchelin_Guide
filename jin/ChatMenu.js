@@ -50,7 +50,7 @@ export default function ChatDrawer({ navigation, route }) {
             headerTitleAlign: 'center',
             headerLeft: () => (
               <Icon
-                style={{ padding: 10 }}
+                style={{ paddingHorizontal: 18 }}
                 name="arrow-left"
                 size={24}
                 color="#fff"
@@ -60,7 +60,7 @@ export default function ChatDrawer({ navigation, route }) {
             headerRight: () => (
               // (user?.uid === route.params.thread.initialUser) &&
               <Icon
-                style={{ padding: 10 }}
+                style={{ paddingHorizontal: 18 }}
                 name="bars"
                 size={24}
                 color="#fff"

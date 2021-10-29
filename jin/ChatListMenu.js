@@ -29,7 +29,11 @@ export default function ChatRoomDrawer({ navigation, route }) {
           headerTintColor: '#fff',
           headerTitleAlign: 'center',
           headerRight: () => (
-            <Icon name="plus" size={24} color="#fff"
+            <Icon
+              style={{ paddingHorizontal: 18 }}
+              name="plus"
+              size={24}
+              color="#fff"
               onPress={() => navigation.navigate('새로운 채팅방 만들기')} />
           )
         }}
