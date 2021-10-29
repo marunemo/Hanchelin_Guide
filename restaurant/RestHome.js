@@ -74,7 +74,7 @@ class RestaurantItem extends Component {
               source={require('../images/home-icon/comments.png')}
               alt="Alternate Text"
               size="19px"
-              style={{ tintColor: "#306773" }}
+              style={{ tintColor: "#2A95BF" }}
             />
             <Text style={{ color: '#333', fontSize: 14.5 }}>{item.comments_count}</Text>
           </HStack>

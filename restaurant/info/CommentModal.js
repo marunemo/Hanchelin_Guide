@@ -264,7 +264,7 @@ const CommentButton = (props) => {
       <IconButton
         style={style.commentButton}
         borderRadius="full"
-        colorScheme="orange"
+        colorScheme='rgb(229, 75, 75)'
         variant="solid"
         size="lg"
         onPress={() => showInput(true)}
