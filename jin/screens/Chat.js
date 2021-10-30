@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
+import { DrawerActions } from '@react-navigation/native';
+import { getDrawerStatusFromState } from '@react-navigation/drawer';
 import { NativeBaseProvider, Modal, Button } from 'native-base';
 
 let timer = null;
@@ -134,7 +136,11 @@ export default function Chat({ navigation, route }) {
               </Button>
               <Button
                 variant="ghost"
-                onPress={navigation.goBack}
+                onPress={() => {
+                  if (getDrawerStatusFromState(navigation.getState()) === 'open')
+                    navigation.dispatch(DrawerActions.closeDrawer());
+                  navigation.goBack();
+                }}
               >
                 취소
               </Button>
