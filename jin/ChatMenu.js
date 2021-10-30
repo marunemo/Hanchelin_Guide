@@ -40,27 +40,50 @@ function DrawerMenu(props) {
   }
 
   function joinOrder() {
-    firestore()
-      .collection('Chat')
-      .doc(props.chatRoomQuery)
-      .collection('Join')
-      .add({
-        uid: user?.uid,
-        name: user?.displayName,
-        profile: user?.photoURL,
-      })
+    if (user) {
+      firestore()
+        .collection('Chat')
+        .doc(props.chatRoomQuery)
+        .collection('Join')
+        .doc(user.uid)
+        .set({
+          uid: user?.uid,
+          name: user?.displayName,
+          profile: user?.photoURL,
+        });
+    } else {
+      firestore()
+        .collection('Chat')
+        .doc(props.chatRoomQuery)
+        .collection('Join')
+        .add({
+          uid: user?.uid,
+          name: user?.displayName,
+          profile: user?.photoURL,
+        })
+    }
   }
 
   function outOrder() {
-    firestore()
-      .collection('Chat')
-      .doc(props.docId)
-      .collection('Join')
-      .add({
-        uid: user?.uid,
-        name: user?.displayName,
-        profile: user?.photoURL,
-      })
+    if (user) {
+      firestore()
+        .collection('Chat')
+        .doc(props.docId)
+        .collection('Join')
+        .doc(user.uid)
+        .delete();
+    } else {
+      for (const joinItem of props.joinUser) {
+        if (joinItem.uid == user.uid) {
+          firestore()
+            .collection('Chat')
+            .doc(props.docId)
+            .collection('Join')
+            .doc(joinItem.id)
+            .delete();
+        }
+      }
+    }
   }
 
   function isJoined() {
