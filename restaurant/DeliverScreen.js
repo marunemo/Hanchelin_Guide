@@ -4,9 +4,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
     SafeAreaView,
     StyleSheet,
-    Text, Modal,
+    Modal,
     TouchableOpacity,
 } from 'react-native';
+import Text from '../defaultSetting/FontText';
 import { ModalPicker } from './ModalPicker'
 
 const SettingsStack = createNativeStackNavigator();

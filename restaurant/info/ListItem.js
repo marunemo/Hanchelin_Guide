@@ -1,25 +1,28 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Text, View, SafeAreaView, RefreshControl, StyleSheet, Dimensions } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { Image } from "native-base";
+import { View, SafeAreaView, RefreshControl, StyleSheet, Dimensions, Animated } from 'react-native';
+import Text from '../../defaultSetting/FontText';
+// import Animated from 'react-native-reanimated';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import { Rating } from 'react-native-ratings';
-import { NativeBaseProvider, HStack, Center, Button } from 'native-base';
+import { NativeBaseProvider, HStack, Center, Button, useToast } from 'native-base';
 import Font from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import KakaoShareLink from 'react-native-kakao-share-link';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
-import { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar } from './InfoElements';
+import { KeyTextView, InfoView, MenuListView, CommentListView, CommentListSetting, RatingBar } from './InfoElements';
 
 const Stack = createNativeStackNavigator();
 
 const MapView = (props) => {
   const navigation = useNavigation();
-  
+
   if (props.position['latitude'] == undefined) {
     return <View style={style.mapView} />;
   }
@@ -44,6 +47,9 @@ const MapView = (props) => {
 }
 
 const RestComponent = (props) => {
+  const [tog, setTog] = useState(false);
+  const navigation = useNavigation();
+  const toast = useToast();
   const user = auth().currentUser;
   const restData = props.restData;
   const menuList = restData['menu'];
@@ -51,13 +57,13 @@ const RestComponent = (props) => {
   let menu = [];
   let comments = [];
 
-  if (typeof(menuList) === 'object') {
+  if (typeof (menuList) === 'object') {
     for (const [id, order] of Object.entries(menuList)) {
       menu.push(
         <MenuListView key={id} order={order} />
       )
     }
-  } else if(typeof(menuList) === 'string') {
+  } else if (typeof (menuList) === 'string') {
     menu = <MenuListView order={menuList} />
   }
 
@@ -71,45 +77,120 @@ const RestComponent = (props) => {
     }
   }
 
-  
-  let uidArray = [];
-  let heartRef = firestore().collection('가게').doc(restData['official_name']).collection('찜');
+  function openingParse(breaktime) {
+    if (breaktime == undefined)
+      return '연중무휴';
+    const week = '월화수목금토일';
+    const dateData = typeof (breaktime) == 'object' ? breaktime : [breaktime]
+    let onlyBreak = true;
+    let breakDate = '';
+    let weekHours = new Map();
+    for (const i of week) weekHours.set(i, [[]])
 
-  useEffect(() => {
-    heartRef
-      .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
-          uidArray = documentSnapshot.get('userId');
-          console.log(uidArray);
+    for (const dateHours of dateData) {
+      const weekRange = dateHours.substring(0, dateHours.indexOf(' '));
+      let validWeek = '';
+      let hours = '';
+      if (weekRange == '매일') {
+        validWeek = week;
+        hours = dateHours.substring(dateHours.indexOf(' ') + 1);
+      } else if (weekRange[1] == '~') {
+        validWeek = week.substring(week.indexOf(weekRange[0]), week.indexOf(weekRange[2]) + 1);
+        hours = dateHours.substring(dateHours.indexOf(' ') + 1);
+      } else if (weekRange.length == 1) {
+        let index = 0;
+        while (dateHours[index] == ' ' || isNaN(Number(dateHours[index]))) index++;
+        validWeek = dateHours.substring(0, index).replace(/\s/g, '');
+        hours = dateHours.substring(index + 1);
+      } else {
+        breakDate = (weekRange == '휴무일:') ? dateHours : '휴무일: ' + dateHours;
+      }
+
+      if (hours.includes('브레이크타임')) {
+        const spliter = hours.substring(hours.indexOf(' ') + 1).split(' ~ ');
+        for (const day of validWeek) {
+          weekHours[day].forEach((openingHour, i) => {
+            if (openingHour[1] > spliter[0] && openingHour[0] < spliter[0]) {
+              weekHours[day].push([spliter[1], openingHour[1]])
+              weekHours[day][i][1] = spliter[0]
+            }
+          })
+        }
+      }
+      else if (validWeek) {
+        onlyBreak = false;
+        for (const day of validWeek)
+          weekHours[day] = [hours.split(' ~ ')];
+      }
+    }
+
+    let result = '';
+    if (!onlyBreak) {
+      for (const day of week) {
+        result += day + ' : ';
+        if (weekHours[day]) {
+          weekHours[day].sort();
+          for (const hour of weekHours[day])
+            result += hour.toString().replace(',', '~') + ', ';
+          result = result.substring(0, result.length - 2) + '\n';
+        } else {
+          result += '휴무\n'
+        }
+      }
+    }
+    if (breakDate)
+      result += breakDate + '\n';
+    return result.substring(0, result.length - 1);
+  }
+
+  async function kakaoSharing() {
+    try {
+      const response = await KakaoShareLink.sendLocation({
+        address: restData['address'],
+        addressTitle: restData['official_name'],
+        content: {
+          title: restData['official_name'],
+          imageUrl:
+            'http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg',
+          link: {
+            webUrl: 'https://developers.kakao.com/',
+            mobileWebUrl: 'https://developers.kakao.com/',
+          },
+          description: restData['address'],
+        },
+        buttons: [{
+          title: '앱으로 연결',
+          link: {
+            // androidExecutionParams: [
+            //   { key: 'title', value: restData['name'] },
+            //   { key: 'restId', value: restData['id'] },
+            // ],
+            // iosExecutionParams: [
+            //   { key: 'title', value: restData['name'] },
+            //   { key: 'restId', value: restData['id'] },
+            // ],
+          },
+        }],
+      });
+    } catch (e) {
+      if (e.message == '카카오톡이 설치되어있지 않습니다.') {
+        toast.show({
+          title: '공유 실패',
+          description: '카카오톡이 설치되어 있지 않습니다.',
+          status: 'error',
+          style: { width: 320 }
         })
-      })
-  })
-
-  const [togHeart, setTogHeart] = useState(uidArray.includes(user?.uid) ? true : false);
-  const [heart, setHeart] = useState(0);
-
-
-  async function addHeart () {
-    if (!uidArray.includes(user?.uid)) {
-      setHeart(heart + 1)
-      setTogHeart(true)
-
-      heartRef.doc('정보').set({
-        찜: firestore.FieldValue.increment(1),
-        userId: firestore.FieldValue.arrayUnion(user?.uid),
-      }, { merge: true })
-    } else {
-      setHeart(heart - 1)
-      setTogHeart(false)
-
-      heartRef.doc('정보').set({
-        찜: firestore.FieldValue.increment(-1),
-        userId: firestore.FieldValue.arrayRemove(user?.uid),
-      }, { merge: true })
+      } else {
+        toast.show({
+          title: '오류 발생',
+          description: e.message,
+          status: 'error',
+          style: { width: 320 }
+        })
+      }
     }
   }
 
-  const navigation = useNavigation();
   return (
     <>
       <Animated.View style={props.scrollAnimation}>
@@ -122,43 +203,55 @@ const RestComponent = (props) => {
         <View style={[style.partitionPadding, { marginBottom: 15 }]}>
           <Rating
             type="custom"
-            ratingImage={require('../../images/info-icon/hgu.png')}
-            ratingColor="rgb(32, 37,76)"
-            ratingBackgroundColor="rgb(202, 208,247)"
+            ratingImage={require('../../images/info-icon/star.png')}
+            ratingColor="#BF2A52"
+            ratingBackgroundColor="#ddd"
             startingValue={restData['total'] ? restData['total'] : 0}
             imageSize={50}
             fractions={1}
             readonly={true}
             onFinishRating={console.log}
           />
-          <Text style={{ fontSize: 20, textAlign: "center" }}>
-            {restData['total'] ? restData['total'] : 0} / 5
+          <Text style={{ marginTop: 10, fontSize: 20, textAlign: "center", fontWeight: 'bold', color: '#444' }}>
+            {restData['total'] ? Math.round(restData['total'] * 10) / 10 : 0} / 5
           </Text>
         </View>
-        <View style={style.partitionPadding}>
-          <InfoView icon="mobile-phone" value={restData['contact']} />
+        <View style={style.basicInfoPadding}>
+          <InfoView icon="phone" value={restData['contact']} />
           <InfoView icon="location-arrow" value={restData['address']} />
-          <InfoView icon="clock-o" value={restData['opening_hours']} />
+          <InfoView icon="clock-o" value={openingParse(restData['opening_hours'])} />
         </View>
         <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => {
               navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기", params: { restName: restData['official_name'] } });
             }}>
-              <Font style={{ textAlign: "center" }} name="wechat" size={30} color="#4c1d95" />
+              <Image
+                alignSelf="center"
+                resizeMode="contain"
+                source={require('../../images/info-icon/food-delivery.png')}
+                alt="Alternate Text"
+                size="30px"
+              />
               <Text style={{ textAlign: "center", marginTop: 5 }}>같이배달</Text>
             </Button>
           </Center>
           <Center style={[style.optionView, style.horizonStack]}>
-            <Button style={style.optionButton} onPress={addHeart}>
-              <Font style={{ textAlign: "center" }} name={togHeart ? "heart" : "heart-o"} size={30} color="#f15c5c"/>
+            <Button style={style.optionButton} onPress={() => setTog(!tog)}>
+              <Font style={{ textAlign: "center" }} name={tog ? "heart" : "heart-o"} size={30} color="#f15c5c" />
               <Text style={{ textAlign: "center", marginTop: 5 }}>찜하기</Text>
             </Button>
           </Center>
           <Center style={[style.optionView, style.horizonStack, { borderRightWidth: 0 }]}>
-            <Button style={style.optionButton} onPress={() => setTog(!tog)}>
-              <Font style={{ textAlign: "center" }} name="share" size={30} color="#999999" />
-              <Text style={{ textAlign: "center", marginTop: 5 }}>??? 공유</Text>
+            <Button style={style.optionButton} onPress={kakaoSharing}>
+            <Image
+                alignSelf="center"
+                resizeMode="contain"
+                source={require('../../images/info-icon/share.png')}
+                alt="Alternate Text"
+                size="30px"
+              />
+              <Text style={{ textAlign: "center", marginTop: 5 }}>카카오톡 공유</Text>
             </Button>
           </Center>
         </HStack>
@@ -176,27 +269,27 @@ const RestComponent = (props) => {
         <HStack>
           <Center style={style.horizonStack}>
             <RatingBar
-              color="#f43f5e"
-              bgText="#fda4af"
-              textColor="#540820"
+              color="#eab308"
+              bgText="#eab308"
+              textColor="#fff"
               ratingName="맛"
               ratingData={restData['flavor']}
             />
           </Center>
           <Center style={style.horizonStack}>
             <RatingBar
-              color="#06b6d4"
-              bgText="#67e8f9"
-              textColor="#053f4d"
+              color="#d97706"
+              bgText="#d97706"
+              textColor="#fff"
               ratingName="가성비"
               ratingData={restData['cost_performance']}
             />
           </Center>
           <Center style={style.horizonStack}>
             <RatingBar
-              color="#10b981"
-              bgText="#6ee7b7"
-              textColor="#022e22"
+              color="#65a30d"
+              bgText="#65a30d"
+              textColor="#fff"
               ratingName="서비스"
               ratingData={restData['service']}
             />
@@ -259,7 +352,7 @@ const RestaurantInfo = (props) => {
       }
     });
   }
-  
+
   const scrollAnimation = (animatedScroll, screenWidth) => {
     return ({
       width: screenWidth,
@@ -269,7 +362,7 @@ const RestaurantInfo = (props) => {
         translateY: animatedScroll.interpolate({
           inputRange: [-screenWidth, 0, screenWidth, screenWidth + 1],
           outputRange: [-screenWidth * 0.3, 0, screenWidth * 0.8, screenWidth * 0.8],
-        })
+        }),
       }]
     })
   }
@@ -280,7 +373,7 @@ const RestaurantInfo = (props) => {
         <Animated.ScrollView
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: animatedScroll } } }],
-            {useNativeDriver:false}
+            { useNativeDriver: true }
           )}
           scrollEventThrottle={16}
           refreshControl={
@@ -334,29 +427,28 @@ export default ItemActivity;
 const style = StyleSheet.create({
   containter: {
     height: '100%',
-    backgroundColor: '#f7f7f7'
+    backgroundColor: '#f5f5f5'
   },
   contexts: {
     flexDirection: 'row',
-    marginVertical: 18,
+    marginBottom: 27,
   },
   partition: {
-    borderRadius: 25,
     backgroundColor: '#ffffff',
-    marginVertical: 5,
-    marginHorizontal: 15,
-    paddingVertical: 20,
-    shadowColor: '#666666',
-    shadowRadius: 1,
-    shadowOpacity: 0.3,
-    elevation: 8
+    marginTop: 1.5,
+    paddingTop: 18,
+    paddingBottom: 40
   },
   partitionPadding: {
-    paddingHorizontal: 30
+    paddingHorizontal: 18
+  },
+  basicInfoPadding: {
+    paddingHorizontal: 35
   },
   horizontalLayout: {
     flexDirection: 'row-reverse',
-    marginVertical: 10
+    marginVertical: 10,
+    paddingVertical: 10
   },
   mapView: {
     width: '100%',
@@ -370,8 +462,8 @@ const style = StyleSheet.create({
     width: '33%',
   },
   optionView: {
-    borderColor: '#aaaaaa',
-    borderRightWidth : 2
+    borderColor: '#ededed',
+    borderRightWidth: 1.5
   },
   optionButton: {
     width: '100%',

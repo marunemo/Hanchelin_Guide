@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { SafeAreaView, StatusBar, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import Text from './defaultSetting/FontText'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -10,6 +11,7 @@ import Authentication from './jin/screens/Authentication'
 import RestHome from './restaurant/RestHome.js';
 import Chatroom from "./jin/screens/Chatroom.js";
 import ClientId from "./android/app/google-services.json";
+import SecureKey from "./defaultSetting/secure.json";
 
 const BTab = createBottomTabNavigator();
 
@@ -21,6 +23,15 @@ export default function App() {
       webClientId: ClientId["client"][0]["oauth_client"][3]["client_id"]
     });
   }, []);
+
+  const linking = {
+    prefixes: ['kakao{' + SecureKey.kakaonative + '}://'],
+    config: {
+      screens: {
+        '식당 정보': 'kakaolink'
+      },
+    },
+  };
 
   async function onGoogleButtonPress() {
     const { idToken } = await GoogleSignin.signIn();
@@ -42,7 +53,7 @@ export default function App() {
         <SafeAreaView style={{ flex: 0, backgroundColor: '#BF2A52' }} />
         <SafeAreaView style={{ flex: 1, backgroundColor: '#efefef' }}>
           <StatusBar barStyle="light-content" />
-          <NavigationContainer>
+          <NavigationContainer linking={linking}>
             <BTab.Navigator
               screenOptions={({ route }) => ({
                 tabBarLabel: ({ focused }) => {
@@ -93,11 +104,12 @@ export default function App() {
 const styles = StyleSheet.create({
   focusLabel: {
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#bf2a52'
+    color: '#bf2a52',
+    fontFamily: 'ELANDChoiceB',
   },
   unfocusLabel: {
     fontSize: 12,
-    color: '#aaaaaa'
+    color: '#aaaaaa',
+    fontFamily: 'ELANDchoiceM'
   }
 })

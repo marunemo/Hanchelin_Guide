@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactnativekakaosharelink.KakaoShareLinkPackage;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;

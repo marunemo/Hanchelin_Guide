@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Keyboard, View, Text, SafeAreaView, StyleSheet } from 'react-native';
+import { Keyboard, View, SafeAreaView, StyleSheet, Image } from 'react-native';
+import Text from '../../defaultSetting/FontText';
 import { IconButton, Icon, Input, Button } from 'native-base';
 import { KeyboardAwareScrollView as ScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Slider from '@react-native-community/slider';
@@ -40,7 +41,11 @@ const CommentButton = (props) => {
       배달시간: delivTime,
       배달비: delivFee,
       작성시간: new Date(),
-      uid: user?.uid,
+      user: {
+        uid: user?.uid,
+        name: user?.displayName,
+        profile: user?.photoURL,
+      }
     })
       .then(querySnapshot => {
         commentList.push({
@@ -53,7 +58,11 @@ const CommentButton = (props) => {
           배달시간: delivTime,
           배달비: delivFee,
           작성시간: new Date().toLocaleString(),
-          uid: user?.uid,
+          user: {
+            uid: user?.uid,
+            name: user?.displayName,
+            profile: user?.photoURL,
+          },
           query: querySnapshot.id
         });
 
@@ -110,11 +119,16 @@ const CommentButton = (props) => {
             <Text style={style.headerTitle}>식당 리뷰</Text>
             <IconButton
               style={style.resetButton}
-              borderRadius="full"
-              variant="ghost"
               size="sm"
+              variant="ghost"
+              colorScheme="teal"
+              borderRadius="full"
               onPress={resetValues}
-              icon={<Icon name="refresh" as={Font} size="sm" color="#0284c7" />}
+              icon={<Image
+                source={require('../../images/info-icon/reset.png')}
+                alt="Alternate Text"
+                style={{ width: 24, height: 24, tintColor: "#14b8a6" }}
+              />}
             />
           </View>
           <ScrollView
@@ -123,15 +137,19 @@ const CommentButton = (props) => {
             enableResetScrollToCoords={false}
             showsVerticalScrollIndicator={false}
           >
-            <Text style={style.commentText}>주문 방식</Text>
+            <Text style={style.commentText}>방식</Text>
             <Button.Group alignSelf="center">
               <Button
-                colorScheme={isDeliver ? "rgb(4, 120, 87)" : "rgb(52, 211, 153)"}
-                onPress={() => setDeliver(true)}>
+                colorScheme={"rgb(4, 120, 87)"}
+                variant={isDeliver ? "solid" : "outline"}
+                onPress={() => setDeliver(true)}
+                mr={1}
+              >
                 배달
               </Button>
               <Button
-                colorScheme={!isDeliver ? "rgb(4, 120, 87)" : "rgb(52, 211, 153)"}
+                colorScheme={"rgb(4, 120, 87)"}
+                variant={isDeliver ? "outline" : "solid"}
                 onPress={() => setDeliver(false)}>
                 방문
               </Button>
@@ -217,21 +235,28 @@ const CommentButton = (props) => {
               onChangeText={setReview}
             />
           </ScrollView>
-          <Button.Group style={{ marginVertical: 10 }}>
+          <Button.Group style={{ marginTop: 15, marginBottom: 10 }}>
             <Button
-              colorScheme="rgb(14, 165, 233)"
+              colorScheme="danger"
+              onPress={() => showInput(false)}
+              _text={{
+                color: "#fff",
+              }}
+            >
+              취소
+            </Button>
+            <Button
+              colorScheme="teal"
               onPress={() => {
                 addReview();
                 showInput(false);
               }}
+              _text={{
+                color: "#fff",
+              }}
+              mr={1}
             >
               완료
-            </Button>
-            <Button
-              colorScheme="rgb(251, 113, 133)"
-              onPress={() => showInput(false)}
-            >
-              취소
             </Button>
           </Button.Group>
         </SafeAreaView>
@@ -239,11 +264,16 @@ const CommentButton = (props) => {
       <IconButton
         style={style.commentButton}
         borderRadius="full"
-        colorScheme="cyan"
+        colorScheme="orange"
         variant="solid"
         size="lg"
         onPress={() => showInput(true)}
-        icon={<Icon name="pencil-square-o" as={Font} size="sm" />}
+        icon={<Image
+          source={require('../../images/info-icon/pencil.png')}
+          alt="Alternate Text"
+          style={{ width: 24, height: 24, tintColor: "#fff" }}
+        />
+        }
       />
     </>
   );
@@ -262,13 +292,13 @@ const style = StyleSheet.create({
   },
   commentButton: {
     position: 'absolute',
-    bottom: 30,
-    right: 30,
+    bottom: 20,
+    right: 20,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#333333',
     shadowRadius: 2,
-    shadowOpacity: 0.7,
+    shadowOpacity: 0.2,
     elevation: 15
   },
   commentHeader: {
@@ -281,17 +311,20 @@ const style = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 35
+    marginLeft: 60,
+    marginRight: 20
   },
   headerTitle: {
     fontWeight: 'bold',
     fontSize: 22,
+    color: '#333',
     textAlign: 'center'
   },
   commentText: {
     fontWeight: 'bold',
     alignSelf: 'flex-start',
     fontSize: 16,
+    color: '#333',
     paddingHorizontal: 16,
     marginTop: 15,
     marginBottom: 8

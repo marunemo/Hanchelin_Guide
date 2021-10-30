@@ -1,7 +1,8 @@
 // 로그인 페이지
 
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
+import Text from '../../defaultSetting/FontText';
 import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 
 export default function Authentication(props) {
