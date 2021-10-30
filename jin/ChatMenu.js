@@ -23,14 +23,14 @@ function DrawerMenu(props) {
         style={styles.joinUserView}
       >
         <Image
-        style={styles.profileImage}
+          style={styles.profileImage}
           source={{
             uri: joinItem.profile,
           }}
           alt="err"
           size={8}
           resizeMode={"contain"}
-      borderRadius={100}
+          borderRadius={100}
         />
         <Text style={styles.joinUserName}>
           {joinItem.name}
@@ -63,6 +63,15 @@ function DrawerMenu(props) {
       })
   }
 
+  function isJoined() {
+    for (const joinItem of props.joinUser) {
+      if (joinItem.uid == user.uid) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   return (
     <DrawerContentScrollView
       style={styles.drawerContainer}
@@ -74,14 +83,23 @@ function DrawerMenu(props) {
         </Text>
         <View style={styles.joinList}>
           {joinUserList}
-          <Button
-            style={styles.deleteButton}
-            onPress={joinOrder}
-          >
-            <Text style={styles.deleteButtonText}>
-              같이배달 신청하기
-            </Text>
-          </Button>
+          {isJoined()
+            ? <Button
+              style={styles.deleteButton}
+              onPress={outOrder}
+            >
+              <Text style={styles.deleteButtonText}>
+                같이배달 신청취소
+              </Text>
+            </Button>
+            : <Button
+              style={styles.deleteButton}
+              onPress={joinOrder}
+            >
+              <Text style={styles.deleteButtonText}>
+                같이배달 신청하기
+              </Text>
+            </Button>}
         </View>
         <View>
           <Button
@@ -136,7 +154,7 @@ export default function ChatDrawer({ navigation, route }) {
 
         setJoinList(joinUser);
       });
-    
+
     return () => unsubscribeListener();
   }, [])
 
