@@ -23,10 +23,14 @@ function DrawerMenu(props) {
         style={styles.joinUserView}
       >
         <Image
+        style={styles.profileImage}
           source={{
             uri: joinItem.profile,
           }}
           alt="err"
+          size={8}
+          resizeMode={"contain"}
+      borderRadius={100}
         />
         <Text style={styles.joinUserName}>
           {joinItem.name}
@@ -233,7 +237,11 @@ const styles = StyleSheet.create({
 
   },
   joinUserView: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  profileImage: {
+    marginHorizontal: 5
   },
   joinUserName: {
     fontSize: 20
