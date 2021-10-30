@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
+  TouchableHighlight,
 } from "react-native";
 import {
   Box,
@@ -9,7 +10,7 @@ import {
   Center,
   VStack,
   HStack,
-  ScrollView,
+  FlatList,
   NativeBaseProvider,
   Select,
   CheckIcon,
@@ -21,7 +22,9 @@ import database from '@react-native-firebase/database';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createFilter } from 'react-native-search-filter';
 import RestInfo from './info/ListItem';
+import AppInfo from "./AppInfo";
 import Profile from "../jin/screens/Profile.js";
+import RestImg from "./RestImg.js"
 
 const KEYS_TO_FILTERS = ['name'];
 //const [headerColor, iconActiveColor, iconInActiveColor] = ["#BF2A52", "#00FF00", "#f5f5f5"];
@@ -35,77 +38,45 @@ class RestaurantItem extends Component {
   render() {
     const item = this.props.restItem;
 
-    if (item.category == "한식")
-      img_source = require('../images/food/1.png')
-    else if (item.category == "양식")
-      img_source = require('../images/food/2.png')
-    else if (item.category == "돈까스 / 회 / 일식")
-      img_source = require('../images/food/3.png')
-    else if (item.category == "중식")
-      img_source = require('../images/food/4.png')
-    else if (item.category == "치킨")
-      img_source = require('../images/food/5.png')
-    else if (item.category == "육류 / 고기")
-      img_source = require('../images/food/6.png')
-    else if (item.category == "족발 / 보쌈")
-      img_source = require('../images/food/7.png')
-    else if (item.category == "분식")
-      img_source = require('../images/food/8.png')
-    else if (item.category == "술집")
-      img_source = require('../images/food/9.png')
-    else if (item.category == "아시안")
-      img_source = require('../images/food/10.png')
-    else if (item.category == "카페 / 디저트")
-      img_source = require('../images/food/11.png')
-    else
-      img_source = require('../images/none.jpeg')
-
     return (
       <TouchableOpacity
         style={styles.itemContainer}
         onPress={() => this.props.navigation.navigate('식당 정보', { title: item.name, restId: item.id })}
       >
-        <HStack pl={4} pr={3} pt={1.5}>
-          <Image
-            style={{ flex: 3 }}
-            resizeMode="contain"
-            source={img_source}
-            alt="Alternate Text"
-            size="md"
-          />
-          <VStack space={1} style={{ flex: 5 }} pl={4}>
-            <Text bold style={{ color: '#333' }}>{item.name}</Text>
+        <HStack pl={4} pr={3}>
+          <RestImg item={this.props.restItem} />
+          <VStack space={1} style={{ flex: 5 }} pt={1.5} pl={4}>
+            <Text bold style={{ color: '#111' }}>{item.name}</Text>
             <Text style={{ color: '#333' }}>{item.category}</Text>
             <Text style={{ color: '#333' }}>{item.dong}</Text>
           </VStack>
           <HStack
             style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'space-between' }}
-            space={1}
           >
             <Image
               resizeMode="contain"
-              source={require('../images/star.png')}
+              source={require('../images/home-icon/star.png')}
               alt="Alternate Text"
-              size="20px"
-              style={{ tintColor: "#555" }}
+              size="19px"
+              style={{ tintColor: "#F2CB05" }}
             />
-            <Text style={{ color: '#555' }}>{item.total.toFixed(1)}</Text>
+            <Text style={{ color: '#333', fontSize: 14.5 }}>{item.total.toFixed(1)}</Text>
             <Image
               resizeMode="contain"
-              source={require('../images/heart.png')}
+              source={require('../images/home-icon/heart.png')}
               alt="Alternate Text"
-              size="20px"
-              style={{ tintColor: "#555" }}
+              size="18.5px"
+              style={{ tintColor: "#D90404" }}
             />
-            <Text style={{ color: '#555' }}>{item.bookmark_count}</Text>
+            <Text style={{ color: '#333', fontSize: 14.5 }}>{item.bookmark_count}</Text>
             <Image
               resizeMode="contain"
-              source={require('../images/comments.png')}
+              source={require('../images/home-icon/comments.png')}
               alt="Alternate Text"
-              size="20px"
-              style={{ tintColor: "#555" }}
+              size="19px"
+              style={{ tintColor: "#306773" }}
             />
-            <Text style={{ color: '#555' }}>{item.comments_count}</Text>
+            <Text style={{ color: '#333', fontSize: 14.5 }}>{item.comments_count}</Text>
           </HStack>
         </HStack>
       </TouchableOpacity>
@@ -120,7 +91,7 @@ class Home extends Component {
       searchTerm: '',
       switchValue: false,
       category: '',
-      sortTerm: '가나다순',
+      sortTerm: '',
       data: [],
       changeListener: null
     }
@@ -224,17 +195,17 @@ class Home extends Component {
           />
         </Box>
         <Center flex={1} backgroundColor='#fff'>
-          <ScrollView width="100%" mb={-0.5}>
-            <VStack alignItems="center">
-              {filteredArr.map(item =>
-                <RestaurantItem
-                  key={item.id.toString()}
-                  restItem={item}
-                  navigation={this.props.navigation}
-                />
-              )}
-            </VStack>
-          </ScrollView>
+          <FlatList width="100%" mb={-0.5}
+            data={filteredArr}
+            renderItem={({ item }) => (
+              <RestaurantItem
+                key={item.id.toString()}
+                restItem={item}
+                navigation={this.props.navigation}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+          />
         </Center>
       </NativeBaseProvider>
     )
@@ -259,13 +230,33 @@ export default function App({ navigation }) {
             },
             headerTintColor: '#fff',
             headerTitleAlign: 'center',
+            headerLeft: () => (
+              <TouchableHighlight
+                activeOpacity={0.4}
+                underlayColor="#BF2A52"
+                onPress={() => navigation.navigate("프로필")}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../images/home-icon/user.png')}
+                  alt="Alternate Text"
+                  size="24px"
+                  style={{ tintColor: "#fff" }}
+                />
+              </TouchableHighlight>
+            ),
             headerRight: () => (
-              <Icon
-                name="user"
-                size={24}
-                color="#fff"
-                onPress={() => navigation.navigate("프로필")}
-              />
+              <TouchableHighlight
+                activeOpacity={0.4}
+                underlayColor="#BF2A52"
+                onPress={() => navigation.navigate("앱정보")}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../images/home-icon/more.png')}
+                  alt="Alternate Text"
+                  size="24px"
+                  style={{ tintColor: "#fff" }}
+                />
+              </TouchableHighlight>
             )
           }}
         />
@@ -286,6 +277,22 @@ export default function App({ navigation }) {
           })}
         />
         <Stack.Screen
+          name="앱정보"
+          component={AppInfo}
+          options={{
+            headerTitle: () => (
+              <Text style={styles.headerTitle} bold>더보기</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#BF2A52',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+            animation: 'slide_from_right'
+          }}
+        />
+        <Stack.Screen
           name="프로필"
           component={Profile}
           options={{
@@ -298,7 +305,7 @@ export default function App({ navigation }) {
             },
             headerTintColor: '#fff',
             headerTitleAlign: 'center',
-            animation: 'slide_from_right'
+            animation: 'fade'
           }}
         />
       </Stack.Navigator>
