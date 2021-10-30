@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { NativeBaseProvider, Modal, Button } from 'native-base';
+import { NativeBaseProvider, Modal, Button, Image } from 'native-base';
 import { DrawerActions } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView } from '@react-navigation/drawer';
 import Text from '../defaultSetting/FontText';
@@ -13,6 +13,52 @@ import Chat from './screens/Chat';
 const Drawer = createDrawerNavigator();
 
 function DrawerMenu(props) {
+  const user = auth().currentUser;
+  let joinUserList = [];
+
+  for (const joinItem of props.joinUser) {
+    joinUserList.push(
+      <View
+        id={joinItem.id}
+        style={styles.joinUserView}
+      >
+        <Image
+          source={{
+            uri: joinItem.profile,
+          }}
+          alt="err"
+        />
+        <Text style={styles.joinUserName}>
+          {joinItem.name}
+        </Text>
+      </View>
+    )
+  }
+
+  function joinOrder() {
+    firestore()
+      .collection('Chat')
+      .doc(props.chatRoomQuery)
+      .collection('Join')
+      .add({
+        uid: user?.uid,
+        name: user?.displayName,
+        profile: user?.photoURL,
+      })
+  }
+
+  function outOrder() {
+    firestore()
+      .collection('Chat')
+      .doc(props.docId)
+      .collection('Join')
+      .add({
+        uid: user?.uid,
+        name: user?.displayName,
+        profile: user?.photoURL,
+      })
+  }
+
   return (
     <DrawerContentScrollView
       style={styles.drawerContainer}
@@ -23,14 +69,20 @@ function DrawerMenu(props) {
           같이 배달 신청자
         </Text>
         <View style={styles.joinList}>
-          <Text style={styles.joinUser}>
-            test
-          </Text>
+          {joinUserList}
+          <Button
+            style={styles.deleteButton}
+            onPress={joinOrder}
+          >
+            <Text style={styles.deleteButtonText}>
+              같이배달 신청하기
+            </Text>
+          </Button>
         </View>
         <View>
           <Button
             style={styles.deleteButton}
-            // onPress={props.onPress}
+          // onPress={props.onPress}
           >
             <Text style={styles.deleteButtonText}>
               배달원 모집 완료
@@ -48,7 +100,7 @@ function DrawerMenu(props) {
           }
           <Button
             style={styles.deleteButton}
-            // onPress={props.onPress}
+          // onPress={props.onPress}
           >
             <Text style={styles.deleteButtonText}>
               채팅방 나가기
@@ -63,6 +115,26 @@ function DrawerMenu(props) {
 export default function ChatDrawer({ navigation, route }) {
   const user = auth().currentUser;
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [joinList, setJoinList] = useState([]);
+
+  useEffect(() => {
+    const unsubscribeListener = firestore()
+      .collection('Chat')
+      .doc(route.params.thread._id)
+      .collection('Join')
+      .onSnapshot(querySnapshot => {
+        const joinUser = querySnapshot.docs.map(joinData => {
+          return {
+            id: joinData.id,
+            ...joinData.data()
+          }
+        });
+
+        setJoinList(joinUser);
+      });
+    
+    return () => unsubscribeListener();
+  }, [])
 
   function deleteChat(id) {
     firestore()
@@ -79,6 +151,8 @@ export default function ChatDrawer({ navigation, route }) {
       <Drawer.Navigator
         drawerContent={(props) => (
           <DrawerMenu
+            joinUser={joinList}
+            chatRoomQuery={route.params.thread._id}
             isOwner={user?.uid === route.params.thread.initialUser}
             onDelete={() => {
               navigation.dispatch(DrawerActions.closeDrawer());
@@ -158,7 +232,10 @@ const styles = StyleSheet.create({
   joinList: {
 
   },
-  joinUser: {
+  joinUserView: {
+    flexDirection: 'row'
+  },
+  joinUserName: {
     fontSize: 20
   },
   deleteButton: {
