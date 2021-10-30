@@ -68,7 +68,7 @@ function DrawerMenu(props) {
     if (user) {
       firestore()
         .collection('Chat')
-        .doc(props.docId)
+        .doc(props.chatRoomQuery)
         .collection('Join')
         .doc(user.uid)
         .delete();
@@ -77,7 +77,7 @@ function DrawerMenu(props) {
         if (joinItem.uid == user.uid) {
           firestore()
             .collection('Chat')
-            .doc(props.docId)
+            .doc(props.chatRoomQuery)
             .collection('Join')
             .doc(joinItem.id)
             .delete();
