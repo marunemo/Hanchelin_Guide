@@ -50,6 +50,16 @@ const CommentListView = (props) => {
   const commentUser = comment['user'];
 
   const dateTimeFormat = (writtenDate) => {
+    // For iOS format
+    if (writtenDate.includes('오전')) {
+      writtenDate = writtenDate.replace('. 오전 ', ' ').replace(/\. /g, '/');
+    } else if (writtenDate.includes('오후')) {
+      writtenDate = writtenDate.replace('. 오후 ', ' ').replace(/\. /g, '/');
+      const hourIndex = writtenDate.indexOf(':');
+      const writtenHour = parseInt(writtenDate.substring(hourIndex - 2, hourIndex));
+      writtenDate = writtenDate.substring(0, hourIndex - 2) + (writtenHour + 12) + writtenDate.substring(hourIndex);
+    }
+
     const date = new Date(writtenDate);
     const diffDate = new Date(new Date() - date);
     if (diffDate.getTime() < 60 * 1000) {
