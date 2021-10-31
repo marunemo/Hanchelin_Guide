@@ -19,7 +19,7 @@ function DrawerMenu(props) {
   for (const joinItem of props.joinUser) {
     joinUserList.push(
       <View
-        id={joinItem.id}
+        key={joinItem.id}
         style={styles.joinUserView}
       >
         <Image
