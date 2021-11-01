@@ -16,7 +16,7 @@ import KakaoShareLink from 'react-native-kakao-share-link';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
-import { KeyTextView, InfoView, MenuListView, CommentListView, CommentListSetting, RatingBar } from './InfoElements';
+import { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar, InfoModal } from './InfoElements';
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +48,7 @@ const MapView = (props) => {
 
 const RestComponent = (props) => {
   const [tog, setTog] = useState(false);
+  const [showOpenHour, setShowOpenHour] = useState(false);
   const navigation = useNavigation();
   const toast = useToast();
   const user = auth().currentUser;
@@ -227,8 +228,17 @@ const RestComponent = (props) => {
         <View style={style.basicInfoPadding}>
           <InfoView icon="phone" value={restData['contact']} />
           <InfoView icon="location-arrow" value={restData['address']} />
-          <InfoView icon="clock-o" value={openingParse(restData['opening_hours'], new Date().getDay())} />
+          <InfoView
+            icon="clock-o"
+            value={openingParse(restData['opening_hours'], new Date().getDay())}
+            onPress={() => setShowOpenHour(true)} />
         </View>
+        <InfoModal
+          isOpen={showOpenHour}
+          onClose={() => setShowOpenHour(false)}
+          restName={restData['official_name']}
+          openHour={openingParse(restData['opening_hours'])}
+        />
         <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => {
