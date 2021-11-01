@@ -135,9 +135,9 @@ class Home extends Component {
           >
             <Select
               width="57%"
-              height={10}
+              height={12}
               color="#555"
-              style={{ fontSize: 15 }}
+              style={{ fontSize: 14 }}
               placeholderTextColor="#555"
               variant="filled"
               selectedValue={this.state.category}
@@ -163,9 +163,9 @@ class Home extends Component {
             </Select>
             <Select
               width="40%"
-              height={10}
+              height={12}
               color="#555"
-              style={{ fontSize: 15 }}
+              style={{ fontSize: 14 }}
               placeholderTextColor="#555"
               variant="filled"
               selectedValue={this.state.sortTerm}
