@@ -136,7 +136,8 @@ const RestComponent = (props) => {
         sortDay = week;
       }
       for (const day of sortDay) {
-        result += day + ' : ';
+        if (weekday == -1)
+          result += day + ' : ';
         if (weekHours[day]) {
           weekHours[day].sort();
           for (const hour of weekHours[day])
