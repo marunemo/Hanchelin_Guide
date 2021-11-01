@@ -77,7 +77,7 @@ const RestComponent = (props) => {
     }
   }
 
-  function openingParse(breaktime) {
+  function openingParse(breaktime, weekday = -1) {
     if (breaktime == undefined)
       return '연중무휴';
     const week = '월화수목금토일';
@@ -126,7 +126,15 @@ const RestComponent = (props) => {
 
     let result = '';
     if (!onlyBreak) {
-      for (const day of week) {
+      let sortDay;
+      if (weekday == 0) {
+        sortDay = '일';
+      } else if (weekday != -1) {
+        sortDay = week[weekday - 1];
+      } else {
+        sortDay = week;
+      }
+      for (const day of sortDay) {
         result += day + ' : ';
         if (weekHours[day]) {
           weekHours[day].sort();
@@ -219,7 +227,7 @@ const RestComponent = (props) => {
         <View style={style.basicInfoPadding}>
           <InfoView icon="phone" value={restData['contact']} />
           <InfoView icon="location-arrow" value={restData['address']} />
-          <InfoView icon="clock-o" value={openingParse(restData['opening_hours'])} />
+          <InfoView icon="clock-o" value={openingParse(restData['opening_hours'], new Date().getDay())} />
         </View>
         <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
@@ -244,7 +252,7 @@ const RestComponent = (props) => {
           </Center>
           <Center style={[style.optionView, style.horizonStack, { borderRightWidth: 0 }]}>
             <Button style={style.optionButton} onPress={kakaoSharing}>
-            <Image
+              <Image
                 alignSelf="center"
                 resizeMode="contain"
                 source={require('../../images/info-icon/share.png')}
