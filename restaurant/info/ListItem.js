@@ -16,7 +16,7 @@ import KakaoShareLink from 'react-native-kakao-share-link';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
-import { KeyTextView, InfoView, MenuListView, CommentListView, CommentListSetting, RatingBar } from './InfoElements';
+import { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar, InfoModal } from './InfoElements';
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +48,7 @@ const MapView = (props) => {
 
 const RestComponent = (props) => {
   const [tog, setTog] = useState(false);
+  const [showOpenHour, setShowOpenHour] = useState(false);
   const navigation = useNavigation();
   const toast = useToast();
   const user = auth().currentUser;
@@ -77,7 +78,7 @@ const RestComponent = (props) => {
     }
   }
 
-  function openingParse(breaktime) {
+  function openingParse(breaktime, weekday = -1) {
     if (breaktime == undefined)
       return '연중무휴';
     const week = '월화수목금토일';
@@ -126,8 +127,17 @@ const RestComponent = (props) => {
 
     let result = '';
     if (!onlyBreak) {
-      for (const day of week) {
-        result += day + ' : ';
+      let sortDay;
+      if (weekday == 0) {
+        sortDay = '일';
+      } else if (weekday != -1) {
+        sortDay = week[weekday - 1];
+      } else {
+        sortDay = week;
+      }
+      for (const day of sortDay) {
+        if (weekday == -1)
+          result += day + ' : ';
         if (weekHours[day]) {
           weekHours[day].sort();
           for (const hour of weekHours[day])
@@ -219,8 +229,17 @@ const RestComponent = (props) => {
         <View style={style.basicInfoPadding}>
           <InfoView icon="phone" value={restData['contact']} />
           <InfoView icon="location-arrow" value={restData['address']} />
-          <InfoView icon="clock-o" value={openingParse(restData['opening_hours'])} />
+          <InfoView
+            icon="clock-o"
+            value={openingParse(restData['opening_hours'], new Date().getDay())}
+            onPress={() => setShowOpenHour(true)} />
         </View>
+        <InfoModal
+          isOpen={showOpenHour}
+          onClose={() => setShowOpenHour(false)}
+          restName={restData['official_name']}
+          openHour={openingParse(restData['opening_hours'])}
+        />
         <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => {
@@ -244,7 +263,7 @@ const RestComponent = (props) => {
           </Center>
           <Center style={[style.optionView, style.horizonStack, { borderRightWidth: 0 }]}>
             <Button style={style.optionButton} onPress={kakaoSharing}>
-            <Image
+              <Image
                 alignSelf="center"
                 resizeMode="contain"
                 source={require('../../images/info-icon/share.png')}

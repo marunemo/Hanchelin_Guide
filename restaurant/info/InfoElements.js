@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Image, StyleSheet } from 'react-native';
 import Text from '../../defaultSetting/FontText';
 import { IconButton, Icon, Modal, Button } from 'native-base';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -25,9 +25,16 @@ const InfoView = (props) => {
           size={22}
         />
       </View>
-      <Text style={{ fontSize: 16, marginVertical: 3, color: '#444' }}>
-        {props.value}
-      </Text>
+      {props.onPress
+        ? <TouchableOpacity onPress={props.onPress}>
+          <Text style={{ fontSize: 16, marginVertical: 3, color: '#444' }}>
+            {props.value}
+          </Text>
+        </TouchableOpacity>
+        : <Text style={{ fontSize: 16, marginVertical: 3, color: '#444' }}>
+          {props.value}
+        </Text>
+      }
     </View>
   )
 }
@@ -50,6 +57,16 @@ const CommentListView = (props) => {
   const commentUser = comment['user'];
 
   const dateTimeFormat = (writtenDate) => {
+    // For iOS format
+    if (writtenDate.includes('오전')) {
+      writtenDate = writtenDate.replace('. 오전 ', ' ').replace(/\. /g, '/');
+    } else if (writtenDate.includes('오후')) {
+      writtenDate = writtenDate.replace('. 오후 ', ' ').replace(/\. /g, '/');
+      const hourIndex = writtenDate.indexOf(':');
+      const writtenHour = parseInt(writtenDate.substring(hourIndex - 2, hourIndex));
+      writtenDate = writtenDate.substring(0, hourIndex - 2) + (writtenHour + 12) + writtenDate.substring(hourIndex);
+    }
+
     const date = new Date(writtenDate);
     const diffDate = new Date(new Date() - date);
     if (diffDate.getTime() < 60 * 1000) {
@@ -215,7 +232,30 @@ const RatingBar = (props) => {
   )
 }
 
-export { KeyTextView, InfoView, MenuListView, CommentListView, CommentListSetting, RatingBar };
+const InfoModal = (props) => {
+  return (
+    <Modal
+      isOpen={props.isOpen}
+      onClose={props.onClose}
+    >
+      <Modal.Content>
+        <Modal.CloseButton />
+        <Modal.Header style={{ maxWidth: '90%' }}>
+          <Text style={{ fontSize: 24 }} bold>
+            {props.restName}의 운영시간
+          </Text>
+        </Modal.Header>
+        <Modal.Body style={{ padding: 10 }}>
+          <Text style={{ fontSize: 16, lineHeight: 23 }}>
+            {props.openHour}
+          </Text>
+        </Modal.Body>
+      </Modal.Content>
+    </Modal>
+  )
+}
+
+export { KeyTextView, InfoView, MenuListView, CommentListView, CommentListSetting, RatingBar, InfoModal };
 
 const style = StyleSheet.create({
   contexts: {
