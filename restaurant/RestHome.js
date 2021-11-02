@@ -43,7 +43,7 @@ class RestaurantItem extends Component {
         style={styles.itemContainer}
         onPress={() => this.props.navigation.navigate('식당 정보', { title: item.name, restId: item.id })}
       >
-        <HStack pl={4} pr={3}>
+        <HStack px={3} py={2.5}>
           <RestImg item={this.props.restItem} />
           <VStack space={1} style={{ flex: 5 }} pt={1.5} pl={4}>
             <Text bold style={{ color: '#111' }}>{item.name}</Text>
@@ -53,30 +53,36 @@ class RestaurantItem extends Component {
           <HStack
             style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'space-between' }}
           >
-            <Image
-              resizeMode="contain"
-              source={require('../images/home-icon/star.png')}
-              alt="Alternate Text"
-              size="19px"
-              style={{ tintColor: "#F2CB05" }}
-            />
-            <Text style={{ color: '#333', fontSize: 14.5 }}>{item.total.toFixed(1)}</Text>
-            <Image
-              resizeMode="contain"
-              source={require('../images/home-icon/heart.png')}
-              alt="Alternate Text"
-              size="18.5px"
-              style={{ tintColor: "#D90404" }}
-            />
-            <Text style={{ color: '#333', fontSize: 14.5 }}>{item.bookmark_count}</Text>
-            <Image
-              resizeMode="contain"
-              source={require('../images/home-icon/comments.png')}
-              alt="Alternate Text"
-              size="19px"
-              style={{ tintColor: "#2A95BF" }}
-            />
-            <Text style={{ color: '#333', fontSize: 14.5 }}>{item.comments_count}</Text>
+            <HStack space={1} style={{ alignItems: 'flex-end' }}>
+              <Image
+                resizeMode="contain"
+                source={require('../images/home-icon/star.png')}
+                alt="Alternate Text"
+                size="19px"
+                style={{ tintColor: "#F2CB05" }}
+              />
+              <Text style={{ color: '#F2CB05', fontSize: 14.5 }}>{item.total.toFixed(1)}</Text>
+            </HStack>
+            <HStack space={1.5} style={{ alignItems: 'flex-end' }}>
+              <Image
+                resizeMode="contain"
+                source={require('../images/home-icon/heart.png')}
+                alt="Alternate Text"
+                size="18.5px"
+                style={{ tintColor: "#D90404" }}
+              />
+              <Text style={{ color: '#D90404', fontSize: 14.5 }}>{item.bookmark_count}</Text>
+            </HStack>
+            <HStack space={1.5} style={{ alignItems: 'flex-end' }}>
+              <Image
+                resizeMode="contain"
+                source={require('../images/home-icon/comments.png')}
+                alt="Alternate Text"
+                size="19px"
+                style={{ tintColor: "#2A95BF" }}
+              />
+              <Text style={{ color: '#2A95BF', fontSize: 14.5 }}>{item.comments_count}</Text>
+            </HStack>
           </HStack>
         </HStack>
       </TouchableOpacity>
@@ -316,8 +322,6 @@ export default function App({ navigation }) {
 const styles = StyleSheet.create({
   itemContainer: {
     justifyContent: 'center',
-    width: '100%',
-    height: 110,
     backgroundColor: '#fff',
     borderBottomColor: '#ededed',
     borderBottomWidth: 0.5,
