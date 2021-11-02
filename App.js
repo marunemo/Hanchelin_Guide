@@ -9,7 +9,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Authentication from './jin/screens/Authentication'
 import RestHome from './restaurant/RestHome.js';
-import Chatroom from "./jin/screens/Chatroom.js";
+// import Chatroom from "./jin/screens/Chatroom.js";
+import Chatroom from "./jin/ChatNavigator";
 import ClientId from "./android/app/google-services.json";
 import SecureKey from "./defaultSetting/secure.json";
 
