@@ -43,7 +43,7 @@ class RestaurantItem extends Component {
         style={styles.itemContainer}
         onPress={() => this.props.navigation.navigate('식당 정보', { title: item.name, restId: item.id })}
       >
-        <HStack px={3} py={2.5}>
+        <HStack pl={4} pr={3} py={2.5}>
           <RestImg item={this.props.restItem} />
           <VStack space={1} style={{ flex: 5 }} pt={1.5} pl={4}>
             <Text bold style={{ color: '#111' }}>{item.name}</Text>
@@ -62,7 +62,7 @@ class RestaurantItem extends Component {
                 size="19px"
                 style={{ tintColor: "#F2CB05" }}
               />
-              <Text style={{ color: '#F2CB05', fontSize: 14.5 }}>{item.total.toFixed(1)}</Text>
+              <Text style={{ color: '#333', fontSize: 14.5 }}>{item.total.toFixed(1)}</Text>
             </HStack>
             <HStack space={1} style={{ alignItems: 'flex-end' }}>
               <Image
@@ -72,7 +72,7 @@ class RestaurantItem extends Component {
                 size="18.5px"
                 style={{ tintColor: "#D90404" }}
               />
-              <Text style={{ color: '#D90404', fontSize: 14.5 }}>{item.bookmark_count}</Text>
+              <Text style={{ color: '#333', fontSize: 14.5 }}>{item.bookmark_count}</Text>
             </HStack>
             <HStack space={1} style={{ alignItems: 'flex-end' }}>
               <Image
@@ -82,7 +82,7 @@ class RestaurantItem extends Component {
                 size="19px"
                 style={{ tintColor: "#2A95BF" }}
               />
-              <Text style={{ color: '#2A95BF', fontSize: 14.5 }}>{item.comments_count}</Text>
+              <Text style={{ color: '#333', fontSize: 14.5 }}>{item.comments_count}</Text>
             </HStack>
           </HStack>
         </HStack>
