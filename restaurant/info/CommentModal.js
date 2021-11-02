@@ -159,8 +159,8 @@ const CommentButton = (props) => {
               <Slider
                 style={{ width: "90%", alignSelf: "center" }}
                 thumbImage={require('../../images/info-icon/bike.png')}
-                minimumTrackTintColor="#bf2a52"
-                thumbTintColor="#bf2a52"
+                minimumTrackTintColor="#E54B4B"
+                thumbTintColor="#E54B4B"
                 value={delivTime}
                 maximumValue={60}
                 step={5}
@@ -173,8 +173,8 @@ const CommentButton = (props) => {
               <Slider
                 style={{ width: "90%", alignSelf: "center" }}
                 thumbImage={require('../../images/info-icon/bike.png')}
-                minimumTrackTintColor="#bf2a52"
-                thumbTintColor="#bf2a52"
+                minimumTrackTintColor="#E54B4B"
+                thumbTintColor="#E54B4B"
                 value={delivFee}
                 maximumValue={5000}
                 step={1000}
