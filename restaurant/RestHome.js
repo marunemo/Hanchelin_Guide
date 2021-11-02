@@ -51,7 +51,8 @@ class RestaurantItem extends Component {
             <Text style={{ color: '#333' }}>{item.dong}</Text>
           </VStack>
           <HStack
-            style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'space-between' }}
+            space={2}
+            style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'flex-end' }}
           >
             <HStack space={1} style={{ alignItems: 'flex-end' }}>
               <Image
@@ -63,7 +64,7 @@ class RestaurantItem extends Component {
               />
               <Text style={{ color: '#F2CB05', fontSize: 14.5 }}>{item.total.toFixed(1)}</Text>
             </HStack>
-            <HStack space={1.5} style={{ alignItems: 'flex-end' }}>
+            <HStack space={1} style={{ alignItems: 'flex-end' }}>
               <Image
                 resizeMode="contain"
                 source={require('../images/home-icon/heart.png')}
@@ -73,7 +74,7 @@ class RestaurantItem extends Component {
               />
               <Text style={{ color: '#D90404', fontSize: 14.5 }}>{item.bookmark_count}</Text>
             </HStack>
-            <HStack space={1.5} style={{ alignItems: 'flex-end' }}>
+            <HStack space={1} style={{ alignItems: 'flex-end' }}>
               <Image
                 resizeMode="contain"
                 source={require('../images/home-icon/comments.png')}
