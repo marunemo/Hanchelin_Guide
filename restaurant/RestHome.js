@@ -43,9 +43,9 @@ class RestaurantItem extends Component {
         style={styles.itemContainer}
         onPress={() => this.props.navigation.navigate('식당 정보', { title: item.name, restId: item.id })}
       >
-        <HStack pl={4} pr={3} py={2.5}>
+        <HStack px={3} py={2}>
           <RestImg item={this.props.restItem} />
-          <VStack space={1} style={{ flex: 5 }} pt={1.5} pl={4}>
+          <VStack space={1} style={{ flex: 5 }} pt={2.5} pl={3}>
             <Text bold style={{ color: '#111' }}>{item.name}</Text>
             <Text style={{ color: '#333' }}>{item.category}</Text>
             <Text style={{ color: '#333' }}>{item.dong}</Text>
