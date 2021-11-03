@@ -45,7 +45,7 @@ class RestaurantItem extends Component {
         <HStack px={3} py={2}>
           <RestImg item={this.props.restItem} />
           <VStack space={1} style={{ flex: 5 }} pt={2.5} pl={3}>
-            <Text bold style={{ fontFamily: 'ELANDChoiceB', color: '#111' }}>{item.name}</Text>
+            <Text style={{ fontFamily: 'ELANDChoiceB', color: '#111' }}>{item.name}</Text>
             <Text style={{ color: '#333' }}>{item.category}</Text>
             <Text style={{ color: '#333' }}>{item.dong}</Text>
           </VStack>
@@ -229,7 +229,7 @@ export default function App({ navigation }) {
           component={Home}
           options={{
             headerTitle: () => (
-              <Text style={styles.headerTitle} bold>한슐랭 가이드</Text>
+              <Text style={styles.headerTitle}>한슐랭 가이드</Text>
             ),
             headerStyle: {
               backgroundColor: '#BF2A52',
@@ -271,7 +271,7 @@ export default function App({ navigation }) {
           component={RestInfo}
           options={({ route }) => ({
             headerTitle: () => (
-              <Text style={styles.headerTitle} bold>{route.params.title}</Text>
+              <Text style={styles.headerTitle}>{route.params.title}</Text>
             ),
             headerBackTitleVisible: false,
             headerStyle: {
@@ -287,7 +287,7 @@ export default function App({ navigation }) {
           component={AppInfo}
           options={{
             headerTitle: () => (
-              <Text style={styles.headerTitle} bold>더보기</Text>
+              <Text style={styles.headerTitle}>더보기</Text>
             ),
             headerBackTitleVisible: false,
             headerStyle: {
@@ -303,7 +303,7 @@ export default function App({ navigation }) {
           component={Profile}
           options={{
             headerTitle: () => (
-              <Text style={styles.headerTitle} bold>프로필</Text>
+              <Text style={styles.headerTitle}>프로필</Text>
             ),
             headerBackTitleVisible: false,
             headerStyle: {
@@ -329,6 +329,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 20,
-    color: '#f5f5f5'
+    color: '#f5f5f5',
+    fontFamily: 'ELANDChoiceB'
   }
 })
