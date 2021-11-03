@@ -41,12 +41,15 @@ export default function Profile(props) {
           let storeName = documentSnapshot.ref.parent.parent.id
 
           review.push(
-            <TouchableOpacity onPress={() => navigation.navigate('식당 정보', { title: storeName, restId: item.restId })}>
-            <View style={styles.content} key={documentSnapshot.id}>
-              <Text>내용 : {item['리뷰']}</Text>
-              <Text>별점 : {'★'.repeat(item['종합'])}</Text>
-              <Text>식당 이름 : {storeName}</Text>
-            </View>
+            <TouchableOpacity
+              key={documentSnapshot.id}
+              onPress={() => navigation.navigate('식당 정보', { title: storeName, restId: item.restId })}
+            >
+              <View style={styles.content}>
+                <Text>내용 : {item['리뷰']}</Text>
+                <Text>별점 : {'★'.repeat(item['종합'])}</Text>
+                <Text>식당 이름 : {storeName}</Text>
+              </View>
             </TouchableOpacity>
           );
         });
