@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Text,
   StyleSheet,
   TouchableOpacity,
   TouchableHighlight,
@@ -15,8 +16,6 @@ import {
   Select,
   CheckIcon,
 } from "native-base";
-import Text from '../defaultSetting/FontText';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import HeaderClassicSearchBar from "../lib/src/HeaderClassicSearchBar/HeaderClassicSearchBar";
 import database from '@react-native-firebase/database';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -46,7 +45,7 @@ class RestaurantItem extends Component {
         <HStack px={3} py={2}>
           <RestImg item={this.props.restItem} />
           <VStack space={1} style={{ flex: 5 }} pt={2.5} pl={3}>
-            <Text bold style={{ color: '#111' }}>{item.name}</Text>
+            <Text bold style={{ fontFamily: 'ELANDChoiceB', color: '#111' }}>{item.name}</Text>
             <Text style={{ color: '#333' }}>{item.category}</Text>
             <Text style={{ color: '#333' }}>{item.dong}</Text>
           </VStack>
@@ -59,30 +58,30 @@ class RestaurantItem extends Component {
                 resizeMode="contain"
                 source={require('../images/home-icon/star.png')}
                 alt="Alternate Text"
-                size="19px"
-                style={{ tintColor: "#F2CB05" }}
+                size="17.5px"
+                style={{ tintColor: "rgb(248, 204, 76)" }}
               />
-              <Text style={{ color: '#333', fontSize: 14.5 }}>{item.total.toFixed(1)}</Text>
+              <Text style={{ color: 'rgb(248, 204, 76)', fontSize: 14 }}>{item.total.toFixed(1)}</Text>
             </HStack>
             <HStack space={1} style={{ alignItems: 'flex-end' }}>
               <Image
                 resizeMode="contain"
                 source={require('../images/home-icon/heart.png')}
                 alt="Alternate Text"
-                size="18.5px"
+                size="17px"
                 style={{ tintColor: "#D90404" }}
               />
-              <Text style={{ color: '#333', fontSize: 14.5 }}>{item.bookmark_count}</Text>
+              <Text style={{ color: '#D90404', fontSize: 14 }}>{item.bookmark_count}</Text>
             </HStack>
             <HStack space={1} style={{ alignItems: 'flex-end' }}>
               <Image
                 resizeMode="contain"
                 source={require('../images/home-icon/comments.png')}
                 alt="Alternate Text"
-                size="19px"
-                style={{ tintColor: "#2A95BF" }}
+                size="17.5px"
+                style={{ tintColor: "rgb(73, 163, 173)" }}
               />
-              <Text style={{ color: '#333', fontSize: 14.5 }}>{item.comments_count}</Text>
+              <Text style={{ color: 'rgb(73, 163, 173)', fontSize: 14 }}>{item.comments_count}</Text>
             </HStack>
           </HStack>
         </HStack>
