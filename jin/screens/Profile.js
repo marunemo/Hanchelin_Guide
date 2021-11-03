@@ -79,7 +79,7 @@ export default function Profile(props) {
               <Image source={{ uri: user?.photoURL }} style={styles.image} alt='사진 없음' />
               <VStack alignItems='center' style={styles.vstack}>
                 <Text style={styles.text}>{user?.displayName}</Text>
-                <Text style={styles.text}>{user?.email}</Text>
+                <Text style={styles.emailText}>{user?.email}</Text>
               </VStack>
             </HStack>
           </Stack>
@@ -125,6 +125,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+  },
+  emailText: {
+    fontSize: 16,
   },
   header: {
     fontSize: 25,
