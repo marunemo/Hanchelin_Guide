@@ -96,17 +96,16 @@ const CommentListView = (props) => {
         </View>
         <IconButton
           size="sm"
-          variant="outline"
-          colorScheme="dark"
+          variant="solid"
+          colorScheme="rgb(239, 239, 239)"
           borderRadius="full"
-          borderColor="#71717a"
-          borderWidth={1}
           onPress={() => setSettingVisible(true)}
           icon={<Image
-            source={require('../../images/info-icon/trash.png')}
+            source={require('../../images/info-icon/menu-vertical.png')}
             alt="Alternate Text"
-            style={{ width: 23, height: 23, tintColor: "#71717a" }}
+            style={{ width: 23, height: 23, tintColor: "#777" }}
           />}
+          style={{ marginBottom: 10 }}
         />
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
