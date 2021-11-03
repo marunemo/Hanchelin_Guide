@@ -156,9 +156,10 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 18,
     padding: 15,
-    margin: 10,
-    borderColor: "#aaa",
+    marginVertical: 10,
+    marginHorizontal: 30,
+    borderColor: "#ccc",
     borderRadius: 3,
-    borderWidth: 0.5,
+    borderWidth: 1,
   }
 });
