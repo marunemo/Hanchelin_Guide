@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import {
+  TouchableOpacity,
   StyleSheet
 } from 'react-native';
 import {
@@ -18,11 +19,12 @@ import {
 import Text from '../../defaultSetting/FontText';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { NavigationContainer } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 export default function Profile(props) {
   const user = auth().currentUser;
+  const navigation = useNavigation();
   const [review, setReview] = useState([]);
   const [store, setStore] = useState([]);
 
@@ -30,23 +32,33 @@ export default function Profile(props) {
     firestore().collectionGroup('리뷰')
       //.orderBy('createdAt', 'desc')
       .where('uid', '==', user?.uid)
+      .orderBy('작성시간', 'asc')
       .onSnapshot(querySnapshot => {
-        let review = []
+        let review = [];
 
-        querySnapshot.forEach(documentSnapshot => {
-          const item = documentSnapshot.data();
-          let storeName = documentSnapshot.ref.parent.parent.id
+        if (querySnapshot !== null) {
+          querySnapshot.forEach(documentSnapshot => {
+            const item = documentSnapshot.data();
+            console.log(item)
+            let storeName = documentSnapshot.ref.parent.parent.id
 
-          review.push(
-            <View style={styles.content} key={documentSnapshot.id}>
-              <Text>내용 : {item['리뷰']}</Text>
-              <Text>별점 : {'★'.repeat(item['종합'])}</Text>
-              <Text>식당 이름 : {storeName}</Text>
-            </View>
-          );
-        });
+            review.push(
+              <TouchableOpacity
+                key={documentSnapshot.id}
+                onPress={() => navigation.navigate('식당 정보', { title: storeName, restId: item.restId })}
+              >
+                <View style={styles.content}>
+                  <Text>내용 : {item['리뷰']}</Text>
+                  <Text>별점 : {'★'.repeat(item['종합'])}</Text>
+                  <Text>식당 이름 : {storeName}</Text>
+                  <Text>작성일 : {new Date(item['작성시간'].seconds).toLocaleString()}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          });
 
-        setReview(review)
+          setReview(review);
+        }
       });
 
     firestore()
@@ -78,14 +90,14 @@ export default function Profile(props) {
               <Image source={{ uri: user?.photoURL }} style={styles.image} alt='사진 없음' />
               <VStack style={styles.vstack}>
                 <Text style={styles.text}>{user?.displayName}</Text>
-                <Text style={styles.text}>{user?.email}</Text>
+                <Text style={styles.emailText}>{user?.email}</Text>
               </VStack>
             </HStack>
           </Stack>
           <Button style={styles.button}
             onPress={() => auth().signOut()}
             bg='#BF2A52'
-            width="80%"
+            width="70%"
             colorScheme="gray"
           >
             <Text style={{ color: 'white', fontWeight: 'bold' }}>로그아웃</Text>
@@ -131,6 +143,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     marginBottom: 5
+  },
+  emailText: {
+    fontSize: 16,
   },
   header: {
     fontSize: 25,

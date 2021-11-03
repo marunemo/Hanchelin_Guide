@@ -7526,6 +7526,15 @@
     "jscodeshift" "^0.11.0"
     "nullthrows" "^1.1.1"
 
+"react-native-codegen@^0.0.9":
+  "integrity" "sha512-N2lWfeKSucXOQiQOAYVgIbMYWgzPnN6Oi7qcFe4ksoPf7uMDhw4f2A+XzrqUBU9mCzI0VcNZ6P5opoKriva3HA=="
+  "resolved" "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.0.9.tgz"
+  "version" "0.0.9"
+  dependencies:
+    "flow-parser" "^0.121.0"
+    "jscodeshift" "^0.11.0"
+    "nullthrows" "^1.1.1"
+
 "react-native-communications@^2.2.1":
   "integrity" "sha1-eIO1ayCgAu63kMET+GFuqGksp5U="
   "resolved" "https://registry.npmjs.org/react-native-communications/-/react-native-communications-2.2.1.tgz"
