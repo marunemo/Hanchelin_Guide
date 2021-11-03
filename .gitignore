@@ -4,6 +4,7 @@ backup.zip
 ### for Copy Right ###
 
 android/app/src/main/assets/fonts/
+android/app/src/main/res/mipmap-*
 ios/Fonts/
 
 ### for Security ###
