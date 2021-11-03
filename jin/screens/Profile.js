@@ -85,7 +85,7 @@ export default function Profile(props) {
   return (
     <NativeBaseProvider>
       <Center flex={1} width="100%">
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Stack alignItems='center' style={styles.stack}>
             <HStack alignItems='center'>
               <Image source={{ uri: user?.photoURL }} style={styles.image} alt='사진 없음' />
