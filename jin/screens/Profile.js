@@ -21,7 +21,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { black } from 'color-name';
+import { Rating } from 'react-native-ratings';
 
 export default function Profile(props) {
   const user = auth().currentUser;
@@ -42,16 +42,27 @@ export default function Profile(props) {
             const item = documentSnapshot.data();
             let storeName = documentSnapshot.ref.parent.parent.id
 
+            console.log(item['종합'])
             review.push(
               <TouchableOpacity
                 key={documentSnapshot.id}
                 onPress={() => navigation.navigate('식당 정보', { title: storeName, restId: item.restId })}
               >
                 <View style={styles.content}>
-                  <Text>내용 : {item['리뷰']}</Text>
-                  <Text>별점 : {'★'.repeat(item['종합'])}</Text>
-                  <Text>식당 이름 : {storeName}</Text>
-                  <Text>작성일 : {dateFormat(item['작성시간'].seconds)}</Text>
+                  <Text style={styles.reviewTitle} bold>{storeName}</Text>
+                  <Rating
+                    type="custom"
+                    ratingImage={require('../../images/info-icon/star.png')}
+                    ratingColor="#BF2A52"
+                    ratingBackgroundColor="#ddd"
+                    startingValue={item['종합']}
+                    imageSize={40}
+                    fractions={0}
+                    readonly={true}
+                    onFinishRating={console.log}
+                  />
+                  <Text style={styles.reviewContent}>{item['리뷰']}</Text>
+                  <Text style={styles.reviewDate}>{dateFormat(item['작성시간'].seconds)}</Text>
                 </View>
               </TouchableOpacity>
             );
@@ -156,11 +167,30 @@ const styles = StyleSheet.create({
     margin: 10
   },
   content: {
-    width: '80%',
-    padding: 10,
-    margin: 10,
+    width: '85%',
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+    margin: 5,
     borderWidth: 1,
     borderRadius: 10,
-    alignSelf: 'center'
+    borderColor: '#999999',
+    alignSelf: 'center',
+    backgroundColor: '#ffffff'
+  },
+  reviewTitle: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginBottom: 20
+  },
+  reviewContent: {
+    fontSize: 16,
+    color: '#222222',
+    marginTop: 20,
+    marginBottom: 8
+  },
+  reviewDate: {
+    fontSize: 12,
+    textAlign: 'right',
+    color: '#777777'
   }
 });
