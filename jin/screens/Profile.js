@@ -36,7 +36,7 @@ export default function Profile(props) {
       .orderBy('작성시간', 'asc')
       .onSnapshot(querySnapshot => {
         let review = [];
-        
+
         if (querySnapshot !== null) {
           querySnapshot.forEach(documentSnapshot => {
             const item = documentSnapshot.data();
@@ -52,6 +52,7 @@ export default function Profile(props) {
                   <Text>내용 : {item['리뷰']}</Text>
                   <Text>별점 : {'★'.repeat(item['종합'])}</Text>
                   <Text>식당 이름 : {storeName}</Text>
+                  <Text>작성일 : {new Date(item['작성시간'].seconds).toLocaleString()}</Text>
                 </View>
               </TouchableOpacity>
             );
