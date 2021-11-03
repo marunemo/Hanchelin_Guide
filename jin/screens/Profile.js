@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import {
+  TouchableOpacity,
   StyleSheet
 } from 'react-native';
 import {
@@ -18,12 +19,13 @@ import {
 import Text from '../../defaultSetting/FontText';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { NavigationContainer } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { black } from 'color-name';
 
 export default function Profile(props) {
   const user = auth().currentUser;
+  const navigation = useNavigation();
   const [review, setReview] = useState([]);
   const [store, setStore] = useState([]);
 
@@ -39,11 +41,13 @@ export default function Profile(props) {
           let storeName = documentSnapshot.ref.parent.parent.id
 
           review.push(
+            <TouchableOpacity onPress={() => navigation.navigate('식당 정보', { title: storeName, restId: item.restId })}>
             <View style={styles.content} key={documentSnapshot.id}>
               <Text>내용 : {item['리뷰']}</Text>
               <Text>별점 : {'★'.repeat(item['종합'])}</Text>
               <Text>식당 이름 : {storeName}</Text>
             </View>
+            </TouchableOpacity>
           );
         });
 

@@ -42,6 +42,7 @@ const CommentButton = (props) => {
       배달비: delivFee,
       작성시간: new Date(),
       uid: user?.uid,
+      restId: props.restaurantData['id']
     })
       .then(querySnapshot => {
         commentList.push({
