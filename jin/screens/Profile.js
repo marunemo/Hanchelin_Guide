@@ -40,7 +40,6 @@ export default function Profile(props) {
         if (querySnapshot !== null) {
           querySnapshot.forEach(documentSnapshot => {
             const item = documentSnapshot.data();
-            console.log(item)
             let storeName = documentSnapshot.ref.parent.parent.id
 
             review.push(
@@ -52,7 +51,7 @@ export default function Profile(props) {
                   <Text>내용 : {item['리뷰']}</Text>
                   <Text>별점 : {'★'.repeat(item['종합'])}</Text>
                   <Text>식당 이름 : {storeName}</Text>
-                  <Text>작성일 : {new Date(item['작성시간'].seconds).toLocaleString()}</Text>
+                  <Text>작성일 : {dateFormat(item['작성시간'].seconds)}</Text>
                 </View>
               </TouchableOpacity>
             );
@@ -80,6 +79,14 @@ export default function Profile(props) {
         setStore(store)
       });
   }, []);
+
+  function dateFormat(seconds) {
+    const targetDate = new Date(seconds * 1000);
+    return targetDate.getFullYear() + '년 ' + targetDate.getMonth() + '월 ' + targetDate.getDate() + '일 '
+      + ((targetDate.getHours() < 10) ? '0' : '') + targetDate.getHours() + ':'
+      + ((targetDate.getMinutes() < 10) ? '0' : '') + targetDate.getMinutes() + ':'
+      + ((targetDate.getSeconds() < 10) ? '0' : '') + targetDate.getSeconds();
+  }
 
   // 가져 올 리뷰와 찜이 없을때 에러 안뜨게 하기
   return (
