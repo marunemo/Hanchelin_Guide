@@ -53,32 +53,32 @@ class RestaurantItem extends Component {
             space={2}
             style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'flex-end' }}
           >
-            <HStack space={1} style={{ alignItems: 'flex-end' }}>
+            <HStack space={0.5}>
               <Image
                 resizeMode="contain"
-                source={require('../images/home-icon/star.png')}
+                source={require('../images/home-icon/star-o.png')}
                 alt="Alternate Text"
-                size="17.5px"
-                style={{ tintColor: "rgb(248, 204, 76)" }}
+                size="16px"
+                style={{ tintColor: "#F2CB05" }}
               />
               <Text style={{ color: 'rgb(248, 204, 76)', fontSize: 14 }}>{item.total.toFixed(1)}</Text>
             </HStack>
-            <HStack space={1} style={{ alignItems: 'flex-end' }}>
+            <HStack space={0.5}>
               <Image
                 resizeMode="contain"
-                source={require('../images/home-icon/heart.png')}
+                source={require('../images/home-icon/heart-o.png')}
                 alt="Alternate Text"
-                size="17px"
+                size="15.5px"
                 style={{ tintColor: "#D90404" }}
               />
               <Text style={{ color: '#D90404', fontSize: 14 }}>{item.bookmark_count}</Text>
             </HStack>
-            <HStack space={1} style={{ alignItems: 'flex-end' }}>
+            <HStack space={0.5}>
               <Image
                 resizeMode="contain"
-                source={require('../images/home-icon/comments.png')}
+                source={require('../images/home-icon/comments-o.png')}
                 alt="Alternate Text"
-                size="17.5px"
+                size="16px"
                 style={{ tintColor: "rgb(73, 163, 173)" }}
               />
               <Text style={{ color: 'rgb(73, 163, 173)', fontSize: 14 }}>{item.comments_count}</Text>
