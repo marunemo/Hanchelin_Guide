@@ -49,6 +49,6 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   centerMargin: {
-    height: 250
+    height: 180
   }
 });
