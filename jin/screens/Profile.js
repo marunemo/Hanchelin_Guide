@@ -91,8 +91,8 @@ export default function Profile(props) {
   // 가져 올 리뷰와 찜이 없을때 에러 안뜨게 하기
   return (
     <NativeBaseProvider>
-      <Center flex={1} width="100%">
-        <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Center flex={1} width="100%">
           <Stack alignItems='center' style={styles.stack}>
             <HStack alignItems='center'>
               <Image source={{ uri: user?.photoURL }} style={styles.image} alt='사진 없음' />
@@ -105,12 +105,12 @@ export default function Profile(props) {
           <Button style={styles.button} onPress={() => auth().signOut()} bg='#BF2A52' width="80%">
             <Text style={{ color: 'white', fontWeight: 'bold' }}>로그아웃</Text>
           </Button>
-          <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 쓴 리뷰</Text>
-          {review}
-          <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 찜한 가게</Text>
-          {store}
-        </ScrollView>
-      </Center>
+        </Center>
+        <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 쓴 리뷰</Text>
+        {review}
+        <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 찜한 가게</Text>
+        {store}
+      </ScrollView>
     </NativeBaseProvider>
   );
 }
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
+    width: '60%',
     marginTop: 25,
     color: 'white',
     alignSelf: 'center'
@@ -155,10 +156,11 @@ const styles = StyleSheet.create({
     margin: 10
   },
   content: {
-    fontSize: 18,
+    width: '80%',
     padding: 10,
     margin: 10,
-    borderColor: black,
     borderWidth: 1,
+    borderRadius: 10,
+    alignSelf: 'center'
   }
 });
