@@ -50,6 +50,7 @@ export default function App() {
   auth().onAuthStateChanged((user) => {
     if (user) {
       setAuthenticated(true);
+      setProgress(false);
     } else {
       setAuthenticated(false);
     }

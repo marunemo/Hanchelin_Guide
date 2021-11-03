@@ -42,7 +42,6 @@ export default function Profile(props) {
             const item = documentSnapshot.data();
             let storeName = documentSnapshot.ref.parent.parent.id
 
-            console.log(item['종합'])
             review.push(
               <TouchableOpacity
                 key={documentSnapshot.id}
