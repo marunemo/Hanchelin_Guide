@@ -33,28 +33,32 @@ export default function Profile(props) {
     firestore().collectionGroup('리뷰')
       //.orderBy('createdAt', 'desc')
       .where('uid', '==', user?.uid)
+      .orderBy('작성시간', 'asc')
       .onSnapshot(querySnapshot => {
-        let review = []
+        let review = [];
+        
+        if (querySnapshot !== null) {
+          querySnapshot.forEach(documentSnapshot => {
+            const item = documentSnapshot.data();
+            console.log(item)
+            let storeName = documentSnapshot.ref.parent.parent.id
 
-        querySnapshot.forEach(documentSnapshot => {
-          const item = documentSnapshot.data();
-          let storeName = documentSnapshot.ref.parent.parent.id
+            review.push(
+              <TouchableOpacity
+                key={documentSnapshot.id}
+                onPress={() => navigation.navigate('식당 정보', { title: storeName, restId: item.restId })}
+              >
+                <View style={styles.content}>
+                  <Text>내용 : {item['리뷰']}</Text>
+                  <Text>별점 : {'★'.repeat(item['종합'])}</Text>
+                  <Text>식당 이름 : {storeName}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          });
 
-          review.push(
-            <TouchableOpacity
-              key={documentSnapshot.id}
-              onPress={() => navigation.navigate('식당 정보', { title: storeName, restId: item.restId })}
-            >
-              <View style={styles.content}>
-                <Text>내용 : {item['리뷰']}</Text>
-                <Text>별점 : {'★'.repeat(item['종합'])}</Text>
-                <Text>식당 이름 : {storeName}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        });
-
-        setReview(review)
+          setReview(review);
+        }
       });
 
     firestore()
