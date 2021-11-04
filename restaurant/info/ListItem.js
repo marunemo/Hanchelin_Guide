@@ -12,7 +12,7 @@ import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import KakaoShareLink from 'react-native-kakao-share-link';
+//import KakaoShareLink from 'react-native-kakao-share-link';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
@@ -47,7 +47,6 @@ const MapView = (props) => {
 }
 
 const RestComponent = (props) => {
-  const [tog, setTog] = useState(false);
   const [showOpenHour, setShowOpenHour] = useState(false);
   const navigation = useNavigation();
   const toast = useToast();
@@ -57,6 +56,50 @@ const RestComponent = (props) => {
   const commentsList = restData['comments'];
   let menu = [];
   let comments = [];
+  let uidArray = [];
+  const [togHeart, setTogHeart] = useState(uidArray.includes(user?.uid) ? true : false);
+  const [heart, setHeart] = useState(0);
+  let heartRef = firestore().collection('가게').doc(restData['official_name']).collection('찜');
+  let heartDB = database().ref(props.heartDir);
+  let bookmarkCount = restData['bookmark_count'];
+
+  useEffect(() => {
+    heartRef
+      .onSnapshot(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          uidArray = documentSnapshot.get('userId');
+          console.log(uidArray);
+        })
+      })
+  })
+
+  async function addHeart () {
+    if (!uidArray.includes(user?.uid)) {
+      setHeart(heart + 1)
+      setTogHeart(true)
+
+      heartRef.doc('정보').set({
+        찜: firestore.FieldValue.increment(1),
+        userId: firestore.FieldValue.arrayUnion(user?.uid),
+      }, { merge: true })
+
+      heartDB.update({
+        bookmark_count: bookmarkCount + 1
+      })
+    } else {
+      setHeart(heart - 1)
+      setTogHeart(false)
+
+      heartRef.doc('정보').set({
+        찜: firestore.FieldValue.increment(-1),
+        userId: firestore.FieldValue.arrayRemove(user?.uid),
+      }, { merge: true })
+
+      heartDB.update({
+        bookmark_count: bookmarkCount - 1
+      })
+    }
+  }
 
   if (typeof (menuList) === 'object') {
     for (const [id, order] of Object.entries(menuList)) {
@@ -153,7 +196,7 @@ const RestComponent = (props) => {
     return result.substring(0, result.length - 1);
   }
 
-  async function kakaoSharing() {
+  /*async function kakaoSharing() {
     try {
       const response = await KakaoShareLink.sendLocation({
         address: restData['address'],
@@ -199,7 +242,7 @@ const RestComponent = (props) => {
         })
       }
     }
-  }
+  }*/
 
   return (
     <>
@@ -256,13 +299,13 @@ const RestComponent = (props) => {
             </Button>
           </Center>
           <Center style={[style.optionView, style.horizonStack]}>
-            <Button style={style.optionButton} onPress={() => setTog(!tog)}>
-              <Font style={{ textAlign: "center" }} name={tog ? "heart" : "heart-o"} size={30} color="#f15c5c" />
+            <Button style={style.optionButton} onPress={addHeart}>
+              <Font style={{ textAlign: "center" }} name={togHeart ? "heart" : "heart-o"} size={30} color="#f15c5c" />
               <Text style={{ textAlign: "center", marginTop: 5 }}>찜하기</Text>
             </Button>
           </Center>
           <Center style={[style.optionView, style.horizonStack, { borderRightWidth: 0 }]}>
-            <Button style={style.optionButton} onPress={kakaoSharing}>
+            <Button style={style.optionButton}>
               <Image
                 alignSelf="center"
                 resizeMode="contain"
@@ -404,6 +447,7 @@ const RestaurantInfo = (props) => {
         >
           <RestComponent
             restData={restData}
+            heartDir={restDir}
             onPop={(id, query) => removeComment(id, query)}
             scrollAnimation={scrollAnimation(animatedScroll, Dimensions.get('window').width)}
           />

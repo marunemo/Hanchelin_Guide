@@ -26,6 +26,8 @@ export default function Profile(props) {
   const user = auth().currentUser;
   const [review, setReview] = useState([]);
   const [store, setStore] = useState([]);
+  const [nickname, setNickname] = useState('');
+  const nameRef = firestore().collection('user').doc('nickname');
 
   useEffect(() => {
     firestore().collectionGroup('리뷰')
@@ -51,8 +53,8 @@ export default function Profile(props) {
       });
 
     firestore()
-      .collection('store')
-      .where('heart', 'array-contains', user?.uid)
+      .collectionGroup('찜')
+      .where('userId', 'array-contains', user?.uid)
       .onSnapshot(querySnapshot => {
         let store = []
 
@@ -62,7 +64,7 @@ export default function Profile(props) {
 
           store.push(
             <View style={styles.content} key={documentSnapshot.id}>
-              <Text>{storeName}</Text>
+              <Text>가게 이름 : {storeName}</Text>
             </View>
           );
         });
@@ -70,6 +72,12 @@ export default function Profile(props) {
         setStore(store)
       });
   }, []);
+
+  /*async function addNickname() {
+    await nameRef.add({
+
+    })
+  }*/
 
   // 가져 올 리뷰와 찜이 없을때 에러 안뜨게 하기
   return (
