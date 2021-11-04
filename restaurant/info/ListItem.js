@@ -454,9 +454,9 @@ const ItemActivity = ({ navigation, route }) => {
         <Stack.Screen
           name="식당 위치"
           component={MapScreen}
-          options={{
+          options={({ route }) => ({
             headerTitle: () => (
-              <Text style={style.headerTitle}>{route.params.title} 위치</Text>
+              <Text style={style.headerTitle}>{route.params.name} 위치</Text>
             ),
             headerBackTitleVisible: false,
             headerStyle: {
@@ -469,11 +469,11 @@ const ItemActivity = ({ navigation, route }) => {
                 name="map-marker"
                 size={24}
                 color="#fff"
-                onPress={() => navigation.navigate('식당 길찾기')}
+                onPress={() => navigation.navigate('식당 길찾기', { name: route.params.name, coordinate: route.params.coordinate })}
               />
             ),
             animation: 'slide_from_right'
-          }}
+          })}
         />
         <Stack.Screen
           name="식당 길찾기"
