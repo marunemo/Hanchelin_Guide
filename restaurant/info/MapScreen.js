@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Platform, Dimensions } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import Geolocation from 'react-native-geolocation-service';
-import { useNavigation } from '@react-navigation/native';
 
 const MapScreen = ({ route }) => {
-  const navigation = useNavigation();
   const [currentPosition, setPosition] = useState({ latitude: 36.103116, longitude: 129.388368 }); // Handong University
   const [centerPosition, setCenter] = useState(route.params.coordinate)
   const [zoomLevel, setZoom] = useState(16)
@@ -48,7 +46,6 @@ const MapScreen = ({ route }) => {
       zoomControl={false}
       minZoomLevel={6}
       maxZoomLevel={19}
-      onMapClick={() => navigation.goBack()}
     >
       <Marker
         coordinate={currentPosition}
