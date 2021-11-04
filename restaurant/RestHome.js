@@ -269,18 +269,10 @@ export default function App({ navigation }) {
         <Stack.Screen
           name="식당 정보"
           component={RestInfo}
-          options={({ route }) => ({
-            headerTitle: () => (
-              <Text style={styles.headerTitle}>{route.params.title}</Text>
-            ),
-            headerBackTitleVisible: false,
-            headerStyle: {
-              backgroundColor: '#BF2A52',
-            },
-            headerTintColor: '#fff',
-            headerTitleAlign: 'center',
+          options={{
+            headerShown: false,
             animation: 'fade_from_bottom'
-          })}
+          }}
         />
         <Stack.Screen
           name="앱정보"

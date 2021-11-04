@@ -53,6 +53,7 @@ const RestComponent = (props) => {
   const toast = useToast();
   const user = auth().currentUser;
   const restData = props.restData;
+  console.log(restData)
   const menuList = restData['menu'];
   const commentsList = restData['comments'];
   let menu = [];
@@ -429,12 +430,34 @@ const ItemActivity = ({ route }) => {
         <Stack.Screen
           name="식당 정보 화면"
           component={RestInfo}
-          options={{ headerShown: false }}
+          initialParams={route.params}
+          options={{
+            headerTitle: () => (
+              <Text style={style.headerTitle}>{route.params.title}</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#BF2A52',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+          }}
         />
         <Stack.Screen
           name="식당 위치"
           component={MapScreen}
-          options={{ headerShown: false }}
+          options={{
+            headerTitle: () => (
+              <Text style={style.headerTitle}>{route.params.title} 위치</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#BF2A52',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+            animation: 'slide_from_right'
+          }}
         />
       </Stack.Navigator>
     </NativeBaseProvider>
@@ -444,6 +467,11 @@ const ItemActivity = ({ route }) => {
 export default ItemActivity;
 
 const style = StyleSheet.create({
+  headerTitle: {
+    fontSize: 20,
+    color: '#f5f5f5',
+    fontFamily: 'ELANDChoiceB'
+  },
   containter: {
     height: '100%',
     backgroundColor: '#f5f5f5'
