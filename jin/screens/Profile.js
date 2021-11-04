@@ -106,13 +106,18 @@ export default function Profile(props) {
           <Stack alignItems='center' style={styles.stack}>
             <HStack alignItems='center'>
               <Image source={{ uri: user?.photoURL }} style={styles.image} alt='사진 없음' />
-              <VStack alignItems='center' style={styles.vstack}>
+              <VStack style={styles.vstack}>
                 <Text style={styles.text}>{user?.displayName}</Text>
                 <Text style={styles.emailText}>{user?.email}</Text>
               </VStack>
             </HStack>
           </Stack>
-          <Button style={styles.button} onPress={() => auth().signOut()} bg='#BF2A52' width="80%">
+          <Button style={styles.button}
+            onPress={() => auth().signOut()}
+            bg='#BF2A52'
+            width="70%"
+            colorScheme="gray"
+          >
             <Text style={{ color: 'white', fontWeight: 'bold' }}>로그아웃</Text>
           </Button>
         </Center>
@@ -134,6 +139,7 @@ const styles = StyleSheet.create({
   },
   vstack: {
     marginLeft: 20,
+    alignItems: 'center'
   },
   button: {
     justifyContent: 'center',
@@ -155,6 +161,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+    marginBottom: 5
   },
   emailText: {
     fontSize: 16,
@@ -172,7 +179,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: '#999999',
+    borderColor: "#ccc",
     alignSelf: 'center',
     backgroundColor: '#ffffff'
   },
