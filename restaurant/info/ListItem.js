@@ -53,7 +53,6 @@ const RestComponent = (props) => {
   const toast = useToast();
   const user = auth().currentUser;
   const restData = props.restData;
-  console.log(restData)
   const menuList = restData['menu'];
   const commentsList = restData['comments'];
   let menu = [];
@@ -419,7 +418,7 @@ const RestaurantInfo = (props) => {
   )
 }
 
-const ItemActivity = ({ route }) => {
+const ItemActivity = ({ navigation, route }) => {
   const RestInfo = () => {
     return <RestaurantInfo restId={route.params.restId} />;
   }
@@ -441,6 +440,14 @@ const ItemActivity = ({ route }) => {
             },
             headerTintColor: '#fff',
             headerTitleAlign: 'center',
+            headerLeft: () => (
+              <Font
+                name="align-left"
+                size={24}
+                color="#fff"
+                onPress={navigation.goBack}
+              />
+            )
           }}
         />
         <Stack.Screen
