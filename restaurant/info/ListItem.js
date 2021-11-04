@@ -16,6 +16,7 @@ import KakaoShareLink from 'react-native-kakao-share-link';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
+import RouteWebScreen from './RouteWebScreen';
 import { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar, InfoModal } from './InfoElements';
 
 const Stack = createNativeStackNavigator();
@@ -456,6 +457,30 @@ const ItemActivity = ({ navigation, route }) => {
           options={{
             headerTitle: () => (
               <Text style={style.headerTitle}>{route.params.title} 위치</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#BF2A52',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+            headerRight: () => (
+              <Font
+                name="map-marker"
+                size={24}
+                color="#fff"
+                onPress={() => navigation.navigate('식당 길찾기')}
+              />
+            ),
+            animation: 'slide_from_right'
+          }}
+        />
+        <Stack.Screen
+          name="식당 길찾기"
+          component={RouteWebScreen}
+          options={{
+            headerTitle: () => (
+              <Text style={style.headerTitle}>{route.params.title} 길찾기</Text>
             ),
             headerBackTitleVisible: false,
             headerStyle: {
