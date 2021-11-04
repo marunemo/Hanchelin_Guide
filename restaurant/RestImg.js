@@ -153,6 +153,7 @@ function RestImg(props) {
     alt="Alternate Text"
     size="md"
     borderRadius={1}
+    m={1}
   />
 }
 

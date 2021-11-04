@@ -41,11 +41,8 @@ const CommentButton = (props) => {
       배달시간: delivTime,
       배달비: delivFee,
       작성시간: new Date(),
-      user: {
-        uid: user?.uid,
-        name: user?.displayName,
-        profile: user?.photoURL,
-      }
+      uid: user?.uid,
+      restId: props.restaurantData['id']
     })
       .then(querySnapshot => {
         commentList.push({
@@ -159,8 +156,8 @@ const CommentButton = (props) => {
               <Slider
                 style={{ width: "90%", alignSelf: "center" }}
                 thumbImage={require('../../images/info-icon/bike.png')}
-                minimumTrackTintColor="#bf2a52"
-                thumbTintColor="#bf2a52"
+                minimumTrackTintColor="#E54B4B"
+                thumbTintColor="#E54B4B"
                 value={delivTime}
                 maximumValue={60}
                 step={5}
@@ -173,8 +170,8 @@ const CommentButton = (props) => {
               <Slider
                 style={{ width: "90%", alignSelf: "center" }}
                 thumbImage={require('../../images/info-icon/bike.png')}
-                minimumTrackTintColor="#bf2a52"
-                thumbTintColor="#bf2a52"
+                minimumTrackTintColor="#E54B4B"
+                thumbTintColor="#E54B4B"
                 value={delivFee}
                 maximumValue={5000}
                 step={1000}
@@ -264,7 +261,7 @@ const CommentButton = (props) => {
       <IconButton
         style={style.commentButton}
         borderRadius="full"
-        colorScheme="orange"
+        colorScheme='rgb(229, 75, 75)'
         variant="solid"
         size="lg"
         onPress={() => showInput(true)}

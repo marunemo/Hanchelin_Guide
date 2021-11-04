@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Text,
   StyleSheet,
   TouchableOpacity,
   TouchableHighlight,
@@ -15,8 +16,6 @@ import {
   Select,
   CheckIcon,
 } from "native-base";
-import Text from '../defaultSetting/FontText';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import HeaderClassicSearchBar from "../lib/src/HeaderClassicSearchBar/HeaderClassicSearchBar";
 import database from '@react-native-firebase/database';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -43,40 +42,47 @@ class RestaurantItem extends Component {
         style={styles.itemContainer}
         onPress={() => this.props.navigation.navigate('식당 정보', { title: item.name, restId: item.id })}
       >
-        <HStack pl={4} pr={3}>
+        <HStack px={3} py={2}>
           <RestImg item={this.props.restItem} />
-          <VStack space={1} style={{ flex: 5 }} pt={1.5} pl={4}>
-            <Text bold style={{ color: '#111' }}>{item.name}</Text>
+          <VStack space={1} style={{ flex: 5 }} pt={2.5} pl={3}>
+            <Text style={{ fontFamily: 'ELANDChoiceB', color: '#111' }}>{item.name}</Text>
             <Text style={{ color: '#333' }}>{item.category}</Text>
             <Text style={{ color: '#333' }}>{item.dong}</Text>
           </VStack>
           <HStack
-            style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'space-between' }}
+            space={2}
+            style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'flex-end' }}
           >
-            <Image
-              resizeMode="contain"
-              source={require('../images/home-icon/star.png')}
-              alt="Alternate Text"
-              size="19px"
-              style={{ tintColor: "#F2CB05" }}
-            />
-            <Text style={{ color: '#333', fontSize: 14.5 }}>{item.total.toFixed(1)}</Text>
-            <Image
-              resizeMode="contain"
-              source={require('../images/home-icon/heart.png')}
-              alt="Alternate Text"
-              size="18.5px"
-              style={{ tintColor: "#D90404" }}
-            />
-            <Text style={{ color: '#333', fontSize: 14.5 }}>{item.bookmark_count}</Text>
-            <Image
-              resizeMode="contain"
-              source={require('../images/home-icon/comments.png')}
-              alt="Alternate Text"
-              size="19px"
-              style={{ tintColor: "#306773" }}
-            />
-            <Text style={{ color: '#333', fontSize: 14.5 }}>{item.comments_count}</Text>
+            <HStack space={0.5}>
+              <Image
+                resizeMode="contain"
+                source={require('../images/home-icon/star-o.png')}
+                alt="Alternate Text"
+                size="16px"
+                style={{ tintColor: "#F2CB05" }}
+              />
+              <Text style={{ color: 'rgb(248, 204, 76)', fontSize: 14 }}>{item.total.toFixed(1)}</Text>
+            </HStack>
+            <HStack space={0.5}>
+              <Image
+                resizeMode="contain"
+                source={require('../images/home-icon/heart-o.png')}
+                alt="Alternate Text"
+                size="15.5px"
+                style={{ tintColor: "#D90404" }}
+              />
+              <Text style={{ color: '#D90404', fontSize: 14 }}>{item.bookmark_count}</Text>
+            </HStack>
+            <HStack space={0.5}>
+              <Image
+                resizeMode="contain"
+                source={require('../images/home-icon/comments-o.png')}
+                alt="Alternate Text"
+                size="16px"
+                style={{ tintColor: "rgb(73, 163, 173)" }}
+              />
+              <Text style={{ color: 'rgb(73, 163, 173)', fontSize: 14 }}>{item.comments_count}</Text>
+            </HStack>
           </HStack>
         </HStack>
       </TouchableOpacity>
@@ -135,9 +141,9 @@ class Home extends Component {
           >
             <Select
               width="57%"
-              height={12}
               color="#555"
               style={{ fontSize: 14 }}
+              py={2}
               placeholderTextColor="#555"
               variant="filled"
               selectedValue={this.state.category}
@@ -163,8 +169,8 @@ class Home extends Component {
             </Select>
             <Select
               width="40%"
-              height={12}
               color="#555"
+              py={2}
               style={{ fontSize: 14 }}
               placeholderTextColor="#555"
               variant="filled"
@@ -223,7 +229,7 @@ export default function App({ navigation }) {
           component={Home}
           options={{
             headerTitle: () => (
-              <Text style={styles.headerTitle} bold>한슐랭 가이드</Text>
+              <Text style={styles.headerTitle}>한슐랭 가이드</Text>
             ),
             headerStyle: {
               backgroundColor: '#BF2A52',
@@ -265,7 +271,7 @@ export default function App({ navigation }) {
           component={RestInfo}
           options={({ route }) => ({
             headerTitle: () => (
-              <Text style={styles.headerTitle} bold>{route.params.title}</Text>
+              <Text style={styles.headerTitle}>{route.params.title}</Text>
             ),
             headerBackTitleVisible: false,
             headerStyle: {
@@ -281,7 +287,7 @@ export default function App({ navigation }) {
           component={AppInfo}
           options={{
             headerTitle: () => (
-              <Text style={styles.headerTitle} bold>더보기</Text>
+              <Text style={styles.headerTitle}>더보기</Text>
             ),
             headerBackTitleVisible: false,
             headerStyle: {
@@ -297,7 +303,7 @@ export default function App({ navigation }) {
           component={Profile}
           options={{
             headerTitle: () => (
-              <Text style={styles.headerTitle} bold>프로필</Text>
+              <Text style={styles.headerTitle}>프로필</Text>
             ),
             headerBackTitleVisible: false,
             headerStyle: {
@@ -316,8 +322,6 @@ export default function App({ navigation }) {
 const styles = StyleSheet.create({
   itemContainer: {
     justifyContent: 'center',
-    width: '100%',
-    height: 110,
     backgroundColor: '#fff',
     borderBottomColor: '#ededed',
     borderBottomWidth: 0.5,
@@ -325,6 +329,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 20,
-    color: '#f5f5f5'
+    color: '#f5f5f5',
+    fontFamily: 'ELANDChoiceB'
   }
 })
