@@ -245,7 +245,7 @@ export default function App({ navigation }) {
                   resizeMode="contain"
                   source={require('../images/home-icon/user.png')}
                   alt="Alternate Text"
-                  size="24px"
+                  size="28px"
                   style={{ tintColor: "#fff" }}
                 />
               </TouchableHighlight>
@@ -259,7 +259,7 @@ export default function App({ navigation }) {
                   resizeMode="contain"
                   source={require('../images/home-icon/more.png')}
                   alt="Alternate Text"
-                  size="24px"
+                  size="30px"
                   style={{ tintColor: "#fff" }}
                 />
               </TouchableHighlight>
@@ -271,7 +271,7 @@ export default function App({ navigation }) {
           component={RestInfo}
           options={{
             headerShown: false,
-            animation: 'fade_from_bottom'
+            animation: 'fade'
           }}
         />
         <Stack.Screen
