@@ -469,7 +469,7 @@ const ItemActivity = ({ navigation, route }) => {
                 name="map-marker"
                 size={24}
                 color="#fff"
-                onPress={() => navigation.navigate('식당 길찾기', { name: route.params.name, coordinate: route.params.coordinate })}
+                onPress={() => navigation.navigate('식당 길찾기', { name: route.params.name, coordinate: route.params.coordinate, myPosition: route.params.myPosition })}
               />
             ),
             animation: 'slide_from_right'
