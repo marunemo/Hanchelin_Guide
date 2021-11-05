@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Image } from "native-base";
-import { View, SafeAreaView, RefreshControl, StyleSheet, Dimensions, Animated } from 'react-native';
+import { View, SafeAreaView, RefreshControl, StyleSheet, Dimensions, Animated, TouchableHighlight } from 'react-native';
 import Text from '../../defaultSetting/FontText';
 // import Animated from 'react-native-reanimated';
 import NaverMapView, { Marker } from 'react-native-nmap';
@@ -442,12 +442,18 @@ const ItemActivity = ({ navigation, route }) => {
             headerTintColor: '#fff',
             headerTitleAlign: 'center',
             headerLeft: () => (
-              <Font
-                name="align-left"
-                size={24}
-                color="#fff"
-                onPress={navigation.goBack}
-              />
+              <TouchableHighlight
+                activeOpacity={0.4}
+                underlayColor="#BF2A52"
+                onPress={navigation.goBack}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../../images/info-icon/list.png')}
+                  alt="Alternate Text"
+                  size="30px"
+                  style={{ tintColor: "#fff" }}
+                />
+              </TouchableHighlight>
             )
           }}
         />
@@ -465,12 +471,18 @@ const ItemActivity = ({ navigation, route }) => {
             headerTintColor: '#fff',
             headerTitleAlign: 'center',
             headerRight: () => (
-              <Font
-                name="map-marker"
-                size={24}
-                color="#fff"
-                onPress={() => navigation.navigate('식당 길찾기', { name: route.params.name, coordinate: route.params.coordinate, myPosition: route.params.myPosition })}
-              />
+              <TouchableHighlight
+                activeOpacity={0.4}
+                underlayColor="#BF2A52"
+                onPress={() => navigation.navigate('식당 길찾기', { name: route.params.name, coordinate: route.params.coordinate, myPosition: route.params.myPosition })}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../../images/info-icon/marker.png')}
+                  alt="Alternate Text"
+                  size="30px"
+                  style={{ tintColor: "#fff" }}
+                />
+              </TouchableHighlight>
             ),
             animation: 'slide_from_right'
           })}
