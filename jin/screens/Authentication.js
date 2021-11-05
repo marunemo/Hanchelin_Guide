@@ -17,7 +17,12 @@ export default function Authentication(props) {
         <Text style={styles.title} bold>한슐랭 가이드</Text>
         <Text style={styles.subtitle}>한동인들을 위한 맛집 어플</Text>
         <View style={styles.centerMargin} />
-        <GoogleSigninButton onPress={props.onGoogleButtonPress} />
+        <GoogleSigninButton
+          style={{ width: 230, height: 48 }}
+          size={GoogleSigninButton.Size.Wide}
+          onPress={props.onGoogleButtonPress}
+          disabled={props.disabled}
+        />
       </ImageBackground>
     </View>
   );
@@ -49,6 +54,6 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   centerMargin: {
-    height: 180
+    height: 100
   }
 });

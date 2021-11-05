@@ -10,3 +10,6 @@
 # Add any project specific keep options here:
 -keep class com.kakao.sdk.**.model.* { <fields>; }
 -keep class * extends com.google.gson.TypeAdapter
+
+# If you're using Proguard, make sure to add rule preventing it from optimizing Turbomodule classes:
+-keep class com.facebook.react.turbomodule.** { *; }
