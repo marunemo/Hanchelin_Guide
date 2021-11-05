@@ -16,6 +16,7 @@ import KakaoShareLink from 'react-native-kakao-share-link';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
+import RouteWebScreen from './RouteWebScreen';
 import { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar, InfoModal } from './InfoElements';
 
 const Stack = createNativeStackNavigator();
@@ -418,7 +419,7 @@ const RestaurantInfo = (props) => {
   )
 }
 
-const ItemActivity = ({ route }) => {
+const ItemActivity = ({ navigation, route }) => {
   const RestInfo = () => {
     return <RestaurantInfo restId={route.params.restId} />;
   }
@@ -429,12 +430,66 @@ const ItemActivity = ({ route }) => {
         <Stack.Screen
           name="식당 정보 화면"
           component={RestInfo}
-          options={{ headerShown: false }}
+          initialParams={route.params}
+          options={{
+            headerTitle: () => (
+              <Text style={style.headerTitle}>{route.params.title}</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#BF2A52',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+            headerLeft: () => (
+              <Font
+                name="align-left"
+                size={24}
+                color="#fff"
+                onPress={navigation.goBack}
+              />
+            )
+          }}
         />
         <Stack.Screen
           name="식당 위치"
           component={MapScreen}
-          options={{ headerShown: false }}
+          options={({ route }) => ({
+            headerTitle: () => (
+              <Text style={style.headerTitle}>{route.params.name} 위치</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#BF2A52',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+            headerRight: () => (
+              <Font
+                name="map-marker"
+                size={24}
+                color="#fff"
+                onPress={() => navigation.navigate('식당 길찾기', { name: route.params.name, coordinate: route.params.coordinate, myPosition: route.params.myPosition })}
+              />
+            ),
+            animation: 'slide_from_right'
+          })}
+        />
+        <Stack.Screen
+          name="식당 길찾기"
+          component={RouteWebScreen}
+          options={{
+            headerTitle: () => (
+              <Text style={style.headerTitle}>{route.params.title} 길찾기</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#BF2A52',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+            animation: 'slide_from_right'
+          }}
         />
       </Stack.Navigator>
     </NativeBaseProvider>
@@ -444,6 +499,11 @@ const ItemActivity = ({ route }) => {
 export default ItemActivity;
 
 const style = StyleSheet.create({
+  headerTitle: {
+    fontSize: 20,
+    color: '#f5f5f5',
+    fontFamily: 'ELANDChoiceB'
+  },
   containter: {
     height: '100%',
     backgroundColor: '#f5f5f5'
