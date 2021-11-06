@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Image } from "native-base";
-import { View, SafeAreaView, RefreshControl, StyleSheet, Dimensions, Animated } from 'react-native';
+import { View, SafeAreaView, RefreshControl, StyleSheet, Dimensions, Animated, TouchableHighlight } from 'react-native';
 import Text from '../../defaultSetting/FontText';
 // import Animated from 'react-native-reanimated';
 import NaverMapView, { Marker } from 'react-native-nmap';
@@ -16,6 +16,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
+import RouteWebScreen from './RouteWebScreen';
 import { KeyTextView, InfoView, MenuListView, CommentListView, RatingBar, InfoModal } from './InfoElements';
 
 const Stack = createNativeStackNavigator();
@@ -462,7 +463,7 @@ const RestaurantInfo = (props) => {
   )
 }
 
-const ItemActivity = ({ route }) => {
+const ItemActivity = ({ navigation, route }) => {
   const RestInfo = () => {
     return <RestaurantInfo restId={route.params.restId} />;
   }
@@ -473,12 +474,79 @@ const ItemActivity = ({ route }) => {
         <Stack.Screen
           name="식당 정보 화면"
           component={RestInfo}
-          options={{ headerShown: false }}
+          initialParams={route.params}
+          options={{
+            headerTitle: () => (
+              <Text style={style.headerTitle}>{route.params.title}</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#BF2A52',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+            headerBackVisible: false,
+            headerLeft: () => (
+              <TouchableHighlight
+                activeOpacity={0.4}
+                underlayColor="#BF2A52"
+                onPress={navigation.goBack}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../../images/info-icon/list.png')}
+                  alt="Alternate Text"
+                  size="30px"
+                  style={{ tintColor: "#fff" }}
+                />
+              </TouchableHighlight>
+            )
+          }}
         />
         <Stack.Screen
           name="식당 위치"
           component={MapScreen}
-          options={{ headerShown: false }}
+          options={({ route }) => ({
+            headerTitle: () => (
+              <Text style={style.headerTitle}>{route.params.name} 위치</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#BF2A52',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+            headerRight: () => (
+              <TouchableHighlight
+                activeOpacity={0.4}
+                underlayColor="#BF2A52"
+                onPress={() => navigation.navigate('식당 길찾기', { name: route.params.name, coordinate: route.params.coordinate, myPosition: route.params.myPosition })}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../../images/info-icon/marker.png')}
+                  alt="Alternate Text"
+                  size="30px"
+                  style={{ tintColor: "#fff" }}
+                />
+              </TouchableHighlight>
+            ),
+            animation: 'slide_from_right'
+          })}
+        />
+        <Stack.Screen
+          name="식당 길찾기"
+          component={RouteWebScreen}
+          options={{
+            headerTitle: () => (
+              <Text style={style.headerTitle}>{route.params.title} 길찾기</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#BF2A52',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+            animation: 'slide_from_right'
+          }}
         />
       </Stack.Navigator>
     </NativeBaseProvider>
@@ -488,6 +556,11 @@ const ItemActivity = ({ route }) => {
 export default ItemActivity;
 
 const style = StyleSheet.create({
+  headerTitle: {
+    fontSize: 20,
+    color: '#f5f5f5',
+    fontFamily: 'ELANDChoiceB'
+  },
   containter: {
     height: '100%',
     backgroundColor: '#f5f5f5'

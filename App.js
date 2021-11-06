@@ -18,6 +18,7 @@ const BTab = createBottomTabNavigator();
 
 export default function App() {
   const [authenticated, setAuthenticated] = useState(false);
+  const [inProgress, setProgress] = useState(false);
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -35,14 +36,21 @@ export default function App() {
   };*/
 
   async function onGoogleButtonPress() {
-    const { idToken } = await GoogleSignin.signIn();
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    return auth().signInWithCredential(googleCredential);
+    setProgress(true);
+    try {
+      const { idToken } = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      return auth().signInWithCredential(googleCredential);
+    } catch (error) {
+      console.log(error);
+      setProgress(false);
+    }
   }
 
   auth().onAuthStateChanged((user) => {
     if (user) {
       setAuthenticated(true);
+      setProgress(false);
     } else {
       setAuthenticated(false);
     }
@@ -98,7 +106,7 @@ export default function App() {
     );
   }
 
-  return <Authentication onGoogleButtonPress={onGoogleButtonPress} />
+  return <Authentication onGoogleButtonPress={onGoogleButtonPress} disabled={inProgress} />
 
 }
 

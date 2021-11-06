@@ -26,6 +26,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { whileStatement } from '@babel/types';
 import { fontSize } from 'styled-system';
+import { Rating } from 'react-native-ratings';
 
 export default function Profile(props) {
   const user = auth().currentUser;
@@ -48,7 +49,6 @@ export default function Profile(props) {
         if (querySnapshot !== null) {
           querySnapshot.forEach(documentSnapshot => {
             const item = documentSnapshot.data();
-            console.log(item)
             let storeName = documentSnapshot.ref.parent.parent.id
 
             review.push(
@@ -57,10 +57,20 @@ export default function Profile(props) {
                 onPress={() => navigation.navigate('식당 정보', { title: storeName, restId: item.restId })}
               >
                 <View style={styles.content}>
-                  <Text>내용 : {item['리뷰']}</Text>
-                  <Text>별점 : {'★'.repeat(item['종합'])}</Text>
-                  <Text>식당 이름 : {storeName}</Text>
-                  <Text>작성일 : {new Date(item['작성시간'].seconds).toLocaleString()}</Text>
+                  <Text style={styles.reviewTitle} bold>{storeName}</Text>
+                  <Rating
+                    type="custom"
+                    ratingImage={require('../../images/info-icon/star.png')}
+                    ratingColor="#BF2A52"
+                    ratingBackgroundColor="#ddd"
+                    startingValue={item['종합']}
+                    imageSize={40}
+                    fractions={0}
+                    readonly={true}
+                    onFinishRating={console.log}
+                  />
+                  <Text style={styles.reviewContent}>{item['리뷰']}</Text>
+                  <Text style={styles.reviewDate}>{dateFormat(item['작성시간'].seconds)}</Text>
                 </View>
               </TouchableOpacity>
             );
@@ -130,10 +140,19 @@ export default function Profile(props) {
     }
   }
 
+  function dateFormat(seconds) {
+    const targetDate = new Date(seconds * 1000);
+    return targetDate.getFullYear() + '년 ' + targetDate.getMonth() + '월 ' + targetDate.getDate() + '일 '
+      + ((targetDate.getHours() < 10) ? '0' : '') + targetDate.getHours() + ':'
+      + ((targetDate.getMinutes() < 10) ? '0' : '') + targetDate.getMinutes() + ':'
+      + ((targetDate.getSeconds() < 10) ? '0' : '') + targetDate.getSeconds();
+  }
+
+  // 가져 올 리뷰와 찜이 없을때 에러 안뜨게 하기
   return (
     <NativeBaseProvider>
-      <Center flex={1}>
-        <ScrollView width="100%" p={5}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Center flex={1} width="100%">
           <Stack alignItems='center' style={styles.stack}>
             <HStack alignItems='center'>
               <Image source={{ uri: user?.photoURL }} style={styles.image} alt='사진 없음' />
@@ -170,12 +189,12 @@ export default function Profile(props) {
           >
             <Text style={{ color: 'white', fontWeight: 'bold' }}>로그아웃</Text>
           </Button>
-          <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 쓴 리뷰</Text>
-          {review}
-          <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 찜한 가게</Text>
-          {store}
-        </ScrollView>
-      </Center>
+        </Center>
+        <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 쓴 리뷰</Text>
+        {review}
+        <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 찜한 가게</Text>
+        {store}
+      </ScrollView>
     </NativeBaseProvider>
   );
 }
@@ -194,6 +213,7 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
+    width: '60%',
     marginTop: 25,
     color: 'white',
     alignSelf: 'center'
@@ -222,12 +242,10 @@ const styles = StyleSheet.create({
     margin: 10
   },
   content: {
-    fontSize: 18,
-    padding: 15,
-    marginVertical: 10,
-    marginHorizontal: 30,
-    borderColor: "#ccc",
-    borderRadius: 3,
+    width: '85%',
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+    margin: 5,
     borderWidth: 1,
   },
   modalView: {
@@ -240,5 +258,25 @@ const styles = StyleSheet.create({
   },
   cancel: {
     marginTop: 10
+    borderRadius: 10,
+    borderColor: "#ccc",
+    alignSelf: 'center',
+    backgroundColor: '#ffffff'
+  },
+  reviewTitle: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginBottom: 20
+  },
+  reviewContent: {
+    fontSize: 16,
+    color: '#222222',
+    marginTop: 20,
+    marginBottom: 8
+  },
+  reviewDate: {
+    fontSize: 12,
+    textAlign: 'right',
+    color: '#777777'
   }
 });
