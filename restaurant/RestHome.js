@@ -45,15 +45,15 @@ class RestaurantItem extends Component {
         <HStack px={3} py={2}>
           <RestImg item={this.props.restItem} />
           <VStack style={{ flex: 10 }}>
-            <HStack px={3} style={{marginTop: 10, justifyContent: 'space-between'}}>
+            <HStack px={3} style={{ marginTop: 10, justifyContent: 'space-between' }}>
               <Text style={{ fontFamily: 'ELANDChoiceB', color: '#111' }}>{item.name}</Text>
               <Image
-                  resizeMode="contain"
-                  source={require('../images/home-icon/heart-o.png')}
-                  alt="Alternate Text"
-                  size="17px"
-                  style={{ tintColor: "#D90404" }}
-                />
+                resizeMode="contain"
+                source={require('../images/home-icon/heart-o.png')}
+                alt="Alternate Text"
+                size="17px"
+                style={{ tintColor: "#D90404" }}
+              />
             </HStack>
             <VStack space={1} style={{ flex: 5 }} pt={2.5} pl={3}>
               <Text style={{ color: '#333' }}>{item.category}</Text>
