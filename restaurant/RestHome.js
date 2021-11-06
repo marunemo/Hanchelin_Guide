@@ -44,46 +44,57 @@ class RestaurantItem extends Component {
       >
         <HStack px={3} py={2}>
           <RestImg item={this.props.restItem} />
-          <VStack space={1} style={{ flex: 5 }} pt={2.5} pl={3}>
-            <Text style={{ fontFamily: 'ELANDChoiceB', color: '#111' }}>{item.name}</Text>
-            <Text style={{ color: '#333' }}>{item.category}</Text>
-            <Text style={{ color: '#333' }}>{item.dong}</Text>
+          <VStack style={{ flex: 10 }}>
+            <HStack px={3} style={{marginTop: 10, justifyContent: 'space-between'}}>
+              <Text style={{ fontFamily: 'ELANDChoiceB', color: '#111' }}>{item.name}</Text>
+              <Image
+                  resizeMode="contain"
+                  source={require('../images/home-icon/heart-o.png')}
+                  alt="Alternate Text"
+                  size="17px"
+                  style={{ tintColor: "#D90404" }}
+                />
+            </HStack>
+            <VStack space={1} style={{ flex: 5 }} pt={2.5} pl={3}>
+              <Text style={{ color: '#333' }}>{item.category}</Text>
+              <Text style={{ color: '#333' }}>{item.dong}</Text>
+            </VStack>
+            <HStack
+              space={2}
+              style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'flex-end' }}
+            >
+              <HStack space={1}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../images/home-icon/star-o.png')}
+                  alt="Alternate Text"
+                  size="16px"
+                  style={{ tintColor: "#F2CB05" }}
+                />
+                <Text style={{ color: '#444', fontSize: 14 }}>{item.total.toFixed(1)}</Text>
+              </HStack>
+              <HStack space={1}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../images/home-icon/heart-o.png')}
+                  alt="Alternate Text"
+                  size="15.5px"
+                  style={{ tintColor: "#D90404" }}
+                />
+                <Text style={{ color: '#444', fontSize: 14 }}>{item.bookmark_count}</Text>
+              </HStack>
+              <HStack space={1}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../images/home-icon/comments-o.png')}
+                  alt="Alternate Text"
+                  size="16px"
+                  style={{ tintColor: "rgb(73, 163, 173)" }}
+                />
+                <Text style={{ color: '#444', fontSize: 14 }}>{item.comments_count}</Text>
+              </HStack>
+            </HStack>
           </VStack>
-          <HStack
-            space={2}
-            style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'flex-end' }}
-          >
-            <HStack space={1}>
-              <Image
-                resizeMode="contain"
-                source={require('../images/home-icon/star-o.png')}
-                alt="Alternate Text"
-                size="16px"
-                style={{ tintColor: "#F2CB05" }}
-              />
-              <Text style={{ color: '#444', fontSize: 14 }}>{item.total.toFixed(1)}</Text>
-            </HStack>
-            <HStack space={1}>
-              <Image
-                resizeMode="contain"
-                source={require('../images/home-icon/heart-o.png')}
-                alt="Alternate Text"
-                size="15.5px"
-                style={{ tintColor: "#D90404" }}
-              />
-              <Text style={{ color: '#444', fontSize: 14 }}>{item.bookmark_count}</Text>
-            </HStack>
-            <HStack space={1}>
-              <Image
-                resizeMode="contain"
-                source={require('../images/home-icon/comments-o.png')}
-                alt="Alternate Text"
-                size="16px"
-                style={{ tintColor: "rgb(73, 163, 173)" }}
-              />
-              <Text style={{ color: '#444', fontSize: 14 }}>{item.comments_count}</Text>
-            </HStack>
-          </HStack>
         </HStack>
       </TouchableOpacity>
     )
