@@ -140,7 +140,7 @@ class Home extends Component {
             pt={3}
           >
             <Select
-              width="57%"
+              width="60%"
               color="#555"
               style={{ fontSize: 14 }}
               py={2}
@@ -168,7 +168,7 @@ class Home extends Component {
               <Select.Item label="카페 / 디저트" value="카페 / 디저트" />
             </Select>
             <Select
-              width="40%"
+              width="37%"
               color="#555"
               py={2}
               style={{ fontSize: 14 }}
