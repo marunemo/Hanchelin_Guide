@@ -441,6 +441,7 @@ const ItemActivity = ({ navigation, route }) => {
             },
             headerTintColor: '#fff',
             headerTitleAlign: 'center',
+            headerBackVisible: false,
             headerLeft: () => (
               <TouchableHighlight
                 activeOpacity={0.4}
