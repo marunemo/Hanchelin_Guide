@@ -14,13 +14,18 @@ import {
   Button,
   Stack,
   View,
-  Image
+  Image,
+  Input
 } from 'native-base';
+import Modal from 'react-native-modal';
 import Text from '../../defaultSetting/FontText';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { whileStatement } from '@babel/types';
+import { fontSize } from 'styled-system';
 
 export default function Profile(props) {
   const user = auth().currentUser;
@@ -28,7 +33,9 @@ export default function Profile(props) {
   const [review, setReview] = useState([]);
   const [store, setStore] = useState([]);
   const [nickname, setNickname] = useState('');
-  const nameRef = firestore().collection('user').doc('nickname');
+  const [checkNickname, setCheckNickname] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const nameRef = firestore().collection('user');
 
   useEffect(() => {
     firestore().collectionGroup('리뷰')
@@ -82,15 +89,47 @@ export default function Profile(props) {
 
         setStore(store)
       });
+
+      firestore()
+        .collection('user')
+        .doc(user?.uid)
+        .get()
+        .then(documentSnapshot => {
+          if (documentSnapshot.exists) {
+            setNickname(documentSnapshot.data().nickname)
+            setCheckNickname(true)
+          }
+        });
   }, []);
 
-  /*async function addNickname() {
-    await nameRef.add({
+  async function addNickname() {
+    await nameRef.doc(user?.uid).set({
+      nickname: nickname,
+    }, {merge: true})
+  }
 
-    })
-  }*/
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  }
 
-  // 가져 올 리뷰와 찜이 없을때 에러 안뜨게 하기
+  const NicknameView = () => {
+    if (checkNickname) {
+      return (
+        <TouchableOpacity onPress={toggleModal}>
+          <Text style={styles.emailText}>별명: {nickname}</Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <>
+        <TouchableOpacity onPress={toggleModal}>
+          <Text style={styles.emailText}>별명을 설정해주세요</Text>
+        </TouchableOpacity>
+        </>
+      );
+    }
+  }
+
   return (
     <NativeBaseProvider>
       <Center flex={1}>
@@ -101,6 +140,25 @@ export default function Profile(props) {
               <VStack style={styles.vstack}>
                 <Text style={styles.text}>{user?.displayName}</Text>
                 <Text style={styles.emailText}>{user?.email}</Text>
+                <NicknameView />
+                <Modal isVisible={isModalVisible}>
+                  <SafeAreaView style={styles.modalView}>
+                    <Text style={{ fontSize: 20, marginTop: 10 }}>별명을 입력해주세요</Text>
+                    <Text style={{ fontSize: 10, marginTop: 5 }}>별명은 작성하신 리뷰에 이름대신 표시됩니다.</Text>
+                    <Input 
+                      style={{ marginTop: 30 }}
+                      w={200}
+                      multiline={false}
+                      value={nickname}
+                      onChangeText={setNickname}
+                      avoidKeyboard={true}
+                    />
+                    <Button style={styles.button} bg='#BF2A52' onPress={() => addNickname()}>설정 완료</Button>
+                    <TouchableOpacity style={styles.cancel} onPress={toggleModal}>
+                      <Text style={styles.emailText}>취소</Text>
+                    </TouchableOpacity>
+                  </SafeAreaView>
+                </Modal>
               </VStack>
             </HStack>
           </Stack>
@@ -171,5 +229,16 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 3,
     borderWidth: 1,
+  },
+  modalView: {
+    backgroundColor: 'white',
+    width: '73%',
+    height: '35%',
+    alignItems: 'center',
+    marginLeft: 50,
+    marginRight: 50,
+  },
+  cancel: {
+    marginTop: 10
   }
 });

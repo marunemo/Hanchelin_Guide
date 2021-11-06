@@ -17,7 +17,6 @@ const CommentButton = (props) => {
   const [isDeliver, setDeliver] = useState(false);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
-  // 여기서 가게 이름 (doc)을 현재 들어간 가게에 따라서 가져와야 한다
   let commentRef = database().ref(props.commentsDir);
   let reviewRef = firestore().collection('가게').doc(props.restaurantData['official_name']).collection('리뷰');
   let commentList = props.restaurantData['comments'] ? props.restaurantData['comments'] : [];
@@ -30,6 +29,19 @@ const CommentButton = (props) => {
   const [review, setReview] = useState(''); //총평
   const [delivTime, setDelivTime] = useState(30); //배달시간
   const [delivFee, setDelivFee] = useState(0); //배달비
+  const [nickname, setNickname] = useState(''); //별명
+
+  useEffect(() => {
+    firestore()
+      .collection('user')
+      .doc(user?.uid)
+      .get()
+      .then(documentSnapshot => {
+        if (documentSnapshot.exists) {
+          setNickname(documentSnapshot.data().nickname)
+        }
+      });
+  }, []);
 
   async function addReview() {
     await reviewRef.add({
@@ -57,7 +69,7 @@ const CommentButton = (props) => {
           작성시간: new Date().toLocaleString(),
           user: {
             uid: user?.uid,
-            name: user?.displayName,
+            name: nickname,
             profile: user?.photoURL,
           },
           query: querySnapshot.id
