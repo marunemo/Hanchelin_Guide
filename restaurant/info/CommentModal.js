@@ -39,6 +39,8 @@ const CommentButton = (props) => {
       .then(documentSnapshot => {
         if (documentSnapshot.exists) {
           setNickname(documentSnapshot.data().nickname)
+        } else {
+          setNickname(user?.displayName)
         }
       });
   }, []);
