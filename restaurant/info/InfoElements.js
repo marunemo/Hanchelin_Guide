@@ -56,22 +56,8 @@ const CommentListView = (props) => {
   const comment = props.comment;
   const commentUser = comment['user'];
 
-  const dateTimeFormat = (writtenDate) => {
-    // For iOS format
-    if (writtenDate.includes('오전')) {
-      writtenDate = writtenDate.replace('. 오전 ', ' ').replace(/\. /g, '/');
-    } else if (writtenDate.includes('오후')) {
-      writtenDate = writtenDate.replace('. 오후 ', ' ').replace(/\. /g, '/');
-      const hourIndex = writtenDate.indexOf(':');
-      let hourDigit = 2;
-      if (writtenDate[hourIndex - hourDigit] == ' ') {
-        hourDigit = 1;
-      }
-      const writtenHour = parseInt(writtenDate.substring(hourIndex - hourDigit, hourIndex));
-      writtenDate = writtenDate.substring(0, hourIndex - hourDigit) + (writtenHour + 12) + writtenDate.substring(hourIndex);
-    }
-
-    const date = new Date(writtenDate);
+  const dateTimeFormat = (writtenMilliseconds) => {
+    const date = new Date(writtenMilliseconds);
     const diffDate = new Date(new Date() - date);
     if (diffDate.getTime() < 60 * 1000) {
       return '·····  ' + diffDate.getSeconds().toString() + '초 전';
