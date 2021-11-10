@@ -174,12 +174,17 @@ const RestComponent = (props) => {
     const todayMinutes = today.getMinutes();
     let weekDay = '';
     let isOpen = false;
+
+    if (onlyBreak) {
+      return '';
+    }
+
     if (weekToday == 0) {
       weekDay = '일';
     } else {
       weekDay = week[weekToday - 1];
     }
-
+    
     if (weekHours[weekDay] == '휴무') {
       return '영업종료'
     } else {
