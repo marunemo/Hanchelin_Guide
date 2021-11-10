@@ -56,6 +56,7 @@ const RestComponent = (props) => {
   const restData = props.restData;
   const menuList = restData['menu'];
   const commentsList = restData['comments'];
+  const openingHour = openingParse(restData['opening_hours']);
   let menu = [];
   let comments = [];
 
@@ -79,9 +80,9 @@ const RestComponent = (props) => {
     }
   }
 
-  function openingParse(breaktime, weekday = -1) {
+  function openingParse(breaktime) {
     if (breaktime == undefined)
-      return '연중무휴';
+      return null;
     const week = '월화수목금토일';
     const dateData = typeof (breaktime) == 'object' ? breaktime : [breaktime]
     let onlyBreak = true;
@@ -126,6 +127,14 @@ const RestComponent = (props) => {
       }
     }
 
+    return { onlyBreak: onlyBreak, weekHours: weekHours, breakDate: breakDate };
+  }
+
+  function openHourString(openHour, weekday = -1) {
+    if (openHour === null)
+      return '연중무휴';
+    const { onlyBreak, weekHours, breakDate } = openHour;
+    const week = '월화수목금토일';
     let result = '';
     if (!onlyBreak) {
       let sortDay;
@@ -232,14 +241,14 @@ const RestComponent = (props) => {
           <InfoView icon="location-arrow" value={restData['address']} />
           <InfoView
             icon="clock-o"
-            value={openingParse(restData['opening_hours'], new Date().getDay())}
+            value={openHourString(openingHour, new Date().getDay())}
             onPress={() => setShowOpenHour(true)} />
         </View>
         <InfoModal
           isOpen={showOpenHour}
           onClose={() => setShowOpenHour(false)}
           restName={restData['official_name']}
-          openHour={openingParse(restData['opening_hours'])}
+          openHour={openHourString(openingHour)}
         />
         <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
