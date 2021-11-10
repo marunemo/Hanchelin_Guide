@@ -163,6 +163,44 @@ const RestComponent = (props) => {
     return result.substring(0, result.length - 1);
   }
 
+  function isRestOpen(openHour) {
+    const today = new Date();
+    if (openHour === null)
+      return '영업중'
+    const { onlyBreak, weekHours, breakDate } = openHour;
+    const week = '월화수목금토일';
+    const weekToday = today.getDay();
+    const todayHour = today.getHours();
+    const todayMinutes = today.getMinutes();
+    let weekDay = '';
+    let isOpen = false;
+    if (weekToday == 0) {
+      weekDay = '일';
+    } else {
+      weekDay = week[weekToday - 1];
+    }
+
+    if (weekHours[weekDay] == '휴무') {
+      return '영업종료'
+    } else {
+      for (const timeline of weekHours[weekDay]) {
+        const start = timeline[0].split(':');
+        const end = timeline[1].substring(0, timeline[1].indexOf(':') + 3).split(':');
+        if (parseInt(start[0]) <= todayHour && todayHour <= parseInt(end[0])) {
+          if (parseInt(start[0]) == todayHour && todayMinutes < parseInt(start[1])) {
+          } else if (parseInt(end[0]) == todayHour && todayMinutes > parseInt(end[1])) {
+          } else {
+            isOpen = true;
+          }
+        }
+      }
+    }
+
+    if (isOpen)
+      return '영업중';
+    return '영업종료';
+  }
+
   async function kakaoSharing() {
     try {
       const response = await KakaoShareLink.sendLocation({
@@ -250,6 +288,9 @@ const RestComponent = (props) => {
           restName={restData['official_name']}
           openHour={openHourString(openingHour)}
         />
+        <View>
+          <Text>{isRestOpen(openingHour)}</Text>
+        </View>
         <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => {
