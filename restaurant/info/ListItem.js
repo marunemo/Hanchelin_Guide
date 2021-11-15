@@ -85,7 +85,7 @@ const RestComponent = (props) => {
       return '연중무휴';
 
     if (breaktime.onlyBreak)
-      return breakTime.breakDate;
+      return breaktime.breakDate;
 
     const week = '일월화수목금토';
     let operationHour = '';
@@ -146,17 +146,17 @@ const RestComponent = (props) => {
         if (breakDay == weekToday) {
           for (const breakWeek of breaktime.breakWeek) {
             if (firstWeekDay + breakWeek * 7 == todayDate)
-              return '영업 종료';
+              return '휴무일';
           }
         }
       }
 
-      if (onlyBreak)
+      if (breaktime.onlyBreak)
         return '영업중';
     }
 
     if (breaktime[week[weekToday]] === undefined) {
-      return '영업종료';
+      return '휴무일';
     } else {
       for (const timeline of breaktime[week[weekToday]]) {
         let isOpen = false;
