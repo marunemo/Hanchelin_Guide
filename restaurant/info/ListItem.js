@@ -81,32 +81,32 @@ const RestComponent = (props) => {
   }
 
   function openingParse(breaktime, weekday = -1) {
-    if(breaktime === undefined)
+    if (breaktime === undefined)
       return '연중무휴';
-    
-    if(breaktime.onlyBreak)
+
+    if (breaktime.onlyBreak)
       return breakTime.breakDate;
 
     const week = '일월화수목금토';
     let operationHour = '';
-    if(weekday !== -1) {
-      if(breaktime[week[weekday]] === undefined) {
+    if (weekday !== -1) {
+      if (breaktime[week[weekday]] === undefined) {
         operationHour = '휴무';
       } else {
         let openingHours = [];
-        for(const section of breaktime[week[weekday]]) {
+        for (const section of breaktime[week[weekday]]) {
           openingHours.push(section[0] + ' ~ ' + section[1]);
         }
         operationHour = openingHours.join(', ');
       }
     } else {
       let sortDay = [];
-      for(const day of week) {
-        if(breaktime[day] === undefined) {
+      for (const day of week) {
+        if (breaktime[day] === undefined) {
           operationHour = day + ': 휴무';
         } else {
           let openingHours = [];
-          for(const section of breaktime[day]) {
+          for (const section of breaktime[day]) {
             openingHours.push(section[0] + ' ~ ' + section[1]);
           }
           operationHour = day + ": " + openingHours.join(', ');
@@ -116,8 +116,8 @@ const RestComponent = (props) => {
       sortDay.push(sortDay.shift());
       operationHour = sortDay.join('\n');
     }
-    
-    if(breaktime.breakDate)
+
+    if (breaktime.breakDate)
       operationHour += '\n' + breaktime.breakDate;
     return operationHour;
   }
