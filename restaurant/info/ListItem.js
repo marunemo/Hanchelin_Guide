@@ -159,19 +159,18 @@ const RestComponent = (props) => {
       return '휴무일';
     } else {
       for (const timeline of breaktime[week[weekToday]]) {
-        let isOpen = false;
         const start = timeline[0].split(':');
-        let end = timeline[1].substring(0, timeline[1].indexOf(':') + 3).split(':');
-        if (parseInt(start[0]) > parseInt(end[0])) end[0] += 24;
+        const end = timeline[1].substring(0, timeline[1].indexOf(':') + 3).split(':');
+        if (parseInt(start[0]) > parseInt(end[0])) {
+
+        }
         if (parseInt(start[0]) <= todayHour && todayHour <= parseInt(end[0])) {
           if (parseInt(start[0]) == todayHour && todayMinutes < parseInt(start[1])) {
           } else if (parseInt(end[0]) == todayHour && todayMinutes > parseInt(end[1])) {
           } else {
-            isOpen = true;
+            return '영업중'
           }
         }
-        if (isOpen)
-          return '영업중';
       }
       return '영업종료';
     }
