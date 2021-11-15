@@ -277,8 +277,10 @@ const RestComponent = (props) => {
           restName={restData['official_name']}
           openHour={openingParse(openingHour)}
         />
-        <View>
-          <Text>{isRestOpen(openingHour)}</Text>
+        <View style={style.openCheckLayout}>
+          <View style={style.openCheckBox}>
+            <Text style={style.openCheckText}>{isRestOpen(openingHour)}</Text>
+          </View>
         </View>
         <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
@@ -600,5 +602,20 @@ const style = StyleSheet.create({
     width: '100%',
     paddingVertical: 15,
     backgroundColor: 'white'
+  },
+  openCheckLayout: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 3
+  },
+  openCheckBox: {
+    backgroundColor: '#34d399',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5
+  },
+  openCheckText: {
+    fontSize: 14,
+    color: '#ffffff'
   },
 })
