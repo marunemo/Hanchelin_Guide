@@ -122,66 +122,44 @@ const RestComponent = (props) => {
     return operationHour;
   }
 
-  function isRestOpen(openHour) {
-    const today = new Date();
-    if (openHour === null)
-      return '영업중';
-    const { onlyBreak, weekHours, breakDate } = openHour;
+  function isRestOpen(breaktime) {
+    if (breaktime === undefined)
+    return '영업중';
     const week = '일월화수목금토';
+    const today = new Date();
     const weekToday = today.getDay();
+    const todayDate = today.getDate();
     const todayHour = today.getHours();
     const todayMinutes = today.getMinutes();
-    const todayDate = today.getDate();
-    let isOpen = false;
-    const weekDay = week[weekToday - 1];
 
-    if (breakDate !== '') {
-      let breakTime = breakDate.replace('휴무일: ', '').replace('요일', '').split(' ');
-      const firstDate = new Date(today.getFullYear(), today.getMonth(), 1); // the first day of this month
-      let nthWeek = [];
-      let isBreakDay = false;
-      for (const rest of breakTime) {
-        if (rest === weekDay) {
-          isBreakDay = true;
-        } else if (!week.includes(rest)) {
-          nthWeek.push(rest);
-        }
-      }
-
-      if (isBreakDay) {
-        if (nthWeek.length == 0) {
-          return '영업종료';
-        }
-        const firstDay = firstDate.getDay();
-        let firstWeekDay = 0;
-        if (firstDay <= weekToday) {
-          firstWeekDay = weekToday - firstDay + 1;
-        } else {
-          firstWeekDay = weekToday + firstDay;
-        }
-        for (const weekCount of nthWeek) {
-          if (weekCount == '첫째' && nthWeekDay == todayDate) {
-            return '영업종료';
-          } else if (weekCount == '둘째' && nthWeekDay + 7 == todayDate) {
-            return '영업종료';
-          } else if (weekCount == '셋째' && nthWeekDay + 7 * 2 == todayDate) {
-            return '영업종료';
-          } else if (weekCount == '넷째' && nthWeekDay + 7 * 3 == todayDate) {
-            return '영업종료';
-          } else if (weekCount == '다섯째' && nthWeekDay + 7 * 4 == todayDate) {
-            return '영업종료';
-          }
-        }
-      }
-    }
-    if (onlyBreak) {
-      return '';
-    }
-
-    if (weekHours[weekDay] == '휴무') {
-      return '영업종료'
+    if (breaktime.breakDate === '')
+      return '영업중';
+    const firstDate = new Date(today.getFullYear(), today.getMonth(), 1); // the first day of this month
+    const firstDay = firstDate.getDay();
+    let firstWeekDay = 0;
+    if (firstDay <= weekToday) {
+      firstWeekDay = weekToday - firstDay + 1;
     } else {
-      for (const timeline of weekHours[weekDay]) {
+      firstWeekDay = weekToday + firstDay;
+    }
+
+    for(const breakDay of breaktime.breakDay) {
+      if (breakDay == weekToday) {
+        for(const breakWeek of breaktime.breakWeek) {
+          if(firstWeekDay + breakWeek * 7 == todayDate)
+            return '영업 종료';
+        }
+      }
+    }
+
+    if (onlyBreak)
+      return '영업중';
+
+    if (breaktime[week[weekToday]] === undefined) {
+      return '영업종료';
+    } else {
+      for (const timeline of breaktime[week[weekToday]]) {
+        let isOpen = false;
         const start = timeline[0].split(':');
         const end = timeline[1].substring(0, timeline[1].indexOf(':') + 3).split(':');
         if (parseInt(start[0]) <= todayHour && todayHour <= parseInt(end[0])) {
@@ -191,12 +169,11 @@ const RestComponent = (props) => {
             isOpen = true;
           }
         }
+        if (isOpen)
+          return '영업중';
       }
+      return '영업종료';
     }
-
-    if (isOpen)
-      return '영업중';
-    return '영업종료';
   }
 
   async function kakaoSharing() {
@@ -286,9 +263,9 @@ const RestComponent = (props) => {
           restName={restData['official_name']}
           openHour={openingParse(openingHour)}
         />
-        {/* <View>
+        <View>
           <Text>{isRestOpen(openingHour)}</Text>
-        </View> */}
+        </View>
         <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => {
