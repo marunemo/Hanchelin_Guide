@@ -124,7 +124,7 @@ const RestComponent = (props) => {
 
   function isRestOpen(breaktime) {
     if (breaktime === undefined)
-    return '영업중';
+      return '영업중';
     const week = '일월화수목금토';
     const today = new Date();
     const weekToday = today.getDay();
@@ -132,8 +132,6 @@ const RestComponent = (props) => {
     const todayHour = today.getHours();
     const todayMinutes = today.getMinutes();
 
-    if (breaktime.breakDate === '')
-      return '영업중';
     const firstDate = new Date(today.getFullYear(), today.getMonth(), 1); // the first day of this month
     const firstDay = firstDate.getDay();
     let firstWeekDay = 0;
@@ -143,17 +141,19 @@ const RestComponent = (props) => {
       firstWeekDay = weekToday + firstDay;
     }
 
-    for(const breakDay of breaktime.breakDay) {
-      if (breakDay == weekToday) {
-        for(const breakWeek of breaktime.breakWeek) {
-          if(firstWeekDay + breakWeek * 7 == todayDate)
-            return '영업 종료';
+    if (breaktime.breakDate !== '') {
+      for (const breakDay of breaktime.breakDay) {
+        if (breakDay == weekToday) {
+          for (const breakWeek of breaktime.breakWeek) {
+            if (firstWeekDay + breakWeek * 7 == todayDate)
+              return '영업 종료';
+          }
         }
       }
-    }
 
-    if (onlyBreak)
-      return '영업중';
+      if (onlyBreak)
+        return '영업중';
+    }
 
     if (breaktime[week[weekToday]] === undefined) {
       return '영업종료';
