@@ -56,7 +56,7 @@ const RestComponent = (props) => {
   const restData = props.restData;
   const menuList = restData['menu'];
   const commentsList = restData['comments'];
-  const openingHour = openingParse(restData['opening_hours']);
+  const openingHour = restData['hour_of_operation'];
   let menu = [];
   let comments = [];
 
@@ -80,87 +80,44 @@ const RestComponent = (props) => {
     }
   }
 
-  function openingParse(breaktime) {
-    if (breaktime == undefined)
-      return null;
-    const week = '월화수목금토일';
-    const dateData = typeof (breaktime) == 'object' ? breaktime : [breaktime]
-    let onlyBreak = true;
-    let breakDate = '';
-    let weekHours = new Map();
-    for (const i of week) weekHours.set(i, [[]])
-
-    for (const dateHours of dateData) {
-      const weekRange = dateHours.substring(0, dateHours.indexOf(' '));
-      let validWeek = '';
-      let hours = '';
-      if (weekRange == '매일') {
-        validWeek = week;
-        hours = dateHours.substring(dateHours.indexOf(' ') + 1);
-      } else if (weekRange[1] == '~') {
-        validWeek = week.substring(week.indexOf(weekRange[0]), week.indexOf(weekRange[2]) + 1);
-        hours = dateHours.substring(dateHours.indexOf(' ') + 1);
-      } else if (weekRange.length == 1) {
-        let index = 0;
-        while (dateHours[index] == ' ' || isNaN(Number(dateHours[index]))) index++;
-        validWeek = dateHours.substring(0, index).replace(/\s/g, '');
-        hours = dateHours.substring(index + 1);
-      } else {
-        breakDate = (weekRange == '휴무일:') ? dateHours : '휴무일: ' + dateHours;
-      }
-
-      if (hours.includes('브레이크타임')) {
-        const spliter = hours.substring(hours.indexOf(' ') + 1).split(' ~ ');
-        for (const day of validWeek) {
-          weekHours[day].forEach((openingHour, i) => {
-            if (openingHour[1] > spliter[0] && openingHour[0] < spliter[0]) {
-              weekHours[day].push([spliter[1], openingHour[1]])
-              weekHours[day][i][1] = spliter[0]
-            }
-          })
-        }
-      }
-      else if (validWeek) {
-        onlyBreak = false;
-        for (const day of validWeek)
-          weekHours[day] = [hours.split(' ~ ')];
-      }
-    }
-
-    return { onlyBreak: onlyBreak, weekHours: weekHours, breakDate: breakDate };
-  }
-
-  function openHourString(openHour, weekday = -1) {
-    if (openHour === null)
+  function openingParse(breaktime, weekday = -1) {
+    if(breaktime === undefined)
       return '연중무휴';
-    const { onlyBreak, weekHours, breakDate } = openHour;
-    const week = '월화수목금토일';
-    let result = '';
-    if (!onlyBreak) {
-      let sortDay;
-      if (weekday == 0) {
-        sortDay = '일';
-      } else if (weekday != -1) {
-        sortDay = week[weekday - 1];
+    
+    if(breaktime.onlyBreak)
+      return breakTime.breakDate;
+
+    const week = '일월화수목금토';
+    let operationHour = '';
+    if(weekday !== -1) {
+      if(breaktime[week[weekday]] === undefined) {
+        operationHour = '휴무';
       } else {
-        sortDay = week;
+        let openingHours = [];
+        for(const section of breaktime[week[weekday]]) {
+          openingHours.push(section[0] + ' ~ ' + section[1]);
+        }
+        operationHour = openingHours.join(', ');
       }
-      for (const day of sortDay) {
-        if (weekday == -1)
-          result += day + ' : ';
-        if (weekHours[day]) {
-          weekHours[day].sort();
-          for (const hour of weekHours[day])
-            result += hour.toString().replace(',', '~') + ', ';
-          result = result.substring(0, result.length - 2) + '\n';
+    } else {
+      let sortDay = [];
+      for(const day of week) {
+        if(breaktime[week[day]] === undefined) {
+          operationHour = '휴무';
         } else {
-          result += '휴무\n'
+          let openingHours = [];
+          for(const section of breaktime[week[day]]) {
+            openingHours.push(section[0] + ' ~ ' + section[1]);
+          }
+          operationHour = openingHours.join(', ');
         }
       }
+      operationHour = sortDay.join('\n');
     }
-    if (breakDate)
-      result += breakDate + '\n';
-    return result.substring(0, result.length - 1);
+    
+    if(breaktime.breakDate)
+      operationHour += '\n' + breaktime.breakDate;
+    return operationHour;
   }
 
   function isRestOpen(openHour) {
@@ -318,18 +275,18 @@ const RestComponent = (props) => {
           <InfoView icon="location-arrow" value={restData['address']} />
           <InfoView
             icon="clock-o"
-            value={openHourString(openingHour, new Date().getDay())}
+            value={openingParse(openingHour, new Date().getDay())}
             onPress={() => setShowOpenHour(true)} />
         </View>
         <InfoModal
           isOpen={showOpenHour}
           onClose={() => setShowOpenHour(false)}
           restName={restData['official_name']}
-          openHour={openHourString(openingHour)}
+          openHour={openingParse(openingHour)}
         />
-        <View>
+        {/* <View>
           <Text>{isRestOpen(openingHour)}</Text>
-        </View>
+        </View> */}
         <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => {
