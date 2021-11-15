@@ -102,15 +102,16 @@ const RestComponent = (props) => {
     } else {
       let sortDay = [];
       for(const day of week) {
-        if(breaktime[week[day]] === undefined) {
-          operationHour = '휴무';
+        if(breaktime[day] === undefined) {
+          operationHour = day + ': 휴무';
         } else {
           let openingHours = [];
-          for(const section of breaktime[week[day]]) {
+          for(const section of breaktime[day]) {
             openingHours.push(section[0] + ' ~ ' + section[1]);
           }
-          operationHour = openingHours.join(', ');
+          operationHour = day + ": " + openingHours.join(', ');
         }
+        sortDay.push(operationHour)
       }
       operationHour = sortDay.join('\n');
     }
