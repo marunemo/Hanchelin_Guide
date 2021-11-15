@@ -144,6 +144,8 @@ const RestComponent = (props) => {
     if (breaktime.breakDate !== '') {
       for (const breakDay of breaktime.breakDay) {
         if (breakDay == weekToday) {
+          if (breaktime.breakWeek == undefined)
+            return '휴무일';
           for (const breakWeek of breaktime.breakWeek) {
             if (firstWeekDay + breakWeek * 7 == todayDate)
               return '휴무일';
