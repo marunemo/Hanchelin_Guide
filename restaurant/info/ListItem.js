@@ -162,7 +162,19 @@ const RestComponent = (props) => {
         const start = timeline[0].split(':');
         const end = timeline[1].substring(0, timeline[1].indexOf(':') + 3).split(':');
         if (parseInt(start[0]) > parseInt(end[0])) {
-
+          if (parseInt(start[0]) <= todayHour) {
+            if (parseInt(start[0]) == todayHour && todayMinutes < parseInt(start[1])) {
+            } else {
+              return '영업중'
+            }
+          }
+          else if (todayHour <= parseInt(end[0])) {
+            if (parseInt(end[0]) == todayHour && todayMinutes > parseInt(end[1])) {
+            } else {
+              return '영업중'
+            }
+          }
+          return '영업종료'
         }
         if (parseInt(start[0]) <= todayHour && todayHour <= parseInt(end[0])) {
           if (parseInt(start[0]) == todayHour && todayMinutes < parseInt(start[1])) {
