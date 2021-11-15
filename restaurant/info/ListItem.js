@@ -113,6 +113,7 @@ const RestComponent = (props) => {
         }
         sortDay.push(operationHour)
       }
+      sortDay.push(sortDay.shift());
       operationHour = sortDay.join('\n');
     }
     
