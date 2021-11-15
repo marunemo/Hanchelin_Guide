@@ -167,26 +167,26 @@ const RestComponent = (props) => {
           if (parseInt(start[0]) <= todayHour) {
             if (parseInt(start[0]) == todayHour && todayMinutes < parseInt(start[1])) {
             } else {
-              return '영업중'
+              return '영업중';
             }
           }
           else if (todayHour <= parseInt(end[0])) {
             if (parseInt(end[0]) == todayHour && todayMinutes > parseInt(end[1])) {
             } else {
-              return '영업중'
+              return '영업중';
             }
           }
-          return '영업종료'
+          return '영업마감';
         }
         if (parseInt(start[0]) <= todayHour && todayHour <= parseInt(end[0])) {
           if (parseInt(start[0]) == todayHour && todayMinutes < parseInt(start[1])) {
           } else if (parseInt(end[0]) == todayHour && todayMinutes > parseInt(end[1])) {
           } else {
-            return '영업중'
+            return '영업중';
           }
         }
       }
-      return '영업종료';
+      return '영업마감';
     }
   }
 
@@ -278,7 +278,7 @@ const RestComponent = (props) => {
           openHour={openingParse(openingHour)}
         />
         <View style={style.openCheckLayout}>
-          <View style={style.openCheckBox}>
+          <View style={style.openCheckBox(isRestOpen(openingHour))}>
             <Text style={style.openCheckText}>{isRestOpen(openingHour)}</Text>
           </View>
         </View>
@@ -608,12 +608,17 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: 3
   },
-  openCheckBox: {
-    backgroundColor: '#34d399',
+  openCheckBox: (isOpen) => ({
+    backgroundColor:
+      isOpen === '영업중' ?
+        '#16a34a' :
+        isOpen === '휴무일' ?
+          '#e11d48' :
+          '#525252',
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5
-  },
+  }),
   openCheckText: {
     fontSize: 14,
     color: '#ffffff'
