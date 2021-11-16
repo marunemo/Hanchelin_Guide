@@ -45,7 +45,7 @@ const MenuListView = (props) => {
   return (
     <View style={style.menuView}>
       <Text style={{ fontWeight: 'bold', color: '#444' }}>{food}</Text>
-      <Text style={{ color: '#444' }}>{price}원</Text>
+      <Text style={{ color: '#444' }}>{price === '0' ? '미정' : price + '원'}</Text>
     </View>
   )
 }
