@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Platform, Dimensions } from 'react-native';
+import { StyleSheet, Platform, Dimensions, PermissionsAndroid, ToastAndroid } from 'react-native';
 import NaverMapView, { Marker } from 'react-native-nmap';
 import Geolocation from 'react-native-geolocation-service';
 
@@ -11,9 +11,24 @@ const MapScreen = ({ navigation, route }) => {
   // ref : https://d2.naver.com/helloworld/1174
   // ref : https://www.ncloud.com/support/notice/all/738
 
+  async function requestLocationPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+      )
+      if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+        ToastAndroid.show("위치 권한을 허용해주세요", ToastAndroid.SHORT);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
     if (Platform.OS === 'ios') {
       Geolocation.requestAuthorization('whenInUse');
+    } else if (Platform.OS === 'android') {
+      requestLocationPermission();
     }
 
     Geolocation.getCurrentPosition(coordinate => {
@@ -31,11 +46,11 @@ const MapScreen = ({ navigation, route }) => {
       const diffMeter = maxAngle / 360 * 2 * Math.PI * 6371000 // 2 * pi * earth radius(m) * (angle) / 360
       setZoom(16 - Math.log2(diffMeter) - 1) // reduce 1 level for padding
     }, error => {
-      console.log(error.code, error.message);
+      console.log("Error", error.code, ":", error.message);
     }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
     )
 
-    navigation.setParams({ myPosition: { latitude: currentPosition.latitude, longitude: currentPosition.longitude }, ...route.params});
+    navigation.setParams({ myPosition: { latitude: currentPosition.latitude, longitude: currentPosition.longitude }, ...route.params });
   }, [zoomLevel]);
 
   return (
