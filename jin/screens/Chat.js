@@ -48,7 +48,7 @@ export default function Chat({ navigation, route }) {
     const removeTimer = setInterval(() => {
       if(endTime < new Date().getTime())
         setDeadline(true);
-    }, 10 * 1000);
+    }, 5 * 1000);
 
     return () => {
       unsubscribeListener();
