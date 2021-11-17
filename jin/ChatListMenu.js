@@ -39,6 +39,7 @@ export default function ChatRoomDrawer({ navigation, route }) {
           },
           headerTintColor: '#fff',
           headerTitleAlign: 'center',
+          headerLeft: () => (<></>),
           headerRight: () => (
             <Icon
               style={{ paddingHorizontal: 18 }}
