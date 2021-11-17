@@ -23,7 +23,6 @@ export default function ChatRoomDrawer({ navigation, route }) {
   const toast = useToast();
 
   useEffect(() => {
-    console.log(route.params)
     const { response } = route.params;
     if (response === 0) {
       toast.show({
