@@ -6,8 +6,6 @@ import { DrawerActions } from '@react-navigation/native';
 import { getDrawerStatusFromState } from '@react-navigation/drawer';
 import { NativeBaseProvider, Modal, Button } from 'native-base';
 
-let timer = null;
-
 export default function Chat({ navigation, route }) {
   const { thread } = route.params;
   const user = auth().currentUser;
@@ -44,13 +42,14 @@ export default function Chat({ navigation, route }) {
         setMessages(messages);
       })
 
-    timer = setTimeout(() => {
-      setDeadline(true);
-    }, new Date(thread.endTime.seconds * 1000) - new Date());
+    const removeTimer = setInterval(() => {
+      if(new Date(thread.endTime.seconds * 1000) < new Date())
+        setDeadline(true);
+    }, 10 * 1000);
 
     return () => {
       unsubscribeListener();
-      clearTimeout(timer);
+      clearTimeout(removeTimer);
     }
   }, [])
 
@@ -90,9 +89,6 @@ export default function Chat({ navigation, route }) {
       .doc(thread._id)
       .update({ endTime: new Date(new Date(thread.endTime.seconds * 1000).getTime() + 5 * 60 * 1000) })
       .then(() => {
-        timer = setTimeout(() => {
-          setDeadline(true);
-        }, 5 * 60 * 1000);
         setDeadline(false);
       })
       .catch(err => {
