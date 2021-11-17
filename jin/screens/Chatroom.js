@@ -92,7 +92,7 @@ export default function Chatroom({ navigation, route }) {
 
   function leftMinutes(deadLine) {
     const deadSecond = new Date(deadLine.seconds * 1000);
-    const gracePeriod = deadSecond.getTime + 5 * 60 * 1000;
+    const gracePeriod = deadSecond.getTime() + 5 * 60 * 1000;
     const currTime = new Date();
     if (currTime > gracePeriod)
       return -10;
