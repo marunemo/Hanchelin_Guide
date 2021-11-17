@@ -11,7 +11,7 @@ export default function Chat({ navigation, route }) {
   const user = auth().currentUser;
   const [messages, setMessages] = useState([]);
   const [deadline, setDeadline] = useState(false);
-  const [endTime, setEndTime] = useState(new Date(thread.endTime.seconds * 1000));
+  const [endTime, setEndTime] = useState(thread.endTime.seconds * 1000);
 
   useEffect(() => {
     const unsubscribeListener = firestore()
@@ -43,19 +43,18 @@ export default function Chat({ navigation, route }) {
         setMessages(messages);
       })
 
-    if(endTime < new Date())
+    if(endTime < new Date().getTime())
       setDeadline(true);
     const removeTimer = setInterval(() => {
-      if(endTime < new Date())
+      if(endTime < new Date().getTime())
         setDeadline(true);
-      console.log(endTime.toLocaleString(), new Date().toLocaleString());
     }, 10 * 1000);
 
     return () => {
       unsubscribeListener();
       clearTimeout(removeTimer);
     }
-  }, [deadline])
+  }, [endTime])
 
   async function handleSend(messages) {
     const text = messages[0].text;
@@ -91,10 +90,10 @@ export default function Chat({ navigation, route }) {
     await firestore()
       .collection('Chat')
       .doc(thread._id)
-      .update({ endTime: new Date(endTime.getTime() + 5 * 60 * 1000) })
+      .update({ endTime: new Date(endTime + 5 * 60 * 1000) })
       .then(() => {
         setDeadline(false);
-        setEndTime(new Date(endTime.getTime() + 5 * 60 * 1000));
+        setEndTime(endTime + 5 * 60 * 1000);
       })
       .catch(err => {
         if (err.message == '[firestore/not-found] Some requested document was not found.') {
