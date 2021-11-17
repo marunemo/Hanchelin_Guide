@@ -6,7 +6,7 @@ import {
   FlatList,
 } from 'react-native';
 import Text from '../../defaultSetting/FontText';
-import { NativeBaseProvider, Stack, HStack, useToast, Spinner } from 'native-base';
+import { NativeBaseProvider, Stack, HStack, Spinner } from 'native-base';
 import firestore from '@react-native-firebase/firestore';
 
 // import HeaderClassicSearchBar from "../../lib/src/HeaderClassicSearchBar/HeaderClassicSearchBar";
@@ -16,7 +16,6 @@ export default function Chatroom({ navigation, route }) {
   const [threads, setThreads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [timer, setTimer] = useState(new Date().getMinutes());
-  const toast = useToast();
 
   useEffect(() => {
     const unsubscribe = firestore()
@@ -42,25 +41,6 @@ export default function Chatroom({ navigation, route }) {
         }
       })
 
-    const { response } = route.params;
-    if (response === 0) {
-      toast.show({
-        title: '삭제 완료',
-        description: '채팅방이 완전히 삭제되었습니다.',
-        status: 'success',
-        style: { width: 320 }
-      })
-      navigation.setParams({ response: -1 })
-    } else if (response === 1) {
-      toast.show({
-        title: '연장 실패',
-        description: '채팅방의 연장 시간이 마감되어, 채팅방이 삭제되었습니다.',
-        status: 'error',
-        style: { width: 320 }
-      })
-      navigation.setParams({ response: -1 })
-    }
-
     const refreshTimer = setInterval(() => {
       let currentMinutes = new Date().getMinutes();
       if (currentMinutes != timer)
@@ -71,7 +51,7 @@ export default function Chatroom({ navigation, route }) {
       unsubscribe();
       clearInterval(refreshTimer);
     }
-  }, [route.params.response]);
+  }, []);
 
   if (loading) {
     return (

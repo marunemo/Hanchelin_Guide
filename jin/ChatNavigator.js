@@ -15,6 +15,7 @@ export default function () {
       <StackNav.Screen
         name="같이 배달 리스트"
         component={ChatRoom}
+        initialParams={{ response: -1 }}
         options={{ headerShown: false }}
       />
       <StackNav.Screen
