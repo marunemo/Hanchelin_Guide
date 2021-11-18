@@ -187,7 +187,7 @@ export default function ChatDrawer({ navigation, route }) {
       .doc(id)
       .delete().then(() => {
         setShowAuthModal(false);
-        navigation.navigate("같이 배달 리스트", { screen: "같이배달리스트", params: { response: 0 } });
+        navigation.navigate("같이 배달 리스트", { response: 0 });
       })
   }
 

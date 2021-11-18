@@ -6,13 +6,12 @@ import { DrawerActions } from '@react-navigation/native';
 import { getDrawerStatusFromState } from '@react-navigation/drawer';
 import { NativeBaseProvider, Modal, Button } from 'native-base';
 
-let timer = null;
-
 export default function Chat({ navigation, route }) {
   const { thread } = route.params;
   const user = auth().currentUser;
   const [messages, setMessages] = useState([]);
   const [deadline, setDeadline] = useState(false);
+  const [endTime, setEndTime] = useState(thread.endTime.seconds * 1000);
 
   useEffect(() => {
     const unsubscribeListener = firestore()
@@ -44,15 +43,18 @@ export default function Chat({ navigation, route }) {
         setMessages(messages);
       })
 
-    timer = setTimeout(() => {
+    if(endTime < new Date().getTime())
       setDeadline(true);
-    }, new Date(thread.endTime.seconds * 1000) - new Date());
+    const removeTimer = setInterval(() => {
+      if(endTime < new Date().getTime())
+        setDeadline(true);
+    }, 5 * 1000);
 
     return () => {
       unsubscribeListener();
-      clearTimeout(timer);
+      clearTimeout(removeTimer);
     }
-  }, [])
+  }, [endTime])
 
   async function handleSend(messages) {
     const text = messages[0].text;
@@ -88,12 +90,10 @@ export default function Chat({ navigation, route }) {
     await firestore()
       .collection('Chat')
       .doc(thread._id)
-      .update({ endTime: new Date(new Date(thread.endTime.seconds * 1000).getTime() + 5 * 60 * 1000) })
+      .update({ endTime: new Date(endTime + 5 * 60 * 1000) })
       .then(() => {
-        timer = setTimeout(() => {
-          setDeadline(true);
-        }, 5 * 60 * 1000);
         setDeadline(false);
+        setEndTime(endTime + 5 * 60 * 1000);
       })
       .catch(err => {
         if (err.message == '[firestore/not-found] Some requested document was not found.') {
