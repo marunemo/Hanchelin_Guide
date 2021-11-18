@@ -107,7 +107,9 @@ function DrawerMenu(props) {
           </Text>
         </View>
         <View style={styles.joinList}>
-          {joinUserList}
+          <View style={styles.joinUserListView}>
+            {joinUserList}
+          </View>
           {isJoined()
             ? <Button
               style={styles.drawerButton}
@@ -129,18 +131,19 @@ function DrawerMenu(props) {
                 같이배달 신청하기
               </Text>
             </Button>}
+          {(props.isOwner) &&
+            <Button
+              style={styles.drawerButton}
+              variant="solid"
+              colorScheme="info"
+            // onPress={props.onPress}
+            >
+              <Text style={styles.completeButtonText}>
+                배달원 모집 완료
+              </Text>
+            </Button>}
         </View>
-        <View>
-          <Button
-            style={styles.drawerButton}
-            variant="solid"
-            colorScheme="info"
-          // onPress={props.onPress}
-          >
-            <Text style={styles.completeButtonText}>
-              배달원 모집 완료
-            </Text>
-          </Button>
+        <View style={styles.drawerFooter}>
           {(props.isOwner) &&
             <Button
               style={styles.drawerButton}
@@ -292,6 +295,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
+  joinUserListView: {
+    marginVertical: 10
+  },
   profileImage: {
     marginHorizontal: 5
   },
@@ -317,5 +323,8 @@ const styles = StyleSheet.create({
   deleteButtonText: {
     color: '#e11d48',
     fontSize: 16
+  },
+  drawerFooter: {
+    justifyContent: 'flex-end'
   }
 })
