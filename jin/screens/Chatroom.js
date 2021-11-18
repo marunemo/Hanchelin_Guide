@@ -115,7 +115,9 @@ export default function Chatroom({ navigation, route }) {
                     <View style={styles.listHeader}>
                       <Text style={styles.nameText}>{item.name}</Text>
                       <View style={styles.deadlineView(leftMin)}>
-                        <Text style={styles.deadlineText}>{leftMin >= 0 ? +leftMin + '분 남음' : '마감'}</Text>
+                        <Text style={styles.deadlineText}>
+                          {leftMin > 0 ? +leftMin + '분 남음' : leftMin == 0 ? '마감 임박' : '마감'}
+                        </Text>
                       </View>
                     </View>
                     <Text style={styles.contentText}>
