@@ -96,11 +96,11 @@ function DrawerMenu(props) {
   }
 
   return (
-    <DrawerContentScrollView
-      style={styles.drawerContainer}
-      {...props}
-    >
-      <NativeBaseProvider>
+    <NativeBaseProvider>
+      <DrawerContentScrollView
+        style={styles.drawerContainer}
+        {...props}
+      >
         <View style={{ paddingBottom: 3, borderBottomWidth: 1 }}>
           <Text style={styles.joinHeader}>
             같이 배달 참가자
@@ -143,30 +143,32 @@ function DrawerMenu(props) {
               </Text>
             </Button>}
         </View>
-        <View style={styles.drawerFooter}>
-          {(props.isOwner) &&
-            <Button
-              style={styles.drawerButton}
-              variant="outline"
-              colorScheme="danger"
-              onPress={props.onDelete}
-            >
-              <Text style={styles.deleteButtonText}>
-                채팅방 삭제
-              </Text>
-            </Button>
-          }
+      </DrawerContentScrollView>
+      <View style={styles.drawerFooter}>
+        {(props.isOwner) &&
           <Button
             style={styles.drawerButton}
-          // onPress={props.onPress}
+            variant="outline"
+            colorScheme="danger"
+            onPress={props.onDelete}
           >
             <Text style={styles.deleteButtonText}>
-              채팅방 나가기
+              채팅방 삭제
             </Text>
           </Button>
-        </View>
-      </NativeBaseProvider>
-    </DrawerContentScrollView>
+        }
+        <Button
+          style={styles.drawerButton}
+          variant="solid"
+          colorScheme="warning"
+          onPress={props.onExit}
+        >
+          <Text style={styles.exitButtonText}>
+            채팅방 나가기
+          </Text>
+        </Button>
+      </View>
+    </NativeBaseProvider>
   );
 }
 
@@ -216,6 +218,7 @@ export default function ChatDrawer({ navigation, route }) {
               navigation.dispatch(DrawerActions.closeDrawer());
               setShowAuthModal(route.params.thread);
             }}
+            onExit={navigation.goBack}
             {...props}
           />
         )}
@@ -324,7 +327,13 @@ const styles = StyleSheet.create({
     color: '#e11d48',
     fontSize: 16
   },
+  exitButtonText: {
+    color: '#fff',
+    fontSize: 16
+  },
   drawerFooter: {
-    justifyContent: 'flex-end'
+    backgroundColor: '#efefef',
+    paddingVertical: 3,
+    paddingHorizontal: 15
   }
 })
