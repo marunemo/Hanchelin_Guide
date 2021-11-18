@@ -32,7 +32,7 @@ function DrawerMenu(props) {
           resizeMode={"contain"}
           borderRadius={100}
         />
-        <Text style={styles.joinUserName}>
+        <Text style={[styles.joinUserName, joinItem.uid === user.uid && { color: '#881337' }]}>
           {joinItem.name}
         </Text>
       </View>
@@ -96,64 +96,79 @@ function DrawerMenu(props) {
   }
 
   return (
-    <DrawerContentScrollView
-      style={styles.drawerContainer}
-      {...props}
-    >
-      <NativeBaseProvider>
-        <Text style={styles.joinHeader}>
-          같이 배달 신청자
-        </Text>
+    <NativeBaseProvider>
+      <DrawerContentScrollView
+        style={styles.drawerContainer}
+        {...props}
+      >
+        <View style={{ paddingBottom: 3, borderBottomWidth: 1 }}>
+          <Text style={styles.joinHeader}>
+            같이 배달 참가자
+          </Text>
+        </View>
         <View style={styles.joinList}>
-          {joinUserList}
+          <View style={styles.joinUserListView}>
+            {joinUserList}
+          </View>
           {isJoined()
             ? <Button
-              style={styles.deleteButton}
+              style={styles.drawerButton}
+              variant="solid"
+              colorScheme="error"
               onPress={outOrder}
             >
-              <Text style={styles.deleteButtonText}>
+              <Text style={styles.outButtonText}>
                 같이배달 신청취소
               </Text>
             </Button>
             : <Button
-              style={styles.deleteButton}
+              style={styles.drawerButton}
+              variant="solid"
+              colorScheme="success"
               onPress={joinOrder}
             >
-              <Text style={styles.deleteButtonText}>
+              <Text style={styles.joinButtonText}>
                 같이배달 신청하기
               </Text>
             </Button>}
-        </View>
-        <View>
-          <Button
-            style={styles.deleteButton}
-          // onPress={props.onPress}
-          >
-            <Text style={styles.deleteButtonText}>
-              배달원 모집 완료
-            </Text>
-          </Button>
           {(props.isOwner) &&
             <Button
-              style={styles.deleteButton}
-              onPress={props.onDelete}
+              style={styles.drawerButton}
+              variant="solid"
+              colorScheme="info"
+            // onPress={props.onPress}
             >
-              <Text style={styles.deleteButtonText}>
-                채팅방 삭제
+              <Text style={styles.completeButtonText}>
+                배달원 모집 완료
               </Text>
-            </Button>
-          }
+            </Button>}
+        </View>
+      </DrawerContentScrollView>
+      <View style={styles.drawerFooter}>
+        {(props.isOwner) &&
           <Button
-            style={styles.deleteButton}
-          // onPress={props.onPress}
+            style={styles.drawerButton}
+            variant="outline"
+            colorScheme="danger"
+            onPress={props.onDelete}
           >
             <Text style={styles.deleteButtonText}>
-              채팅방 나가기
+              채팅방 삭제
             </Text>
           </Button>
-        </View>
-      </NativeBaseProvider>
-    </DrawerContentScrollView>
+        }
+        <Button
+          style={styles.drawerButton}
+          variant="solid"
+          colorScheme="warning"
+          onPress={props.onExit}
+        >
+          <Text style={styles.exitButtonText}>
+            채팅방 나가기
+          </Text>
+        </Button>
+      </View>
+    </NativeBaseProvider>
   );
 }
 
@@ -203,6 +218,7 @@ export default function ChatDrawer({ navigation, route }) {
               navigation.dispatch(DrawerActions.closeDrawer());
               setShowAuthModal(route.params.thread);
             }}
+            onExit={navigation.goBack}
             {...props}
           />
         )}
@@ -265,7 +281,8 @@ export default function ChatDrawer({ navigation, route }) {
 
 const styles = StyleSheet.create({
   drawerContainer: {
-    padding: 10,
+    backgroundColor: '#efefef',
+    padding: 15
   },
   headerTitle: {
     fontSize: 20,
@@ -275,23 +292,48 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   joinList: {
-
+    marginBottom: 10
   },
   joinUserView: {
     flexDirection: 'row',
     alignItems: 'center'
   },
+  joinUserListView: {
+    marginVertical: 10
+  },
   profileImage: {
     marginHorizontal: 5
   },
   joinUserName: {
-    fontSize: 20
+    fontSize: 14
   },
-  deleteButton: {
+  drawerButton: {
     width: '100%',
     marginVertical: 3
   },
+  joinButtonText: {
+    color: '#fff',
+    fontSize: 16
+  },
+  outButtonText: {
+    color: '#fff',
+    fontSize: 16
+  },
+  completeButtonText: {
+    color: '#fff',
+    fontSize: 16
+  },
   deleteButtonText: {
-    fontSize: 20
+    color: '#e11d48',
+    fontSize: 16
+  },
+  exitButtonText: {
+    color: '#fff',
+    fontSize: 16
+  },
+  drawerFooter: {
+    backgroundColor: '#efefef',
+    paddingVertical: 3,
+    paddingHorizontal: 15
   }
 })

@@ -115,7 +115,9 @@ export default function Chatroom({ navigation, route }) {
                     <View style={styles.listHeader}>
                       <Text style={styles.nameText}>{item.name}</Text>
                       <View style={styles.deadlineView(leftMin)}>
-                        <Text style={styles.deadlineText}>{leftMin >= 0 ? +leftMin + '분 남음' : '마감'}</Text>
+                        <Text style={styles.deadlineText}>
+                          {leftMin > 0 ? +leftMin + '분 남음' : leftMin == 0 ? '마감 임박' : '마감'}
+                        </Text>
                       </View>
                     </View>
                     <Text style={styles.contentText}>
@@ -124,7 +126,6 @@ export default function Chatroom({ navigation, route }) {
                     <Stack>
                       <HStack marginRight={3} alignSelf="flex-end" space={3}>
                         <Text>가게명: {item.store}</Text>
-                        <Text bold>|</Text>
                         <Text>배달 위치: {item.location}</Text>
                       </HStack>
                     </Stack>
@@ -174,16 +175,10 @@ const styles = StyleSheet.create({
   deadlineView: (leftMin) => ({
     backgroundColor:
       leftMin >= 10 ?
-        '#6ee7b7' :
-        leftMin >= 5 ?
-          '#fde047' :
-          leftMin >= 3 ?
-            '#fdba74' :
-            leftMin >= 1 ?
-              '#f87171' :
-              leftMin >= 0 ?
-                '#ef4444' :
-                '#dc2626'
+        'hsl(135, 100%, 40%)' :
+        leftMin >= 0 ?
+          `hsl(${135 * leftMin / 10}, 100%, 40%)` :
+          '#737373'
     ,
     borderRadius: 10,
     paddingVertical: 3,
