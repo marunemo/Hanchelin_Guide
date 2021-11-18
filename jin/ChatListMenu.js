@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native'
+import { useToast } from 'native-base';
 import { createDrawerNavigator, DrawerContentScrollView } from '@react-navigation/drawer';
 import Text from '../defaultSetting/FontText';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -19,6 +20,30 @@ function DrawerMenu(props) {
 }
 
 export default function ChatRoomDrawer({ navigation, route }) {
+  const toast = useToast();
+
+  useEffect(() => {
+    const { response } = route.params;
+    if (response === 0) {
+      toast.show({
+        title: '삭제 완료',
+        description: '채팅방이 완전히 삭제되었습니다.',
+        status: 'success',
+        style: { width: 320 }
+      })
+      navigation.setParams({ response: -1 })
+    } else if (response === 1) {
+      toast.show({
+        title: '연장 실패',
+        description: '채팅방의 연장 시간이 마감되어, 채팅방이 삭제되었습니다.',
+        status: 'error',
+        style: { width: 320 }
+      })
+      navigation.setParams({ response: -1 })
+    }
+
+  }, [route.params.response])
+
   return (
     <Drawer.Navigator
       drawerContent={(props) => <DrawerMenu {...props} />}
@@ -29,7 +54,6 @@ export default function ChatRoomDrawer({ navigation, route }) {
       <Drawer.Screen
         name="같이배달리스트"
         component={ChatRoom}
-        initialParams={{ response: -1 }}
         options={{
           headerTitle: () => (
             <Text style={styles.headerTitle} bold>같이 배달</Text>
@@ -39,6 +63,7 @@ export default function ChatRoomDrawer({ navigation, route }) {
           },
           headerTintColor: '#fff',
           headerTitleAlign: 'center',
+          headerLeft: () => (<></>),
           headerRight: () => (
             <Icon
               style={{ paddingHorizontal: 18 }}

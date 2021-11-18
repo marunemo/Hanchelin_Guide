@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { NativeBaseProvider } from 'native-base';
 import Text from '../defaultSetting/FontText';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -11,37 +12,40 @@ const StackNav = createNativeStackNavigator();
 
 export default function () {
   return (
-    <StackNav.Navigator>
-      <StackNav.Screen
-        name="같이 배달 리스트"
-        component={ChatRoom}
-        options={{ headerShown: false }}
-      />
-      <StackNav.Screen
-        name="새로운 채팅방 만들기"
-        component={CreateChat}
-        options={{
-          headerTitle: () => (
-            <Text style={styles.headerTitle} bold>{"새로운 채팅방 만들기"}</Text>
-          ),
-          headerBackTitleVisible: false,
-          headerStyle: {
-            backgroundColor: '#BF2A52',
-          },
-          headerTintColor: '#fff',
-          headerTitleAlign: 'center',
-          animation: 'slide_from_right'
-        }}
-      />
-      <StackNav.Screen
-        name="메시지"
-        component={Chat}
-        options={{
-          headerShown: false,
-          animation: 'fade_from_bottom'
-        }}
-      />
-    </StackNav.Navigator>
+    <NativeBaseProvider>
+      <StackNav.Navigator>
+        <StackNav.Screen
+          name="같이 배달 리스트"
+          component={ChatRoom}
+          initialParams={{ response: -1 }}
+          options={{ headerShown: false }}
+        />
+        <StackNav.Screen
+          name="새로운 채팅방 만들기"
+          component={CreateChat}
+          options={{
+            headerTitle: () => (
+              <Text style={styles.headerTitle} bold>{"새로운 채팅방 만들기"}</Text>
+            ),
+            headerBackTitleVisible: false,
+            headerStyle: {
+              backgroundColor: '#BF2A52',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+            animation: 'slide_from_right'
+          }}
+        />
+        <StackNav.Screen
+          name="메시지"
+          component={Chat}
+          options={{
+            headerShown: false,
+            animation: 'fade_from_bottom'
+          }}
+        />
+      </StackNav.Navigator>
+    </NativeBaseProvider>
   )
 }
 

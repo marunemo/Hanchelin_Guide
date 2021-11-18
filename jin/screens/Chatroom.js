@@ -6,7 +6,7 @@ import {
   FlatList,
 } from 'react-native';
 import Text from '../../defaultSetting/FontText';
-import { NativeBaseProvider, Stack, HStack, useToast, Spinner } from 'native-base';
+import { NativeBaseProvider, Stack, HStack, Spinner } from 'native-base';
 import firestore from '@react-native-firebase/firestore';
 
 // import HeaderClassicSearchBar from "../../lib/src/HeaderClassicSearchBar/HeaderClassicSearchBar";
@@ -16,7 +16,6 @@ export default function Chatroom({ navigation, route }) {
   const [threads, setThreads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [timer, setTimer] = useState(new Date().getMinutes());
-  const toast = useToast();
 
   useEffect(() => {
     const unsubscribe = firestore()
@@ -42,25 +41,6 @@ export default function Chatroom({ navigation, route }) {
         }
       })
 
-    const { response } = route.params;
-    if (response === 0) {
-      toast.show({
-        title: '삭제 완료',
-        description: '채팅방이 완전히 삭제되었습니다.',
-        status: 'success',
-        style: { width: 320 }
-      })
-      navigation.setParams({ response: -1 })
-    } else if (response === 1) {
-      toast.show({
-        title: '연장 실패',
-        description: '채팅방의 연장 시간이 마감되어, 채팅방이 삭제되었습니다.',
-        status: 'error',
-        style: { width: 320 }
-      })
-      navigation.setParams({ response: -1 })
-    }
-
     const refreshTimer = setInterval(() => {
       let currentMinutes = new Date().getMinutes();
       if (currentMinutes != timer)
@@ -71,7 +51,7 @@ export default function Chatroom({ navigation, route }) {
       unsubscribe();
       clearInterval(refreshTimer);
     }
-  }, [route.params.response]);
+  }, []);
 
   if (loading) {
     return (
@@ -92,7 +72,7 @@ export default function Chatroom({ navigation, route }) {
 
   function leftMinutes(deadLine) {
     const deadSecond = new Date(deadLine.seconds * 1000);
-    const gracePeriod = deadSecond.getTime + 5 * 60 * 1000;
+    const gracePeriod = deadSecond.getTime() + 5 * 60 * 1000;
     const currTime = new Date();
     if (currTime > gracePeriod)
       return -10;
@@ -135,7 +115,9 @@ export default function Chatroom({ navigation, route }) {
                     <View style={styles.listHeader}>
                       <Text style={styles.nameText}>{item.name}</Text>
                       <View style={styles.deadlineView(leftMin)}>
-                        <Text style={styles.deadlineText}>{leftMin >= 0 ? +leftMin + '분 남음' : '마감'}</Text>
+                        <Text style={styles.deadlineText}>
+                          {leftMin > 0 ? +leftMin + '분 남음' : leftMin == 0 ? '마감 임박' : '마감'}
+                        </Text>
                       </View>
                     </View>
                     <Text style={styles.contentText}>
@@ -144,7 +126,6 @@ export default function Chatroom({ navigation, route }) {
                     <Stack>
                       <HStack marginRight={3} alignSelf="flex-end" space={3}>
                         <Text>가게명: {item.store}</Text>
-                        <Text bold>|</Text>
                         <Text>배달 위치: {item.location}</Text>
                       </HStack>
                     </Stack>
@@ -194,16 +175,10 @@ const styles = StyleSheet.create({
   deadlineView: (leftMin) => ({
     backgroundColor:
       leftMin >= 10 ?
-        '#6ee7b7' :
-        leftMin >= 5 ?
-          '#fde047' :
-          leftMin >= 3 ?
-            '#fdba74' :
-            leftMin >= 1 ?
-              '#f87171' :
-              leftMin >= 0 ?
-                '#ef4444' :
-                '#dc2626'
+        'hsl(135, 100%, 40%)' :
+        leftMin >= 0 ?
+          `hsl(${135 * leftMin / 10}, 100%, 40%)` :
+          '#737373'
     ,
     borderRadius: 10,
     paddingVertical: 3,
