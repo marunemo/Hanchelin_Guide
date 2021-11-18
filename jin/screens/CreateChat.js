@@ -46,7 +46,14 @@ export default function CreateChat({ route, navigation }) {
             createdAt: new Date().getTime(),
             system: true,
           })
-          docRef.collection('Join').add({});
+          docRef
+            .collection('Join')
+            .doc(user.uid)
+            .set({
+              uid: user?.uid,
+              name: user?.displayName,
+              profile: user?.photoURL,
+            });
           navigation.goBack();
           navigation.navigate('메시지', { thread: { _id: docRef.id, endTime: { seconds: endTime.getTime() / 1000 }, ...chatThread } });
         })
