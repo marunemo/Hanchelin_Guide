@@ -32,7 +32,7 @@ function DrawerMenu(props) {
           resizeMode={"contain"}
           borderRadius={100}
         />
-        <Text style={styles.joinUserName}>
+        <Text style={[styles.joinUserName, joinItem.uid === user.uid && { color: '#881337' }]}>
           {joinItem.name}
         </Text>
       </View>
@@ -101,9 +101,11 @@ function DrawerMenu(props) {
       {...props}
     >
       <NativeBaseProvider>
-        <Text style={styles.joinHeader}>
-          같이 배달 신청자
-        </Text>
+        <View style={{ paddingBottom: 3, borderBottomWidth: 1 }}>
+          <Text style={styles.joinHeader}>
+            같이 배달 참가자
+          </Text>
+        </View>
         <View style={styles.joinList}>
           {joinUserList}
           {isJoined()
@@ -284,7 +286,7 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   joinList: {
-
+    marginBottom: 10
   },
   joinUserView: {
     flexDirection: 'row',
