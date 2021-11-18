@@ -108,34 +108,42 @@ function DrawerMenu(props) {
           {joinUserList}
           {isJoined()
             ? <Button
-              style={styles.deleteButton}
+              style={styles.drawerButton}
+              variant="solid"
+              colorScheme="error"
               onPress={outOrder}
             >
-              <Text style={styles.deleteButtonText}>
+              <Text style={styles.outButtonText}>
                 같이배달 신청취소
               </Text>
             </Button>
             : <Button
-              style={styles.deleteButton}
+              style={styles.drawerButton}
+              variant="solid"
+              colorScheme="success"
               onPress={joinOrder}
             >
-              <Text style={styles.deleteButtonText}>
+              <Text style={styles.joinButtonText}>
                 같이배달 신청하기
               </Text>
             </Button>}
         </View>
         <View>
           <Button
-            style={styles.deleteButton}
+            style={styles.drawerButton}
+            variant="solid"
+            colorScheme="info"
           // onPress={props.onPress}
           >
-            <Text style={styles.deleteButtonText}>
+            <Text style={styles.completeButtonText}>
               배달원 모집 완료
             </Text>
           </Button>
           {(props.isOwner) &&
             <Button
-              style={styles.deleteButton}
+              style={styles.drawerButton}
+              variant="outline"
+              colorScheme="danger"
               onPress={props.onDelete}
             >
               <Text style={styles.deleteButtonText}>
@@ -144,7 +152,7 @@ function DrawerMenu(props) {
             </Button>
           }
           <Button
-            style={styles.deleteButton}
+            style={styles.drawerButton}
           // onPress={props.onPress}
           >
             <Text style={styles.deleteButtonText}>
@@ -265,7 +273,8 @@ export default function ChatDrawer({ navigation, route }) {
 
 const styles = StyleSheet.create({
   drawerContainer: {
-    padding: 10,
+    backgroundColor: '#efefef',
+    padding: 15
   },
   headerTitle: {
     fontSize: 20,
@@ -285,13 +294,26 @@ const styles = StyleSheet.create({
     marginHorizontal: 5
   },
   joinUserName: {
-    fontSize: 20
+    fontSize: 14
   },
-  deleteButton: {
+  drawerButton: {
     width: '100%',
     marginVertical: 3
   },
+  joinButtonText: {
+    color: '#fff',
+    fontSize: 16
+  },
+  outButtonText: {
+    color: '#fff',
+    fontSize: 16
+  },
+  completeButtonText: {
+    color: '#fff',
+    fontSize: 16
+  },
   deleteButtonText: {
-    fontSize: 20
+    color: '#e11d48',
+    fontSize: 16
   }
 })
