@@ -10,7 +10,7 @@ export default function CreateChat({ route, navigation }) {
   const user = auth().currentUser
   const toast = useToast()
   const [roomName, setRoomName] = useState('') //채팅방 이름
-  const [storeName, setStoreName] = useState(route.params?.restName ? route.params.restName : '') //식당이름
+  const [storeName, setStoreName] = useState(route.params?.restFullName ? route.params.restFullName : '') //식당이름
   const [delivLocation, setDelivLocation] = useState('') //배달위치
   const [endTime, setEndTime] = useState(new Date(new Date().getTime() + 10 * 60 * 1000)) //모집 마감시간 (1000 밀리초 * 10초 * 10분)
   const [modalVisible, setModalVisible] = useState(false)
@@ -26,7 +26,7 @@ export default function CreateChat({ route, navigation }) {
       toast.show({ description: '마감 시간이 현재 시간보다 전에 있습니다!', ...toastSetting })
     } else {
       const chatThread = {
-        name: roomName === '' ? storeName + '로 같이 주문해요' : roomName,
+        name: roomName === '' ? storeName + ' 같이 주문해요' : roomName,
         store: storeName,
         location: delivLocation,
         initialUser: user?.uid,
@@ -72,7 +72,7 @@ export default function CreateChat({ route, navigation }) {
             </View>
             <Input
               bg='white'
-              minWidth={230}
+              width={230}
               marginBottom='3'
               returnKeyType='done'
               value={storeName}
@@ -83,10 +83,10 @@ export default function CreateChat({ route, navigation }) {
             </View>
             <Input
               bg='white'
-              minWidth={230}
+              width={230}
               marginBottom='3'
               returnKeyType='done'
-              placeholder={storeName + '로 같이 주문해요'}
+              placeholder={route.params === undefined ? storeName + ' 같이 주문해요' : route.params.restName + ' 같이 주문해요'}
               onChangeText={setRoomName}
             />
             <View style={styles.labelLayout}>
@@ -94,7 +94,7 @@ export default function CreateChat({ route, navigation }) {
             </View>
             <Input
               bg='white'
-              minWidth={230}
+              width={230}
               marginBottom='3'
               returnKeyType='done'
               placeholder='배달 위치'
@@ -105,7 +105,7 @@ export default function CreateChat({ route, navigation }) {
             </View>
             <Button
               bg='white'
-              minWidth={230}
+              width={230}
               marginBottom='3'
               variant="outline"
               onPress={() => setModalVisible(true)}

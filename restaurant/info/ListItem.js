@@ -285,7 +285,13 @@ const RestComponent = (props) => {
         <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => {
-              navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기", params: { restName: restData['official_name'] } });
+              navigation.navigate("같이 배달", {
+                screen: "새로운 채팅방 만들기",
+                params: {
+                  restName: restData['name'],
+                  restFullName: restData['official_name']
+                }
+              });
             }}>
               <Image
                 alignSelf="center"
@@ -516,7 +522,12 @@ const ItemActivity = ({ navigation, route }) => {
               <TouchableHighlight
                 activeOpacity={0.4}
                 underlayColor="#BF2A52"
-                onPress={() => navigation.navigate('식당 길찾기', { name: route.params.name, coordinate: route.params.coordinate, myPosition: route.params.myPosition })}>
+                onPress={() => navigation.navigate('식당 길찾기', {
+                  name: route.params.name,
+                  coordinate: route.params.coordinate,
+                  myPosition: route.params.myPosition
+                })}
+              >
                 <Image
                   resizeMode="contain"
                   source={require('../../images/info-icon/marker.png')}
