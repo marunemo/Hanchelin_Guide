@@ -26,7 +26,7 @@ export default function CreateChat({ route, navigation }) {
       toast.show({ description: '마감 시간이 현재 시간보다 전에 있습니다!', ...toastSetting })
     } else {
       const chatThread = {
-        name: roomName === '' ? storeName + ' 같이 주문해요' : roomName,
+        name: roomName !== '' ? roomName : route.params === undefined ? storeName + ' 같이 주문해요' : route.params.restName + ' 같이 주문해요',
         store: storeName,
         location: delivLocation,
         initialUser: user?.uid,
@@ -86,7 +86,7 @@ export default function CreateChat({ route, navigation }) {
               width={230}
               marginBottom='3'
               returnKeyType='done'
-              placeholder={route.params === undefined ? storeName + ' 같이 주문해요' : route.params.restName + ' 같이 주문해요'}
+              placeholder={route.params !== undefined ? route.params.restName + ' 같이 주문해요' : storeName === '' ? '' : storeName + ' 같이 주문해요'}
               onChangeText={setRoomName}
             />
             <View style={styles.labelLayout}>
