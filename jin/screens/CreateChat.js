@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, StyleSheet, Platform, View } from 'react-native';
-import { NativeBaseProvider, Text, Input, Button, useToast } from 'native-base';
+import { NativeBaseProvider, Input, Button, useToast } from 'native-base';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import Text from '../../defaultSetting/FontText';
 
 export default function CreateChat({ route, navigation }) {
   const user = auth().currentUser
@@ -17,9 +18,7 @@ export default function CreateChat({ route, navigation }) {
   function handleButtonPress() {
     const toastSetting = { title: '주의', status: 'error', isClosable: false, style: { width: 320 } }
 
-    if (roomName === '') {
-      toast.show({ description: '채팅방 이름이 작성되지 않았습니다!', ...toastSetting })
-    } else if (storeName === '') {
+    if (storeName === '') {
       toast.show({ description: '식당 이름이 작성되지 않았습니다!', ...toastSetting })
     } else if (delivLocation === '') {
       toast.show({ description: '배달 위치가 정해지지 않았습니다!', ...toastSetting })
@@ -27,12 +26,12 @@ export default function CreateChat({ route, navigation }) {
       toast.show({ description: '마감 시간이 현재 시간보다 전에 있습니다!', ...toastSetting })
     } else {
       const chatThread = {
-        name: roomName,
+        name: roomName === '' ? storeName + '로 같이 주문해요' : roomName,
         store: storeName,
         location: delivLocation,
         initialUser: user?.uid,
         latestMessage: {
-          text: roomName + ' 채팅방이 생성되었습니다.',
+          text: '채팅방이 생성되었습니다.',
           createdAt: new Date().getTime()
         }
       }
@@ -68,35 +67,46 @@ export default function CreateChat({ route, navigation }) {
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.container}>
+            <View style={styles.labelLayout}>
+              <Text style={styles.inputLabel}>식당 이름</Text>
+            </View>
             <Input
               bg='white'
               minWidth={230}
-              marginTop='3'
-              placeholder='식당 이름'
+              marginBottom='3'
               returnKeyType='done'
               value={storeName}
               onChangeText={setStoreName}
             />
+            <View style={styles.labelLayout}>
+              <Text style={styles.inputLabel}>채팅방 이름</Text>
+            </View>
             <Input
               bg='white'
               minWidth={230}
-              marginTop='3'
+              marginBottom='3'
               returnKeyType='done'
-              placeholder='채팅방 이름'
+              placeholder={storeName + '로 같이 주문해요'}
               onChangeText={setRoomName}
             />
+            <View style={styles.labelLayout}>
+              <Text style={styles.inputLabel}>배달 위치</Text>
+            </View>
             <Input
               bg='white'
               minWidth={230}
-              marginTop='3'
+              marginBottom='3'
               returnKeyType='done'
               placeholder='배달 위치'
               onChangeText={setDelivLocation}
             />
+            <View style={styles.labelLayout}>
+              <Text style={styles.inputLabel}>마감 시간</Text>
+            </View>
             <Button
               bg='white'
               minWidth={230}
-              marginTop='3'
+              marginBottom='3'
               variant="outline"
               onPress={() => setModalVisible(true)}
               _text={{
@@ -156,4 +166,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18
   },
+  labelLayout: {
+    width: 230,
+    marginBottom: 3,
+    paddingLeft: 5
+  },
+  inputLabel: {
+    fontSize: 15
+  }
 })
