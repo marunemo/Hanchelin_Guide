@@ -7,7 +7,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Authentication from './jin/screens/Authentication'
+import Authentication from './jin/screens/Authentication';
 import RestHome from './restaurant/RestHome.js';
 // import Chatroom from "./jin/screens/Chatroom.js";
 import Chatroom from "./jin/ChatNavigator";

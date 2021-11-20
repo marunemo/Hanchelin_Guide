@@ -172,7 +172,7 @@ export default function Profile(props) {
                       onChangeText={setNickname}
                       avoidKeyboard={true}
                     />
-                    <Button style={styles.button} bg='#BF2A52' onPress={() => addNickname()}>설정 완료</Button>
+                    <Button style={styles.button} bg='#BF2A52' onPress={() => {addNickname(); toggleModal();}}>완료</Button>
                     <TouchableOpacity style={styles.cancel} onPress={toggleModal}>
                       <Text style={styles.emailText}>취소</Text>
                     </TouchableOpacity>
@@ -247,6 +247,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     margin: 5,
     borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#ccc",
+    alignSelf: 'center',
+    backgroundColor: '#ffffff'
   },
   modalView: {
     backgroundColor: 'white',
@@ -255,13 +259,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 50,
     marginRight: 50,
+    borderRadius: 5,
   },
   cancel: {
-    marginTop: 10
-    borderRadius: 10,
-    borderColor: "#ccc",
-    alignSelf: 'center',
-    backgroundColor: '#ffffff'
+    marginTop: 10,
   },
   reviewTitle: {
     fontSize: 24,
