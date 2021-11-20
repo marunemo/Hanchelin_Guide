@@ -353,15 +353,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide/Pods-Hanchelin_Guide-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide/Pods-Hanchelin_Guide-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide/Pods-Hanchelin_Guide-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Hanchelin_Guide-Hanchelin_GuideTests/Pods-Hanchelin_Guide-Hanchelin_GuideTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		23AAA7938D0815EC4CC41A94 /* [CP-User] [RNFB] Core Configuration */ = {

@@ -26,14 +26,16 @@ export default function App() {
     });
   }, []);
 
-  /*const linking = {
+  /*
+  const linking = {
     prefixes: ['kakao{' + SecureKey.kakaonative + '}://'],
     config: {
       screens: {
         '식당 정보': 'kakaolink'
       },
     },
-  };*/
+  };
+  */
 
   async function onGoogleButtonPress() {
     setProgress(true);
@@ -62,6 +64,7 @@ export default function App() {
         <SafeAreaView style={{ flex: 0, backgroundColor: '#BF2A52' }} />
         <SafeAreaView style={{ flex: 1, backgroundColor: '#efefef' }}>
           <StatusBar barStyle="light-content" />
+          {/* <NavigationContainer linking={linking}> */}
           <NavigationContainer>
             <BTab.Navigator
               screenOptions={({ route }) => ({

@@ -12,7 +12,7 @@ import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-//import KakaoShareLink from 'react-native-kakao-share-link';
+import KakaoShareLink from 'react-native-kakao-share-link';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
@@ -233,7 +233,7 @@ const RestComponent = (props) => {
     }
   }
 
-  /*async function kakaoSharing() {
+  async function kakaoSharing() {
     try {
       const response = await KakaoShareLink.sendLocation({
         address: restData['address'],
@@ -279,7 +279,7 @@ const RestComponent = (props) => {
         })
       }
     }
-  }*/
+  }
 
   return (
     <>
@@ -353,7 +353,7 @@ const RestComponent = (props) => {
             </Button>
           </Center>
           <Center style={[style.optionView, style.horizonStack, { borderRightWidth: 0 }]}>
-            <Button style={style.optionButton}>
+            <Button style={style.optionButton} onPress={kakaoSharing}>
               <Image
                 alignSelf="center"
                 resizeMode="contain"
