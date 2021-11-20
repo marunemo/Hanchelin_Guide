@@ -7,12 +7,12 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Authentication from './jin/screens/Authentication'
+import Authentication from './jin/screens/Authentication';
 import RestHome from './restaurant/RestHome.js';
 // import Chatroom from "./jin/screens/Chatroom.js";
 import Chatroom from "./jin/ChatNavigator";
 import ClientId from "./android/app/google-services.json";
-import SecureKey from "./defaultSetting/secure.json";
+//import SecureKey from "./defaultSetting/secure.json";
 
 const BTab = createBottomTabNavigator();
 
@@ -22,18 +22,18 @@ export default function App() {
 
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId: ClientId["client"][0]["oauth_client"][1]["client_id"]
+      webClientId: ClientId["client"][0]["oauth_client"][3]["client_id"]
     });
   }, []);
 
-  const linking = {
+  /*const linking = {
     prefixes: ['kakao{' + SecureKey.kakaonative + '}://'],
     config: {
       screens: {
         '식당 정보': 'kakaolink'
       },
     },
-  };
+  };*/
 
   async function onGoogleButtonPress() {
     setProgress(true);
@@ -62,7 +62,7 @@ export default function App() {
         <SafeAreaView style={{ flex: 0, backgroundColor: '#BF2A52' }} />
         <SafeAreaView style={{ flex: 1, backgroundColor: '#efefef' }}>
           <StatusBar barStyle="light-content" />
-          <NavigationContainer linking={linking}>
+          <NavigationContainer>
             <BTab.Navigator
               screenOptions={({ route }) => ({
                 tabBarLabel: ({ focused }) => {
