@@ -713,7 +713,7 @@ PODS:
   - React-jsinspector (0.64.2)
   - react-native-geolocation-service (5.3.0-beta.1):
     - React
-  - react-native-kakao-share-link (1.0.6):
+  - react-native-kakao-share-link (1.0.4):
     - KakaoSDKCommon (~> 2.4.0)
     - KakaoSDKLink (~> 2.4.0)
     - KakaoSDKTemplate (~> 2.4.0)
@@ -1080,7 +1080,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
   react-native-geolocation-service: 4030de78cdeb93ebef1fdc1971668bea6c0bc59b
-  react-native-kakao-share-link: 198508e0a6d44d891fdd9d2ddbbd2738a233c5b6
+  react-native-kakao-share-link: 1c322024412f4f11e0c5e6450e7807ee80c2265a
   react-native-nmap: cfcc5402746040494c544ea90a6062f49505acdf
   react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
   react-native-slider: c98f8413776ec1218ec9cd4f8ed32bfd91d428fc
