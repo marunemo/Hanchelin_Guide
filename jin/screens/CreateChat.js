@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, TouchableOpacity, StyleSheet, Platform, View, ScrollView } from 'react-native';
-import { NativeBaseProvider, Input, Button, Modal, useToast } from 'native-base';
+import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, TouchableOpacity, StyleSheet, Platform, View, ScrollView, SafeAreaView } from 'react-native';
+import { NativeBaseProvider, Input, Button, useToast } from 'native-base';
+import Modal from 'react-native-modal';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import database from '@react-native-firebase/database';
@@ -21,6 +22,7 @@ export default function CreateChat({ route, navigation }) {
   const [restNameList, setRestList] = useState([])
   const [searchModalVisible, setSearchModalVisible] = useState(false)
   const [searchText, setSearchText] = useState('')
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
     let restDataList = [];
@@ -31,7 +33,15 @@ export default function CreateChat({ route, navigation }) {
         })
       }
     })
-    setRestList(restDataList)
+    setRestList(restDataList);
+
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
   }, []);
 
   function handleButtonPress() {
@@ -145,39 +155,35 @@ export default function CreateChat({ route, navigation }) {
                 (endTime.getMinutes() < 10 ? '0' : '') + endTime.getMinutes()}
             </Button>
             <Modal
-              isOpen={searchModalVisible}
-              onClose={() => setSearchModalVisible(false)}
+              isVisible={searchModalVisible}
+              onBackButtonPress={() => setSearchModalVisible(false)}
+              onBackdropPress={isKeyboardVisible ? Keyboard.dismiss : (() => setSearchModalVisible(false))}
             >
-              <Modal.Content>
-                {/* <Modal.CloseButton /> */}
-                <Modal.Header>
-                  <SearchInput
-                    onChangeText={setSearchText}
-                    style={styles.searchBox}
-                    placeholder="검색할 식당 이름을 입력해주세요"
-                  />
-                </Modal.Header>
-                <Modal.Body>
-                  <ScrollView style={{ height: 300 }}>
-                    {restNameList.filter(createFilter(searchText, KEYS_TO_FILTERS)).map(restName => {
-                      return (
-                        <TouchableOpacity
-                          key={restName.id}
-                          onPress={() => {
-                            setStoreName(restName.name);
-                            setSearchModalVisible(false);
-                          }}
-                        >
-                          <View style={styles.restListItem}>
-                            <Text style={styles.restListName} bold>{restName.name}</Text>
-                            <Text style={styles.restListCategory}>{restName.category}</Text>
-                          </View>
-                        </TouchableOpacity>
-                      )
-                    })}
-                  </ScrollView>
-                </Modal.Body>
-              </Modal.Content>
+              <SafeAreaView style={styles.searchModal}>
+              <SearchInput
+                onChangeText={setSearchText}
+                style={styles.searchBox}
+                placeholder="검색할 식당 이름을 입력해주세요"
+              />
+              <ScrollView keyboardDismissMode="on-drag">
+                {restNameList.filter(createFilter(searchText, KEYS_TO_FILTERS)).map(restName => {
+                  return (
+                    <TouchableOpacity
+                      key={restName.id}
+                      onPress={() => {
+                        setStoreName(restName.name);
+                        setSearchModalVisible(false);
+                      }}
+                    >
+                      <View style={styles.restListItem}>
+                        <Text style={styles.restListName} bold>{restName.name}</Text>
+                        <Text style={styles.restListCategory}>{restName.category}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  )
+                })}
+              </ScrollView>
+              </SafeAreaView>
             </Modal>
             <DateTimePickerModal
               mode="time"
@@ -234,6 +240,13 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize: 15
+  },
+  searchModal: {
+    height: '70%',
+    backgroundColor: '#fff',
+    paddingVertical: 35,
+    paddingHorizontal: 25,
+    borderRadius: 20
   },
   searchBox: {
     padding: 10,
