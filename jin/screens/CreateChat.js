@@ -144,7 +144,10 @@ export default function CreateChat({ route, navigation }) {
               {(endTime.getHours() < 10 ? '0' : '') + endTime.getHours() + " : " +
                 (endTime.getMinutes() < 10 ? '0' : '') + endTime.getMinutes()}
             </Button>
-            <Modal isOpen={searchModalVisible} onClose={() => setSearchModalVisible(false)}>
+            <Modal
+              isOpen={searchModalVisible}
+              onClose={() => setSearchModalVisible(false)}
+            >
               <Modal.Content>
                 {/* <Modal.CloseButton /> */}
                 <Modal.Header>
@@ -165,8 +168,10 @@ export default function CreateChat({ route, navigation }) {
                             setSearchModalVisible(false);
                           }}
                         >
-                          <Text>{restName.name}</Text>
-                          <Text>{restName.category}</Text>
+                          <View style={styles.restListItem}>
+                            <Text style={styles.restListName} bold>{restName.name}</Text>
+                            <Text style={styles.restListCategory}>{restName.category}</Text>
+                          </View>
                         </TouchableOpacity>
                       )
                     })}
@@ -234,5 +239,19 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: '#ccc',
     borderWidth: 1
+  },
+  restListItem: {
+    borderColor: '#737373',
+    borderBottomWidth: 1,
+    paddingVertical: 7,
+    paddingHorizontal: 5
+  },
+  restListName: {
+    fontSize: 14,
+    marginBottom: 3
+  },
+  restListCategory: {
+    fontSize: 12,
+    marginLeft: 3
   }
 })
