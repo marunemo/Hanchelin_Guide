@@ -170,6 +170,13 @@ export default function CreateChat({ route, navigation }) {
                 (endTime.getMinutes() < 10 ? '0' : '') + endTime.getMinutes()}
             </Button>
             <Modal
+              animationIn="zoomInDown"
+              animationOut="zoomOutUp"
+              useNativeDriver={true}
+              useNativeDriverForBackdrop={true}
+              hideModalContentWhileAnimating={true}
+              backdropTransitionInTiming={0}
+              backdropTransitionOutTiming={0}
               isVisible={searchModalVisible}
               onBackButtonPress={() => setSearchModalVisible(false)}
               onBackdropPress={isKeyboardVisible ? Keyboard.dismiss : (() => setSearchModalVisible(false))}
