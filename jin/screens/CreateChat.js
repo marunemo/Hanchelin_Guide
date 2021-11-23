@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
-import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, StyleSheet, Platform, View } from 'react-native';
-import { NativeBaseProvider, Input, Button, useToast } from 'native-base';
+import React, { useState, useEffect } from 'react';
+import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, TouchableOpacity, StyleSheet, Platform, View, ScrollView } from 'react-native';
+import { NativeBaseProvider, Input, Button, Modal, useToast } from 'native-base';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import database from '@react-native-firebase/database';
+import SearchInput, { createFilter } from 'react-native-search-filter';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Text from '../../defaultSetting/FontText';
+
+const KEYS_TO_FILTERS = ['name'];
 
 export default function CreateChat({ route, navigation }) {
   const user = auth().currentUser
@@ -13,7 +17,22 @@ export default function CreateChat({ route, navigation }) {
   const [storeName, setStoreName] = useState(route.params?.restFullName ? route.params.restFullName : '') //식당이름
   const [delivLocation, setDelivLocation] = useState('') //배달위치
   const [endTime, setEndTime] = useState(new Date(new Date().getTime() + 10 * 60 * 1000)) //모집 마감시간 (1000 밀리초 * 10초 * 10분)
-  const [modalVisible, setModalVisible] = useState(false)
+  const [dateModalVisible, setDateModalVisible] = useState(false)
+  const [restNameList, setRestList] = useState([])
+  const [searchModalVisible, setSearchModalVisible] = useState(false)
+  const [searchText, setSearchText] = useState('')
+
+  useEffect(() => {
+    let restDataList = [];
+    database().ref('/식당').once('value').then(restData => {
+      if (restData) {
+        restData.val().map(restDataItem => {
+          restDataList.push({ name: restDataItem['name'], category: restDataItem['category'] });
+        })
+      }
+    })
+    setRestList(restDataList)
+  }, []);
 
   function handleButtonPress() {
     const toastSetting = { title: '주의', status: 'error', isClosable: false, style: { width: 320 } }
@@ -70,14 +89,16 @@ export default function CreateChat({ route, navigation }) {
             <View style={styles.labelLayout}>
               <Text style={styles.inputLabel}>식당 이름</Text>
             </View>
-            <Input
+            <Button
               bg='white'
               width={230}
               marginBottom='3'
-              returnKeyType='done'
               value={storeName}
-              onChangeText={setStoreName}
-            />
+              // onChangeText={setStoreName}
+              onPress={() => setSearchModalVisible(true)}
+            >
+              {storeName}
+            </Button>
             <View style={styles.labelLayout}>
               <Text style={styles.inputLabel}>채팅방 이름</Text>
             </View>
@@ -108,7 +129,7 @@ export default function CreateChat({ route, navigation }) {
               width={230}
               marginBottom='3'
               variant="outline"
-              onPress={() => setModalVisible(true)}
+              onPress={() => setDateModalVisible(true)}
               _text={{
                 textAlign: 'center',
                 fontSize: 18,
@@ -118,15 +139,39 @@ export default function CreateChat({ route, navigation }) {
               {(endTime.getHours() < 10 ? '0' : '') + endTime.getHours() + " : " +
                 (endTime.getMinutes() < 10 ? '0' : '') + endTime.getMinutes()}
             </Button>
+            <Modal isOpen={searchModalVisible} onClose={() => setSearchModalVisible(false)}>
+              <Modal.Content>
+                {/* <Modal.CloseButton /> */}
+                <Modal.Header>
+                  <SearchInput
+                    onChangeText={setSearchText}
+                    style={styles.searchBox}
+                    placeholder="검색할 식당 이름을 입력해주세요"
+                  />
+                </Modal.Header>
+                <Modal.Body>
+                  <ScrollView style={{ height: 300 }}>
+                    {restNameList.filter(createFilter(searchText, KEYS_TO_FILTERS)).map(restName => {
+                      return (
+                        <TouchableOpacity key={restName.name} onPress={() => console.log(restName.name)}>
+                          <Text>{restName.name}</Text>
+                          <Text>{restName.category}</Text>
+                        </TouchableOpacity>
+                      )
+                    })}
+                  </ScrollView>
+                </Modal.Body>
+              </Modal.Content>
+            </Modal>
             <DateTimePickerModal
               mode="time"
               date={endTime}
-              isVisible={modalVisible}
+              isVisible={dateModalVisible}
               onConfirm={endTime => {
                 setEndTime(endTime);
-                setModalVisible(false);
+                setDateModalVisible(false);
               }}
-              onCancel={() => setModalVisible(false)}
+              onCancel={() => setDateModalVisible(false)}
             />
             <Button style={styles.button} onPress={handleButtonPress} bg='#BF2A52'>
               <Text style={{ color: 'white', fontWeight: 'bold' }}>채팅방 만들기</Text>
@@ -173,5 +218,10 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize: 15
+  },
+  searchBox: {
+    padding: 10,
+    borderColor: '#ccc',
+    borderWidth: 1
   }
 })
