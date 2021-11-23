@@ -59,6 +59,36 @@ export default function CreateChat({ route, navigation }) {
     };
   }, []);
 
+  function FilteredRestList(props) {
+    const restList = props.restList;
+    if (restList.length === 0) {
+      return (
+          <Text style={styles.emptyText}>검색된 식당이 없습니다</Text>
+      )
+    } else {
+      return (
+        <ScrollView keyboardDismissMode="on-drag">
+          {restList.map(restName => {
+            return (
+              <TouchableOpacity
+                key={restName.id}
+                onPress={() => {
+                  setStoreName(restName.name);
+                  setSearchModalVisible(false);
+                }}
+              >
+                <View style={styles.restListItem}>
+                  <Text style={styles.restListName} bold>{restName.name}</Text>
+                  <Text style={styles.restListCategory}>{restName.category}</Text>
+                </View>
+              </TouchableOpacity>
+            )
+          })}
+        </ScrollView>
+      )
+    }
+  }
+
   function handleButtonPress() {
     const toastSetting = { title: '주의', status: 'error', isClosable: false, style: { width: 320 } }
 
@@ -184,29 +214,14 @@ export default function CreateChat({ route, navigation }) {
               <SafeAreaView style={styles.searchModal}>
                 <Input
                   style={styles.searchBox}
-                  variant="underlined"
                   returnKeyType="search"
                   placeholder="검색할 식당 이름을 입력해주세요"
                   onChangeText={setSearchText}
+                  _focus={{
+                    borderColor: '#BF2A52'
+                  }}
                 />
-                <ScrollView keyboardDismissMode="on-drag">
-                  {restNameList.filter(createFilter(searchText, KEYS_TO_FILTERS)).map(restName => {
-                    return (
-                      <TouchableOpacity
-                        key={restName.id}
-                        onPress={() => {
-                          setStoreName(restName.name);
-                          setSearchModalVisible(false);
-                        }}
-                      >
-                        <View style={styles.restListItem}>
-                          <Text style={styles.restListName} bold>{restName.name}</Text>
-                          <Text style={styles.restListCategory}>{restName.category}</Text>
-                        </View>
-                      </TouchableOpacity>
-                    )
-                  })}
-                </ScrollView>
+                <FilteredRestList restList={restNameList.filter(createFilter(searchText, KEYS_TO_FILTERS))} />
               </SafeAreaView>
             </Modal>
             <DateTimePickerModal
@@ -290,5 +305,11 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: 12,
     marginLeft: 3
+  },
+  emptyText: {
+    color: '#555',
+    textAlign: 'center',
+    fontSize: 18,
+    marginTop: 30,
   }
 })
