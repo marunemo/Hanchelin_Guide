@@ -91,11 +91,12 @@ export default function CreateChat({ route, navigation }) {
             </View>
             <Button
               bg='white'
-              borderColor='rose.500'
+              borderColor="muted.200"
               width={230}
               marginBottom='3'
-              value={storeName}
               justifyContent="flex-start"
+              variant="outline"
+              value={storeName}
               onPress={() => setSearchModalVisible(true)}
               _text={{
                 color: '#333333'
@@ -130,6 +131,7 @@ export default function CreateChat({ route, navigation }) {
             </View>
             <Button
               bg='white'
+              borderColor="muted.200"
               width={230}
               marginBottom='3'
               variant="outline"
