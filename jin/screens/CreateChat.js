@@ -27,7 +27,7 @@ export default function CreateChat({ route, navigation }) {
     database().ref('/식당').once('value').then(restData => {
       if (restData) {
         restData.val().map(restDataItem => {
-          restDataList.push({ name: restDataItem['name'], category: restDataItem['category'] });
+          restDataList.push({ id: restDataItem['id'], name: restDataItem['name'], category: restDataItem['category'] });
         })
       }
     })
@@ -91,13 +91,17 @@ export default function CreateChat({ route, navigation }) {
             </View>
             <Button
               bg='white'
+              borderColor='rose.500'
               width={230}
               marginBottom='3'
               value={storeName}
-              // onChangeText={setStoreName}
+              justifyContent="flex-start"
               onPress={() => setSearchModalVisible(true)}
+              _text={{
+                color: '#333333'
+              }}
             >
-              {storeName}
+              {' ' + storeName + ' '}
             </Button>
             <View style={styles.labelLayout}>
               <Text style={styles.inputLabel}>채팅방 이름</Text>
@@ -131,7 +135,6 @@ export default function CreateChat({ route, navigation }) {
               variant="outline"
               onPress={() => setDateModalVisible(true)}
               _text={{
-                textAlign: 'center',
                 fontSize: 18,
                 color: '#333333'
               }}
@@ -153,7 +156,13 @@ export default function CreateChat({ route, navigation }) {
                   <ScrollView style={{ height: 300 }}>
                     {restNameList.filter(createFilter(searchText, KEYS_TO_FILTERS)).map(restName => {
                       return (
-                        <TouchableOpacity key={restName.name} onPress={() => console.log(restName.name)}>
+                        <TouchableOpacity
+                          key={restName.id}
+                          onPress={() => {
+                            setStoreName(restName.name);
+                            setSearchModalVisible(false);
+                          }}
+                        >
                           <Text>{restName.name}</Text>
                           <Text>{restName.category}</Text>
                         </TouchableOpacity>
