@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, TouchableOpacity, StyleSheet, Platform, View, ScrollView, SafeAreaView } from 'react-native';
-import { NativeBaseProvider, Input, Button, useToast } from 'native-base';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+  View,
+  ScrollView,
+  SafeAreaView
+} from 'react-native';
+import {
+  NativeBaseProvider,
+  Input,
+  Button,
+  useToast
+} from 'native-base';
 import Modal from 'react-native-modal';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -160,29 +175,29 @@ export default function CreateChat({ route, navigation }) {
               onBackdropPress={isKeyboardVisible ? Keyboard.dismiss : (() => setSearchModalVisible(false))}
             >
               <SafeAreaView style={styles.searchModal}>
-              <SearchInput
-                onChangeText={setSearchText}
-                style={styles.searchBox}
-                placeholder="검색할 식당 이름을 입력해주세요"
-              />
-              <ScrollView keyboardDismissMode="on-drag">
-                {restNameList.filter(createFilter(searchText, KEYS_TO_FILTERS)).map(restName => {
-                  return (
-                    <TouchableOpacity
-                      key={restName.id}
-                      onPress={() => {
-                        setStoreName(restName.name);
-                        setSearchModalVisible(false);
-                      }}
-                    >
-                      <View style={styles.restListItem}>
-                        <Text style={styles.restListName} bold>{restName.name}</Text>
-                        <Text style={styles.restListCategory}>{restName.category}</Text>
-                      </View>
-                    </TouchableOpacity>
-                  )
-                })}
-              </ScrollView>
+                <SearchInput
+                  onChangeText={setSearchText}
+                  style={styles.searchBox}
+                  placeholder="검색할 식당 이름을 입력해주세요"
+                />
+                <ScrollView keyboardDismissMode="on-drag">
+                  {restNameList.filter(createFilter(searchText, KEYS_TO_FILTERS)).map(restName => {
+                    return (
+                      <TouchableOpacity
+                        key={restName.id}
+                        onPress={() => {
+                          setStoreName(restName.name);
+                          setSearchModalVisible(false);
+                        }}
+                      >
+                        <View style={styles.restListItem}>
+                          <Text style={styles.restListName} bold>{restName.name}</Text>
+                          <Text style={styles.restListCategory}>{restName.category}</Text>
+                        </View>
+                      </TouchableOpacity>
+                    )
+                  })}
+                </ScrollView>
               </SafeAreaView>
             </Modal>
             <DateTimePickerModal
