@@ -20,7 +20,7 @@ import Modal from 'react-native-modal';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import database from '@react-native-firebase/database';
-import SearchInput, { createFilter } from 'react-native-search-filter';
+import { createFilter } from 'react-native-search-filter';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Text from '../../defaultSetting/FontText';
 
@@ -127,7 +127,7 @@ export default function CreateChat({ route, navigation }) {
                 color: '#333333'
               }}
             >
-              {' ' + storeName + ' '}
+              {storeName === '' ? ' ' : storeName}
             </Button>
             <View style={styles.labelLayout}>
               <Text style={styles.inputLabel}>채팅방 이름</Text>
@@ -182,10 +182,12 @@ export default function CreateChat({ route, navigation }) {
               onBackdropPress={isKeyboardVisible ? Keyboard.dismiss : (() => setSearchModalVisible(false))}
             >
               <SafeAreaView style={styles.searchModal}>
-                <SearchInput
-                  onChangeText={setSearchText}
+                <Input
                   style={styles.searchBox}
+                  variant="underlined"
+                  returnKeyType="search"
                   placeholder="검색할 식당 이름을 입력해주세요"
+                  onChangeText={setSearchText}
                 />
                 <ScrollView keyboardDismissMode="on-drag">
                   {restNameList.filter(createFilter(searchText, KEYS_TO_FILTERS)).map(restName => {
@@ -272,8 +274,7 @@ const styles = StyleSheet.create({
   },
   searchBox: {
     padding: 10,
-    borderColor: '#ccc',
-    borderWidth: 1
+    marginBottom: 10
   },
   restListItem: {
     borderColor: '#737373',
@@ -286,6 +287,7 @@ const styles = StyleSheet.create({
     marginBottom: 3
   },
   restListCategory: {
+    color: '#333',
     fontSize: 12,
     marginLeft: 3
   }
