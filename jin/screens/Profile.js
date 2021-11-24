@@ -163,7 +163,7 @@ export default function Profile(props) {
               <VStack style={styles.vstack}>
                 <Text style={styles.text}>{user?.displayName}</Text>
                 <Text style={styles.emailText}>{user?.email}</Text>
-                <Modal isVisible={isModalVisible} avoidKeyboard>
+                <Modal isVisible={isModalVisible}>
                   <SafeAreaView style={styles.modalView}>
                     <Text style={{ fontSize: 20, marginTop: 10 }}>별명을 입력해주세요</Text>
                     <Text style={{ fontSize: 12, marginTop: 5 }}>별명은 작성하신 리뷰에 이름대신 표시됩니다.</Text>
