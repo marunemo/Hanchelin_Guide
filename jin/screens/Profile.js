@@ -100,22 +100,22 @@ export default function Profile(props) {
         setStore(store)
       });
 
-      firestore()
-        .collection('user')
-        .doc(user?.uid)
-        .get()
-        .then(documentSnapshot => {
-          if (documentSnapshot.exists) {
-            setNickname(documentSnapshot.data().nickname)
-            setCheckNickname(true)
-          }
-        });
+    firestore()
+      .collection('user')
+      .doc(user?.uid)
+      .get()
+      .then(documentSnapshot => {
+        if (documentSnapshot.exists) {
+          setNickname(documentSnapshot.data().nickname)
+          setCheckNickname(true)
+        }
+      });
   }, []);
 
   async function addNickname() {
     await nameRef.doc(user?.uid).set({
       nickname: nickname,
-    }, {merge: true})
+    }, { merge: true })
   }
 
   const toggleModal = () => {
@@ -132,9 +132,9 @@ export default function Profile(props) {
     } else {
       return (
         <>
-        <TouchableOpacity onPress={toggleModal}>
-          <Text style={styles.emailText}>별명을 설정해주세요</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={toggleModal}>
+            <Text style={styles.emailText}>별명을 설정해주세요</Text>
+          </TouchableOpacity>
         </>
       );
     }
@@ -164,7 +164,7 @@ export default function Profile(props) {
                   <SafeAreaView style={styles.modalView}>
                     <Text style={{ fontSize: 20, marginTop: 10 }}>별명을 입력해주세요</Text>
                     <Text style={{ fontSize: 10, marginTop: 5 }}>별명은 작성하신 리뷰에 이름대신 표시됩니다.</Text>
-                    <Input 
+                    <Input
                       style={{ marginTop: 30 }}
                       w={200}
                       multiline={false}
@@ -172,7 +172,7 @@ export default function Profile(props) {
                       onChangeText={setNickname}
                       avoidKeyboard={true}
                     />
-                    <Button style={styles.button} bg='#BF2A52' onPress={() => {addNickname(); toggleModal();}}>완료</Button>
+                    <Button style={styles.button} bg='#BF2A52' onPress={() => { addNickname(); toggleModal(); }}>완료</Button>
                     <TouchableOpacity style={styles.cancel} onPress={toggleModal}>
                       <Text style={styles.emailText}>취소</Text>
                     </TouchableOpacity>
@@ -181,14 +181,24 @@ export default function Profile(props) {
               </VStack>
             </HStack>
           </Stack>
-          <Button style={styles.button}
-            onPress={() => auth().signOut()}
-            bg='#BF2A52'
-            width="70%"
-            colorScheme="gray"
-          >
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>로그아웃</Text>
-          </Button>
+          <Button.Group style={styles.buttonGroup}>
+            <Button style={styles.button}
+              onPress={toggleModal}
+              bg='#BF2A52'
+              width="70%"
+              colorScheme="gray"
+            >
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>닉네임 설정</Text>
+            </Button>
+            <Button style={styles.button}
+              onPress={() => auth().signOut()}
+              bg='#BF2A52'
+              width="70%"
+              colorScheme="gray"
+            >
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>로그아웃</Text>
+            </Button>
+          </Button.Group>
         </Center>
         <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 쓴 리뷰</Text>
         {review}
@@ -210,13 +220,15 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     alignItems: 'center'
   },
-  button: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  buttonGroup: {
     width: '60%',
-    marginTop: 25,
+    marginTop: 10,
+    flexDirection: 'column'
+  },
+  button: {
+    width: '100%',
+    marginTop: 10,
     color: 'white',
-    alignSelf: 'center'
   },
   title: {
     fontSize: 25,
