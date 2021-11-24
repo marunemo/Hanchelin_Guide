@@ -118,6 +118,10 @@ export default function Profile(props) {
     }, { merge: true })
   }
 
+  async function resetNickname() {
+    await nameRef.doc(user?.uid).delete();
+  }
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   }
@@ -159,7 +163,7 @@ export default function Profile(props) {
               <VStack style={styles.vstack}>
                 <Text style={styles.text}>{user?.displayName}</Text>
                 <Text style={styles.emailText}>{user?.email}</Text>
-                <Modal isVisible={isModalVisible}>
+                <Modal isVisible={isModalVisible} avoidKeyboard>
                   <SafeAreaView style={styles.modalView}>
                     <Text style={{ fontSize: 20, marginTop: 10 }}>별명을 입력해주세요</Text>
                     <Text style={{ fontSize: 12, marginTop: 5 }}>별명은 작성하신 리뷰에 이름대신 표시됩니다.</Text>
@@ -168,15 +172,19 @@ export default function Profile(props) {
                       w={200}
                       multiline={false}
                       value={nickname}
+                      placeholder={user?.displayName}
                       onChangeText={setNickname}
-                      avoidKeyboard={true}
                     />
                     <Button.Group style={styles.buttonGroup}>
                       <Button
                         style={styles.button}
                         bg='#BF2A52'
                         onPress={() => {
-                          addNickname();
+                          if (nickname === '') {
+                            resetNickname();
+                          } else {
+                            addNickname();
+                          }
                           toggleModal();
                         }}
                       >
