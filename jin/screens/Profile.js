@@ -159,11 +159,10 @@ export default function Profile(props) {
               <VStack style={styles.vstack}>
                 <Text style={styles.text}>{user?.displayName}</Text>
                 <Text style={styles.emailText}>{user?.email}</Text>
-                <NicknameView />
                 <Modal isVisible={isModalVisible}>
                   <SafeAreaView style={styles.modalView}>
                     <Text style={{ fontSize: 20, marginTop: 10 }}>별명을 입력해주세요</Text>
-                    <Text style={{ fontSize: 10, marginTop: 5 }}>별명은 작성하신 리뷰에 이름대신 표시됩니다.</Text>
+                    <Text style={{ fontSize: 12, marginTop: 5 }}>별명은 작성하신 리뷰에 이름대신 표시됩니다.</Text>
                     <Input
                       style={{ marginTop: 30 }}
                       w={200}
@@ -172,10 +171,25 @@ export default function Profile(props) {
                       onChangeText={setNickname}
                       avoidKeyboard={true}
                     />
-                    <Button style={styles.button} bg='#BF2A52' onPress={() => { addNickname(); toggleModal(); }}>완료</Button>
-                    <TouchableOpacity style={styles.cancel} onPress={toggleModal}>
-                      <Text style={styles.emailText}>취소</Text>
-                    </TouchableOpacity>
+                    <Button.Group style={styles.buttonGroup}>
+                      <Button
+                        style={styles.button}
+                        bg='#BF2A52'
+                        onPress={() => {
+                          addNickname();
+                          toggleModal();
+                        }}
+                      >
+                        <Text style={{ fontSize: 15 }}>완료</Text>
+                      </Button>
+                      <Button
+                        style={styles.button}
+                        variant="ghost"
+                        onPress={toggleModal}
+                      >
+                        <Text style={{ fontSize: 15, color: '#BF2A52' }}>취소</Text>
+                      </Button>
+                    </Button.Group>
                   </SafeAreaView>
                 </Modal>
               </VStack>
@@ -272,9 +286,6 @@ const styles = StyleSheet.create({
     marginLeft: 50,
     marginRight: 50,
     borderRadius: 5,
-  },
-  cancel: {
-    marginTop: 10,
   },
   reviewTitle: {
     fontSize: 24,
