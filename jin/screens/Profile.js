@@ -113,13 +113,17 @@ export default function Profile(props) {
   }, []);
 
   async function addNickname() {
-    await nameRef.doc(user?.uid).set({
-      nickname: nickname,
-    }, { merge: true })
+    await nameRef.doc(user?.uid)
+      .set({
+        nickname: nickname,
+      }, { merge: true })
+      .then(() => setCheckNickname(true));
   }
 
   async function resetNickname() {
-    await nameRef.doc(user?.uid).delete();
+    await nameRef.doc(user?.uid)
+      .delete()
+      .then(() => setCheckNickname(false));
   }
 
   const toggleModal = () => {
@@ -148,7 +152,7 @@ export default function Profile(props) {
               </VStack>
             </HStack>
             <View style={styles.customUserSetting}>
-            <Text>표시될 이름 : {checkNickname ? nickname : user?.displayName}</Text>
+              <Text>표시될 이름 : {checkNickname ? nickname : user?.displayName}</Text>
             </View>
           </Stack>
           <Button.Group style={styles.menuButtonGroup}>
@@ -182,41 +186,41 @@ export default function Profile(props) {
         size="md"
       >
         <Modal.Content style={styles.modalView}>
-        <Modal.Header style={{alignItems: 'center'}}>
-          <Text style={{ fontSize: 20, marginTop: 10 }} bold>닉네임을 입력해주세요</Text>
-          <Text style={{ fontSize: 13, marginTop: 5, textAlign: 'center' }}>{'닉네임은 작성하신 리뷰에\n이름 대신 표시됩니다.'}</Text>
+          <Modal.Header style={{ alignItems: 'center' }}>
+            <Text style={{ fontSize: 20, marginTop: 10 }} bold>닉네임을 입력해주세요</Text>
+            <Text style={{ fontSize: 13, marginTop: 5, textAlign: 'center' }}>{'닉네임은 작성하신 리뷰에\n이름 대신 표시됩니다.'}</Text>
           </Modal.Header>
-          <Modal.Body style={{alignItems: 'center', marginTop: 15}}>
-          <Input
-            w={200}
-            multiline={false}
-            value={nickname}
-            placeholder={user?.displayName}
-            onChangeText={setNickname}
-          />
-          <Button.Group style={styles.menuButtonGroup}>
-            <Button
-              style={styles.menuButton}
-              bg='#BF2A52'
-              onPress={() => {
-                if (nickname === '') {
-                  resetNickname();
-                } else {
-                  addNickname();
-                }
-                toggleModal();
-              }}
-            >
-              <Text style={{ fontSize: 15 }}>완료</Text>
-            </Button>
-            <Button
-              style={styles.menuButton}
-              variant="ghost"
-              onPress={toggleModal}
-            >
-              <Text style={{ fontSize: 15, color: '#BF2A52' }}>취소</Text>
-            </Button>
-          </Button.Group>
+          <Modal.Body style={{ alignItems: 'center', marginTop: 15 }}>
+            <Input
+              w={200}
+              multiline={false}
+              value={nickname}
+              placeholder={user?.displayName}
+              onChangeText={setNickname}
+            />
+            <Button.Group style={styles.menuButtonGroup}>
+              <Button
+                style={styles.menuButton}
+                bg='#BF2A52'
+                onPress={() => {
+                  if (nickname === '') {
+                    resetNickname();
+                  } else {
+                    addNickname();
+                  }
+                  toggleModal();
+                }}
+              >
+                <Text style={{ fontSize: 15 }}>완료</Text>
+              </Button>
+              <Button
+                style={styles.menuButton}
+                variant="ghost"
+                onPress={toggleModal}
+              >
+                <Text style={{ fontSize: 15, color: '#BF2A52' }}>취소</Text>
+              </Button>
+            </Button.Group>
           </Modal.Body>
         </Modal.Content>
       </Modal>
