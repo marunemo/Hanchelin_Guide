@@ -126,24 +126,6 @@ export default function Profile(props) {
     setModalVisible(!isModalVisible);
   }
 
-  const NicknameView = () => {
-    if (checkNickname) {
-      return (
-        <TouchableOpacity onPress={toggleModal}>
-          <Text style={styles.emailText}>별명: {nickname}</Text>
-        </TouchableOpacity>
-      );
-    } else {
-      return (
-        <>
-          <TouchableOpacity onPress={toggleModal}>
-            <Text style={styles.emailText}>별명을 설정해주세요</Text>
-          </TouchableOpacity>
-        </>
-      );
-    }
-  }
-
   function dateFormat(seconds) {
     const targetDate = new Date(seconds * 1000);
     return targetDate.getFullYear() + '년 ' + targetDate.getMonth() + '월 ' + targetDate.getDate() + '일 '
@@ -165,6 +147,9 @@ export default function Profile(props) {
                 <Text style={styles.emailText}>{user?.email}</Text>
               </VStack>
             </HStack>
+            <View style={styles.customUserSetting}>
+            <Text>표시될 이름 : {checkNickname ? nickname : user?.displayName}</Text>
+            </View>
           </Stack>
           <Button.Group style={styles.menuButtonGroup}>
             <Button style={styles.menuButton}
@@ -198,8 +183,8 @@ export default function Profile(props) {
       >
         <Modal.Content style={styles.modalView}>
         <Modal.Header style={{alignItems: 'center'}}>
-          <Text style={{ fontSize: 20, marginTop: 10 }}>별명을 입력해주세요</Text>
-          <Text style={{ fontSize: 12, marginTop: 5 }}>별명은 작성하신 리뷰에 이름대신 표시됩니다.</Text>
+          <Text style={{ fontSize: 20, marginTop: 10 }} bold>닉네임을 입력해주세요</Text>
+          <Text style={{ fontSize: 13, marginTop: 5, textAlign: 'center' }}>{'닉네임은 작성하신 리뷰에\n이름 대신 표시됩니다.'}</Text>
           </Modal.Header>
           <Modal.Body style={{alignItems: 'center', marginTop: 15}}>
           <Input
@@ -315,5 +300,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'right',
     color: '#777777'
+  },
+  customUserSetting: {
+    marginTop: 20
   }
 });
