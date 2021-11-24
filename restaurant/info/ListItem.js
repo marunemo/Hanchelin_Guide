@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Image } from "native-base";
+import { Image, Spinner } from "native-base";
 import { View, SafeAreaView, RefreshControl, StyleSheet, Dimensions, Animated, TouchableHighlight } from 'react-native';
 import Text from '../../defaultSetting/FontText';
 // import Animated from 'react-native-reanimated';
@@ -24,10 +24,6 @@ const Stack = createNativeStackNavigator();
 const MapView = (props) => {
   const navigation = useNavigation();
 
-  if (props.position['latitude'] == undefined) {
-    return <View style={style.mapView} />;
-  }
-
   return (
     <NaverMapView
       style={style.mapView}
@@ -44,7 +40,7 @@ const MapView = (props) => {
         caption={{ text: props.restName }}
       />
     </NaverMapView>
-  )
+  );
 }
 
 const RestComponent = (props) => {
@@ -75,7 +71,7 @@ const RestComponent = (props) => {
       })
   })
 
-  async function addHeart () {
+  async function addHeart() {
     if (!uidArray.includes(user?.uid)) {
       setHeart(heart + 1)
       setTogHeart(true)
@@ -279,6 +275,19 @@ const RestComponent = (props) => {
         })
       }
     }
+  }
+
+  if (Object.keys(restData).length === 0) {
+    return (
+      <>
+        <Animated.View style={props.scrollAnimation}>
+          <View style={[style.mapView, { alignItems: 'center', justifyContent: 'center' }]}>
+            <Spinner size="lg" color="gray.300" />
+          </View>
+        </Animated.View>
+        <View style={[style.partition, { height: '100%' }]} />
+      </>
+    );
   }
 
   return (
