@@ -15,9 +15,9 @@ import {
   Stack,
   View,
   Image,
-  Input
+  Input,
+  Modal
 } from 'native-base';
-import Modal from 'react-native-modal';
 import Text from '../../defaultSetting/FontText';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -166,8 +166,8 @@ export default function Profile(props) {
               </VStack>
             </HStack>
           </Stack>
-          <Button.Group style={styles.buttonGroup}>
-            <Button style={styles.button}
+          <Button.Group style={styles.menuButtonGroup}>
+            <Button style={styles.menuButton}
               onPress={toggleModal}
               bg='#BF2A52'
               width="70%"
@@ -175,7 +175,7 @@ export default function Profile(props) {
             >
               <Text style={{ color: 'white', fontWeight: 'bold' }}>닉네임 설정</Text>
             </Button>
-            <Button style={styles.button}
+            <Button style={styles.menuButton}
               onPress={() => auth().signOut()}
               bg='#BF2A52'
               width="70%"
@@ -190,21 +190,28 @@ export default function Profile(props) {
         <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 찜한 가게</Text>
         {store}
       </ScrollView>
-      <Modal isVisible={isModalVisible}>
-        <SafeAreaView style={styles.modalView}>
+      <Modal
+        isOpen={isModalVisible}
+        onClose={() => setModalVisible(false)}
+        avoidKeyboard
+        size="md"
+      >
+        <Modal.Content style={styles.modalView}>
+        <Modal.Header style={{alignItems: 'center'}}>
           <Text style={{ fontSize: 20, marginTop: 10 }}>별명을 입력해주세요</Text>
           <Text style={{ fontSize: 12, marginTop: 5 }}>별명은 작성하신 리뷰에 이름대신 표시됩니다.</Text>
+          </Modal.Header>
+          <Modal.Body style={{alignItems: 'center', marginTop: 15}}>
           <Input
-            style={{ marginTop: 30 }}
             w={200}
             multiline={false}
             value={nickname}
             placeholder={user?.displayName}
             onChangeText={setNickname}
           />
-          <Button.Group style={styles.buttonGroup}>
+          <Button.Group style={styles.menuButtonGroup}>
             <Button
-              style={styles.button}
+              style={styles.menuButton}
               bg='#BF2A52'
               onPress={() => {
                 if (nickname === '') {
@@ -218,14 +225,15 @@ export default function Profile(props) {
               <Text style={{ fontSize: 15 }}>완료</Text>
             </Button>
             <Button
-              style={styles.button}
+              style={styles.menuButton}
               variant="ghost"
               onPress={toggleModal}
             >
               <Text style={{ fontSize: 15, color: '#BF2A52' }}>취소</Text>
             </Button>
           </Button.Group>
-        </SafeAreaView>
+          </Modal.Body>
+        </Modal.Content>
       </Modal>
     </NativeBaseProvider>
   );
@@ -242,12 +250,12 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     alignItems: 'center'
   },
-  buttonGroup: {
+  menuButtonGroup: {
     width: '60%',
     marginTop: 10,
     flexDirection: 'column'
   },
-  button: {
+  menuButton: {
     width: '100%',
     marginTop: 10,
     color: 'white',
@@ -288,8 +296,6 @@ const styles = StyleSheet.create({
   },
   modalView: {
     backgroundColor: 'white',
-    width: '73%',
-    height: '35%',
     alignItems: 'center',
     paddingHorizontal: 10,
     borderRadius: 5,
