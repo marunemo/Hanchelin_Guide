@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Image } from "native-base";
+import { Image, Spinner } from "native-base";
 import { View, SafeAreaView, RefreshControl, StyleSheet, Dimensions, Animated, TouchableHighlight } from 'react-native';
 import Text from '../../defaultSetting/FontText';
 // import Animated from 'react-native-reanimated';
@@ -12,7 +12,7 @@ import database from '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-//import KakaoShareLink from 'react-native-kakao-share-link';
+import KakaoShareLink from 'react-native-kakao-share-link';
 
 import CommentButton from './CommentModal';
 import MapScreen from './MapScreen';
@@ -23,10 +23,6 @@ const Stack = createNativeStackNavigator();
 
 const MapView = (props) => {
   const navigation = useNavigation();
-
-  if (props.position['latitude'] == undefined) {
-    return <View style={style.mapView} />;
-  }
 
   return (
     <NaverMapView
@@ -44,7 +40,7 @@ const MapView = (props) => {
         caption={{ text: props.restName }}
       />
     </NaverMapView>
-  )
+  );
 }
 
 const RestComponent = (props) => {
@@ -75,7 +71,7 @@ const RestComponent = (props) => {
       })
   })
 
-  async function addHeart () {
+  async function addHeart() {
     if (!uidArray.includes(user?.uid)) {
       setHeart(heart + 1)
       setTogHeart(true)
@@ -233,7 +229,7 @@ const RestComponent = (props) => {
     }
   }
 
-  /*async function kakaoSharing() {
+  async function kakaoSharing() {
     try {
       const response = await KakaoShareLink.sendLocation({
         address: restData['address'],
@@ -279,7 +275,20 @@ const RestComponent = (props) => {
         })
       }
     }
-  }*/
+  }
+
+  if (Object.keys(restData).length === 0) {
+    return (
+      <>
+        <Animated.View style={props.scrollAnimation}>
+          <View style={[style.mapView, { alignItems: 'center', justifyContent: 'center' }]}>
+            <Spinner size="lg" color="gray.300" />
+          </View>
+        </Animated.View>
+        <View style={[style.partition, { height: '100%' }]} />
+      </>
+    );
+  }
 
   return (
     <>
@@ -328,7 +337,13 @@ const RestComponent = (props) => {
         <HStack style={{ marginTop: 15, marginHorizontal: 10 }}>
           <Center style={[style.optionView, style.horizonStack]}>
             <Button style={style.optionButton} onPress={() => {
-              navigation.navigate("같이 배달", { screen: "새로운 채팅방 만들기", params: { restName: restData['official_name'] } });
+              navigation.navigate("같이 배달", {
+                screen: "새로운 채팅방 만들기",
+                params: {
+                  restName: restData['name'],
+                  restFullName: restData['official_name']
+                }
+              });
             }}>
               <Image
                 alignSelf="center"
@@ -347,7 +362,7 @@ const RestComponent = (props) => {
             </Button>
           </Center>
           <Center style={[style.optionView, style.horizonStack, { borderRightWidth: 0 }]}>
-            <Button style={style.optionButton}>
+            <Button style={style.optionButton} onPress={kakaoSharing}>
               <Image
                 alignSelf="center"
                 resizeMode="contain"
@@ -560,7 +575,12 @@ const ItemActivity = ({ navigation, route }) => {
               <TouchableHighlight
                 activeOpacity={0.4}
                 underlayColor="#BF2A52"
-                onPress={() => navigation.navigate('식당 길찾기', { name: route.params.name, coordinate: route.params.coordinate, myPosition: route.params.myPosition })}>
+                onPress={() => navigation.navigate('식당 길찾기', {
+                  name: route.params.name,
+                  coordinate: route.params.coordinate,
+                  myPosition: route.params.myPosition
+                })}
+              >
                 <Image
                   resizeMode="contain"
                   source={require('../../images/info-icon/marker.png')}

@@ -15,9 +15,9 @@ import {
   Stack,
   View,
   Image,
-  Input
+  Input,
+  Modal
 } from 'native-base';
-import Modal from 'react-native-modal';
 import Text from '../../defaultSetting/FontText';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -100,44 +100,34 @@ export default function Profile(props) {
         setStore(store)
       });
 
-      firestore()
-        .collection('user')
-        .doc(user?.uid)
-        .get()
-        .then(documentSnapshot => {
-          if (documentSnapshot.exists) {
-            setNickname(documentSnapshot.data().nickname)
-            setCheckNickname(true)
-          }
-        });
+    firestore()
+      .collection('user')
+      .doc(user?.uid)
+      .get()
+      .then(documentSnapshot => {
+        if (documentSnapshot.exists) {
+          setNickname(documentSnapshot.data().nickname)
+          setCheckNickname(true)
+        }
+      });
   }, []);
 
   async function addNickname() {
-    await nameRef.doc(user?.uid).set({
-      nickname: nickname,
-    }, {merge: true})
+    await nameRef.doc(user?.uid)
+      .set({
+        nickname: nickname,
+      }, { merge: true })
+      .then(() => setCheckNickname(true));
+  }
+
+  async function resetNickname() {
+    await nameRef.doc(user?.uid)
+      .delete()
+      .then(() => setCheckNickname(false));
   }
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
-  }
-
-  const NicknameView = () => {
-    if (checkNickname) {
-      return (
-        <TouchableOpacity onPress={toggleModal}>
-          <Text style={styles.emailText}>별명: {nickname}</Text>
-        </TouchableOpacity>
-      );
-    } else {
-      return (
-        <>
-        <TouchableOpacity onPress={toggleModal}>
-          <Text style={styles.emailText}>별명을 설정해주세요</Text>
-        </TouchableOpacity>
-        </>
-      );
-    }
   }
 
   function dateFormat(seconds) {
@@ -159,42 +149,81 @@ export default function Profile(props) {
               <VStack style={styles.vstack}>
                 <Text style={styles.text}>{user?.displayName}</Text>
                 <Text style={styles.emailText}>{user?.email}</Text>
-                <NicknameView />
-                <Modal isVisible={isModalVisible}>
-                  <SafeAreaView style={styles.modalView}>
-                    <Text style={{ fontSize: 20, marginTop: 10 }}>별명을 입력해주세요</Text>
-                    <Text style={{ fontSize: 10, marginTop: 5 }}>별명은 작성하신 리뷰에 이름대신 표시됩니다.</Text>
-                    <Input 
-                      style={{ marginTop: 30 }}
-                      w={200}
-                      multiline={false}
-                      value={nickname}
-                      onChangeText={setNickname}
-                      avoidKeyboard={true}
-                    />
-                    <Button style={styles.button} bg='#BF2A52' onPress={() => {addNickname(); toggleModal();}}>완료</Button>
-                    <TouchableOpacity style={styles.cancel} onPress={toggleModal}>
-                      <Text style={styles.emailText}>취소</Text>
-                    </TouchableOpacity>
-                  </SafeAreaView>
-                </Modal>
               </VStack>
             </HStack>
+            <View style={styles.customUserSetting}>
+              <Text>표시될 이름 : {checkNickname ? nickname : user?.displayName}</Text>
+            </View>
           </Stack>
-          <Button style={styles.button}
-            onPress={() => auth().signOut()}
-            bg='#BF2A52'
-            width="70%"
-            colorScheme="gray"
-          >
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>로그아웃</Text>
-          </Button>
+          <Button.Group style={styles.menuButtonGroup}>
+            <Button style={styles.menuButton}
+              onPress={toggleModal}
+              bg='#BF2A52'
+              width="70%"
+              colorScheme="gray"
+            >
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>닉네임 설정</Text>
+            </Button>
+            <Button style={styles.menuButton}
+              onPress={() => auth().signOut()}
+              bg='#BF2A52'
+              width="70%"
+              colorScheme="gray"
+            >
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>로그아웃</Text>
+            </Button>
+          </Button.Group>
         </Center>
         <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 쓴 리뷰</Text>
         {review}
         <Text style={{ alignSelf: 'center', fontSize: 24, paddingTop: 40, paddingBottom: 10, }}>내가 찜한 가게</Text>
         {store}
       </ScrollView>
+      <Modal
+        isOpen={isModalVisible}
+        onClose={() => setModalVisible(false)}
+        avoidKeyboard
+        size="md"
+      >
+        <Modal.Content style={styles.modalView}>
+          <Modal.Header style={{ alignItems: 'center' }}>
+            <Text style={{ fontSize: 20, marginTop: 10 }} bold>닉네임을 입력해주세요</Text>
+            <Text style={{ fontSize: 13, marginTop: 5, textAlign: 'center' }}>{'닉네임은 작성하신 리뷰에\n이름 대신 표시됩니다.'}</Text>
+          </Modal.Header>
+          <Modal.Body style={{ alignItems: 'center', marginTop: 15 }}>
+            <Input
+              w={200}
+              multiline={false}
+              value={nickname}
+              placeholder={user?.displayName}
+              onChangeText={setNickname}
+            />
+            <Button.Group style={styles.menuButtonGroup}>
+              <Button
+                style={styles.menuButton}
+                bg='#BF2A52'
+                onPress={() => {
+                  if (nickname === '') {
+                    resetNickname();
+                  } else {
+                    addNickname();
+                  }
+                  toggleModal();
+                }}
+              >
+                <Text style={{ fontSize: 15 }}>완료</Text>
+              </Button>
+              <Button
+                style={styles.menuButton}
+                variant="ghost"
+                onPress={toggleModal}
+              >
+                <Text style={{ fontSize: 15, color: '#BF2A52' }}>취소</Text>
+              </Button>
+            </Button.Group>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
     </NativeBaseProvider>
   );
 }
@@ -210,13 +239,15 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     alignItems: 'center'
   },
-  button: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  menuButtonGroup: {
     width: '60%',
-    marginTop: 25,
+    marginTop: 10,
+    flexDirection: 'column'
+  },
+  menuButton: {
+    width: '100%',
+    marginTop: 10,
     color: 'white',
-    alignSelf: 'center'
   },
   title: {
     fontSize: 25,
@@ -254,15 +285,9 @@ const styles = StyleSheet.create({
   },
   modalView: {
     backgroundColor: 'white',
-    width: '73%',
-    height: '35%',
     alignItems: 'center',
-    marginLeft: 50,
-    marginRight: 50,
+    paddingHorizontal: 10,
     borderRadius: 5,
-  },
-  cancel: {
-    marginTop: 10,
   },
   reviewTitle: {
     fontSize: 24,
@@ -279,5 +304,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'right',
     color: '#777777'
+  },
+  customUserSetting: {
+    marginTop: 20
   }
 });
